@@ -21,15 +21,16 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/张尉/EasyAlert'
+  s.homepage         = 'https://github.com/zhwayne/EasyAlert'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { '张尉' => 'mrzhwayne@163.com' }
-  s.source           = { :git => 'https://github.com/张尉/EasyAlert.git', :tag => s.version.to_s }
+  s.author           = { 'iya' => 'mrzhwayne@163.com' }
+  s.source           = { :git => 'https://github.com/zhwayne/EasyAlert.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '10.0'
 
+  s.swift_version = '5.5'
   s.source_files = 'EasyAlert/Classes/**/*'
   
   # s.resource_bundles = {
@@ -38,5 +39,5 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'SnapKit', '~> 5.0'
 end

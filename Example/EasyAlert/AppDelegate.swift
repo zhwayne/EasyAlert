@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EasyAlert
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        if #available(iOS 13.0, *) {
+            EasyAlert.Action.register(attributes: [
+                .font: UIFont.systemFont(ofSize: 17),
+                .textColor: UIColor.tertiaryLabel,
+                .itemBackgroundColor: UIColor.secondarySystemBackground,
+                .itemEdgeInsets: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16),
+                .itemCornerRadius: Action.roundCornerRadius,
+                .itemHeight: CGFloat(35)
+            ], for: .cancel)
+            
+            EasyAlert.Action.register(attributes: [
+                .font: UIFont.systemFont(ofSize: 17),
+                .textColor: UIColor.white,
+                .itemBackgroundColor: UIColor.orange,
+                .itemEdgeInsets: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16),
+                .itemCornerRadius: Action.roundCornerRadius,
+                .itemHeight: CGFloat(35)
+            ], for: .default)
+            
+            EasyAlert.Action.registerGlobal(attributes: [
+                .separatorColor: UIColor.separator,
+                .itemSpacing: CGFloat(-16)
+            ])
+            
+        } else {
+            // Fallback on earlier versions
+        }
         return true
     }
 
