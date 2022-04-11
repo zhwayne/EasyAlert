@@ -1,6 +1,6 @@
 # EasyAlert
 
-[![CI Status](https://img.shields.io/travis/张尉/EasyAlert.svg?style=flat)](https://travis-ci.org/张尉/EasyAlert)
+[![CI Status](https://img.shields.io/travis/zhwayne/EasyAlert.svg?style=flat)](https://travis-ci.org/zhwayne/EasyAlert)
 [![Version](https://img.shields.io/cocoapods/v/EasyAlert.svg?style=flat)](https://cocoapods.org/pods/EasyAlert)
 [![License](https://img.shields.io/cocoapods/l/EasyAlert.svg?style=flat)](https://cocoapods.org/pods/EasyAlert)
 [![Platform](https://img.shields.io/cocoapods/p/EasyAlert.svg?style=flat)](https://cocoapods.org/pods/EasyAlert)
@@ -9,7 +9,28 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Requirements
+## TODO
+
+- [x] show any custom view
+- [x] Replaceable background
+- [ ] Customizable action buttons
+- [ ] show view controller
+
+## Usage
+
+Example for `MessageAlert`:
+```swift
+let alert = MessageAlert(title: "Error", message: "\(error)")
+let cancel = Action(title: "Cancel", style: .cancel)
+let ok = Action(title: "OK", style: .default) { _ in
+    if let url = result.videoURL {
+        self?.showVideo(url: url)
+    }
+}
+alert.add(action: cancel)
+alert.add(action: ok)
+alert.show(in: window)
+```
 
 ## Installation
 
