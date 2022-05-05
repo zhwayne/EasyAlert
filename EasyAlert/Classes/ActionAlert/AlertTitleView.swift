@@ -14,14 +14,6 @@ final class AlertTitleView: UIView {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        if #available(iOS 13.0, *) {
-            label.textColor = .label
-        } else {
-            // Fallback on earlier versions
-            label.textColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
-        }
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.numberOfLines = 0
         return label
     }()

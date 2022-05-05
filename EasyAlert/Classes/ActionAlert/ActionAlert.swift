@@ -14,9 +14,14 @@ open class ActionAlert: Alert {
     
     let alertCustomView: ActionAlertCustomView
     
-    public required init(title: String?, customView: CustomizedView) {
+    public convenience init(title: String?, customView: CustomizedView) {
+        let attributedTitle = title?.attributedTitle
+        self.init(title: attributedTitle, customView: customView)
+    }
+    
+    public required init(title: NSAttributedString?, customView: CustomizedView) {
         alertCustomView = ActionAlertCustomView(customView: customView)
-        alertCustomView.titleView.titleLabel.text = title
+        alertCustomView.titleView.titleLabel.attributedText = title
         super.init(customView: alertCustomView)
         let layout = ActionAlertLayout()
         layout.alertCustomView = alertCustomView
@@ -166,5 +171,33 @@ extension ActionAlert {
                 }
             }
         }
+    }
+}
+
+extension String {
+    
+    var attributedTitle: NSAttributedString {
+        
+        typealias Key = NSAttributedString.Key
+        let range = NSMakeRange(0, self.count)
+        let attributedTitle = NSMutableAttributedString(string: self)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        paragraphStyle.lineBreakMode = .byCharWrapping
+        paragraphStyle.lineHeightMultiple = 1.2
+        attributedTitle.addAttributes([Key.paragraphStyle: paragraphStyle], range: range)
+        if #available(iOS 13.0, *) {
+            attributedTitle.addAttributes([Key.font: UIColor.label], range: range)
+        } else {
+            // Fallback on earlier versions
+            let color = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+            attributedTitle.addAttributes([Key.font: color], range: range)
+        }
+        
+        let font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        attributedTitle.addAttributes([Key.font: font], range: range)
+        
+        return NSAttributedString(attributedString: attributedTitle)
     }
 }
