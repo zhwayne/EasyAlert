@@ -40,19 +40,13 @@ public final class MessageAlert: ActionAlert {
     
     
     @available(*, unavailable)
-    public required init(title: NSAttributedString?, customView: ActionAlert.CustomizedView) {
-        super.init(title: title, customView: customView)
+    public required init(title: Title?, customView: ActionAlert.CustomizedView) {
+        fatalError()
     }
     
-    public convenience init(title: String?, message: String?) {
-        let attributedTitle = title?.attributedTitle
-        let attributedMessage = message?.attributedMessage
-        self.init(title: attributedTitle, message: attributedMessage)
-    }
-    
-    public required init(title: NSAttributedString?, message: NSAttributedString?) {
+    public required init(title: Title?, message: Message?) {
         let messageView = MessageView()
-        messageView.label.attributedText = message
+        messageView.label.attributedText = message?.message
         messageView.isHidden = message == nil
         super.init(title: title, customView: messageView)
     }
@@ -60,35 +54,5 @@ public final class MessageAlert: ActionAlert {
     public override func willShow() {
         super.willShow()
         alertCustomView.contentStackView.insertArrangedSubview(alertCustomView.titleView, at: 0)
-    }
-}
-
-extension String {
-    
-    var attributedMessage: NSAttributedString {
-        
-        let range = NSRange(location: 0, length: self.count)
-        typealias Key = NSAttributedString.Key
-        let attributedString = NSMutableAttributedString(string: self)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .center
-        paragraphStyle.lineBreakMode = .byCharWrapping
-        paragraphStyle.lineHeightMultiple = 1.2
-        if #available(iOS 13.0, *) {
-            attributedString.setAttributes([
-                .font: UIFont.systemFont(ofSize: 15),
-                .foregroundColor: UIColor.secondaryLabel,
-                .paragraphStyle: paragraphStyle,
-            ], range: range)
-        } else {
-            // Fallback on earlier versions
-            attributedString.setAttributes([
-                .font: UIFont.systemFont(ofSize: 15),
-                .foregroundColor: UIColor.gray,
-                .paragraphStyle: paragraphStyle,
-            ], range: range)
-        }
-        
-        return NSAttributedString(attributedString: attributedString)
     }
 }
