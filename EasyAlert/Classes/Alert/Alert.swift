@@ -162,7 +162,7 @@ extension Alert {
     }
     
     private func showAlert(in parent: UIView) {
-        objc_setAssociatedObject(parent, &AssociatedKey.alert, self, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        parent.attach(alert: self)
         backgroundView.alert = self
         backgroundView.frame = parent.bounds
         backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -182,7 +182,7 @@ extension Alert {
     private func windup() {
         defer {
             if let parent = backgroundView.superview {
-                objc_setAssociatedObject(parent, &AssociatedKey.alert, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                parent.detach(alert: self)
                 backgroundView.removeFromSuperview()
             }
         }
@@ -191,9 +191,4 @@ extension Alert {
     }
 }
 
-public extension Alert {
-    
-    private struct AssociatedKey {
-        static var alert = "alert"
-    }
-}
+
