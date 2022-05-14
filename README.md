@@ -13,7 +13,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 - [x] show any custom view
 - [x] Replaceable background
-- [ ] Customizable action buttons
+- [x] Customizable action buttons
+- [x] Customizable transition
 - [ ] show view controller
 
 ## Usage
