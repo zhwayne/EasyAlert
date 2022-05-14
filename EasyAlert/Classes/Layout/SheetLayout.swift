@@ -7,17 +7,15 @@
 
 import Foundation
 
-class SheetLayout: ContainerLayout {
+class SheetLayout: AlertLayoutable {
     
     var width: Alert.Width = .multiplied(1)
     
-    func updateLayout(container: UIView, content: UIView, interfaceOrientation: UIInterfaceOrientation) {
+    func layout(content: Alert.CustomizedView, container: UIView, interfaceOrientation: UIInterfaceOrientation) {
+        container.addSubview(content)
         
-        if content.superview != container {
-            container.addSubview(content)
-            content.snp.remakeConstraints { maker in
-                maker.edges.equalToSuperview()
-            }
+        content.snp.remakeConstraints { maker in
+            maker.edges.equalToSuperview()
         }
         
         container.snp.remakeConstraints { maker in

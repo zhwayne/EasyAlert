@@ -7,18 +7,26 @@
 
 import UIKit
 
-internal class ActionButton: UIButton {
+class ActionButton: UIControl {
     
-    weak var action: Action?
+    var action: Action? {
+        didSet {
+            oldValue?.view.removeFromSuperview()
+            if let view = action?.view {
+                addSubview(view)
+            }
+        }
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            action?.view.alpha = isHighlighted ? 0.5 : 1
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
-        if #available(iOS 13.0, *) {
-            backgroundColor = .systemBackground
-        } else {
-            backgroundColor = .white
-        }
     }
     
     @available(*, unavailable)
@@ -27,8 +35,12 @@ internal class ActionButton: UIButton {
     }
     
     override var intrinsicContentSize: CGSize {
-        var size = super.intrinsicContentSize
-        size.height = 44
-        return size
+        return action?.view.intrinsicContentSize ?? .zero
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        action?.view.frame = bounds
+        action?.view.isUserInteractionEnabled = false
     }
 }

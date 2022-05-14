@@ -14,6 +14,26 @@ open class ActionAlert: Alert {
     
     let alertCustomView: ActionAlertCustomView
     
+    public var titleBackgroundColor: UIColor? {
+        get { alertCustomView.titleView.backgroundColor }
+        set { alertCustomView.titleView.backgroundColor = newValue }
+    }
+    
+    public var actionBackgroundColor: UIColor? {
+        get { alertCustomView.actionContainerView.backgroundColor }
+        set { alertCustomView.actionContainerView.backgroundColor = newValue }
+    }
+    
+    public var backgoundColor: UIColor? {
+        get { alertCustomView.backgroundView.backgroundColor }
+        set { alertCustomView.backgroundView.backgroundColor = newValue }
+    }
+    
+    public var actionLayout: ActionLayoutable {
+        get { alertCustomView.actionLayout }
+        set { alertCustomView.actionLayout = newValue }
+    }
+        
     public required init(title: Title?, customView: CustomizedView) {
         alertCustomView = ActionAlertCustomView(customView: customView)
         alertCustomView.titleView.titleLabel.attributedText = title?.title
@@ -21,7 +41,13 @@ open class ActionAlert: Alert {
         let layout = ActionAlertLayout()
         layout.alertCustomView = alertCustomView
         self.layout = layout
-    }
+        
+        if #available(iOS 13.0, *) {
+            backgoundColor = .systemBackground
+        } else {
+            backgoundColor = .white
+        }
+    }    
 }
 
 extension ActionAlert: ActionAlertble {
@@ -29,43 +55,45 @@ extension ActionAlert: ActionAlertble {
     public func add(action: Action) {
         assert(isShowing == false)
         alertCustomView.actions.append(action)
-        action.alert = self
     }
     
     public func add(actions: [Action]) {
         assert(isShowing == false)
         alertCustomView.actions.append(contentsOf: actions)
-        actions.forEach { $0.alert = self }
-    }
-}
-
-extension ActionAlert {
-    func setAction(_ action: Action, enabled: Bool) {
-        fatalError("暂未实现此功能")
     }
 }
 
 extension ActionAlert {
     
-    final class ActionAlertCustomView: UIView, AlertCustomable {
+    final class ActionAlertCustomView: CustomizedView {
+        
+        fileprivate lazy var actionLayout: ActionLayoutable = Action.defaultLayout
         
         var actions: [Action] = []
         
-        let customView: UIView
+        let customView: CustomizedView
+        
+        let backgroundView = UIView()
         
         lazy var titleView = AlertTitleView()
         
         lazy var actionContainerView = ActionContainerView()
                 
-        private(set) lazy var contentStackView: UIStackView = {
+        private lazy var contentStackView: UIStackView = {
             let stackView = UIStackView()
             stackView.axis = .vertical
+            stackView.spacing = -1 / UIScreen.main.scale
             return stackView
         }()
         
-        required init(customView: UIView) {
+        required init(customView: CustomizedView) {
             self.customView = customView
+            backgroundView.clipsToBounds = true
+            backgroundView.layer.cornerRadius = ActionAlert.CornerRadius
             super.init(frame: .zero)
+            backgroundView.frame = frame
+            backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            addSubview(backgroundView)
         }
         
         override func didMoveToSuperview() {
@@ -92,69 +120,20 @@ extension ActionAlert {
         
         func updateLayout(interfaceOrientation: UIInterfaceOrientation, width: Alert.Width) {
             guard !actions.isEmpty else { return }
-            for view in actionContainerView.subviews {
-                view.removeFromSuperview()
+            
+            actionContainerView.subviews.forEach {
+                $0.removeFromSuperview()
             }
-            
-            let globalAttributes = Action.Style.globalAttributes
-            
-            let backgroundColor = globalAttributes[.backgroundColor] as! UIColor
-            let itemSpacing = globalAttributes[.itemSpacing] as! CGFloat
-            // let separatorColor = globalAttributes[.separatorColor] as! UIColor
-            
-            actionContainerView.backgroundColor = backgroundColor
-
-            var actionIdx = 0
-            var lastButton: ActionButton!
-            let actionCount = actions.count
-            actions.forEach { action in
-                let attributes = action.style.attributes
-                
-                var stringAttr = [NSAttributedString.Key: Any]()
-                stringAttr[.font] = attributes[.font]
-                stringAttr[.foregroundColor] = attributes[.textColor]
-                
-                let title = NSAttributedString(string: action.title ?? "", attributes: stringAttr)
-                let button = ActionButton(type: .system)
-                button.setAttributedTitle(title, for: .normal)
-                button.backgroundColor = (attributes[.itemBackgroundColor] as! UIColor)
-                
-                button.addTarget(self, action: #selector(handleActionButtonTouchUpInside(_:)), for: .touchUpInside)
+            let buttons = actions.map { action -> UIView in
+                let button = ActionButton()
                 button.action = action
-    
-                actionContainerView.addSubview(button)
-                let height = attributes[.itemHeight] as! CGFloat
-                let edgeInsets = attributes[.itemEdgeInsets] as! UIEdgeInsets
-                var cornerRadius = attributes[.itemCornerRadius] as! CGFloat
-                
-                cornerRadius = cornerRadius == Action.roundCornerRadius ? height / 2 : cornerRadius
-                button.layer.cornerRadius = cornerRadius
-                
-                if actionCount == 1 {
-                    button.snp.makeConstraints {
-                        $0.height.equalTo(height)
-                        $0.edges.equalTo(edgeInsets)
-                    }
-                } else if actionCount == 2 {
-                    button.snp.makeConstraints {
-                        $0.height.equalTo(height)
-                        $0.top.equalTo(edgeInsets.top)
-                        $0.bottom.equalTo(-edgeInsets.bottom)
-                        if actionIdx == 0 {
-                            $0.left.equalTo(edgeInsets.left + -(itemSpacing) * 0.5)
-                        } else {
-                            $0.right.equalTo(-edgeInsets.right + itemSpacing * 0.5)
-                            $0.left.equalTo(lastButton.snp.right).offset(edgeInsets.left + edgeInsets.right + itemSpacing)
-                            $0.width.equalTo(lastButton)
-                        }
-                    }
-                } else {
-                    fatalError("暂不支持超过 2 个 action")
-                }
-                
-                actionIdx += 1
-                lastButton = button
+                let selector = #selector(handleActionButtonTouchUpInside(_:))
+                button.removeTarget(self, action: selector, for: .touchUpInside)
+                button.addTarget(self, action: selector, for: .touchUpInside)
+                return button
             }
+            
+            actionLayout.layout(buttons: buttons, container: actionContainerView)
         }
         
         @objc

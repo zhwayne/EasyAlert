@@ -10,7 +10,7 @@ import SnapKit
 
 open class Alert: Alertble {
     
-    public typealias CustomizedView = UIView & AlertCustomable
+    public typealias CustomizedView = UIView & AlertCustomizable
     
     /// The view that can be customized according to your ideas.
     public let customView: CustomizedView
@@ -19,7 +19,7 @@ open class Alert: Alertble {
     
     let containerView: UIView = UIView()
     
-    public var layout: ContainerLayout? = AlertLayout()
+    public var layout: AlertLayoutable? = AlertLayout()
     
     public var animator: Animator = AlertAnimator()
     
@@ -36,6 +36,8 @@ open class Alert: Alertble {
     public init(customView: CustomizedView) {
         self.customView = customView
         
+        backgroundView.frame = UIScreen.main.bounds
+        backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backgroundView.willRemoveFromSuperviewObserver = { [weak self] in
             if let alert = self?.backgroundView.alert {
                 alert.dismiss(completion: nil)
@@ -142,30 +144,32 @@ extension Alert {
         backgroundView.insertSubview(dimmingView, at: 0)
     }
     
-    private func layoutIfNeeded() {
-        if #available(iOS 13.0, *) {
-            guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene else { return }
-            willLayoutContainer()
-            layout?.updateLayout(container: containerView, content: customView, interfaceOrientation: windowScene.interfaceOrientation)
-        } else {
-            // Fallback on earlier versions
-            willLayoutContainer()
-            layout?.updateLayout(container: containerView, content: customView, interfaceOrientation: UIApplication.shared.statusBarOrientation)
-        }
-        didLayoutContainer()
-        containerView.layoutIfNeeded()
-    }
-    
     private func configContainer() {
         backgroundView.addSubview(containerView)
         layoutIfNeeded()
+    }
+    
+    private func layoutIfNeeded() {
+        containerView.subviews.forEach { $0.removeFromSuperview() }
+        willLayoutContainer()
+        defer {
+            didLayoutContainer()
+            containerView.layoutIfNeeded()
+        }
+        
+        if #available(iOS 13.0, *) {
+            guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene else { return }
+            layout?.layout(content: customView, container: containerView, interfaceOrientation: windowScene.interfaceOrientation)
+        } else {
+            // Fallback on earlier versions
+            layout?.layout(content: customView, container: containerView, interfaceOrientation: UIApplication.shared.statusBarOrientation)
+        }
     }
     
     private func showAlert(in parent: UIView) {
         parent.attach(alert: self)
         backgroundView.alert = self
         backgroundView.frame = parent.bounds
-        backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         parent.addSubview(backgroundView)
         backgroundView.layoutIfNeeded()
         

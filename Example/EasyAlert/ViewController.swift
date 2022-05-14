@@ -28,28 +28,30 @@ class ViewController: UIViewController {
     }
     
     @IBAction func handleTap(_ sender: Any) {
-        let alert = MessageAlert(title: nil, message: "神迹全程回顾，记住这一刻！记住9秒83！记住苏炳添！[心] 这是封神之战，东京奥运会100米短跑半决赛，苏炳添以9秒83个人历史最佳成绩晋级决赛！")
+        let alert = MessageAlert(title: "快讯", message: "神迹全程回顾，记住这一刻！记住9秒83！记住苏炳添！[心] 这是封神之战，东京奥运会100米短跑半决赛，苏炳添以9秒83个人历史最佳成绩晋级决赛！")
         alert.backgroundProvider.allowDismissWhenBackgroundTouch = true
         let action = Action(title: "好的", style: .default)
         let cancel = Action(title: "取消", style: .cancel)
+//        let other = Action(title: "Other", style: .destructive)
         alert.add(action: cancel)
         alert.add(action: action)
+//        alert.add(action: other)
         alert.show(in: view)
         
         //        let alert = Sheet(customView: SheetContent(frame: .zero))
         //        alert.backgroundProvider.allowDismissWhenBackgroundTouch = true
         //        alert.show(in: view)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleAlertContentTap(_:)))
-        alert.customView.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(handleAlertContentTap(_:)))
+//        alert.customView.addGestureRecognizer(tap)
     }
     
-    @objc func handleAlertContentTap(_ sender: UITapGestureRecognizer) {
-        guard let view = sender.view as? Alert.CustomizedView else { return }
-        view.dismiss {
-            debugPrint("did disappear")
-        }
-    }
+//    @objc func handleAlertContentTap(_ sender: UITapGestureRecognizer) {
+//        guard let view = sender.view as? Alert.CustomizedView else { return }
+//        view.dismiss {
+//            debugPrint("did disappear")
+//        }
+//    }
 }
 
 class SheetContent: Alert.CustomizedView {

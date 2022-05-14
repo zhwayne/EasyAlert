@@ -1,5 +1,5 @@
 //
-//  ContainerLayout.swift
+//  AlertLayoutable.swift
 //  EasyAlert
 //
 //  Created by iya on 2021/12/9.
@@ -15,9 +15,9 @@ public extension Alert {
     }
 }
 
-public protocol ContainerLayout {
+public protocol AlertLayoutable {
     
     var width: Alert.Width { get set }
     
-    func updateLayout(container: UIView, content: UIView, interfaceOrientation: UIInterfaceOrientation)
+    func layout(content: Alert.CustomizedView, container: UIView, interfaceOrientation: UIInterfaceOrientation)
 }

@@ -9,35 +9,63 @@ import UIKit
 
 public final class Action {
     
+    public typealias CustomizedView = UIView & ActionCustomizable
+    
     public typealias Handelr = (Action) -> Void
     
-    public var title: String?
+    public static var defaultViewType: CustomizedView.Type = DefaultActionView.self
+    public static var defaultLayout: ActionLayoutable = DefaultActionLayout()
     
-    internal let style: Style
+    let handler: Handelr?
     
-    internal let handler: Handelr?
-    
-    public weak var alert: ActionAlertble?
-    
-    @available(*, unavailable)
-    public var isEnabled: Bool = true {
-        didSet {
-            // 暂未实现
-        }
-    }
+    let view: CustomizedView
     
     public var allowAutoDismiss: Bool = true
     
-    public init(title: String, style: Style, handler: Handelr? = nil) {
-        self.title = title
-        self.style = style
+    public convenience init(title: String, style: Style, handler: Handelr? = nil) {
+        let view = Action.defaultViewType.init(style: style)
+        view.title = title
+        self.init(view: view, handler: handler)
+    }
+    
+    public required init(view: CustomizedView, handler: Handelr? = nil) {
+        self.view = view
         self.handler = handler
+    }
+    
+    deinit {
+        view.removeFromSuperview()
+    }
+}
+
+extension Action {
+    
+    public var style: Style { view.style }
+    
+    public var title: String? {
+        get { view.title }
+        set { view.title = newValue }
+    }
+    
+    public var isEnabled: Bool {
+        get {
+            guard let control = view.superview as? UIControl else {
+                return true
+            }
+            return control.isEnabled
+        }
+        set {
+            guard let control = view.superview as? UIControl else {
+                return
+            }
+            control.isEnabled = newValue
+        }
     }
 }
 
 public extension Action {
     
-    enum Style {
+    enum Style : Hashable {
         case `default`, cancel, destructive
         
         internal var attributes: [Action.Key : Any] {
@@ -51,6 +79,10 @@ public extension Action {
         static var globalAttributes: [Action.Key : Any] {
             return GlobalActionAttributes
         }
+    }
+    
+    enum State : Hashable {
+        case normal, disabled
     }
 }
 

@@ -14,22 +14,22 @@ public final class MessageAlert: ActionAlert {
         alertCustomView.titleView.titleLabel.text
     }
     
-    private final class MessageView: UIView, AlertCustomable {
+    private final class MessageView: UIView, AlertCustomizable {
         
         fileprivate let label = UILabel()
         
         override init(frame: CGRect) {
             super.init(frame: frame)
-            if #available(iOS 13.0, *) {
-                backgroundColor = .systemBackground
-            } else {
-                backgroundColor = .white
-            }
+//            if #available(iOS 13.0, *) {
+//                backgroundColor = .systemBackground
+//            } else {
+//                backgroundColor = .white
+//            }
             label.numberOfLines = 0
             addSubview(label)
             
             label.snp.makeConstraints { maker in
-                maker.edges.equalTo(UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
+                maker.edges.equalTo(UIEdgeInsets(top: 8, left: 16, bottom: 16, right: 16))
             }
         }
         
@@ -49,10 +49,5 @@ public final class MessageAlert: ActionAlert {
         messageView.label.attributedText = message?.message
         messageView.isHidden = message == nil
         super.init(title: title, customView: messageView)
-    }
-    
-    public override func willShow() {
-        super.willShow()
-        alertCustomView.contentStackView.insertArrangedSubview(alertCustomView.titleView, at: 0)
     }
 }

@@ -11,8 +11,8 @@ class ActionAlertLayout: AlertLayout {
     
     weak var alertCustomView: ActionAlert.ActionAlertCustomView?
     
-    override func updateLayout(container: UIView, content: UIView, interfaceOrientation: UIInterfaceOrientation) {
-        super.updateLayout(container: container, content: content, interfaceOrientation: interfaceOrientation)
+    override func layout(content: Alert.CustomizedView, container: UIView, interfaceOrientation: UIInterfaceOrientation) {
+        super.layout(content: content, container: container, interfaceOrientation: interfaceOrientation)
         alertCustomView?.updateLayout(interfaceOrientation: interfaceOrientation, width: width)
     }
 }

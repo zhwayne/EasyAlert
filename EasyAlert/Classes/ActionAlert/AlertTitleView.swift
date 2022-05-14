@@ -20,11 +20,6 @@ final class AlertTitleView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        if #available(iOS 13.0, *) {
-            backgroundColor = .systemBackground
-        } else {
-            backgroundColor = .white
-        }
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { maker in
             maker.edges.equalTo(titleEdgeInsets)
