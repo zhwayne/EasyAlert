@@ -10,8 +10,6 @@ import SnapKit
 
 open class ActionAlert: Alert {
     
-    static let CornerRadius: CGFloat = 13
-    
     let alertCustomView: ActionAlertCustomView
     
     public var titleBackgroundColor: UIColor? {
@@ -55,19 +53,35 @@ extension ActionAlert: ActionAlertble {
     public func add(action: Action) {
         assert(isShowing == false)
         alertCustomView.actions.append(action)
+        setViewForAction(action)
     }
     
     public func add(actions: [Action]) {
         assert(isShowing == false)
         alertCustomView.actions.append(contentsOf: actions)
+        actions.forEach { setViewForAction($0) }
     }
+    
+    private func setViewForAction(_ action: Action) {
+        if action.view == nil {
+            action.view = ActionAlert.defaultActionViewType.init(style: action.style)
+            action.view.title = action.title
+        }
+    }
+}
+
+extension ActionAlert {
+    
+    public static var defaultCornerRadius: CGFloat = 13
+    public static var defaultActionViewType: Action.CustomizedView.Type = ActionView.self
+    public static var defaultActionLayout: ActionLayoutable = ActionLayout()
 }
 
 extension ActionAlert {
     
     final class ActionAlertCustomView: CustomizedView {
         
-        fileprivate lazy var actionLayout: ActionLayoutable = Action.defaultLayout
+        fileprivate lazy var actionLayout: ActionLayoutable = ActionAlert.defaultActionLayout
         
         var actions: [Action] = []
         
@@ -89,7 +103,7 @@ extension ActionAlert {
         required init(customView: CustomizedView) {
             self.customView = customView
             backgroundView.clipsToBounds = true
-            backgroundView.layer.cornerRadius = ActionAlert.CornerRadius
+            backgroundView.layer.cornerRadius = ActionAlert.defaultCornerRadius
             super.init(frame: .zero)
             backgroundView.frame = frame
             backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -127,6 +141,7 @@ extension ActionAlert {
             let buttons = actions.map { action -> UIView in
                 let button = ActionButton()
                 button.action = action
+                button.isEnabled = action.isEnabled
                 let selector = #selector(handleActionButtonTouchUpInside(_:))
                 button.removeTarget(self, action: selector, for: .touchUpInside)
                 button.addTarget(self, action: selector, for: .touchUpInside)

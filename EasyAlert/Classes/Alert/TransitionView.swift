@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TransitionView: UIView {
+final class TransitionView: UIView {
 
     weak var alert: Alertble?
     

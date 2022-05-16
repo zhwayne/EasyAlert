@@ -9,7 +9,7 @@ import UIKit
 
 extension ActionAlert {
     
-    class ContentContainerView: UIView {
+    final class ContentContainerView: UIView {
         
         let stackView: UIStackView = {
             let stackView = UIStackView()
@@ -42,15 +42,15 @@ extension ActionAlert {
         override func layoutSubviews() {
             super.layoutSubviews()
             if #available(iOS 11.0, *) {
-                layer.cornerRadius = ActionAlert.CornerRadius
+                layer.cornerRadius = ActionAlert.defaultCornerRadius
                 layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             } else {
                 let path = UIBezierPath(
                     roundedRect: bounds,
                     byRoundingCorners: [.bottomLeft, .bottomRight],
                     cornerRadii: CGSize(
-                        width: ActionAlert.CornerRadius,
-                        height: ActionAlert.CornerRadius
+                        width: ActionAlert.defaultCornerRadius,
+                        height: ActionAlert.defaultCornerRadius
                     )
                 )
                 let mask = CAShapeLayer()

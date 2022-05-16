@@ -33,15 +33,15 @@ final class AlertTitleView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         if #available(iOS 11.0, *) {
-            layer.cornerRadius = ActionAlert.CornerRadius
+            layer.cornerRadius = ActionAlert.defaultCornerRadius
             layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         } else {
             let path = UIBezierPath(
                 roundedRect: bounds,
                 byRoundingCorners: [.topLeft, .topRight],
                 cornerRadii: CGSize(
-                    width: ActionAlert.CornerRadius,
-                    height: ActionAlert.CornerRadius
+                    width: ActionAlert.defaultCornerRadius,
+                    height: ActionAlert.defaultCornerRadius
                 )
             )
             let mask = CAShapeLayer()

@@ -9,7 +9,7 @@ import UIKit
 
 extension Alert {
     
-    class TapTarget: NSObject, UIGestureRecognizerDelegate {
+    final class TapTarget: NSObject, UIGestureRecognizerDelegate {
         
         var gestureRecognizerShouldBeginBlock: ((UIGestureRecognizer) -> Bool)?
         

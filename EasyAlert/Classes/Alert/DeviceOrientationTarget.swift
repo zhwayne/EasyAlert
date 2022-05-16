@@ -9,7 +9,7 @@ import Foundation
 
 extension Alert {
     
-    class DeviceOrientationTarget: NSObject {
+    final class DeviceOrientationTarget: NSObject {
         
         private lazy var proxy = Proxy(target: self)
         

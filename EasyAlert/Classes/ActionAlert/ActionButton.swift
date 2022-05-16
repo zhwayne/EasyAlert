@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ActionButton: UIControl {
+final class ActionButton: UIControl {
     
     var action: Action? {
         didSet {

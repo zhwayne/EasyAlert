@@ -63,4 +63,7 @@ public extension ActionLayoutable {
     }
 }
 
-public struct DefaultActionLayout: ActionLayoutable { }
+extension ActionAlert {
+    
+    struct ActionLayout: ActionLayoutable { }
+}
