@@ -11,6 +11,8 @@ class SheetLayout: AlertLayoutable {
     
     var width: Alert.Width = .multiplied(1)
     
+    var height: Alert.Height = .greaterThanOrEqualTo(44)
+    
     func layout(content: Alert.CustomizedView, container: UIView, interfaceOrientation: UIInterfaceOrientation) {
         container.addSubview(content)
         
@@ -29,8 +31,10 @@ class SheetLayout: AlertLayoutable {
                     maker.width.equalTo(container.superview!.snp.height).multipliedBy(value).priority(.high)
                 }
             }
+            if case let .greaterThanOrEqualTo(value) = height {
+                maker.height.greaterThanOrEqualTo(value)
+            }
             maker.centerX.equalToSuperview()
-            maker.height.greaterThanOrEqualTo(44)
             maker.bottom.equalToSuperview()
         }
     }

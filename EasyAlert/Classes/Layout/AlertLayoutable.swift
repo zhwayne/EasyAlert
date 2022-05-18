@@ -13,11 +13,18 @@ public extension Alert {
         case flexible(CGFloat)
         case multiplied(CGFloat)
     }
+    
+    enum Height {
+        case automic
+        case greaterThanOrEqualTo(CGFloat)
+    }
 }
 
 public protocol AlertLayoutable {
     
     var width: Alert.Width { get set }
+    
+    var height: Alert.Height { get set }
     
     func layout(content: Alert.CustomizedView, container: UIView, interfaceOrientation: UIInterfaceOrientation)
 }

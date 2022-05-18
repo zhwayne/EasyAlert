@@ -15,6 +15,7 @@ final class AlertTitleView: UIView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.setContentHuggingPriority(.required, for: .vertical)
         return label
     }()
     

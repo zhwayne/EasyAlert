@@ -12,6 +12,8 @@ class AlertLayout: AlertLayoutable {
     
     var width: Alert.Width = .multiplied(0.75)
     
+    var height: Alert.Height = .automic
+    
     func layout(content: Alert.CustomizedView, container: UIView, interfaceOrientation: UIInterfaceOrientation) {
         container.addSubview(content)
         
@@ -29,6 +31,9 @@ class AlertLayout: AlertLayoutable {
                 } else {
                     maker.width.equalTo(container.superview!.snp.height).multipliedBy(value)
                 }
+            }
+            if case let .greaterThanOrEqualTo(value) = height {
+                maker.height.greaterThanOrEqualTo(value)
             }
             maker.center.equalToSuperview()
         }

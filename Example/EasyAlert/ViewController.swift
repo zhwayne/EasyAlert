@@ -33,6 +33,7 @@ class ViewController: UIViewController {
         let action = Action(title: "好的", style: .default)
         let cancel = Action(title: "取消", style: .cancel)
 //        let other = Action(title: "Other", style: .destructive)
+        alert.layout?.height = .greaterThanOrEqualTo(400)
         alert.add(action: cancel)
         alert.add(action: action)
 //        alert.add(action: other)
