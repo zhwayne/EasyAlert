@@ -41,7 +41,13 @@ open class ActionAlert: Alert {
         self.layout = layout
         
         if #available(iOS 13.0, *) {
-            backgoundColor = .systemBackground
+            backgoundColor = UIColor(dynamicProvider: { traitCollection in
+                if traitCollection.userInterfaceStyle == .light {
+                    return .white
+                } else {
+                    return .systemFill
+                }
+            })
         } else {
             backgoundColor = .white
         }

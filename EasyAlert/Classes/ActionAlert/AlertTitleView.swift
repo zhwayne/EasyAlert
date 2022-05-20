@@ -10,7 +10,7 @@ import SnapKit
 
 final class AlertTitleView: UIView {
     
-    private let titleEdgeInsets = UIEdgeInsets(top: 20, left: 16, bottom: 12, right: 16)
+    private let titleEdgeInsets = UIEdgeInsets(top: 20, left: 16, bottom: 16, right: 16)
     
     let titleLabel: UILabel = {
         let label = UILabel()

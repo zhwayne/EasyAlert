@@ -14,12 +14,12 @@ struct MyActionLayout : ActionLayoutable {
     func layout(buttons: [UIView], container: UIView) {
 
         let stackView = UIStackView(arrangedSubviews: buttons)
-        stackView.axis = buttons.count <= 2 ? .horizontal : .vertical
-        stackView.distribution = .fillEqually
+        stackView.axis = buttons.count <= 3 ? .horizontal : .vertical
+        stackView.distribution = .fillProportionally
         stackView.spacing = 20
         container.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.edges.equalTo(UIEdgeInsets(top: 0, left: 20, bottom: 16, right: 20))
+            make.edges.equalTo(UIEdgeInsets(top: 8, left: 20, bottom: 16, right: 20))
         }
     }
 }

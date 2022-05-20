@@ -27,27 +27,39 @@ public final class MessageAlert: ActionAlert {
 //            }
             label.numberOfLines = 0
             addSubview(label)
-            
-            label.snp.makeConstraints { maker in
-                maker.edges.equalTo(UIEdgeInsets(top: 8, left: 16, bottom: 16, right: 16))
-            }
         }
         
         required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
+        
+        func updateEdges(_ edges: UIEdgeInsets) {
+            label.snp.remakeConstraints { maker in
+                maker.edges.equalTo(edges)
+            }
+        }
     }
     
+    private let messageView: MessageView
     
     @available(*, unavailable)
     public required init(title: Title?, customView: ActionAlert.CustomizedView) {
         fatalError()
     }
-    
+        
     public required init(title: Title?, message: Message?) {
-        let messageView = MessageView()
+        messageView = MessageView()
         messageView.label.attributedText = message?.message
         messageView.isHidden = message == nil
         super.init(title: title, customView: messageView)
+    }
+    
+    public override func willLayoutContainer() {
+        super.willLayoutContainer()
+        if title == nil {
+            messageView.updateEdges(UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16))
+        } else {
+            messageView.updateEdges(UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
+        }
     }
 }
