@@ -26,6 +26,7 @@ public final class MessageAlert: ActionAlert {
 //                backgroundColor = .white
 //            }
             label.numberOfLines = 0
+            label.textAlignment = MessageAlert.messageConfiguration.messageAlignment
             addSubview(label)
         }
         
@@ -46,7 +47,7 @@ public final class MessageAlert: ActionAlert {
     public required init(title: Title?, customView: ActionAlert.CustomizedView) {
         fatalError()
     }
-        
+    
     public required init(title: Title?, message: Message?) {
         messageView = MessageView()
         messageView.label.attributedText = message?.message
@@ -63,4 +64,9 @@ public final class MessageAlert: ActionAlert {
             messageView.updateEdges(UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20))
         }
     }
+}
+
+extension MessageAlert {
+
+    public static var messageConfiguration: Configuration = Configuration()
 }

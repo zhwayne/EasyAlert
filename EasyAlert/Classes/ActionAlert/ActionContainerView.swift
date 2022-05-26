@@ -21,15 +21,15 @@ final class ActionContainerView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         if #available(iOS 11.0, *) {
-            layer.cornerRadius = ActionAlert.defaultCornerRadius
+            layer.cornerRadius = ActionAlert.configuration.cornerRadius
             layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         } else {
             let path = UIBezierPath(
                 roundedRect: bounds,
                 byRoundingCorners: [.bottomLeft, .bottomRight],
                 cornerRadii: CGSize(
-                    width: ActionAlert.defaultCornerRadius,
-                    height: ActionAlert.defaultCornerRadius
+                    width: ActionAlert.configuration.cornerRadius,
+                    height: ActionAlert.configuration.cornerRadius
                 )
             )
             let mask = CAShapeLayer()

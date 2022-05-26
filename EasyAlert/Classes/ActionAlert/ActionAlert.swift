@@ -70,7 +70,7 @@ extension ActionAlert: ActionAlertble {
     
     private func setViewForAction(_ action: Action) {
         if action.view == nil {
-            action.view = ActionAlert.defaultActionViewType.init(style: action.style)
+            action.view = ActionAlert.configuration.actionViewType.init(style: action.style)
             action.view.title = action.title
         }
     }
@@ -78,16 +78,14 @@ extension ActionAlert: ActionAlertble {
 
 extension ActionAlert {
     
-    public static var defaultCornerRadius: CGFloat = 13
-    public static var defaultActionViewType: Action.CustomizedView.Type = ActionView.self
-    public static var defaultActionLayout: ActionLayoutable = ActionLayout()
+    public static var configuration = Configuration()
 }
 
 extension ActionAlert {
     
     final class ActionAlertCustomView: CustomizedView {
         
-        fileprivate lazy var actionLayout: ActionLayoutable = ActionAlert.defaultActionLayout
+        fileprivate lazy var actionLayout: ActionLayoutable = ActionAlert.configuration.actionLayout
         
         var actions: [Action] = []
         
@@ -110,7 +108,7 @@ extension ActionAlert {
             self.backgroundView = UIView()
             self.customView = customView
             backgroundView.clipsToBounds = true
-            backgroundView.layer.cornerRadius = ActionAlert.defaultCornerRadius
+            backgroundView.layer.cornerRadius = ActionAlert.configuration.cornerRadius
             super.init(frame: .zero)
             backgroundView.frame = frame
             backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]

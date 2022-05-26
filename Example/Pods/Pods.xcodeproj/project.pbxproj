@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		023F6D328BC44893778DD04FD6D5C4B2 /* ConstraintInsetTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2EC377264B25FB0E67D150E37E87CD /* ConstraintInsetTarget.swift */; };
+		0B069C31283F88F400202136 /* ActionAlertConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B069C30283F88F400202136 /* ActionAlertConfiguration.swift */; };
 		0B315184282E360800F0F9B8 /* TitleAndMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B315183282E360800F0F9B8 /* TitleAndMessage.swift */; };
 		0B315186282E9C6500F0F9B8 /* ActionCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B315185282E9C6500F0F9B8 /* ActionCustomizable.swift */; };
 		0B315188282E9DF900F0F9B8 /* DefaultActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B315187282E9DF900F0F9B8 /* DefaultActionView.swift */; };
@@ -123,6 +124,7 @@
 		01A8C01459A65322CCAFBE518A0E12D2 /* ActionButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
 		0680F9DCCB00013FD4690F01A364ABAC /* EasyAlert.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = EasyAlert.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		09BF299D2EEB87E7DD02630E87B96224 /* ConstraintLayoutGuide+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintLayoutGuide+Extensions.swift"; path = "Source/ConstraintLayoutGuide+Extensions.swift"; sourceTree = "<group>"; };
+		0B069C30283F88F400202136 /* ActionAlertConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionAlertConfiguration.swift; sourceTree = "<group>"; };
 		0B315183282E360800F0F9B8 /* TitleAndMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndMessage.swift; sourceTree = "<group>"; };
 		0B315185282E9C6500F0F9B8 /* ActionCustomizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCustomizable.swift; sourceTree = "<group>"; };
 		0B315187282E9DF900F0F9B8 /* DefaultActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultActionView.swift; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 			children = (
 				CCE1E7F3C3975A406AB4AADF04A940BB /* Action.swift */,
 				9C077F1775012284B913555BFFF97C95 /* ActionAlert.swift */,
+				0B069C30283F88F400202136 /* ActionAlertConfiguration.swift */,
 				01A8C01459A65322CCAFBE518A0E12D2 /* ActionButton.swift */,
 				596255FA8037CD4AD0ECC30CAED79F4C /* ActionContainerView.swift */,
 				2D020AB4FFAE202FA11F7F58712EF8E8 /* AlertTitleView.swift */,
@@ -776,6 +779,7 @@
 				74309B1FBBE748B120A7FD2CE9D09DB9 /* ActionAlertLayout.swift in Sources */,
 				1D67B8F8FDE7B8599A5F55C8E6C58971 /* ActionButton.swift in Sources */,
 				A95A5C25A1CBAAD3B93361E5E29D656C /* ActionContainerView.swift in Sources */,
+				0B069C31283F88F400202136 /* ActionAlertConfiguration.swift in Sources */,
 				4BA6785B9B9A5529E7D336592983A5A5 /* Alert.swift in Sources */,
 				E825083005DF2011358A63D17D48A535 /* AlertAnimator.swift in Sources */,
 				9B82AA1B5D4187CB681F902028EF27E7 /* Alertble.swift in Sources */,
