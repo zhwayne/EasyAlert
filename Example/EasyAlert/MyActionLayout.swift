@@ -19,7 +19,7 @@ struct MyActionLayout : ActionLayoutable {
         stackView.spacing = 20
         container.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.edges.equalTo(UIEdgeInsets(top: 8, left: 20, bottom: 16, right: 20))
+            make.edges.equalTo(UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20))
         }
     }
 }

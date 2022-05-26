@@ -11,9 +11,9 @@ import EasyAlert
 
 final class MyActionView: Action.CustomizedView {
     
-    var isHighlight: Bool = false {
+    var isHighlighted: Bool = false {
         didSet {
-            backgroundColor = isHighlight ? .black.withAlphaComponent(0.1) : .clear
+            alpha = isHighlighted ? 0.5 : 1
         }
     }
     
@@ -25,9 +25,7 @@ final class MyActionView: Action.CustomizedView {
     let style: Action.Style
     
     var isEnabled: Bool = true
-    
-    var isHighlighted: Bool = false
-    
+        
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17)
