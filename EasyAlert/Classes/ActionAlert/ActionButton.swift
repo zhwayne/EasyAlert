@@ -19,8 +19,8 @@ final class ActionButton: UIControl {
     }
     
     override var isHighlighted: Bool {
-        didSet {
-            action?.view.alpha = isHighlighted ? 0.5 : 1
+        willSet {
+            action?.view.isHighlighted = newValue
         }
     }
     

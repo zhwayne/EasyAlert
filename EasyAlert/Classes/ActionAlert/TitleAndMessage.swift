@@ -44,7 +44,7 @@ fileprivate extension String {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         paragraphStyle.lineBreakMode = .byCharWrapping
-        paragraphStyle.lineHeightMultiple = 1.2
+        paragraphStyle.lineHeightMultiple = 1.1
         attributedTitle.addAttributes([Key.paragraphStyle: paragraphStyle], range: range)
         if #available(iOS 13.0, *) {
             attributedTitle.addAttributes([Key.font: UIColor.label], range: range)
@@ -68,17 +68,17 @@ fileprivate extension String {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         paragraphStyle.lineBreakMode = .byCharWrapping
-        paragraphStyle.lineHeightMultiple = 1.2
+        paragraphStyle.lineHeightMultiple = 1.1
         if #available(iOS 13.0, *) {
             attributedString.setAttributes([
-                .font: UIFont.systemFont(ofSize: 15),
-                .foregroundColor: UIColor.secondaryLabel,
+                .font: UIFont.systemFont(ofSize: 14),
+                .foregroundColor: UIColor.label,
                 .paragraphStyle: paragraphStyle,
             ], range: range)
         } else {
             // Fallback on earlier versions
             attributedString.setAttributes([
-                .font: UIFont.systemFont(ofSize: 15),
+                .font: UIFont.systemFont(ofSize: 14),
                 .foregroundColor: UIColor.gray,
                 .paragraphStyle: paragraphStyle,
             ], range: range)

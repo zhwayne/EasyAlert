@@ -57,7 +57,7 @@ public extension ActionLayoutable {
         if #available(iOS 13.0, *) {
             separator.backgroundColor = UIColor.separator
         } else {
-            separator.backgroundColor = UIColor.systemGray
+            separator.backgroundColor = UIColor(white: 0.237, alpha: 0.29)
         }
         return separator
     }

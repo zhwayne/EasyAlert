@@ -23,7 +23,7 @@ public protocol BackgroundProvider {
 
 public struct DefaultBackgroundProvider: BackgroundProvider {
     
-    public var dimming: Dimming = .color(.black.withAlphaComponent(0.35))
+    public var dimming: Dimming = .color(.black.withAlphaComponent(0.25))
     
     public var allowDismissWhenBackgroundTouch: Bool = false
 }

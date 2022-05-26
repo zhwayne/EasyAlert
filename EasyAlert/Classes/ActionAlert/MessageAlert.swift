@@ -52,14 +52,15 @@ public final class MessageAlert: ActionAlert {
         messageView.label.attributedText = message?.message
         messageView.isHidden = message == nil
         super.init(title: title, customView: messageView)
+        layout?.width = .fixed(280)
     }
     
     public override func willLayoutContainer() {
         super.willLayoutContainer()
         if title == nil {
-            messageView.updateEdges(UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16))
+            messageView.updateEdges(UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
         } else {
-            messageView.updateEdges(UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
+            messageView.updateEdges(UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20))
         }
     }
 }

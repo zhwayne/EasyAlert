@@ -11,6 +11,12 @@ import EasyAlert
 
 final class MyActionView: Action.CustomizedView {
     
+    var isHighlight: Bool = false {
+        didSet {
+            backgroundColor = isHighlight ? .black.withAlphaComponent(0.1) : .clear
+        }
+    }
+    
     var title: String? {
         get { titleLabel.text }
         set { titleLabel.text = newValue }

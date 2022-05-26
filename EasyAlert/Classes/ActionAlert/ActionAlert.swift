@@ -45,7 +45,7 @@ open class ActionAlert: Alert {
                 if traitCollection.userInterfaceStyle == .light {
                     return .white
                 } else {
-                    return .systemFill
+                    return .secondarySystemBackground
                 }
             })
         } else {
@@ -93,7 +93,7 @@ extension ActionAlert {
         
         let customView: CustomizedView
         
-        let backgroundView = UIView()
+        let backgroundView: UIView
         
         lazy var titleView = AlertTitleView()
         
@@ -107,6 +107,7 @@ extension ActionAlert {
         }()
         
         required init(customView: CustomizedView) {
+            self.backgroundView = UIView()
             self.customView = customView
             backgroundView.clipsToBounds = true
             backgroundView.layer.cornerRadius = ActionAlert.defaultCornerRadius

@@ -30,7 +30,6 @@ class ViewController: UIViewController {
     @IBAction func handleTap(_ sender: Any) {
         let alert = MessageAlert(title: "快讯", message: "神迹全程回顾，记住这一刻！记住9秒83！记住苏炳添！[心] 这是封神之战，东京奥运会100米短跑半决赛，苏炳添以9秒83个人历史最佳成绩晋级决赛！")
         alert.backgroundProvider.allowDismissWhenBackgroundTouch = true
-        alert.backgroundProvider.dimming = .view(UIVisualEffectView(effect: UIBlurEffect(style: .dark)))
         let action = Action(title: "好的", style: .default)
         let cancel = Action(title: "取消", style: .cancel)
         alert.add(action: cancel)

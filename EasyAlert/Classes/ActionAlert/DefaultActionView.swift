@@ -16,11 +16,27 @@ extension ActionAlert {
             set { titleLabel.text = newValue }
         }
         
+        var isHighlighted: Bool = false {
+            didSet {
+                highlightedOverlay.alpha = isHighlighted ? 1 : 0
+            }
+        }
+        
         let style: Action.Style
         
         var isEnabled: Bool = true
-        
-        var isHighlighted: Bool = false
+                
+        private lazy var highlightedOverlay: UIView = {
+            let view = UIView()
+            if #available(iOS 13.0, *) {
+                view.backgroundColor = .systemFill
+            } else {
+                view.backgroundColor = UIColor(white: 0.472, alpha: 0.36)
+            }
+            view.alpha = 0
+            view.isUserInteractionEnabled = false
+            return view
+        }()
         
         private lazy var titleLabel: UILabel = {
             let label = UILabel()
@@ -35,7 +51,11 @@ extension ActionAlert {
             super.init(frame: .zero)
             
             clipsToBounds = true
+            addSubview(highlightedOverlay)
             addSubview(titleLabel)
+            highlightedOverlay.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
             titleLabel.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
@@ -53,7 +73,7 @@ extension ActionAlert {
         
         override var intrinsicContentSize: CGSize {
             var size = super.intrinsicContentSize
-            size.height = 44
+            size.height = 45
             return size
         }
     }
