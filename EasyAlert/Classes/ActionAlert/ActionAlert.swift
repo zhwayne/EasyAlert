@@ -30,9 +30,9 @@ open class ActionAlert: Alert {
         self.layout = layout
         
         if #available(iOS 13.0, *) {
-            backgoundColor = .systemBackground.withAlphaComponent(0.5)
+            backgoundColor = .systemBackground.withAlphaComponent(0.33)
         } else {
-            backgoundColor = .white.withAlphaComponent(0.5)
+            backgoundColor = .white.withAlphaComponent(0.33)
         }
     }    
 }
