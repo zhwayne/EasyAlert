@@ -42,15 +42,15 @@ extension ActionAlert {
         override func layoutSubviews() {
             super.layoutSubviews()
             if #available(iOS 11.0, *) {
-                layer.cornerRadius = ActionAlert.configuration.cornerRadius
+                layer.cornerRadius = ActionAlert.config.cornerRadius
                 layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             } else {
                 let path = UIBezierPath(
                     roundedRect: bounds,
                     byRoundingCorners: [.bottomLeft, .bottomRight],
                     cornerRadii: CGSize(
-                        width: ActionAlert.configuration.cornerRadius,
-                        height: ActionAlert.configuration.cornerRadius
+                        width: ActionAlert.config.cornerRadius,
+                        height: ActionAlert.config.cornerRadius
                     )
                 )
                 let mask = CAShapeLayer()

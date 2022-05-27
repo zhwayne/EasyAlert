@@ -11,37 +11,33 @@ import SnapKit
 public final class MessageAlert: ActionAlert {
     
     public var title: String? {
-        alertCustomView.titleView.titleLabel.text
+        contentView.titleLabel.attributedText?.string
     }
     
-    private final class MessageView: UIView, AlertCustomizable {
+    public var message: String? {
+        contentView.messageLabel.attributedText?.string
+    }
+    
+    private final class ContentView: UIView, AlertCustomizable {
         
-        fileprivate let label = UILabel()
-        
-        override init(frame: CGRect) {
-            super.init(frame: frame)
-//            if #available(iOS 13.0, *) {
-//                backgroundColor = .systemBackground
-//            } else {
-//                backgroundColor = .white
-//            }
+        fileprivate let titleLabel: UILabel = {
+            let label = UILabel()
             label.numberOfLines = 0
-            label.textAlignment = MessageAlert.messageConfiguration.messageAlignment
-            addSubview(label)
-        }
+            label.textAlignment = MessageAlert.titleConfig.alignment
+            label.setContentHuggingPriority(.required, for: .vertical)
+            return label
+        }()
         
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
         
-        func updateEdges(_ edges: UIEdgeInsets) {
-            label.snp.remakeConstraints { maker in
-                maker.edges.equalTo(edges)
-            }
-        }
+        fileprivate let messageLabel: UILabel = {
+            let label = UILabel()
+            label.numberOfLines = 0
+            label.textAlignment = MessageAlert.messageConfig.alignment
+            return label
+        }()
     }
     
-    private let messageView: MessageView
+    private let contentView: ContentView
     
     @available(*, unavailable)
     public required init(title: Title?, customView: ActionAlert.CustomizedView) {
@@ -49,24 +45,40 @@ public final class MessageAlert: ActionAlert {
     }
     
     public required init(title: Title?, message: Message?) {
-        messageView = MessageView()
-        messageView.label.attributedText = message?.message
-        messageView.isHidden = message == nil
-        super.init(title: title, customView: messageView)
-        layout?.width = .fixed(280)
+        contentView = ContentView()
+        contentView.titleLabel.attributedText = title?.title
+        contentView.messageLabel.attributedText = message?.message
+        super.init(customView: contentView)
+        layout?.width = .fixed(270)
     }
     
     public override func willLayoutContainer() {
         super.willLayoutContainer()
+        
         if title == nil {
-            messageView.updateEdges(UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
+            contentView.titleLabel.removeFromSuperview()
         } else {
-            messageView.updateEdges(UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20))
+            contentView.addSubview(contentView.titleLabel)
+            contentView.titleLabel.snp.remakeConstraints { make in
+                make.top.equalToSuperview().offset(20)
+                make.left.equalToSuperview().offset(20)
+                make.right.equalToSuperview().offset(-20)
+                make.bottom.lessThanOrEqualToSuperview().offset(-20)
+            }
+        }
+        if message == nil {
+            contentView.messageLabel.removeFromSuperview()
+        } else {
+            contentView.addSubview(contentView.messageLabel)
+            contentView.messageLabel.snp.remakeConstraints { make in
+                make.top.greaterThanOrEqualToSuperview().offset(20)
+                if title != nil {
+                    make.top.equalTo(contentView.titleLabel.snp.bottom).offset(4)
+                }
+                make.left.equalToSuperview().offset(20)
+                make.right.equalToSuperview().offset(-20)
+                make.bottom.equalToSuperview().offset(-20)
+            }
         }
     }
-}
-
-extension MessageAlert {
-
-    public static var messageConfiguration: Configuration = Configuration()
 }

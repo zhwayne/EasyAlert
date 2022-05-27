@@ -12,19 +12,9 @@ open class ActionAlert: Alert {
     
     let alertCustomView: ActionAlertCustomView
     
-    public var titleBackgroundColor: UIColor? {
-        get { alertCustomView.titleView.backgroundColor }
-        set { alertCustomView.titleView.backgroundColor = newValue }
-    }
-    
-    public var actionBackgroundColor: UIColor? {
-        get { alertCustomView.actionContainerView.backgroundColor }
-        set { alertCustomView.actionContainerView.backgroundColor = newValue }
-    }
-    
     public var backgoundColor: UIColor? {
-        get { alertCustomView.backgroundView.backgroundColor }
-        set { alertCustomView.backgroundView.backgroundColor = newValue }
+        get { alertCustomView.backgroundView.contentView.backgroundColor }
+        set { alertCustomView.backgroundView.contentView.backgroundColor = newValue }
     }
     
     public var actionLayout: ActionLayoutable {
@@ -32,25 +22,24 @@ open class ActionAlert: Alert {
         set { alertCustomView.actionLayout = newValue }
     }
         
-    public required init(title: Title?, customView: CustomizedView) {
+    public override init(customView: CustomizedView) {
         alertCustomView = ActionAlertCustomView(customView: customView)
-        alertCustomView.titleView.titleLabel.attributedText = title?.title
         super.init(customView: alertCustomView)
         let layout = ActionAlertLayout()
         layout.alertCustomView = alertCustomView
         self.layout = layout
         
-        if #available(iOS 13.0, *) {
-            backgoundColor = UIColor(dynamicProvider: { traitCollection in
-                if traitCollection.userInterfaceStyle == .light {
-                    return .white
-                } else {
-                    return .secondarySystemBackground
-                }
-            })
-        } else {
-            backgoundColor = .white
-        }
+//        if #available(iOS 13.0, *) {
+//            backgoundColor = UIColor(dynamicProvider: { traitCollection in
+//                if traitCollection.userInterfaceStyle == .light {
+//                    return .white
+//                } else {
+//                    return .secondarySystemBackground
+//                }
+//            })
+//        } else {
+//            backgoundColor = .white
+//        }
     }    
 }
 
@@ -70,7 +59,7 @@ extension ActionAlert: ActionAlertble {
     
     private func setViewForAction(_ action: Action) {
         if action.view == nil {
-            action.view = ActionAlert.configuration.actionViewType.init(style: action.style)
+            action.view = ActionAlert.config.actionViewType.init(style: action.style)
             action.view.title = action.title
         }
     }
@@ -78,22 +67,15 @@ extension ActionAlert: ActionAlertble {
 
 extension ActionAlert {
     
-    public static var configuration = Configuration()
-}
-
-extension ActionAlert {
-    
     final class ActionAlertCustomView: CustomizedView {
         
-        fileprivate lazy var actionLayout: ActionLayoutable = ActionAlert.configuration.actionLayout
+        fileprivate lazy var actionLayout: ActionLayoutable = ActionAlert.config.actionLayout
         
         var actions: [Action] = []
         
         let customView: CustomizedView
         
-        let backgroundView: UIView
-        
-        lazy var titleView = AlertTitleView()
+        let backgroundView: UIVisualEffectView
         
         lazy var actionContainerView = ActionContainerView()
                 
@@ -105,10 +87,10 @@ extension ActionAlert {
         }()
         
         required init(customView: CustomizedView) {
-            self.backgroundView = UIView()
+            self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
             self.customView = customView
             backgroundView.clipsToBounds = true
-            backgroundView.layer.cornerRadius = ActionAlert.configuration.cornerRadius
+            backgroundView.layer.cornerRadius = ActionAlert.config.cornerRadius
             super.init(frame: .zero)
             backgroundView.frame = frame
             backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -118,10 +100,7 @@ extension ActionAlert {
         override func didMoveToSuperview() {
             super.didMoveToSuperview()
             guard superview != nil else { return }
-            
-            if let _ = titleView.titleLabel.text {
-                contentStackView.addArrangedSubview(titleView)
-            }
+ 
             contentStackView.addArrangedSubview(customView)
             if !actions.isEmpty {
                 contentStackView.addArrangedSubview(actionContainerView)

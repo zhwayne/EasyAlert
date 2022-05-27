@@ -14,6 +14,7 @@
 		0B315188282E9DF900F0F9B8 /* DefaultActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B315187282E9DF900F0F9B8 /* DefaultActionView.swift */; };
 		0B31518C282EA57F00F0F9B8 /* ActionLayoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B31518B282EA57F00F0F9B8 /* ActionLayoutable.swift */; };
 		0B31518E282EB15A00F0F9B8 /* AlertDismissible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B31518D282EB15A00F0F9B8 /* AlertDismissible.swift */; };
+		0B61E84F2840FD90006CFC2C /* MessageAlertConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B61E84E2840FD90006CFC2C /* MessageAlertConfiguration.swift */; };
 		1006947C523715E8B5314EB144483449 /* ConstraintPriority.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BD95F32F2E57D6B9100B77B93F013C /* ConstraintPriority.swift */; };
 		10C6D5D0B6387C662EBCA82A3F60D807 /* SheetLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A512894B4167324B78AF74DB1C017B /* SheetLayout.swift */; };
 		1859058C2901E67068AFD8BA4470914A /* ConstraintLayoutSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D705690D879064ED84970813189D8D4 /* ConstraintLayoutSupport.swift */; };
@@ -130,6 +131,7 @@
 		0B315187282E9DF900F0F9B8 /* DefaultActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultActionView.swift; sourceTree = "<group>"; };
 		0B31518B282EA57F00F0F9B8 /* ActionLayoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionLayoutable.swift; sourceTree = "<group>"; };
 		0B31518D282EB15A00F0F9B8 /* AlertDismissible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDismissible.swift; sourceTree = "<group>"; };
+		0B61E84E2840FD90006CFC2C /* MessageAlertConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAlertConfiguration.swift; sourceTree = "<group>"; };
 		11D02329E74D733C03BF6BAE1F564481 /* ConstraintMakerFinalizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerFinalizable.swift; path = Source/ConstraintMakerFinalizable.swift; sourceTree = "<group>"; };
 		13F460233F2A555D41511B6CCA66A124 /* ConstraintAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintAttributes.swift; path = Source/ConstraintAttributes.swift; sourceTree = "<group>"; };
 		141BC33167429B9926FB24A17F01568C /* ConstraintMaker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMaker.swift; path = Source/ConstraintMaker.swift; sourceTree = "<group>"; };
@@ -506,12 +508,13 @@
 				0B069C30283F88F400202136 /* ActionAlertConfiguration.swift */,
 				01A8C01459A65322CCAFBE518A0E12D2 /* ActionButton.swift */,
 				596255FA8037CD4AD0ECC30CAED79F4C /* ActionContainerView.swift */,
+				0B315185282E9C6500F0F9B8 /* ActionCustomizable.swift */,
 				2D020AB4FFAE202FA11F7F58712EF8E8 /* AlertTitleView.swift */,
 				94CAC0BCC09AAE6DF0729C0C44C92577 /* ContentContainerView.swift */,
-				484CE16DCB212FAB8CF5B2107793C6AB /* MessageAlert.swift */,
-				0B315183282E360800F0F9B8 /* TitleAndMessage.swift */,
-				0B315185282E9C6500F0F9B8 /* ActionCustomizable.swift */,
 				0B315187282E9DF900F0F9B8 /* DefaultActionView.swift */,
+				484CE16DCB212FAB8CF5B2107793C6AB /* MessageAlert.swift */,
+				0B61E84E2840FD90006CFC2C /* MessageAlertConfiguration.swift */,
+				0B315183282E360800F0F9B8 /* TitleAndMessage.swift */,
 			);
 			name = ActionAlert;
 			path = EasyAlert/Classes/ActionAlert;
@@ -784,6 +787,7 @@
 				E825083005DF2011358A63D17D48A535 /* AlertAnimator.swift in Sources */,
 				9B82AA1B5D4187CB681F902028EF27E7 /* Alertble.swift in Sources */,
 				65C2EC96455C71DF459CF57D2F62D718 /* AlertCustomizable.swift in Sources */,
+				0B61E84F2840FD90006CFC2C /* MessageAlertConfiguration.swift in Sources */,
 				0B315188282E9DF900F0F9B8 /* DefaultActionView.swift in Sources */,
 				A9FBBB564420289E0291013F13A1281F /* AlertLayout.swift in Sources */,
 				6A965C1382D011D2D645CA106BF62E3E /* AlertTapTarget.swift in Sources */,

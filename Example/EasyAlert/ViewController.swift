@@ -28,12 +28,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func handleTap(_ sender: Any) {
-        let alert = MessageAlert(title: "快讯", message: "神迹全程回顾，记住这一刻！记住9秒83！记住苏炳添！[心] 这是封神之战，东京奥运会100米短跑半决赛，苏炳添以9秒83个人历史最佳成绩晋级决赛！")
-        alert.backgroundProvider.allowDismissWhenBackgroundTouch = true
-        let action = Action(title: "好的", style: .default)
-        let cancel = Action(title: "取消", style: .cancel)
-        alert.add(action: cancel)
-        alert.add(action: action)
+        let alert = MessageAlert(title: "要移除无线局域网“Meizu-0D23-5G”吗？", message: "您的设备和其他使用iCloud钥匙串的设备将不再加入此无线局域网络。")
+        alert.backgroundProvider.allowDismissWhenBackgroundTouch = false
+        let cancel = Action(title: "取消", style: .default)
+        let ignore = Action(title: "忽略", style: .destructive)
+        alert.add(actions: [cancel, ignore])
         alert.show(in: view)
         
         //        let alert = Sheet(customView: SheetContent(frame: .zero))

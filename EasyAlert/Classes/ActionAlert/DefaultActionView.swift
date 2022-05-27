@@ -26,7 +26,7 @@ extension ActionAlert {
         
         var isEnabled: Bool = true
                 
-        private lazy var highlightedOverlay: UIView = {
+        let highlightedOverlay: UIView = {
             let view = UIView()
             if #available(iOS 13.0, *) {
                 view.backgroundColor = .systemFill
@@ -40,7 +40,7 @@ extension ActionAlert {
         
         private lazy var titleLabel: UILabel = {
             let label = UILabel()
-            label.font = .systemFont(ofSize: 17)
+            label.font = style.font
             label.textAlignment = .center
             label.textColor = style.color
             return label
@@ -86,6 +86,14 @@ fileprivate extension Action.Style {
         case .`default`: return .systemBlue
         case .cancel: return .systemGray
         case .destructive: return .systemRed
+        }
+    }
+    
+    var font: UIFont {
+        switch self {
+        case .`default`: return .systemFont(ofSize: 17, weight: .semibold)
+        case .cancel: return .systemFont(ofSize: 17, weight: .regular)
+        case .destructive: return .systemFont(ofSize: 17, weight: .regular)
         }
     }
 }
