@@ -12,6 +12,9 @@ final class ActionContainerView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
+        if #available(iOS 13.0, *) {
+            layer.cornerCurve = .continuous
+        }
     }
     
     required init(coder: NSCoder) {

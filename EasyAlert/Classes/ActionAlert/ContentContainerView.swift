@@ -23,6 +23,7 @@ extension ActionAlert {
             
             if #available(iOS 13.0, *) {
                 backgroundColor = UIColor.separator
+                layer.cornerCurve = .continuous
             } else {
                 // Fallback on earlier versions
                 backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)

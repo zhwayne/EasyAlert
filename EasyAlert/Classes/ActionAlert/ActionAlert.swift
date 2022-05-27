@@ -29,17 +29,11 @@ open class ActionAlert: Alert {
         layout.alertCustomView = alertCustomView
         self.layout = layout
         
-//        if #available(iOS 13.0, *) {
-//            backgoundColor = UIColor(dynamicProvider: { traitCollection in
-//                if traitCollection.userInterfaceStyle == .light {
-//                    return .white
-//                } else {
-//                    return .secondarySystemBackground
-//                }
-//            })
-//        } else {
-//            backgoundColor = .white
-//        }
+        if #available(iOS 13.0, *) {
+            backgoundColor = .systemBackground.withAlphaComponent(0.5)
+        } else {
+            backgoundColor = .white.withAlphaComponent(0.5)
+        }
     }    
 }
 
@@ -91,6 +85,9 @@ extension ActionAlert {
             self.customView = customView
             backgroundView.clipsToBounds = true
             backgroundView.layer.cornerRadius = ActionAlert.config.cornerRadius
+            if #available(iOS 13.0, *) {
+                backgroundView.layer.cornerCurve = .continuous
+            }
             super.init(frame: .zero)
             backgroundView.frame = frame
             backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
