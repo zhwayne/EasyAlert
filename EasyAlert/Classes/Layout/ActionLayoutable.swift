@@ -10,22 +10,22 @@ import SnapKit
 
 public protocol ActionLayoutable {
     
-    func layout(buttons: [UIView], container: UIView)
+    func layout(actionViews: [UIView], container: UIView)
 }
 
 public extension ActionLayoutable {
     
-    func layout(buttons: [UIView], container: UIView) {
+    func layout(actionViews: [UIView], container: UIView) {
         
-        let stackView = UIStackView(arrangedSubviews: buttons)
-        stackView.axis = buttons.count <= 2 ? .horizontal : .vertical
+        let stackView = UIStackView(arrangedSubviews: actionViews)
+        stackView.axis = actionViews.count <= 2 ? .horizontal : .vertical
         stackView.distribution = .fillEqually
         container.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        if buttons.count == 2 {
+        if actionViews.count == 2 {
             let horizontalSeparator = makeSeparator()
             container.addSubview(horizontalSeparator)
             horizontalSeparator.snp.makeConstraints { make in
@@ -40,7 +40,7 @@ public extension ActionLayoutable {
                 make.width.equalTo(1 / UIScreen.main.scale)
             }
         } else {
-            buttons.forEach { button in
+            actionViews.forEach { button in
                 let horizontalSeparator = makeSeparator()
                 container.addSubview(horizontalSeparator)
                 horizontalSeparator.snp.makeConstraints { make in
@@ -55,7 +55,7 @@ public extension ActionLayoutable {
     private func makeSeparator() -> UIView {
         let separator = UIView()
         if #available(iOS 13.0, *) {
-            separator.backgroundColor = UIColor.separator
+            separator.backgroundColor = UIColor.tertiaryLabel
         } else {
             separator.backgroundColor = UIColor(white: 0.237, alpha: 0.29)
         }

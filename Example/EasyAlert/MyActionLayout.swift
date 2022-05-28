@@ -11,10 +11,10 @@ import EasyAlert
 
 struct MyActionLayout : ActionLayoutable {
 
-    func layout(buttons: [UIView], container: UIView) {
+    func layout(actionViews: [UIView], container: UIView) {
 
-        let stackView = UIStackView(arrangedSubviews: buttons)
-        stackView.axis = buttons.count <= 3 ? .horizontal : .vertical
+        let stackView = UIStackView(arrangedSubviews: actionViews)
+        stackView.axis = actionViews.count <= 3 ? .horizontal : .vertical
         stackView.distribution = .fillProportionally
         stackView.spacing = 20
         container.addSubview(stackView)

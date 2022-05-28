@@ -13,8 +13,8 @@ open class ActionAlert: Alert {
     let alertCustomView: ActionAlertCustomView
     
     public var backgoundColor: UIColor? {
-        get { alertCustomView.backgroundView.contentView.backgroundColor }
-        set { alertCustomView.backgroundView.contentView.backgroundColor = newValue }
+        get { alertCustomView.backgroundView.backgroundColor }
+        set { alertCustomView.backgroundView.backgroundColor = newValue }
     }
     
     public var actionLayout: ActionLayoutable {
@@ -29,11 +29,11 @@ open class ActionAlert: Alert {
         layout.alertCustomView = alertCustomView
         self.layout = layout
         
-        if #available(iOS 13.0, *) {
-            backgoundColor = .systemBackground.withAlphaComponent(0.33)
-        } else {
-            backgoundColor = .white.withAlphaComponent(0.33)
-        }
+//        if #available(iOS 13.0, *) {
+//            backgoundColor = .systemBackground.withAlphaComponent(0.33)
+//        } else {
+//            backgoundColor = .white.withAlphaComponent(0.33)
+//        }
     }    
 }
 
@@ -81,7 +81,12 @@ extension ActionAlert {
         }()
         
         required init(customView: CustomizedView) {
-            self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
+            if #available(iOS 13.0, *) {
+                self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+            } else {
+                // Fallback on earlier versions
+                self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
+            }
             self.customView = customView
             backgroundView.clipsToBounds = true
             backgroundView.layer.cornerRadius = ActionAlert.config.cornerRadius
@@ -129,7 +134,7 @@ extension ActionAlert {
                 return button
             }
             
-            actionLayout.layout(buttons: buttons, container: actionContainerView)
+            actionLayout.layout(actionViews: buttons, container: actionContainerView)
         }
         
         @objc

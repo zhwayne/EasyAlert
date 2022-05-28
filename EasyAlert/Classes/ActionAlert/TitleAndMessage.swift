@@ -13,64 +13,58 @@ public protocol Message { }
 extension String: Title, Message { }
 extension NSAttributedString: Title, Message { }
 
-extension Title {
+extension MessageAlert {
     
-    var title: NSAttributedString {
-        if let text = self as? String {
-            return text.attributedTitle
+    func text(for title: Title?) -> NSAttributedString? {
+        if let text = title as? String {
+            return attributedTitle(text)
         }
-        return self as! NSAttributedString
+        return title as? NSAttributedString
     }
-}
-
-extension Message {
     
-    var message: NSAttributedString {
-        if let text = self as? String {
-            return text.attributedMessage
+    func text(for message: Message?) -> NSAttributedString? {
+        if let text = message as? String {
+            return attributedTitle(text)
         }
-        return self as! NSAttributedString
+        return message as? NSAttributedString
     }
 }
 
 extension MessageAlert {
     
-    static var titleAttributes: [NSAttributedString.Key: Any] {
+    var titleAttributes: [NSAttributedString.Key: Any] {
         var attributes: [NSAttributedString.Key: Any] = [:]
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.1
-        paragraphStyle.alignment = MessageAlert.titleConfig.alignment
-        attributes[.font] = MessageAlert.titleConfig.font
-        attributes[.foregroundColor] = MessageAlert.titleConfig.color
+        paragraphStyle.alignment = titleConfig.alignment
+        attributes[.font] = titleConfig.font
+        attributes[.foregroundColor] = titleConfig.color
         attributes[.paragraphStyle] = paragraphStyle
         return attributes
     }
     
-    static var messageAttributes: [NSAttributedString.Key: Any] {
+    var messageAttributes: [NSAttributedString.Key: Any] {
         var attributes: [NSAttributedString.Key: Any] = [:]
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1
-        paragraphStyle.alignment = MessageAlert.messageConfig.alignment
-        attributes[.font] = MessageAlert.messageConfig.font
-        attributes[.foregroundColor] = MessageAlert.messageConfig.color
+        paragraphStyle.lineHeightMultiple = 1.05
+        paragraphStyle.alignment = messageConfig.alignment
+        attributes[.font] = messageConfig.font
+        attributes[.foregroundColor] = messageConfig.color
         attributes[.paragraphStyle] = paragraphStyle
         return attributes
     }
-}
-
-fileprivate extension String {
     
-    var attributedTitle: NSAttributedString {
-        let range = NSMakeRange(0, self.count)
-        let attributedTitle = NSMutableAttributedString(string: self)
-        attributedTitle.addAttributes(MessageAlert.titleAttributes, range: range)
+    func attributedTitle(_ title: String) -> NSAttributedString {
+        let range = NSMakeRange(0, title.count)
+        let attributedTitle = NSMutableAttributedString(string: title)
+        attributedTitle.addAttributes(titleAttributes, range: range)
         return NSAttributedString(attributedString: attributedTitle)
     }
     
-    var attributedMessage: NSAttributedString {
-        let range = NSMakeRange(0, self.count)
-        let attributedMessage = NSMutableAttributedString(string: self)
-        attributedMessage.addAttributes(MessageAlert.messageAttributes, range: range)
+    func attributedMessage(_ message: String) -> NSAttributedString {
+        let range = NSMakeRange(0, message.count)
+        let attributedMessage = NSMutableAttributedString(string: message)
+        attributedMessage.addAttributes(messageAttributes, range: range)
         return NSAttributedString(attributedString: attributedMessage)
     }
 }

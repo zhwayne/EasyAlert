@@ -37,7 +37,7 @@ public extension MessageAlert {
 
         public var alignment: NSTextAlignment = .center
 
-        public var font: UIFont = UIFont.systemFont(ofSize: 13)
+        public var font: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular)
 
         public var color: UIColor = {
             if #available(iOS 13.0, *) {

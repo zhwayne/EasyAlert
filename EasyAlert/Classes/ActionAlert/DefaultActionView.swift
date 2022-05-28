@@ -84,15 +84,15 @@ fileprivate extension Action.Style {
     var color: UIColor {
         switch self {
         case .`default`: return .systemBlue
-        case .cancel: return .systemGray
+        case .cancel: return .systemBlue
         case .destructive: return .systemRed
         }
     }
     
     var font: UIFont {
         switch self {
-        case .`default`: return .systemFont(ofSize: 17, weight: .semibold)
-        case .cancel: return .systemFont(ofSize: 17, weight: .regular)
+        case .`default`: return .systemFont(ofSize: 17, weight: .regular)
+        case .cancel: return .systemFont(ofSize: 17, weight: .semibold)
         case .destructive: return .systemFont(ofSize: 17, weight: .regular)
         }
     }

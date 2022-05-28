@@ -23,7 +23,6 @@ public final class MessageAlert: ActionAlert {
         fileprivate let titleLabel: UILabel = {
             let label = UILabel()
             label.numberOfLines = 0
-            label.textAlignment = MessageAlert.titleConfig.alignment
             label.setContentHuggingPriority(.required, for: .vertical)
             return label
         }()
@@ -32,23 +31,32 @@ public final class MessageAlert: ActionAlert {
         fileprivate let messageLabel: UILabel = {
             let label = UILabel()
             label.numberOfLines = 0
-            label.textAlignment = MessageAlert.messageConfig.alignment
             return label
         }()
     }
     
     private let contentView: ContentView
     
+    let titleConfig: TitleConfiguration
+    let messageConfig: MessageConfiguration
+    
     @available(*, unavailable)
     public required init(title: Title?, customView: ActionAlert.CustomizedView) {
         fatalError()
     }
     
-    public required init(title: Title?, message: Message?) {
+    public required init(
+        title: Title?,
+        message: Message?,
+        titleConfig: TitleConfiguration? = nil,
+        messageConfig: MessageConfiguration? = nil
+    ) {
+        self.titleConfig = titleConfig ?? MessageAlert.titleConfig
+        self.messageConfig = messageConfig ?? MessageAlert.messageConfig
         contentView = ContentView()
-        contentView.titleLabel.attributedText = title?.title
-        contentView.messageLabel.attributedText = message?.message
         super.init(customView: contentView)
+        contentView.titleLabel.attributedText = text(for: title)
+        contentView.messageLabel.attributedText = text(for: message)
         layout?.width = .fixed(270)
     }
     
@@ -58,25 +66,31 @@ public final class MessageAlert: ActionAlert {
         if title == nil {
             contentView.titleLabel.removeFromSuperview()
         } else {
+            contentView.titleLabel.textAlignment = titleConfig.alignment
+            contentView.titleLabel.textColor = titleConfig.color
+            contentView.titleLabel.font = titleConfig.font
             contentView.addSubview(contentView.titleLabel)
             contentView.titleLabel.snp.remakeConstraints { make in
-                make.top.equalToSuperview().offset(20)
-                make.left.equalToSuperview().offset(20)
-                make.right.equalToSuperview().offset(-20)
-                make.bottom.lessThanOrEqualToSuperview().offset(-20)
+                make.top.equalToSuperview().offset(17)
+                make.left.equalToSuperview().offset(16)
+                make.right.equalToSuperview().offset(-16)
+                make.bottom.lessThanOrEqualToSuperview().offset(-17)
             }
         }
         if message == nil {
             contentView.messageLabel.removeFromSuperview()
         } else {
+            contentView.messageLabel.textAlignment = messageConfig.alignment
+            contentView.messageLabel.textColor = messageConfig.color
+            contentView.messageLabel.font = messageConfig.font
             contentView.addSubview(contentView.messageLabel)
             contentView.messageLabel.snp.remakeConstraints { make in
-                make.top.greaterThanOrEqualToSuperview().offset(20)
+                make.top.greaterThanOrEqualToSuperview().offset(17)
                 if title != nil {
-                    make.top.equalTo(contentView.titleLabel.snp.bottom).offset(4)
+                    make.top.equalTo(contentView.titleLabel.snp.bottom).offset(3)
                 }
-                make.left.equalToSuperview().offset(20)
-                make.right.equalToSuperview().offset(-20)
+                make.left.equalToSuperview().offset(16)
+                make.right.equalToSuperview().offset(-16)
                 make.bottom.equalToSuperview().offset(-20)
             }
         }
