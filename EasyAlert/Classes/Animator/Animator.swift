@@ -16,6 +16,8 @@ public struct AnimatorContext {
 
 public protocol Animator {
     
+    var duration: TimeInterval { get set }
+    
     func show(context: AnimatorContext, completion: @escaping () -> Void)
     
     func dismiss(context: AnimatorContext, completion: @escaping () -> Void)

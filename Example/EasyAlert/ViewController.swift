@@ -16,11 +16,12 @@ class ViewController: UIViewController {
     private var sections: [Section] = [
         .message(title: "消息弹框", items: [
             .systemAlert("iOS系统消息弹框"),
-            .messageAlert("类系统消息弹框"),
+            .messageAlert("仿系统消息弹框"),
             .threeActions("3个按钮")
         ]),
         .customMessage(title: "自定义消息弹框", items: [
             .allowTapBackground("允许点击背景消失"),
+            .effectBackground("模糊背景"),
             .leftAlignment("标题和内容左对齐"),
             .cornerRadius("自定义按钮UI和布局"),
             .attributedTitleAndMessage("支持富文本"),
@@ -82,6 +83,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case let .messageAlert(title): cell.textLabel?.text = title
         case let .threeActions(title): cell.textLabel?.text = title
         case let .allowTapBackground(title): cell.textLabel?.text = title
+        case let .effectBackground(title): cell.textLabel?.text = title
         case let .leftAlignment(title): cell.textLabel?.text = title
         case let .cornerRadius(title): cell.textLabel?.text = title
         case let .attributedTitleAndMessage(title): cell.textLabel?.text = title
@@ -136,6 +138,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.add(action: cancel)
             alert.add(action: ignore)
+            alert.show(in: view)
+            
+        case .effectBackground:
+            let alert = MessageAlert(title: alertTitle, message: message)
+            let effectView = UIVisualEffectView()
+            let animator = UIViewPropertyAnimator(duration: 0, curve: .linear) {
+                effectView.effect = UIBlurEffect(style: .regular)
+            }
+            animator.fractionComplete = 0.2
+            alert.backgroundProvider.dimming = .view(effectView)
+            let cancel = Action(title: "取消", style: .cancel)
+            let ignore = Action(title: "忽略", style: .destructive)
+            alert.add(action: cancel)
+            alert.add(action: ignore)
+            alert.callback = Alert.Callback(didDismiss: {
+                animator.stopAnimation(true)
+            })
             alert.show(in: view)
             
         case .leftAlignment:

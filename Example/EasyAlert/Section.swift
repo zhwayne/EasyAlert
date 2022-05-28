@@ -20,6 +20,7 @@ enum Section {
         case messageAlert(String)
         case threeActions(String)
         case allowTapBackground(String)
+        case effectBackground(String)
         case leftAlignment(String)
         case cornerRadius(String)
         case attributedTitleAndMessage(String)

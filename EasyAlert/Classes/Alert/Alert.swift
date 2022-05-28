@@ -25,14 +25,16 @@ open class Alert: Alertble {
     
     private let backgroundView = TransitionView()
 
-    private var dimmingView = UIView()
+    private let dimmingView = DimmingView()
         
     private let tapTarget = TapTarget()
         
     private(set) var isShowing = false
     
-    private var notificationToken: NotificationToken?
+    public var callback = Callback()
     
+    private var notificationToken: NotificationToken?
+        
     public init(customView: CustomizedView) {
         self.customView = customView
         
@@ -101,8 +103,10 @@ open class Alert: Alertble {
             dimmingView: dimmingView
         )
         willDismiss()
+        callback.willDismiss?()
         animator.dismiss(context: context, completion: { [weak self] in
             self?.didDismiss()
+            self?.callback.didDismiss?()
             completion?()
             self?.windup()
         })
@@ -136,7 +140,7 @@ extension Alert {
     private func configDimming() {
         switch backgroundProvider.dimming {
         case .color(let color): dimmingView.backgroundColor = color
-        case .view(let view):   dimmingView = view
+        case .view(let view):   dimmingView.contentView = view
         }
         dimmingView.isUserInteractionEnabled = false
         dimmingView.frame = backgroundView.bounds
@@ -178,8 +182,10 @@ extension Alert {
             dimmingView: dimmingView
         )
         willShow()
+        callback.willShow?()
         animator.show(context: context) { [weak self] in
             self?.didShow()
+            self?.callback.didShow?()
         }
     }
     
