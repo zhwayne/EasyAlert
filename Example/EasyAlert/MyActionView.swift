@@ -13,7 +13,7 @@ final class MyActionView: Action.CustomizedView {
     
     var isHighlighted: Bool = false {
         didSet {
-            alpha = isHighlighted ? 0.5 : 1
+            alpha = isHighlighted ? 0.3 : 1
         }
     }
     
@@ -28,7 +28,7 @@ final class MyActionView: Action.CustomizedView {
         
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 17)
+        label.font = style.font
         label.textAlignment = .center
         label.textColor = .white
         label.backgroundColor = style.color
@@ -80,6 +80,14 @@ fileprivate extension Action.Style {
         case .`default`: return .systemOrange
         case .cancel: return .lightGray.withAlphaComponent(0.5)
         case .destructive: return .systemRed
+        }
+    }
+    
+    var font: UIFont {
+        switch self {
+        case .`default`: return .systemFont(ofSize: 17, weight: .regular)
+        case .cancel: return .systemFont(ofSize: 17, weight: .semibold)
+        case .destructive: return .systemFont(ofSize: 17, weight: .regular)
         }
     }
 }

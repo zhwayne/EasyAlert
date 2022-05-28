@@ -16,10 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-//        ActionAlert.config.actionViewType = MyActionView.self
-//        ActionAlert.config.actionLayout = MyActionLayout()
-//        MessageAlert.titleConfig.alignment = .left
-//        MessageAlert.messageConfig.alignment = .left
         return true
     }
 

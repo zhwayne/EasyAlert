@@ -17,12 +17,14 @@ class ViewController: UIViewController {
         .message(title: "消息弹框", items: [
             .systemAlert("iOS系统消息弹框"),
             .messageAlert("类系统消息弹框"),
+            .threeActions("3个按钮")
         ]),
-            .custom(title: "自定义弹框", items: [
-                .allowTapBackground("允许点击背景消失"),
-                .leftAlignment("标题和内容左对齐"),
-//                .cornerRadius("带圆角按钮"),
-            ])
+        .customMessage(title: "自定义消息弹框", items: [
+            .allowTapBackground("允许点击背景消失"),
+            .leftAlignment("标题和内容左对齐"),
+            .cornerRadius("自定义按钮UI和布局"),
+            .attributedTitleAndMessage("支持富文本"),
+        ])
     ]
     
     override func viewDidLoad() {
@@ -66,7 +68,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch sections[section] {
         case let .message(title, _): return title
-        case let .custom(title, _):  return title
+        case let .customMessage(title, _):  return title
         }
     }
     
@@ -78,11 +80,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         switch item {
         case let .systemAlert(title): cell.textLabel?.text = title
         case let .messageAlert(title): cell.textLabel?.text = title
+        case let .threeActions(title): cell.textLabel?.text = title
         case let .allowTapBackground(title): cell.textLabel?.text = title
         case let .leftAlignment(title): cell.textLabel?.text = title
         case let .cornerRadius(title): cell.textLabel?.text = title
+        case let .attributedTitleAndMessage(title): cell.textLabel?.text = title
         }
         return cell
+    }
+    
+    var alertTitle: String {
+        "要移除无线局域网“Meizu-0D23-5G”吗？"
+    }
+    
+    var message: String {
+        "您的设备和其他使用iCloud钥匙串的设备将不再加入此无线局域网络。"
     }
     
     
@@ -92,27 +104,33 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch item {
         case .systemAlert:
-            let alertController = UIAlertController(title: "要移除无线局域网“Meizu-0D23-5G”吗？", message: "您的设备和其他使用iCloud钥匙串的设备将不再加入此无线局域网络。", preferredStyle: .alert)
+            let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
             let cancel = UIAlertAction(title: "取消", style: .cancel)
             let ignore = UIAlertAction(title: "忽略", style: .destructive)
             alertController.addAction(cancel)
             alertController.addAction(ignore)
-            present(alertController, animated: true) {
-                if let view = alertController.view {
-                    print(view.subviews[0].subviews[0].subviews[0].subviews[0].subviews[0].layer.cornerRadius)
-                }
-            }
+            present(alertController, animated: true)
             
         case .messageAlert:
-            let alert = MessageAlert(title: "要移除无线局域网“Meizu-0D23-5G”吗？", message: "您的设备和其他使用iCloud钥匙串的设备将不再加入此无线局域网络。")
+            let alert = MessageAlert(title: alertTitle, message: message)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
             alert.add(action: cancel)
             alert.add(action: ignore)
             alert.show(in: view)
             
+        case .threeActions:
+            let alert = MessageAlert(title: alertTitle, message: message)
+            let cancel = Action(title: "取消", style: .cancel)
+            let confirm = Action(title: "确定", style: .default)
+            let ignore = Action(title: "忽略", style: .destructive)
+            alert.add(action: cancel)
+            alert.add(action: confirm)
+            alert.add(action: ignore)
+            alert.show(in: view)
+            
         case .allowTapBackground:
-            let alert = MessageAlert(title: "要移除无线局域网“Meizu-0D23-5G”吗？", message: "您的设备和其他使用iCloud钥匙串的设备将不再加入此无线局域网络。")
+            let alert = MessageAlert(title: alertTitle, message: message)
             alert.backgroundProvider.allowDismissWhenBackgroundTouch = true
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
@@ -127,7 +145,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             var messageConfig = MessageAlert.messageConfig
             messageConfig.alignment = .left
             
-            let alert = MessageAlert(title: "要移除无线局域网“Meizu-0D23-5G”吗？", message: "您的设备和其他使用iCloud钥匙串的设备将不再加入此无线局域网络。", titleConfig: titleConfig, messageConfig: messageConfig)
+            let alert = MessageAlert(title: alertTitle, message: message, titleConfig: titleConfig, messageConfig: messageConfig)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
             alert.add(action: cancel)
@@ -135,7 +153,39 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.show(in: view)
             
         case .cornerRadius:
-            fatalError("TODO")
+            var config = ActionAlert.config
+            config.actionLayout = MyActionLayout()
+            config.actionViewType = MyActionView.self
+            
+            var titleConfig = MessageAlert.titleConfig
+            titleConfig.alignment = .left
+            
+            var messageConfig = MessageAlert.messageConfig
+            messageConfig.alignment = .justified
+            
+            let alert = MessageAlert(title: alertTitle, message: message, config: config, titleConfig: titleConfig, messageConfig: messageConfig)
+            let cancel = Action(title: "取消", style: .cancel)
+            let ignore = Action(title: "忽略", style: .destructive)
+            alert.add(action: cancel)
+            alert.add(action: ignore)
+            alert.show(in: view)
+            
+        case .attributedTitleAndMessage:
+            var range = (alertTitle as NSString).range(of: "Meizu-0D23-5G")
+            let attrTitle = NSMutableAttributedString(string: alertTitle)
+            attrTitle.addAttribute(.foregroundColor, value: UIColor.systemOrange, range: range)
+            
+            range = (message as NSString).range(of: "iCloud")
+            let attrMessage = NSMutableAttributedString(string: message)
+            attrMessage.addAttribute(.foregroundColor, value: UIColor.white, range: range)
+            attrMessage.addAttribute(.backgroundColor, value: UIColor.orange, range: range)
+            
+            let alert = MessageAlert(title: attrTitle, message: attrMessage)
+            let cancel = Action(title: "取消", style: .cancel)
+            let ignore = Action(title: "忽略", style: .destructive)
+            alert.add(action: cancel)
+            alert.add(action: ignore)
+            alert.show(in: view)
         }
     }
 }

@@ -12,29 +12,22 @@ open class ActionAlert: Alert {
     
     let alertCustomView: ActionAlertCustomView
     
-    public var backgoundColor: UIColor? {
-        get { alertCustomView.backgroundView.backgroundColor }
-        set { alertCustomView.backgroundView.backgroundColor = newValue }
-    }
+    let config: Configuration
     
-    public var actionLayout: ActionLayoutable {
-        get { alertCustomView.actionLayout }
-        set { alertCustomView.actionLayout = newValue }
-    }
-        
-    public override init(customView: CustomizedView) {
+    public required init(customView: CustomizedView, config: Configuration? = nil) {
+        self.config = config ?? ActionAlert.config
         alertCustomView = ActionAlertCustomView(customView: customView)
         super.init(customView: alertCustomView)
+        alertCustomView.actionLayout = self.config.actionLayout
         let layout = ActionAlertLayout()
         layout.alertCustomView = alertCustomView
         self.layout = layout
-        
-//        if #available(iOS 13.0, *) {
-//            backgoundColor = .systemBackground.withAlphaComponent(0.33)
-//        } else {
-//            backgoundColor = .white.withAlphaComponent(0.33)
-//        }
-    }    
+    }
+    
+    open override func willLayoutContainer() {
+        super.willLayoutContainer()
+        alertCustomView.setCornerRadius(config.cornerRadius)
+    }
 }
 
 extension ActionAlert: ActionAlertble {
@@ -53,7 +46,7 @@ extension ActionAlert: ActionAlertble {
     
     private func setViewForAction(_ action: Action) {
         if action.view == nil {
-            action.view = ActionAlert.config.actionViewType.init(style: action.style)
+            action.view = config.actionViewType.init(style: action.style)
             action.view.title = action.title
         }
     }
@@ -63,7 +56,7 @@ extension ActionAlert {
     
     final class ActionAlertCustomView: CustomizedView {
         
-        fileprivate lazy var actionLayout: ActionLayoutable = ActionAlert.config.actionLayout
+        fileprivate var actionLayout: ActionLayoutable!
         
         var actions: [Action] = []
         
@@ -71,7 +64,7 @@ extension ActionAlert {
         
         let backgroundView: UIVisualEffectView
         
-        lazy var actionContainerView = ActionContainerView()
+        let actionContainerView = ActionContainerView()
                 
         private lazy var contentStackView: UIStackView = {
             let stackView = UIStackView()
@@ -89,7 +82,6 @@ extension ActionAlert {
             }
             self.customView = customView
             backgroundView.clipsToBounds = true
-            backgroundView.layer.cornerRadius = ActionAlert.config.cornerRadius
             if #available(iOS 13.0, *) {
                 backgroundView.layer.cornerCurve = .continuous
             }
@@ -145,6 +137,11 @@ extension ActionAlert {
                     dismiss(completion: nil)
                 }
             }
+        }
+        
+        func setCornerRadius(_ radius: CGFloat) {
+            backgroundView.layer.cornerRadius = radius
+            actionContainerView.setCornerRadius(radius)
         }
     }
 }

@@ -21,18 +21,17 @@ final class ActionContainerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    func setCornerRadius(_ radius: CGFloat) {
         if #available(iOS 11.0, *) {
-            layer.cornerRadius = ActionAlert.config.cornerRadius
+            layer.cornerRadius = radius
             layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         } else {
             let path = UIBezierPath(
                 roundedRect: bounds,
                 byRoundingCorners: [.bottomLeft, .bottomRight],
                 cornerRadii: CGSize(
-                    width: ActionAlert.config.cornerRadius,
-                    height: ActionAlert.config.cornerRadius
+                    width: radius,
+                    height: radius
                 )
             )
             let mask = CAShapeLayer()

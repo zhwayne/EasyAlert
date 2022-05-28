@@ -42,22 +42,40 @@ public final class MessageAlert: ActionAlert {
     
     @available(*, unavailable)
     public required init(title: Title?, customView: ActionAlert.CustomizedView) {
-        fatalError()
+        fatalError("init(customView:) has not been implemented")
     }
     
     public required init(
         title: Title?,
         message: Message?,
+        config: Configuration? = nil,
         titleConfig: TitleConfiguration? = nil,
         messageConfig: MessageConfiguration? = nil
     ) {
         self.titleConfig = titleConfig ?? MessageAlert.titleConfig
         self.messageConfig = messageConfig ?? MessageAlert.messageConfig
         contentView = ContentView()
-        super.init(customView: contentView)
+        super.init(customView: contentView, config: config)
+        configAttributes()
         contentView.titleLabel.attributedText = text(for: title)
         contentView.messageLabel.attributedText = text(for: message)
         layout?.width = .fixed(270)
+        
+    }
+    
+    @available(*, unavailable)
+    public required init(customView: CustomizedView, config: Configuration? = nil) {
+        fatalError("init(customView:config:) has not been implemented")
+    }
+    
+    private func configAttributes() {
+        contentView.titleLabel.textAlignment = titleConfig.alignment
+        contentView.titleLabel.textColor = titleConfig.color
+        contentView.titleLabel.font = titleConfig.font
+        
+        contentView.messageLabel.textAlignment = messageConfig.alignment
+        contentView.messageLabel.textColor = messageConfig.color
+        contentView.messageLabel.font = messageConfig.font
     }
     
     public override func willLayoutContainer() {
@@ -66,9 +84,6 @@ public final class MessageAlert: ActionAlert {
         if title == nil {
             contentView.titleLabel.removeFromSuperview()
         } else {
-            contentView.titleLabel.textAlignment = titleConfig.alignment
-            contentView.titleLabel.textColor = titleConfig.color
-            contentView.titleLabel.font = titleConfig.font
             contentView.addSubview(contentView.titleLabel)
             contentView.titleLabel.snp.remakeConstraints { make in
                 make.top.equalToSuperview().offset(17)
@@ -80,9 +95,6 @@ public final class MessageAlert: ActionAlert {
         if message == nil {
             contentView.messageLabel.removeFromSuperview()
         } else {
-            contentView.messageLabel.textAlignment = messageConfig.alignment
-            contentView.messageLabel.textColor = messageConfig.color
-            contentView.messageLabel.font = messageConfig.font
             contentView.addSubview(contentView.messageLabel)
             contentView.messageLabel.snp.remakeConstraints { make in
                 make.top.greaterThanOrEqualToSuperview().offset(17)

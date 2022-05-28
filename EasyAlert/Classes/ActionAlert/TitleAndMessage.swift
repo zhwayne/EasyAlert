@@ -24,7 +24,7 @@ extension MessageAlert {
     
     func text(for message: Message?) -> NSAttributedString? {
         if let text = message as? String {
-            return attributedTitle(text)
+            return attributedMessage(text)
         }
         return message as? NSAttributedString
     }

@@ -16,10 +16,10 @@ struct MyActionLayout : ActionLayoutable {
         let stackView = UIStackView(arrangedSubviews: actionViews)
         stackView.axis = actionViews.count <= 3 ? .horizontal : .vertical
         stackView.distribution = .fillProportionally
-        stackView.spacing = 20
+        stackView.spacing = 16
         container.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.edges.equalTo(UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20))
+            make.edges.equalTo(UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
         }
     }
 }
