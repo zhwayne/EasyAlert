@@ -7,22 +7,19 @@
 
 import Foundation
 
-extension Alert {
+class DimmingView : UIView {
     
-    class DimmingView : UIView {
-        
-        var contentView: UIView? {
-            didSet {
-                guard oldValue != contentView else { return }
-                oldValue?.removeFromSuperview()
-                guard let contentView = contentView else { return }
-                addSubview(contentView)
-            }
+    var contentView: UIView? {
+        didSet {
+            guard oldValue != contentView else { return }
+            oldValue?.removeFromSuperview()
+            guard let contentView = contentView else { return }
+            addSubview(contentView)
         }
-        
-        override func layoutSubviews() {
-            super.layoutSubviews()
-            contentView?.frame = bounds
-        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView?.frame = bounds
     }
 }

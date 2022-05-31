@@ -1,5 +1,5 @@
 //
-//  ActionContainerView.swift
+//  ActionRepresentationSequenceView.swift
 //  EasyAlert
 //
 //  Created by iya on 2021/12/17.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ActionContainerView: UIView {
+final class ActionRepresentationSequenceView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

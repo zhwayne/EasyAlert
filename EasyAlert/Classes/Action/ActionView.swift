@@ -1,46 +1,50 @@
 //
-//  MyActionView.swift
-//  EasyAlert_Example
+//  DefaultActionView.swift
+//  EasyAlert
 //
-//  Created by iya on 2022/5/14.
-//  Copyright © 2022 CocoaPods. All rights reserved.
+//  Created by iya on 2022/5/13.
 //
 
 import UIKit
-import EasyAlert
 
-final class MyActionView: Action.CustomizedView {
-    
-    var isHighlighted: Bool = false {
-        didSet {
-            alpha = isHighlighted ? 0.3 : 1
-        }
-    }
+final class ActionView: Action.CustomizedView {
     
     var title: String? {
         get { titleLabel.text }
         set { titleLabel.text = newValue }
     }
     
+    var isHighlighted: Bool = false {
+        didSet {
+            highlightedOverlay.alpha = isHighlighted ? 1 : 0
+        }
+    }
+    
     let style: Action.Style
     
     var isEnabled: Bool = true {
         didSet {
-            alpha = isHighlighted ? 1 : 0.3
+            highlightedOverlay.alpha = isEnabled ? 0 : 1
         }
     }
+    
+    private let highlightedOverlay: UIView = {
+        let view = UIView()
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = .systemFill
+        } else {
+            view.backgroundColor = UIColor(white: 0.472, alpha: 0.36)
+        }
+        view.alpha = 0
+        view.isUserInteractionEnabled = false
+        return view
+    }()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = style.font
         label.textAlignment = .center
-        label.textColor = .white
-        label.backgroundColor = style.color
-        label.clipsToBounds = true
-        label.layer.cornerRadius = 10
-        if #available(iOS 13.0, *) {
-            label.layer.cornerCurve = .continuous
-        }
+        label.textColor = style.color
         return label
     }()
     
@@ -49,7 +53,11 @@ final class MyActionView: Action.CustomizedView {
         super.init(frame: .zero)
         
         clipsToBounds = true
+        addSubview(highlightedOverlay)
         addSubview(titleLabel)
+        highlightedOverlay.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         titleLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -67,13 +75,8 @@ final class MyActionView: Action.CustomizedView {
     
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
-        size.height = 40
+        size.height = 45
         return size
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
     }
 }
 
@@ -81,8 +84,8 @@ fileprivate extension Action.Style {
     
     var color: UIColor {
         switch self {
-        case .`default`: return .systemOrange
-        case .cancel: return .lightGray.withAlphaComponent(0.5)
+        case .`default`: return .systemBlue
+        case .cancel: return .systemBlue
         case .destructive: return .systemRed
         }
     }

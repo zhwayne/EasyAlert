@@ -9,7 +9,7 @@ import Foundation
 
 class ActionAlertLayout: AlertLayout {
     
-    weak var alertCustomView: ActionAlert.ActionAlertCustomView?
+    weak var alertCustomView: ActionAlert.ContentView?
     
     override func layout(content: Alert.CustomizedView, container: UIView, interfaceOrientation: UIInterfaceOrientation) {
         super.layout(content: content, container: container, interfaceOrientation: interfaceOrientation)

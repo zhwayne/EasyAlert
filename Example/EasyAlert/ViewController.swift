@@ -152,7 +152,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.add(action: cancel)
             alert.add(action: ignore)
-            alert.callback = Alert.Callback(didDismiss: {
+            alert.callback = LiftcycleCallback(didDismiss: {
                 animator.stopAnimation(true)
             })
             alert.show(in: view)

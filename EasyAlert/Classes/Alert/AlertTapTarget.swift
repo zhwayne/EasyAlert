@@ -7,27 +7,24 @@
 
 import UIKit
 
-extension Alert {
+final class TapTarget: NSObject, UIGestureRecognizerDelegate {
     
-    final class TapTarget: NSObject, UIGestureRecognizerDelegate {
-        
-        var gestureRecognizerShouldBeginBlock: ((UIGestureRecognizer) -> Bool)?
-        
-        var tapHandler: (() -> Void)?
-        
-        private(set) lazy var tapGestureRecognizer: UITapGestureRecognizer = {
-            let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-            tap.delegate = self
-            return tap
-        }()
-
-        func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-            return gestureRecognizerShouldBeginBlock?(gestureRecognizer) ?? false
-        }
-        
-        @objc
-        private func handleTap(_ tap: UITapGestureRecognizer) {
-            tapHandler?()
-        }
+    var gestureRecognizerShouldBeginBlock: ((UIGestureRecognizer) -> Bool)?
+    
+    var tapHandler: (() -> Void)?
+    
+    private(set) lazy var tapGestureRecognizer: UITapGestureRecognizer = {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tap.delegate = self
+        return tap
+    }()
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return gestureRecognizerShouldBeginBlock?(gestureRecognizer) ?? false
+    }
+    
+    @objc
+    private func handleTap(_ tap: UITapGestureRecognizer) {
+        tapHandler?()
     }
 }

@@ -41,10 +41,10 @@ public final class Action {
     
     public var isEnabled: Bool = true {
         didSet {
-            guard let control = view?.superview as? UIControl else {
+            guard let representationView = view?.superview as? ActionRepresentationView else {
                 return
             }
-            control.isEnabled = isEnabled
+            representationView.isEnabled = isEnabled
         }
     }
 }

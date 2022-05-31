@@ -10,7 +10,7 @@ import SnapKit
 
 class AlertLayout: AlertLayoutable {
     
-    var width: Alert.Width = .multiplied(0.75)
+    var width: Alert.Width = .fixed(270)
     
     var height: Alert.Height = .automic
     

@@ -31,9 +31,9 @@ open class Alert: Alertble {
         
     private(set) var isShowing = false
     
-    public var callback = Callback()
+    public var callback = LiftcycleCallback()
     
-    private var notificationToken: NotificationToken?
+    private var orientationChangeToken: NotificationToken?
         
     public init(customView: CustomizedView) {
         self.customView = customView
@@ -64,7 +64,7 @@ open class Alert: Alertble {
             UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         }
         let name = UIDevice.orientationDidChangeNotification
-        notificationToken = NotificationCenter.default.observe(name: name, object: nil, queue: nil, using: { [weak self] _ in
+        orientationChangeToken = NotificationCenter.default.observe(name: name, object: nil, queue: nil, using: { [weak self] _ in
             self?.layoutIfNeeded()
         })
     }

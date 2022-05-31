@@ -1,5 +1,5 @@
 //
-//  ActionButton.swift
+//  ActionRepresentationView.swift
 //  EasyAlert
 //
 //  Created by 张尉 on 2021/8/2.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ActionButton: UIControl {
+final class ActionRepresentationView: UIControl {
     
     var action: Action? {
         didSet {
@@ -21,6 +21,12 @@ final class ActionButton: UIControl {
     override var isHighlighted: Bool {
         willSet {
             action?.view.isHighlighted = newValue
+        }
+    }
+    
+    override var isEnabled: Bool {
+        willSet {
+            action?.view.isEnabled = newValue
         }
     }
     

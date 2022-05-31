@@ -10,37 +10,37 @@ import SnapKit
 
 open class ActionAlert: Alert {
     
-    let alertCustomView: ActionAlertCustomView
+    let alertContentView: ContentView
     
     let config: Configuration
     
     public required init(customView: CustomizedView, config: Configuration? = nil) {
         self.config = config ?? ActionAlert.config
-        alertCustomView = ActionAlertCustomView(customView: customView)
-        super.init(customView: alertCustomView)
-        alertCustomView.actionLayout = self.config.actionLayout
+        alertContentView = ContentView(customView: customView)
+        super.init(customView: alertContentView)
+        alertContentView.actionLayout = self.config.actionLayout
         let layout = ActionAlertLayout()
-        layout.alertCustomView = alertCustomView
+        layout.alertCustomView = alertContentView
         self.layout = layout
     }
     
     open override func willLayoutContainer() {
         super.willLayoutContainer()
-        alertCustomView.setCornerRadius(config.cornerRadius)
+        alertContentView.setCornerRadius(config.cornerRadius)
     }
 }
 
 extension ActionAlert: ActionAlertble {
     
-    public func add(action: Action) {
+    open func add(action: Action) {
         assert(isShowing == false)
-        alertCustomView.actions.append(action)
+        alertContentView.actions.append(action)
         setViewForAction(action)
     }
     
-    public func add(actions: [Action]) {
+    open func add(actions: [Action]) {
         assert(isShowing == false)
-        alertCustomView.actions.append(contentsOf: actions)
+        alertContentView.actions.append(contentsOf: actions)
         actions.forEach { setViewForAction($0) }
     }
     
@@ -54,7 +54,7 @@ extension ActionAlert: ActionAlertble {
 
 extension ActionAlert {
     
-    final class ActionAlertCustomView: CustomizedView {
+    final class ContentView: CustomizedView {
         
         fileprivate var actionLayout: ActionLayoutable!
         
@@ -64,7 +64,7 @@ extension ActionAlert {
         
         let backgroundView: UIVisualEffectView
         
-        let actionContainerView = ActionContainerView()
+        let actionContainerView = ActionRepresentationSequenceView()
                 
         private lazy var contentStackView: UIStackView = {
             let stackView = UIStackView()
@@ -117,7 +117,7 @@ extension ActionAlert {
                 $0.removeFromSuperview()
             }
             let buttons = actions.map { action -> UIView in
-                let button = ActionButton()
+                let button = ActionRepresentationView()
                 button.action = action
                 button.isEnabled = action.isEnabled
                 let selector = #selector(handleActionButtonTouchUpInside(_:))
@@ -130,7 +130,7 @@ extension ActionAlert {
         }
         
         @objc
-        private func handleActionButtonTouchUpInside(_ button: ActionButton) {
+        private func handleActionButtonTouchUpInside(_ button: ActionRepresentationView) {
             if let action = button.action {
                 action.handler?(action)
                 if action.allowAutoDismiss {

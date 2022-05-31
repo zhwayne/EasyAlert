@@ -12,6 +12,8 @@ public protocol ActionCustomizable : AlertDismissible {
     var title: String? { get set }
     
     var isHighlighted: Bool { get set }
+    
+    var isEnabled: Bool { get set }
         
     var style: Action.Style { get }
     
