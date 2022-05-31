@@ -13,22 +13,17 @@ class SheetLayout: AlertLayoutable {
     
     var height: Alert.Height = .greaterThanOrEqualTo(44)
     
-    func layout(content: Alert.CustomizedView, container: UIView, interfaceOrientation: UIInterfaceOrientation) {
-        container.addSubview(content)
+    func layout(with context: AlertLayoutContext) {
         
-        content.snp.remakeConstraints { maker in
-            maker.edges.equalToSuperview()
-        }
-        
-        container.snp.remakeConstraints { maker in
+        context.container.snp.remakeConstraints { maker in
             switch width {
             case let .fixed(value): maker.width.equalTo(value)
             case let .flexible(value): maker.width.lessThanOrEqualTo(value)
             case let .multiplied(value):
-                if interfaceOrientation.isPortrait {
+                if context.interfaceOrientation.isPortrait {
                     maker.width.equalToSuperview().multipliedBy(value)
                 } else {
-                    maker.width.equalTo(container.superview!.snp.height).multipliedBy(value).priority(.high)
+                    maker.width.equalTo(context.container.superview!.snp.height).multipliedBy(value).priority(.high)
                 }
             }
             if case let .greaterThanOrEqualTo(value) = height {

@@ -9,14 +9,6 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## TODO
-
-- [x] show any custom view
-- [x] Replaceable background
-- [x] Customizable action buttons
-- [x] Customizable transition
-- [ ] show view controller
-
 ## Usage
 
 Example for `MessageAlert`:

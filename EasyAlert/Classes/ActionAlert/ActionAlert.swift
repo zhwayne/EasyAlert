@@ -111,11 +111,12 @@ extension ActionAlert {
         }
         
         func updateLayout(interfaceOrientation: UIInterfaceOrientation, width: Alert.Width) {
-            guard !actions.isEmpty else { return }
-            
             actionContainerView.subviews.forEach {
                 $0.removeFromSuperview()
             }
+            guard !actions.isEmpty else { return }
+            
+            // FIXME: 这里需要一套高效的diff方式，避免不必要的重新构建view。
             let buttons = actions.map { action -> UIView in
                 let button = ActionRepresentationView()
                 button.action = action
@@ -125,7 +126,6 @@ extension ActionAlert {
                 button.addTarget(self, action: selector, for: .touchUpInside)
                 return button
             }
-            
             actionLayout.layout(actionViews: buttons, container: actionContainerView)
         }
         

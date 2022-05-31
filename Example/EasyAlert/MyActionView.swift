@@ -26,7 +26,7 @@ final class MyActionView: Action.CustomizedView {
     
     var isEnabled: Bool = true {
         didSet {
-            alpha = isHighlighted ? 1 : 0.3
+            alpha = isEnabled ? 1 : 0.3
         }
     }
     

@@ -42,6 +42,7 @@ class ViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.keyboardDismissMode = .onDrag
         // Do any additional setup after loading the view, typically from a nib.
         
         view.addSubview(tableView)

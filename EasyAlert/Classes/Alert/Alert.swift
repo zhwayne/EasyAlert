@@ -34,7 +34,7 @@ open class Alert: Alertble {
     public var callback = LiftcycleCallback()
     
     private var orientationChangeToken: NotificationToken?
-        
+            
     public init(customView: CustomizedView) {
         self.customView = customView
         
@@ -150,24 +150,32 @@ extension Alert {
     
     private func configContainer() {
         backgroundView.addSubview(containerView)
+        containerView.addSubview(customView)
+        customView.snp.remakeConstraints { $0.edges.equalToSuperview() }
         layoutIfNeeded()
     }
     
     private func layoutIfNeeded() {
-        containerView.subviews.forEach { $0.removeFromSuperview() }
+        backgroundView.layoutIfNeeded()
         willLayoutContainer()
         defer {
             didLayoutContainer()
             containerView.layoutIfNeeded()
         }
-        
+        var interfaceOrientation: UIInterfaceOrientation = .portrait
         if #available(iOS 13.0, *) {
             guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene else { return }
-            layout?.layout(content: customView, container: containerView, interfaceOrientation: windowScene.interfaceOrientation)
+            interfaceOrientation = windowScene.interfaceOrientation
         } else {
-            // Fallback on earlier versions
-            layout?.layout(content: customView, container: containerView, interfaceOrientation: UIApplication.shared.statusBarOrientation)
+            interfaceOrientation = UIApplication.shared.statusBarOrientation
         }
+        let context = AlertLayoutContext(
+            container: containerView,
+            interfaceOrientation: interfaceOrientation,
+            frame: backgroundView.frame,
+            keyboardFrame: nil
+        )
+        layout?.layout(with: context)
     }
     
     private func showAlert(in parent: UIView) {

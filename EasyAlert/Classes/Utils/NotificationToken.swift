@@ -25,8 +25,11 @@ final class NotificationToken: NSObject {
 extension NotificationCenter {
     /// Convenience wrapper for addObserver(forName:object:queue:using:)
     /// that returns our custom NotificationToken.
-    func observe(name: NSNotification.Name?, object obj: Any?,
-                 queue: OperationQueue?, using block: @escaping (Notification) -> ())
+    func observe(
+        name: NSNotification.Name?,
+        object obj: Any? = nil,
+        queue: OperationQueue? = .main,
+        using block: @escaping (Notification) -> ())
     -> NotificationToken
     {
         let token = addObserver(forName: name, object: obj, queue: queue, using: block)
