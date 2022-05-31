@@ -39,7 +39,7 @@ extension MessageAlert {
         paragraphStyle.alignment = titleConfig.alignment
         attributes[.font] = titleConfig.font
         attributes[.foregroundColor] = titleConfig.color
-        attributes[.paragraphStyle] = paragraphStyle
+        attributes[.paragraphStyle] = paragraphStyle.copy()
         return attributes
     }
     
@@ -50,7 +50,7 @@ extension MessageAlert {
         paragraphStyle.alignment = messageConfig.alignment
         attributes[.font] = messageConfig.font
         attributes[.foregroundColor] = messageConfig.color
-        attributes[.paragraphStyle] = paragraphStyle
+        attributes[.paragraphStyle] = paragraphStyle.copy()
         return attributes
     }
     

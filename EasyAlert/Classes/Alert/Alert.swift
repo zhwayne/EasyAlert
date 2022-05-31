@@ -19,11 +19,9 @@ open class Alert: Alertble {
     
     let containerView: UIView = UIView()
     
-    public var layout: AlertLayoutable? = AlertLayout()
-    
-    public var animator: Animator = AlertAnimator()
-    
-    private let backgroundView = TransitionView()
+    public var transitioning: Transitioning = AlertTransitioning()
+        
+    private let backgroundView = BackgroundView()
 
     private let dimmingView = DimmingView()
         
@@ -98,22 +96,42 @@ open class Alert: Alertble {
         guard canDismiss() else {
             return
         }
-        let context = AnimatorContext(
-            container: containerView,
-            dimmingView: dimmingView
-        )
+        
         willDismiss()
         callback.willDismiss?()
-        animator.dismiss(context: context, completion: { [weak self] in
+        
+        transitioning.dismiss(context: transitioningContext) { [weak self] in
             self?.didDismiss()
             self?.callback.didDismiss?()
             completion?()
             self?.windup()
-        })
+        }
     }
 }
 
 extension Alert {
+    
+    private var interfaceOrientation: UIInterfaceOrientation {
+        if #available(iOS 13.0, *) {
+            let scenes = UIApplication.shared.connectedScenes
+            let windowScene = scenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
+            guard let interfaceOrientation = windowScene?.interfaceOrientation else {
+                return UIApplication.shared.statusBarOrientation
+            }
+            return interfaceOrientation
+        } else {
+            return UIApplication.shared.statusBarOrientation
+        }
+    }
+    
+    private var transitioningContext: TransitioningContext {
+        TransitioningContext(
+            container: containerView,
+            dimmingView: dimmingView,
+            interfaceOrientation: interfaceOrientation,
+            frame: backgroundView.bounds
+        )
+    }
     
     private func findParentView(_ view: UIView?) -> UIView? {
         if let view = view { return view } else {
@@ -158,24 +176,9 @@ extension Alert {
     private func layoutIfNeeded() {
         backgroundView.layoutIfNeeded()
         willLayoutContainer()
-        defer {
-            didLayoutContainer()
-            containerView.layoutIfNeeded()
-        }
-        var interfaceOrientation: UIInterfaceOrientation = .portrait
-        if #available(iOS 13.0, *) {
-            guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene else { return }
-            interfaceOrientation = windowScene.interfaceOrientation
-        } else {
-            interfaceOrientation = UIApplication.shared.statusBarOrientation
-        }
-        let context = AlertLayoutContext(
-            container: containerView,
-            interfaceOrientation: interfaceOrientation,
-            frame: backgroundView.frame,
-            keyboardFrame: nil
-        )
-        layout?.layout(with: context)
+        transitioning.update(context: transitioningContext)
+        didLayoutContainer()
+        containerView.layoutIfNeeded()
     }
     
     private func showAlert(in parent: UIView) {
@@ -184,14 +187,11 @@ extension Alert {
         backgroundView.frame = parent.bounds
         parent.addSubview(backgroundView)
         backgroundView.layoutIfNeeded()
-        
-        let context = AnimatorContext(
-            container: containerView,
-            dimmingView: dimmingView
-        )
+
         willShow()
         callback.willShow?()
-        animator.show(context: context) { [weak self] in
+        
+        transitioning.show(context: transitioningContext) { [weak self] in
             self?.didShow()
             self?.callback.didShow?()
         }

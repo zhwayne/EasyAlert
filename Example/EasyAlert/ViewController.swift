@@ -181,7 +181,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             titleConfig.alignment = .left
             
             var messageConfig = MessageAlert.messageConfig
-            messageConfig.alignment = .justified
+            messageConfig.alignment = .left
             
             let alert = MessageAlert(title: alertTitle, message: message, config: config, titleConfig: titleConfig, messageConfig: messageConfig)
             let cancel = Action(title: "取消", style: .cancel)
@@ -193,12 +193,24 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case .attributedTitleAndMessage:
             var range = (alertTitle as NSString).range(of: "Meizu-0D23-5G")
             let attrTitle = NSMutableAttributedString(string: alertTitle)
-            attrTitle.addAttribute(.foregroundColor, value: UIColor.systemOrange, range: range)
+            let titleParagraphStyle = NSMutableParagraphStyle()
+            attrTitle.addAttribute(.foregroundColor, value: UIColor.systemPurple, range: range)
+            
+            range = NSRange(location: 0, length: alertTitle.count)
+            titleParagraphStyle.lineHeightMultiple = 1.1
+            titleParagraphStyle.alignment = .center
+            attrTitle.addAttribute(.paragraphStyle, value: titleParagraphStyle.copy(), range: range)
             
             range = (message as NSString).range(of: "iCloud")
             let attrMessage = NSMutableAttributedString(string: message)
             attrMessage.addAttribute(.foregroundColor, value: UIColor.white, range: range)
             attrMessage.addAttribute(.backgroundColor, value: UIColor.orange, range: range)
+            
+            range = NSRange(location: 0, length: message.count)
+            let messageParagraphStyle = NSMutableParagraphStyle()
+            messageParagraphStyle.lineHeightMultiple = 1.05
+            messageParagraphStyle.alignment = .center
+            attrMessage.addAttribute(.paragraphStyle, value: messageParagraphStyle.copy(), range: range)
             
             let alert = MessageAlert(title: attrTitle, message: attrMessage)
             let cancel = Action(title: "取消", style: .cancel)

@@ -1,5 +1,5 @@
 //
-//  TransitionView.swift
+//  BackgroundView.swift
 //  EasyAlert
 //
 //  Created by 张尉 on 2021/7/27.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TransitionView: UIView {
+final class BackgroundView: UIView {
 
     weak var alert: Alertble?
     

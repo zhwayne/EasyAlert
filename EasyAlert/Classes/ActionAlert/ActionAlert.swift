@@ -19,9 +19,9 @@ open class ActionAlert: Alert {
         alertContentView = ContentView(customView: customView)
         super.init(customView: alertContentView)
         alertContentView.actionLayout = self.config.actionLayout
-        let layout = ActionAlertLayout()
-        layout.alertCustomView = alertContentView
-        self.layout = layout
+        let transitioning = ActionAlertTransitioning()
+        transitioning.alertCustomView = alertContentView
+        self.transitioning = transitioning
     }
     
     open override func willLayoutContainer() {
@@ -110,7 +110,7 @@ extension ActionAlert {
             fatalError("init(coder:) has not been implemented")
         }
         
-        func updateLayout(interfaceOrientation: UIInterfaceOrientation, width: Alert.Width) {
+        func updateLayout(interfaceOrientation: UIInterfaceOrientation, width: Width) {
             actionContainerView.subviews.forEach {
                 $0.removeFromSuperview()
             }

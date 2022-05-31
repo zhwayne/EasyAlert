@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B0168162845BD6D0031216D /* TextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0168152845BD6D0031216D /* TextFieldAlert.swift */; };
-		0B15B5E728423A7100F1C8A3 /* CALayer+Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B15B5E628423A7100F1C8A3 /* CALayer+Snapshot.swift */; };
-		0B15B5E928423A8E00F1C8A3 /* UIImage+Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B15B5E828423A8E00F1C8A3 /* UIImage+Blur.swift */; };
 		0B2BF3A52801D4040017F987 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B2BF3A32801D4040017F987 /* Main.storyboard */; };
 		0B3151C0282F789F00F0F9B8 /* MyActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3151BF282F789F00F0F9B8 /* MyActionView.swift */; };
 		0B3151C2282F7C4D00F0F9B8 /* MyActionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3151C1282F7C4D00F0F9B8 /* MyActionLayout.swift */; };
@@ -34,9 +31,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B0168152845BD6D0031216D /* TextFieldAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlert.swift; sourceTree = "<group>"; };
-		0B15B5E628423A7100F1C8A3 /* CALayer+Snapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Snapshot.swift"; sourceTree = "<group>"; };
-		0B15B5E828423A8E00F1C8A3 /* UIImage+Blur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Blur.swift"; sourceTree = "<group>"; };
 		0B2BF3A42801D4040017F987 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0B3151BF282F789F00F0F9B8 /* MyActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActionView.swift; sourceTree = "<group>"; };
 		0B3151C1282F7C4D00F0F9B8 /* MyActionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActionLayout.swift; sourceTree = "<group>"; };
@@ -116,12 +110,9 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				0B15B5E628423A7100F1C8A3 /* CALayer+Snapshot.swift */,
-				0B15B5E828423A8E00F1C8A3 /* UIImage+Blur.swift */,
 				0B61E8502841CC52006CFC2C /* Section.swift */,
 				0B3151BF282F789F00F0F9B8 /* MyActionView.swift */,
 				0B3151C1282F7C4D00F0F9B8 /* MyActionLayout.swift */,
-				0B0168152845BD6D0031216D /* TextFieldAlert.swift */,
 				0B2BF3A32801D4040017F987 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -353,10 +344,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B0168162845BD6D0031216D /* TextFieldAlert.swift in Sources */,
 				0B61E8512841CC52006CFC2C /* Section.swift in Sources */,
-				0B15B5E928423A8E00F1C8A3 /* UIImage+Blur.swift in Sources */,
-				0B15B5E728423A7100F1C8A3 /* CALayer+Snapshot.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				0B3151C2282F7C4D00F0F9B8 /* MyActionLayout.swift in Sources */,
 				0B3151C0282F789F00F0F9B8 /* MyActionView.swift in Sources */,
