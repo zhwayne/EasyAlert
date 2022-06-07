@@ -32,13 +32,13 @@ open class ActionAlert: Alert {
 
 extension ActionAlert: ActionAlertble {
     
-    open func add(action: Action) {
+    public func add(action: Action) {
         assert(isShowing == false)
         alertContentView.actions.append(action)
         setViewForAction(action)
     }
     
-    open func add(actions: [Action]) {
+    public func add(actions: [Action]) {
         assert(isShowing == false)
         alertContentView.actions.append(contentsOf: actions)
         actions.forEach { setViewForAction($0) }

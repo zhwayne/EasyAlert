@@ -12,10 +12,13 @@ public final class Action {
     public typealias CustomizedView = UIView & ActionCustomizable
     public typealias Handelr = (Action) -> Void
     
+    /// 当 allowAutoDismiss 为 true 时，点击 action view 后，alert 会立即消失。
+    /// 否则开发者需要自己手动关闭 alert。
     public var allowAutoDismiss: Bool = true
 
     public let style: Style
     
+    /// action view 的标题
     public let title: String?
     
     let handler: Handelr?
@@ -39,6 +42,9 @@ public final class Action {
         view?.removeFromSuperview()
     }
     
+    /// 是否可用
+    ///
+    /// isEnabled 为 true 时，action view 将无法点击。
     public var isEnabled: Bool = true {
         didSet {
             guard let representationView = view?.superview as? ActionRepresentationView else {
@@ -51,6 +57,11 @@ public final class Action {
 
 public extension Action {
     
+    /// Action 风格
+    ///
+    /// - `default`: 默认
+    /// - cancel:  取消
+    /// - destructive: 破坏性操作
     enum Style : Hashable {
         case `default`, cancel, destructive
     }
