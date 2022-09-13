@@ -15,7 +15,7 @@ open class ActionAlert: Alert {
     let config: Configuration
     
     public required init(customView: CustomizedView, config: Configuration? = nil) {
-        self.config = config ?? ActionAlert.config
+        self.config = config ?? ActionAlert.defaultConfiguration
         alertContentView = ContentView(customView: customView)
         super.init(customView: alertContentView)
         alertContentView.actionLayout = self.config.actionLayout
@@ -142,6 +142,59 @@ extension ActionAlert {
         func setCornerRadius(_ radius: CGFloat) {
             backgroundView.layer.cornerRadius = radius
             actionContainerView.setCornerRadius(radius)
+        }
+    }
+}
+
+extension ActionAlert {
+    
+    struct ActionLayout: ActionLayoutable {
+        
+        func layout(actionViews: [UIView], container: UIView) {
+            
+            let stackView = UIStackView(arrangedSubviews: actionViews)
+            stackView.axis = actionViews.count <= 2 ? .horizontal : .vertical
+            stackView.distribution = .fillEqually
+            container.addSubview(stackView)
+            stackView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            
+            if actionViews.count == 2 {
+                let horizontalSeparator = makeSeparator()
+                container.addSubview(horizontalSeparator)
+                horizontalSeparator.snp.makeConstraints { make in
+                    make.left.right.top.equalToSuperview()
+                    make.height.equalTo(1 / UIScreen.main.scale)
+                }
+                
+                let verticalSeparator = makeSeparator()
+                container.addSubview(verticalSeparator)
+                verticalSeparator.snp.makeConstraints { make in
+                    make.top.bottom.centerX.equalToSuperview()
+                    make.width.equalTo(1 / UIScreen.main.scale)
+                }
+            } else {
+                actionViews.forEach { button in
+                    let horizontalSeparator = makeSeparator()
+                    container.addSubview(horizontalSeparator)
+                    horizontalSeparator.snp.makeConstraints { make in
+                        make.left.right.equalToSuperview()
+                        make.top.equalTo(button)
+                        make.height.equalTo(1 / UIScreen.main.scale)
+                    }
+                }
+            }
+        }
+        
+        private func makeSeparator() -> UIView {
+            let separator = UIView()
+            if #available(iOS 13.0, *) {
+                separator.backgroundColor = UIColor.tertiaryLabel
+            } else {
+                separator.backgroundColor = UIColor(white: 0.237, alpha: 0.29)
+            }
+            return separator
         }
     }
 }

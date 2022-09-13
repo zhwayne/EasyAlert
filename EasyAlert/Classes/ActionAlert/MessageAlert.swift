@@ -52,14 +52,14 @@ public final class MessageAlert: ActionAlert {
         titleConfig: TitleConfiguration? = nil,
         messageConfig: MessageConfiguration? = nil
     ) {
-        self.titleConfig = titleConfig ?? MessageAlert.titleConfig
-        self.messageConfig = messageConfig ?? MessageAlert.messageConfig
+        self.titleConfig = titleConfig ?? MessageAlert.titleConfiguration
+        self.messageConfig = messageConfig ?? MessageAlert.messageConfiguration
         contentView = ContentView()
         super.init(customView: contentView, config: config)
         configAttributes()
         contentView.titleLabel.attributedText = text(for: title)
         contentView.messageLabel.attributedText = text(for: message)
-        transitioning.layoutSize.width = .fixed(270)
+        transitionCoordinator.size.width = .fixed(270)
     }
     
     @available(*, unavailable)

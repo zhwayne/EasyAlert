@@ -9,9 +9,13 @@ import Foundation
 
 extension MessageAlert {
 
-    public static var titleConfig = TitleConfiguration()
+    public static var titleConfiguration: TitleConfiguration {
+        TitleConfiguration()
+    }
     
-    public static var messageConfig = MessageConfiguration()
+    public static var messageConfiguration: MessageConfiguration {
+        MessageConfiguration()
+    }
 }
 
 

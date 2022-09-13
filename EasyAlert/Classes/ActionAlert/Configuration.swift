@@ -9,7 +9,9 @@ import Foundation
 
 extension ActionAlert {
     
-    public static var config = Configuration()
+    public static var defaultConfiguration: Configuration {
+        Configuration()
+    }
 }
 
 public extension ActionAlert {

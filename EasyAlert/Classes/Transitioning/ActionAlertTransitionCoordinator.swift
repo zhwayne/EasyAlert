@@ -13,6 +13,6 @@ final class ActionAlertTransitionCoordinator : AlertTransitionCoordinator {
     
     override func update(context: TransitionCoordinatorContext) {
         super.update(context: context)
-        alertCustomView?.updateLayout(interfaceOrientation: context.interfaceOrientation, width: layoutSize.width)
+        alertCustomView?.updateLayout(interfaceOrientation: context.interfaceOrientation, width: size.width)
     }
 }
