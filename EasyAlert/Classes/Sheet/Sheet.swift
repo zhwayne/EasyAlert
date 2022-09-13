@@ -11,6 +11,6 @@ open class Sheet: Alert {
     
     public override init(customView: Alert.CustomizedView) {
         super.init(customView: customView)
-        self.transitioning = SheetTransitioning()
+        self.transitionCoordinator = SheetTransitionCoordinator()
     }
 }

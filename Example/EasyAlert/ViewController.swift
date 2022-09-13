@@ -221,32 +221,3 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
-
-//class SheetContent: Alert.CustomizedView {
-//
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//
-//        backgroundColor = .orange
-//
-//        let switcher = UISwitch()
-//        addSubview(switcher)
-//
-//        switcher.snp.makeConstraints { make in
-//            make.top.equalToSuperview().offset(64)
-//            make.centerX.equalToSuperview()
-//            if #available(iOS 11.0, *) {
-//                make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-217)
-//            } else {
-//                // Fallback on earlier versions
-//                make.bottom.equalToSuperview().offset(-217)
-//            }
-//        }
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}
-
-

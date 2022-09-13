@@ -19,9 +19,9 @@ open class ActionAlert: Alert {
         alertContentView = ContentView(customView: customView)
         super.init(customView: alertContentView)
         alertContentView.actionLayout = self.config.actionLayout
-        let transitioning = ActionAlertTransitioning()
-        transitioning.alertCustomView = alertContentView
-        self.transitioning = transitioning
+        let transitionCoordinator = ActionAlertTransitionCoordinator()
+        transitionCoordinator.alertCustomView = alertContentView
+        self.transitionCoordinator = transitionCoordinator
     }
     
     open override func willLayoutContainer() {

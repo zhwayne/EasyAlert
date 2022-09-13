@@ -19,7 +19,7 @@ open class Alert: Alertble {
     
     let containerView: UIView = UIView()
     
-    public var transitioning: Transitioning = AlertTransitioning()
+    public var transitionCoordinator: TransitionCoordinator = AlertTransitionCoordinator()
         
     private let backgroundView = BackgroundView()
 
@@ -100,7 +100,7 @@ open class Alert: Alertble {
         willDismiss()
         callback.willDismiss?()
         
-        transitioning.dismiss(context: transitioningContext) { [weak self] in
+        transitionCoordinator.dismiss(context: transitioningContext) { [weak self] in
             self?.didDismiss()
             self?.callback.didDismiss?()
             completion?()
@@ -124,8 +124,8 @@ extension Alert {
         }
     }
     
-    private var transitioningContext: TransitioningContext {
-        TransitioningContext(
+    private var transitioningContext: TransitionCoordinatorContext {
+        TransitionCoordinatorContext(
             container: containerView,
             dimmingView: dimmingView,
             interfaceOrientation: interfaceOrientation,
@@ -176,7 +176,7 @@ extension Alert {
     private func layoutIfNeeded() {
         backgroundView.layoutIfNeeded()
         willLayoutContainer()
-        transitioning.update(context: transitioningContext)
+        transitionCoordinator.update(context: transitioningContext)
         didLayoutContainer()
         containerView.layoutIfNeeded()
     }
@@ -191,7 +191,7 @@ extension Alert {
         willShow()
         callback.willShow?()
         
-        transitioning.show(context: transitioningContext) { [weak self] in
+        transitionCoordinator.show(context: transitioningContext) { [weak self] in
             self?.didShow()
             self?.callback.didShow?()
         }
