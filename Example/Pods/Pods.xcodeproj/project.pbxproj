@@ -277,7 +277,6 @@
 			isa = PBXGroup;
 			children = (
 				C186FC4C11091360832C8AA2A023B1DB /* ActionAlert.swift */,
-				9AF781D9FAB497EB5866B657559E7687 /* ActionLayoutable.swift */,
 				F709B04BE79A555F499544DCB58A7A76 /* Configuration.swift */,
 				501946E7FB0AA6CA706EB47DB53E0922 /* MessageAlert.swift */,
 				60A2560881DCDC74096E88353FF5FDF1 /* MessageConfiguration.swift */,
@@ -414,6 +413,7 @@
 				2736893FF88E0BCB67E957E706304CD7 /* ActionRepresentationSequenceView.swift */,
 				2BA69A4BA4740B4504AFA2629A197603 /* ActionRepresentationView.swift */,
 				5FA2B9CB102552AC8655890AF59599D6 /* ActionView.swift */,
+				9AF781D9FAB497EB5866B657559E7687 /* ActionLayoutable.swift */,
 			);
 			name = Action;
 			path = EasyAlert/Classes/Action;

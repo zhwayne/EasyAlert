@@ -159,10 +159,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.show(in: view)
             
         case .leftAlignment:
-            var titleConfig = MessageAlert.titleConfig
+            var titleConfig = MessageAlert.titleConfiguration
             titleConfig.alignment = .left
             
-            var messageConfig = MessageAlert.messageConfig
+            var messageConfig = MessageAlert.messageConfiguration
             messageConfig.alignment = .left
             
             let alert = MessageAlert(title: alertTitle, message: message, titleConfig: titleConfig, messageConfig: messageConfig)
@@ -173,14 +173,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.show(in: view)
             
         case .cornerRadius:
-            var config = ActionAlert.config
+            var config = ActionAlert.defaultConfiguration
             config.actionLayout = MyActionLayout()
             config.actionViewType = MyActionView.self
             
-            var titleConfig = MessageAlert.titleConfig
+            var titleConfig = MessageAlert.titleConfiguration
             titleConfig.alignment = .left
             
-            var messageConfig = MessageAlert.messageConfig
+            var messageConfig = MessageAlert.messageConfiguration
             messageConfig.alignment = .left
             
             let alert = MessageAlert(title: alertTitle, message: message, config: config, titleConfig: titleConfig, messageConfig: messageConfig)
