@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 
 open class Alert: Alertble {
     
@@ -80,7 +79,7 @@ open class Alert: Alertble {
     open func didLayoutContainer() { }
     
     open func show(in view: UIView?) {
-        assert(Thread.isMainThread && OperationQueue.current == OperationQueue.main)
+        Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard let parent = findParentView(view),
               canShow(in: parent) else {
             return
@@ -92,7 +91,7 @@ open class Alert: Alertble {
     }
     
     open func dismiss(completion: (() -> Void)? = nil) {
-        assert(Thread.isMainThread && OperationQueue.current == OperationQueue.main)
+        Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard canDismiss() else {
             return
         }
@@ -169,7 +168,8 @@ extension Alert {
     private func configContainer() {
         backgroundView.addSubview(containerView)
         containerView.addSubview(customView)
-        customView.snp.remakeConstraints { $0.edges.equalToSuperview() }
+        customView.frame = containerView.bounds
+        customView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         layoutIfNeeded()
     }
     

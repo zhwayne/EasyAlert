@@ -111,7 +111,7 @@ extension ActionAlert {
         }
         
         func updateLayout(interfaceOrientation: UIInterfaceOrientation, width: Width) {
-            actionContainerView.subviews.forEach {
+            actionContainerView.contentView.subviews.forEach {
                 $0.removeFromSuperview()
             }
             guard !actions.isEmpty else { return }
@@ -126,7 +126,7 @@ extension ActionAlert {
                 button.addTarget(self, action: selector, for: .touchUpInside)
                 return button
             }
-            actionLayout.layout(actionViews: buttons, container: actionContainerView)
+            actionLayout.layout(actionViews: buttons, container: actionContainerView.contentView)
         }
         
         @objc
@@ -141,7 +141,7 @@ extension ActionAlert {
         
         func setCornerRadius(_ radius: CGFloat) {
             backgroundView.layer.cornerRadius = radius
-            actionContainerView.setCornerRadius(radius)
+            actionContainerView.contentView.setCornerRadius(radius)
         }
     }
 }

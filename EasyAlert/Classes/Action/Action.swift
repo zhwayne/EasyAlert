@@ -21,9 +21,9 @@ public final class Action {
     /// action view 的标题
     public let title: String?
     
-    let handler: Handelr?
+    internal let handler: Handelr?
     
-    var view: CustomizedView!
+    internal var view: CustomizedView!
     
     public init(title: String, style: Style, handler: Handelr? = nil) {
         self.title = title

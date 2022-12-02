@@ -1,5 +1,5 @@
 PODS:
-  - EasyAlert (0.1.4):
+  - EasyAlert (0.1.5):
     - SnapKit (~> 5.0)
   - SnapKit (5.6.0)
 
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  EasyAlert: 6dbe534644f1ec60e3dfa0f2abcf5beeb8ce4f3e
+  EasyAlert: ed32728ad03d7203d3983553032f5155fea29cc5
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
 PODFILE CHECKSUM: 8109fef79d598dce88b9e69595352e984c8345e3
