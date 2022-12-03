@@ -21,9 +21,11 @@ public final class Action {
     /// action view 的标题
     public let title: String?
     
-    internal let handler: Handelr?
+    let handler: Handelr?
     
-    internal var view: CustomizedView!
+    var view: CustomizedView?
+    
+    weak var representationView: ActionRepresentationView?
     
     public init(title: String, style: Style, handler: Handelr? = nil) {
         self.title = title

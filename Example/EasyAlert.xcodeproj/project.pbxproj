@@ -302,12 +302,10 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-EasyAlert_Example/Pods-EasyAlert_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/EasyAlert/EasyAlert.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyAlert.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

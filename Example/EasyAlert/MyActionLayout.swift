@@ -8,7 +8,6 @@
 
 import Foundation
 import EasyAlert
-import SnapKit
 
 struct MyActionLayout : ActionLayoutable {
 
@@ -19,8 +18,11 @@ struct MyActionLayout : ActionLayoutable {
         stackView.distribution = .fillProportionally
         stackView.spacing = 16
         container.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalTo(UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
-        }
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.topAnchor.constraint(equalTo: container.topAnchor, constant: 0).isActive = true
+        stackView.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 16).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -16).isActive = true
+        stackView.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -16).isActive = true
     }
 }

@@ -9,6 +9,9 @@ import UIKit
 
 final class ActionSeparatableSequenceView: UIView {
     
+    private var horizontalSeparators: [UIView] = []
+    private var verticalSeparators: [UIView] = []
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
@@ -40,4 +43,30 @@ final class ActionSeparatableSequenceView: UIView {
             layer.mask = mask
         }
     }
+    
+    func horizontalSeparator(at index: Int) -> UIView {
+        guard index < horizontalSeparators.count else {
+            horizontalSeparators.append(makeSeparator())
+            return horizontalSeparator(at: index)
+        }
+        return horizontalSeparators[index]
+    }
+    
+    func verticalSeparator(at index: Int) -> UIView {
+        guard index < verticalSeparators.count else {
+            verticalSeparators.append(makeSeparator())
+            return verticalSeparator(at: index)
+        }
+        return verticalSeparators[index]
+    }
+}
+
+private func makeSeparator() -> UIView {
+    let separator = UIView()
+    if #available(iOS 13.0, *) {
+        separator.backgroundColor = UIColor.tertiaryLabel
+    } else {
+        separator.backgroundColor = UIColor(white: 0.237, alpha: 0.29)
+    }
+    return separator
 }

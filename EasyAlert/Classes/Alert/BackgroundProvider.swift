@@ -23,7 +23,24 @@ public protocol BackgroundProvider {
 
 public struct DefaultBackgroundProvider: BackgroundProvider {
     
-    public var dimming: Dimming = .color(.black.withAlphaComponent(0.25))
+    public var dimming: Dimming = .color(Self.alertDimmingViewColor)
     
     public var allowDismissWhenBackgroundTouch: Bool = false
+}
+
+extension DefaultBackgroundProvider {
+    
+    static var alertDimmingViewColor: UIColor {
+        if #available(iOS 13.0, *) {
+            return UIColor { traitCollection in
+                if traitCollection.userInterfaceStyle == .dark {
+                    return UIColor(white: 0, alpha: 0.48)
+                } else {
+                    return UIColor(white: 0, alpha: 0.2)
+                }
+            }
+        } else {
+            return UIColor(white: 0, alpha: 0.2)
+        }
+    }
 }

@@ -11,7 +11,7 @@ final class ActionRepresentationView: UIControl {
     
     var action: Action? {
         didSet {
-            oldValue?.view.removeFromSuperview()
+            oldValue?.view?.removeFromSuperview()
             if let view = action?.view {
                 addSubview(view)
             }
@@ -20,13 +20,13 @@ final class ActionRepresentationView: UIControl {
     
     override var isHighlighted: Bool {
         willSet {
-            action?.view.isHighlighted = newValue
+            action?.view?.isHighlighted = newValue
         }
     }
     
     override var isEnabled: Bool {
         willSet {
-            action?.view.isEnabled = newValue
+            action?.view?.isEnabled = newValue
         }
     }
     
@@ -41,12 +41,12 @@ final class ActionRepresentationView: UIControl {
     }
     
     override var intrinsicContentSize: CGSize {
-        return action?.view.intrinsicContentSize ?? .zero
+        return action?.view?.intrinsicContentSize ?? .zero
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        action?.view.frame = bounds
-        action?.view.isUserInteractionEnabled = false
+        action?.view?.frame = bounds
+        action?.view?.isUserInteractionEnabled = false
     }
 }

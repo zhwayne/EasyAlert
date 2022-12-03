@@ -47,7 +47,7 @@ extension ActionAlert: ActionAlertble {
     private func setViewForAction(_ action: Action) {
         if action.view == nil {
             action.view = configuration.actionViewType.init(style: action.style)
-            action.view.title = action.title
+            action.view?.title = action.title
         }
     }
 }
@@ -125,7 +125,12 @@ extension ActionAlert {
             
             // FIXME: 这里需要一套高效的diff方式，避免不必要的重新构建view。
             let buttons = actions.map { action -> UIView in
+                if let representationView = action.representationView {
+                    return representationView
+                }
+                
                 let button = ActionRepresentationView()
+                defer { action.representationView = button }
                 button.action = action
                 button.isEnabled = action.isEnabled
                 let selector = #selector(handleActionButtonTouchUpInside(_:))
@@ -220,6 +225,10 @@ extension ActionAlert {
         
         func layout(actionViews: [UIView], container: UIView) {
             
+            guard let container = container as? ActionSeparatableSequenceView else {
+                return
+            }
+            
             let stackView = UIStackView(arrangedSubviews: actionViews)
             stackView.axis = actionViews.count <= 2 ? .horizontal : .vertical
             stackView.distribution = .fillEqually
@@ -231,7 +240,8 @@ extension ActionAlert {
             stackView.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
             
             if actionViews.count == 2 {
-                let horizontalSeparator = makeSeparator()
+                let horizontalSeparator = container.horizontalSeparator(at: 0)
+                
                 container.addSubview(horizontalSeparator)
                 horizontalSeparator.translatesAutoresizingMaskIntoConstraints = false
                 horizontalSeparator.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
@@ -239,7 +249,7 @@ extension ActionAlert {
                 horizontalSeparator.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
                 horizontalSeparator.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
                 
-                let verticalSeparator = makeSeparator()
+                let verticalSeparator = container.verticalSeparator(at: 0)
                 container.addSubview(verticalSeparator)
                 verticalSeparator.translatesAutoresizingMaskIntoConstraints = false
                 verticalSeparator.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
@@ -247,8 +257,8 @@ extension ActionAlert {
                 verticalSeparator.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
                 verticalSeparator.widthAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
             } else {
-                actionViews.forEach { button in
-                    let horizontalSeparator = makeSeparator()
+                actionViews.enumerated().forEach { (idx, button) in
+                    let horizontalSeparator = container.horizontalSeparator(at: idx)
                     container.addSubview(horizontalSeparator)
                     horizontalSeparator.translatesAutoresizingMaskIntoConstraints = false
                     horizontalSeparator.topAnchor.constraint(equalTo: button.topAnchor).isActive = true
@@ -257,16 +267,6 @@ extension ActionAlert {
                     horizontalSeparator.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
                 }
             }
-        }
-        
-        private func makeSeparator() -> UIView {
-            let separator = UIView()
-            if #available(iOS 13.0, *) {
-                separator.backgroundColor = UIColor.tertiaryLabel
-            } else {
-                separator.backgroundColor = UIColor(white: 0.237, alpha: 0.29)
-            }
-            return separator
         }
     }
 }
