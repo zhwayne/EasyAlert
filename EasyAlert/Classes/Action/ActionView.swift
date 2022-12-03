@@ -55,12 +55,18 @@ final class ActionView: Action.CustomizedView {
         clipsToBounds = true
         addSubview(highlightedOverlay)
         addSubview(titleLabel)
-        highlightedOverlay.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        titleLabel.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        
+        highlightedOverlay.translatesAutoresizingMaskIntoConstraints = false
+        highlightedOverlay.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        highlightedOverlay.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        highlightedOverlay.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        highlightedOverlay.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     
     @available(*, unavailable)

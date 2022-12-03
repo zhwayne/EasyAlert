@@ -7,16 +7,18 @@
 
 import Foundation
 
-extension ActionAlert {
+public protocol ActionAlertConfiguration {
     
-    public static var defaultConfiguration: Configuration {
-        Configuration()
-    }
+    var cornerRadius: CGFloat { get set }
+    
+    var actionViewType: Action.CustomizedView.Type { get set }
+    
+    var actionLayout: ActionLayoutable { get set }
 }
 
 public extension ActionAlert {
     
-    struct Configuration {
+    struct Configuration: ActionAlertConfiguration {
         
         public var cornerRadius: CGFloat = 13
         
@@ -24,5 +26,8 @@ public extension ActionAlert {
         
         public var actionLayout: ActionLayoutable = ActionLayout()
         
+        public init() {}
+        
+        public static var global = Configuration()
     }
 }

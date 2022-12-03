@@ -20,10 +20,5 @@
   },
   "swift_versions": "5.7",
   "source_files": "EasyAlert/Classes/**/*",
-  "dependencies": {
-    "SnapKit": [
-      "~> 5.0"
-    ]
-  },
   "swift_version": "5.7"
 }

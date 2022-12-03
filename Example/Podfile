@@ -4,6 +4,8 @@ platform :ios, '10.0'
 
 target 'EasyAlert_Example' do
   pod 'EasyAlert', :path => '../'
+  
+  pod 'SnapKit'
 
   target 'EasyAlert_Tests' do
     inherit! :search_paths

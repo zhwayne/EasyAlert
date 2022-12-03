@@ -36,9 +36,9 @@ extension MessageAlert {
         var attributes: [NSAttributedString.Key: Any] = [:]
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.1
-        paragraphStyle.alignment = titleConfig.alignment
-        attributes[.font] = titleConfig.font
-        attributes[.foregroundColor] = titleConfig.color
+        paragraphStyle.alignment = titleConfiguration.alignment
+        attributes[.font] = titleConfiguration.font
+        attributes[.foregroundColor] = titleConfiguration.color
         attributes[.paragraphStyle] = paragraphStyle.copy()
         return attributes
     }
@@ -47,9 +47,9 @@ extension MessageAlert {
         var attributes: [NSAttributedString.Key: Any] = [:]
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.05
-        paragraphStyle.alignment = messageConfig.alignment
-        attributes[.font] = messageConfig.font
-        attributes[.foregroundColor] = messageConfig.color
+        paragraphStyle.alignment = messageConfiguration.alignment
+        attributes[.font] = messageConfiguration.font
+        attributes[.foregroundColor] = messageConfiguration.color
         attributes[.paragraphStyle] = paragraphStyle.copy()
         return attributes
     }

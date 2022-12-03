@@ -1,10 +1,10 @@
 PODS:
-  - EasyAlert (0.1.5):
-    - SnapKit (~> 5.0)
+  - EasyAlert (0.1.5)
   - SnapKit (5.6.0)
 
 DEPENDENCIES:
   - EasyAlert (from `../`)
+  - SnapKit
 
 SPEC REPOS:
   trunk:
@@ -15,9 +15,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  EasyAlert: ed32728ad03d7203d3983553032f5155fea29cc5
+  EasyAlert: 34417aa95cfa5aef2c7ba0c5d2672d67c4cc97fd
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 8109fef79d598dce88b9e69595352e984c8345e3
+PODFILE CHECKSUM: a57a938c89e51457faf4ae63515fecf4982ba02c
 
 COCOAPODS: 1.11.3

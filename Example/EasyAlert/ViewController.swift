@@ -127,9 +127,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let cancel = Action(title: "取消", style: .cancel)
             let confirm = Action(title: "确定", style: .default)
             let ignore = Action(title: "忽略", style: .destructive)
-            alert.add(action: cancel)
-            alert.add(action: confirm)
-            alert.add(action: ignore)
+            alert.add(actions: [cancel, confirm, ignore])
             alert.show(in: view)
             
         case .allowTapBackground:
@@ -159,13 +157,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.show(in: view)
             
         case .leftAlignment:
-            var titleConfig = MessageAlert.titleConfiguration
-            titleConfig.alignment = .left
+            var configuration = MessageAlert.Configuration()
+            configuration.titleConfiguration.alignment = .left
+            configuration.messageConfiguration.alignment = .left
             
-            var messageConfig = MessageAlert.messageConfiguration
-            messageConfig.alignment = .left
-            
-            let alert = MessageAlert(title: alertTitle, message: message, titleConfig: titleConfig, messageConfig: messageConfig)
+            let alert = MessageAlert(title: alertTitle, message: message, configuration: configuration)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
             alert.add(action: cancel)
@@ -173,17 +169,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.show(in: view)
             
         case .cornerRadius:
-            var config = ActionAlert.defaultConfiguration
-            config.actionLayout = MyActionLayout()
-            config.actionViewType = MyActionView.self
             
-            var titleConfig = MessageAlert.titleConfiguration
-            titleConfig.alignment = .left
+            var configuration = MessageAlert.Configuration()
+            configuration.titleConfiguration.alignment = .left
+            configuration.messageConfiguration.alignment = .left
+            configuration.actionLayout = MyActionLayout()
+            configuration.actionViewType = MyActionView.self
             
-            var messageConfig = MessageAlert.messageConfiguration
-            messageConfig.alignment = .left
-            
-            let alert = MessageAlert(title: alertTitle, message: message, config: config, titleConfig: titleConfig, messageConfig: messageConfig)
+            let alert = MessageAlert(title: alertTitle, message: message, configuration: configuration)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
             alert.add(action: cancel)

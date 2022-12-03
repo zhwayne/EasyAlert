@@ -8,6 +8,7 @@
 
 import Foundation
 import EasyAlert
+import SnapKit
 
 struct MyActionLayout : ActionLayoutable {
 

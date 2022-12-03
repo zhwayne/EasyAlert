@@ -6,19 +6,19 @@
 //
 
 import UIKit
-import SnapKit
 
 open class ActionAlert: Alert {
     
     let alertContentView: ContentView
     
-    let config: Configuration
+    let configuration: ActionAlertConfiguration
     
-    public required init(customView: CustomizedView, config: Configuration? = nil) {
-        self.config = config ?? ActionAlert.defaultConfiguration
+    public required init(customView: CustomizedView,
+                         configuration: ActionAlertConfiguration = ActionAlert.Configuration.global) {
+        self.configuration = configuration
         alertContentView = ContentView(customView: customView)
         super.init(customView: alertContentView)
-        alertContentView.actionLayout = self.config.actionLayout
+        alertContentView.actionLayout = self.configuration.actionLayout
         let transitionCoordinator = ActionAlertTransitionCoordinator()
         transitionCoordinator.alertCustomView = alertContentView
         self.transitionCoordinator = transitionCoordinator
@@ -26,7 +26,7 @@ open class ActionAlert: Alert {
     
     open override func willLayoutContainer() {
         super.willLayoutContainer()
-        alertContentView.setCornerRadius(config.cornerRadius)
+        alertContentView.setCornerRadius(configuration.cornerRadius)
     }
 }
 
@@ -46,7 +46,7 @@ extension ActionAlert: ActionAlertble {
     
     private func setViewForAction(_ action: Action) {
         if action.view == nil {
-            action.view = config.actionViewType.init(style: action.style)
+            action.view = configuration.actionViewType.init(style: action.style)
             action.view.title = action.title
         }
     }
@@ -65,6 +65,10 @@ extension ActionAlert {
         let backgroundView: UIVisualEffectView
         
         let actionContainerView = ActionRepresentationSequenceView()
+        
+        private var representationView: ActionRepresentationView?
+        
+        private let feedback = UISelectionFeedbackGenerator()
                 
         private lazy var contentStackView: UIStackView = {
             let stackView = UIStackView()
@@ -86,8 +90,9 @@ extension ActionAlert {
                 backgroundView.layer.cornerCurve = .continuous
             }
             super.init(frame: .zero)
-            backgroundView.frame = frame
+            backgroundView.frame = bounds
             backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            backgroundView.translatesAutoresizingMaskIntoConstraints = false
             addSubview(backgroundView)
         }
         
@@ -100,9 +105,11 @@ extension ActionAlert {
                 contentStackView.addArrangedSubview(actionContainerView)
             }
             addSubview(contentStackView)
-            contentStackView.snp.remakeConstraints { maker in
-                maker.edges.equalToSuperview()
-            }
+            contentStackView.translatesAutoresizingMaskIntoConstraints = false
+            contentStackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+            contentStackView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+            contentStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+            contentStackView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         }
         
         @available(*, unavailable)
@@ -143,6 +150,67 @@ extension ActionAlert {
             backgroundView.layer.cornerRadius = radius
             actionContainerView.contentView.setCornerRadius(radius)
         }
+        
+        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            resetRepresentationView()
+            if let touch = touches.first {
+                handleTracking(touch, with: event, isTracking: false)
+            }
+            super.touchesBegan(touches, with: event)
+        }
+        
+        override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+            defer { representationView = nil }
+            if let representationView, representationView.isHighlighted {
+                representationView.isHighlighted = false
+                representationView.sendActions(for: .touchUpInside)
+            }
+            super.touchesEnded(touches, with: event)
+        }
+    
+        override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+            resetRepresentationView()
+            super.touchesCancelled(touches, with: event)
+        }
+        
+        override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+            if let touch = touches.first {
+                handleTracking(touch, with: event, isTracking: true)
+            }
+            super.touchesMoved(touches, with: event)
+        }
+        
+        private func handleTracking(_ touch: UITouch, with event: UIEvent?, isTracking: Bool) {
+            guard let targetViews = actionContainerView.contentView.findActionRepresentationViews() else {
+                resetRepresentationView()
+                return
+            }
+            guard let touched = targetViews.first(where: { view in
+                let point = touch.location(in: view)
+                return view.point(inside: point, with: event)
+            }) else {
+                resetRepresentationView()
+                return
+            }
+            representationView = touched
+            
+            if !touched.isHighlighted {
+                touched.isHighlighted = true
+                if isTracking {
+                    feedback.selectionChanged()
+                }
+            }
+            for view in targetViews where view != touched && view.isHighlighted {
+                view.isHighlighted = false
+            }
+        }
+        
+        private func resetRepresentationView() {
+            if let representationView, representationView.isHighlighted {
+                representationView.isHighlighted = false
+            }
+            representationView = nil
+        }
     }
 }
 
@@ -156,33 +224,37 @@ extension ActionAlert {
             stackView.axis = actionViews.count <= 2 ? .horizontal : .vertical
             stackView.distribution = .fillEqually
             container.addSubview(stackView)
-            stackView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
+            stackView.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
+            stackView.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
+            stackView.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
             
             if actionViews.count == 2 {
                 let horizontalSeparator = makeSeparator()
                 container.addSubview(horizontalSeparator)
-                horizontalSeparator.snp.makeConstraints { make in
-                    make.left.right.top.equalToSuperview()
-                    make.height.equalTo(1 / UIScreen.main.scale)
-                }
+                horizontalSeparator.translatesAutoresizingMaskIntoConstraints = false
+                horizontalSeparator.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
+                horizontalSeparator.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
+                horizontalSeparator.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
+                horizontalSeparator.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
                 
                 let verticalSeparator = makeSeparator()
                 container.addSubview(verticalSeparator)
-                verticalSeparator.snp.makeConstraints { make in
-                    make.top.bottom.centerX.equalToSuperview()
-                    make.width.equalTo(1 / UIScreen.main.scale)
-                }
+                verticalSeparator.translatesAutoresizingMaskIntoConstraints = false
+                verticalSeparator.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
+                verticalSeparator.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
+                verticalSeparator.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
+                verticalSeparator.widthAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
             } else {
                 actionViews.forEach { button in
                     let horizontalSeparator = makeSeparator()
                     container.addSubview(horizontalSeparator)
-                    horizontalSeparator.snp.makeConstraints { make in
-                        make.left.right.equalToSuperview()
-                        make.top.equalTo(button)
-                        make.height.equalTo(1 / UIScreen.main.scale)
-                    }
+                    horizontalSeparator.translatesAutoresizingMaskIntoConstraints = false
+                    horizontalSeparator.topAnchor.constraint(equalTo: button.topAnchor).isActive = true
+                    horizontalSeparator.leftAnchor.constraint(equalTo: container.leftAnchor).isActive = true
+                    horizontalSeparator.rightAnchor.constraint(equalTo: container.rightAnchor).isActive = true
+                    horizontalSeparator.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
                 }
             }
         }
@@ -196,5 +268,26 @@ extension ActionAlert {
             }
             return separator
         }
+    }
+}
+
+extension UIView {
+    
+    fileprivate func findActionRepresentationViews() -> [ActionRepresentationView]? {
+        guard subviews.isEmpty == false else { return nil }
+        var allButtons = [UIView]()
+        for view in subviews where view is ActionRepresentationView{
+            if (view as! ActionRepresentationView).isEnabled {
+                allButtons.append(view)
+            }
+        }
+        if allButtons.isEmpty {
+            for view in subviews {
+                if let buttons = view.findActionRepresentationViews() {
+                    allButtons.append(contentsOf: buttons)
+                }
+            }
+        }
+        return (allButtons as! [ActionRepresentationView])
     }
 }

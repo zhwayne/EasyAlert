@@ -16,6 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+//        var configuration = MessageAlert.Configuration()
+//        configuration.actionLayout = MyActionLayout()
+//        configuration.actionViewType = MyActionView.self
+//        configuration.titleConfiguration.alignment = .left
+//        configuration.messageConfiguration.alignment = .left
+//        MessageAlert.Configuration.global = configuration
         return true
     }
 

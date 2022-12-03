@@ -40,23 +40,23 @@ open class AlertTransitionCoordinator : TransitionCoordinator {
     }
     
     public func update(context: TransitionCoordinatorContext) {
-        
-        context.container.snp.remakeConstraints { maker in
-            switch size.width {
-            case let .fixed(value): maker.width.equalTo(value)
-            case let .flexible(value): maker.width.lessThanOrEqualTo(value)
-            case let .multiplied(value):
-                if context.interfaceOrientation.isPortrait {
-                    maker.width.equalToSuperview().multipliedBy(value)
-                } else {
-                    maker.width.equalTo(context.container.superview!.snp.height).multipliedBy(value)
-                }
+        context.container.translatesAutoresizingMaskIntoConstraints = false
+        guard let superview = context.container.superview else { return }
+        NSLayoutConstraint.deactivate(context.container.constraints)
+        switch size.width {
+        case let .fixed(value): context.container.widthAnchor.constraint(equalToConstant: value).isActive = true
+        case let .flexible(value): context.container.widthAnchor.constraint(lessThanOrEqualToConstant: value).isActive = true
+        case let .multiplied(value):
+            if context.interfaceOrientation.isPortrait {
+                context.container.widthAnchor.constraint(equalTo: superview.widthAnchor, multiplier: value).isActive = true
+            } else {
+                context.container.widthAnchor.constraint(equalTo: superview.heightAnchor, multiplier: value).isActive = true
             }
-            if case let .greaterThanOrEqualTo(value) = size.height {
-                maker.height.greaterThanOrEqualTo(value)
-            }
-            
-            maker.center.equalToSuperview()
         }
+        if case let .greaterThanOrEqualTo(value) = size.height {
+            context.container.heightAnchor.constraint(greaterThanOrEqualToConstant: value).isActive = true
+        }
+        context.container.centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = true
+        context.container.centerYAnchor.constraint(equalTo: superview.centerYAnchor).isActive = true
     }
 }

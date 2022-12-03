@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SnapKit
 
 public final class MessageAlert: ActionAlert {
     
@@ -37,8 +36,8 @@ public final class MessageAlert: ActionAlert {
     
     private let contentView: ContentView
     
-    let titleConfig: TitleConfiguration
-    let messageConfig: MessageConfiguration
+    let titleConfiguration: TitleConfiguration
+    let messageConfiguration: MessageConfiguration
     
     @available(*, unavailable)
     public required init(title: Title?, customView: ActionAlert.CustomizedView) {
@@ -48,14 +47,12 @@ public final class MessageAlert: ActionAlert {
     public required init(
         title: Title?,
         message: Message?,
-        config: Configuration? = nil,
-        titleConfig: TitleConfiguration? = nil,
-        messageConfig: MessageConfiguration? = nil
+        configuration: MessageAlertConfiguration = MessageAlert.Configuration.global
     ) {
-        self.titleConfig = titleConfig ?? MessageAlert.titleConfiguration
-        self.messageConfig = messageConfig ?? MessageAlert.messageConfiguration
+        self.titleConfiguration = configuration.titleConfiguration
+        self.messageConfiguration = configuration.messageConfiguration
         contentView = ContentView()
-        super.init(customView: contentView, config: config)
+        super.init(customView: contentView, configuration: configuration)
         configAttributes()
         contentView.titleLabel.attributedText = text(for: title)
         contentView.messageLabel.attributedText = text(for: message)
@@ -63,18 +60,18 @@ public final class MessageAlert: ActionAlert {
     }
     
     @available(*, unavailable)
-    public required init(customView: CustomizedView, config: Configuration? = nil) {
+    public required init(customView: CustomizedView, configuration: ActionAlertConfiguration? = nil) {
         fatalError("init(customView:config:) has not been implemented")
     }
     
     private func configAttributes() {
-        contentView.titleLabel.textAlignment = titleConfig.alignment
-        contentView.titleLabel.textColor = titleConfig.color
-        contentView.titleLabel.font = titleConfig.font
+        contentView.titleLabel.textAlignment = titleConfiguration.alignment
+        contentView.titleLabel.textColor = titleConfiguration.color
+        contentView.titleLabel.font = titleConfiguration.font
         
-        contentView.messageLabel.textAlignment = messageConfig.alignment
-        contentView.messageLabel.textColor = messageConfig.color
-        contentView.messageLabel.font = messageConfig.font
+        contentView.messageLabel.textAlignment = messageConfiguration.alignment
+        contentView.messageLabel.textColor = messageConfiguration.color
+        contentView.messageLabel.font = messageConfiguration.font
     }
     
     public override func willLayoutContainer() {
@@ -84,26 +81,26 @@ public final class MessageAlert: ActionAlert {
             contentView.titleLabel.removeFromSuperview()
         } else {
             contentView.addSubview(contentView.titleLabel)
-            contentView.titleLabel.snp.remakeConstraints { make in
-                make.top.equalToSuperview().offset(17)
-                make.left.equalToSuperview().offset(16)
-                make.right.equalToSuperview().offset(-16)
-                make.bottom.lessThanOrEqualToSuperview().offset(-17)
-            }
+            NSLayoutConstraint.deactivate(contentView.titleLabel.constraints)
+            contentView.titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            contentView.titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17).isActive = true
+            contentView.titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
+            contentView.titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16).isActive = true
+            contentView.titleLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -17).isActive = true
         }
         if message == nil {
             contentView.messageLabel.removeFromSuperview()
         } else {
             contentView.addSubview(contentView.messageLabel)
-            contentView.messageLabel.snp.remakeConstraints { make in
-                make.top.greaterThanOrEqualToSuperview().offset(17)
-                if title != nil {
-                    make.top.equalTo(contentView.titleLabel.snp.bottom).offset(3)
-                }
-                make.left.equalToSuperview().offset(16)
-                make.right.equalToSuperview().offset(-16)
-                make.bottom.equalToSuperview().offset(-20)
+            NSLayoutConstraint.deactivate(contentView.messageLabel.constraints)
+            contentView.messageLabel.translatesAutoresizingMaskIntoConstraints = false
+            contentView.messageLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 17).isActive = true
+            if title != nil {
+                contentView.messageLabel.topAnchor.constraint(equalTo: contentView.titleLabel.bottomAnchor, constant: 3).isActive = true
             }
+            contentView.messageLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
+            contentView.messageLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16).isActive = true
+            contentView.messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
         }
     }
 }
