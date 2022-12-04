@@ -20,9 +20,9 @@ let ok = Action(title: "OK", style: .default) { _ in
         self?.showVideo(url: url)
     }
 }
-alert.add(action: cancel)
-alert.add(action: ok)
-alert.show(in: window)
+alert.addAction(cancel)
+alert.addAction(ok)
+window.present(alert)
 ```
 
 ## Installation

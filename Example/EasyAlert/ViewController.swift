@@ -124,7 +124,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            view.presentAlert(alert)
+            view.present(alert)
             
         case .threeActions:
             let alert = MessageAlert(title: alertTitle, message: message)
@@ -141,7 +141,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }, didDismiss: {
                 print("Alert did dismiss.")
             })
-            view.presentAlert(alert)
+            view.present(alert)
             if #available(iOS 13.0, *) {
                 Task {
                     try? await Task.sleep(nanoseconds:1_000_000_000)
@@ -157,7 +157,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            view.presentAlert(alert)
+            view.present(alert)
 
         case .effectBackground:
             let alert = MessageAlert(title: alertTitle, message: message)
@@ -174,7 +174,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.callback = LiftcycleCallback(didDismiss: {
                 animator.stopAnimation(true)
             })
-            view.presentAlert(alert)
+            view.present(alert)
             
         case .leftAlignment:
             var configuration = MessageAlert.Configuration()
@@ -186,7 +186,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            view.presentAlert(alert)
+            view.present(alert)
             
         case .cornerRadius:
             
@@ -201,7 +201,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            view.presentAlert(alert)
+            view.present(alert)
             
         case .attributedTitleAndMessage:
             var range = (alertTitle as NSString).range(of: "Meizu-0D23-5G")
@@ -230,7 +230,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            view.presentAlert(alert)
+            view.present(alert)
         }
     }
 }

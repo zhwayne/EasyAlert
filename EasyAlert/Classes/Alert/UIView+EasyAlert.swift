@@ -9,7 +9,7 @@ import UIKit
 
 extension UIView {
     
-    public func presentAlert(_ alert: Alertble) {
+    public func present(_ alert: Alertble) {
         if let alert = alert as? Alert {
             alert.show(in: self)
         }
