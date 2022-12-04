@@ -112,8 +112,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
             let cancel = UIAlertAction(title: "取消", style: .cancel)
             let ignore = UIAlertAction(title: "忽略", style: .destructive)
+            let other = UIAlertAction(title: "其他", style: .destructive)
             alertController.addAction(cancel)
             alertController.addAction(ignore)
+            alertController.addAction(other)
             present(alertController, animated: true)
             
         case .messageAlert:
