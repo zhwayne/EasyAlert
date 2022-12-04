@@ -78,7 +78,7 @@ open class Alert: Alertble {
     
     open func didLayoutContainer() { }
     
-    open func show(in view: UIView?) {
+    func show(in view: UIView?) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard let parent = findParentView(view),
               canShow(in: parent) else {
@@ -90,7 +90,7 @@ open class Alert: Alertble {
         showAlert(in: parent)
     }
     
-    open func dismiss(completion: (() -> Void)? = nil) {
+    public func dismiss(completion: (() -> Void)? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard canDismiss() else {
             return
@@ -105,6 +105,13 @@ open class Alert: Alertble {
             completion?()
             self?.windup()
         }
+    }
+    
+    @available(iOS 13.0, *)
+    @MainActor public func dismiss() async {
+        await withUnsafeContinuation({ continuation in
+            dismiss { continuation.resume() }
+        })
     }
 }
 
@@ -208,5 +215,3 @@ extension Alert {
         isShowing = false
     }
 }
-
-

@@ -7,16 +7,4 @@
 
 import UIKit
 
-public protocol Alertble : AnyObject {
-    
-    func show(in view: UIView?)
-    
-    func dismiss(completion: (() -> Void)?)
-}
-
-public protocol ActionAlertble: Alertble {
-    
-    func add(action: Action)
-    
-    func add(actions: [Action])
-}
+public protocol Alertble : AlertDismissible { }

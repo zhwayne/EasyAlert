@@ -9,6 +9,19 @@ import UIKit
 
 extension UIView {
     
+    public func presentAlert(_ alert: Alertble) {
+        if let alert = alert as? Alert {
+            alert.show(in: self)
+        }
+    }
+    
+    // TODO: 也许应该放开查询 `UIView` 中全部 alert 的 API？
+    // public var visiableAlert: Alertble? { alerts.last }
+}
+
+
+extension UIView {
+    
     private var alerts: [Alertble] {
         get {
             if let alerts = objc_getAssociatedObject(self, &AssociatedKey.alerts) as? [Alertble] {
@@ -23,6 +36,9 @@ extension UIView {
     }
     
     func attach(alert: Alertble) {
+        if alerts.contains(where: { alert === $0 }) {
+            return
+        }
         alerts.append(alert)
     }
     
@@ -36,3 +52,4 @@ extension UIView {
 fileprivate struct AssociatedKey {
     static var alerts = "alerts"
 }
+

@@ -11,13 +11,13 @@ public struct LiftcycleCallback {
     
     public typealias Handler = () -> Void
     
-    var willShow: Handler?
+    let willShow: Handler?
     
-    var didShow: Handler?
+    let didShow: Handler?
     
-    var willDismiss: Handler?
+    let willDismiss: Handler?
     
-    var didDismiss: Handler?
+    let didDismiss: Handler?
     
     public init(willShow: Handler? = nil,
                 didShow: Handler? = nil,

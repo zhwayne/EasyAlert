@@ -7,7 +7,15 @@
 
 import Foundation
 
-public protocol AlertDismissible : AnyObject { }
+public protocol AlertDismissible : AnyObject {
+    
+    /// 关掉 alert。
+    /// - Parameter completion: 完成回调。
+    func dismiss(completion: (() -> Void)?)
+    
+    @available(iOS 13.0, *)
+    @MainActor func dismiss() async
+}
 
 public extension AlertDismissible where Self: UIView {
     
@@ -27,5 +35,12 @@ public extension AlertDismissible where Self: UIView {
     /// - Parameter completion: 完成回调。
     func dismiss(completion: (() -> Void)? = nil) {
         alert?.dismiss(completion: completion)
+    }
+    
+    @available(iOS 13.0, *)
+    @MainActor func dismiss() async {
+        await withUnsafeContinuation({ continuation in
+            dismiss { continuation.resume() }
+        })
     }
 }

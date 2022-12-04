@@ -32,13 +32,13 @@ open class ActionAlert: Alert {
 
 extension ActionAlert: ActionAlertble {
     
-    public func add(action: Action) {
+    public func addAction(_ action: Action) {
         assert(isShowing == false)
         alertContentView.actions.append(action)
         setViewForAction(action)
     }
     
-    public func add(actions: [Action]) {
+    public func addActions(_ actions: [Action]) {
         assert(isShowing == false)
         alertContentView.actions.append(contentsOf: actions)
         actions.forEach { setViewForAction($0) }
@@ -73,7 +73,7 @@ extension ActionAlert {
         private lazy var contentStackView: UIStackView = {
             let stackView = UIStackView()
             stackView.axis = .vertical
-            stackView.spacing = 1 / UIScreen.main.scale
+            // stackView.spacing = 1 / UIScreen.main.scale
             return stackView
         }()
         

@@ -122,27 +122,43 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let alert = MessageAlert(title: alertTitle, message: message)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
-            alert.add(action: cancel)
-            alert.add(action: ignore)
-            alert.show(in: view)
+            alert.addAction(cancel)
+            alert.addAction(ignore)
+            view.presentAlert(alert)
             
         case .threeActions:
             let alert = MessageAlert(title: alertTitle, message: message)
             let cancel = Action(title: "取消", style: .cancel)
             let confirm = Action(title: "确定", style: .default)
             let ignore = Action(title: "忽略", style: .destructive)
-            alert.add(actions: [cancel, confirm, ignore])
-            alert.show(in: view)
+            alert.addActions([cancel, confirm, ignore])
+            alert.callback = LiftcycleCallback(willShow: {
+                print("Alert will show.")
+            }, didShow: {
+                print("Alert did show.")
+            }, willDismiss: {
+                print("Alert will dismiss.")
+            }, didDismiss: {
+                print("Alert did dismiss.")
+            })
+            view.presentAlert(alert)
+            if #available(iOS 13.0, *) {
+                Task {
+                    try? await Task.sleep(nanoseconds:1_000_000_000)
+                    await alert.dismiss()
+                    print("Alert destroyed.")
+                }
+            }
             
         case .allowTapBackground:
             let alert = MessageAlert(title: alertTitle, message: message)
             alert.backgroundProvider.allowDismissWhenBackgroundTouch = true
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
-            alert.add(action: cancel)
-            alert.add(action: ignore)
-            alert.show(in: view)
-            
+            alert.addAction(cancel)
+            alert.addAction(ignore)
+            view.presentAlert(alert)
+
         case .effectBackground:
             let alert = MessageAlert(title: alertTitle, message: message)
             let effectView = UIVisualEffectView()
@@ -153,12 +169,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.backgroundProvider.dimming = .view(effectView)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
-            alert.add(action: cancel)
-            alert.add(action: ignore)
+            alert.addAction(cancel)
+            alert.addAction(ignore)
             alert.callback = LiftcycleCallback(didDismiss: {
                 animator.stopAnimation(true)
             })
-            alert.show(in: view)
+            view.presentAlert(alert)
             
         case .leftAlignment:
             var configuration = MessageAlert.Configuration()
@@ -168,9 +184,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let alert = MessageAlert(title: alertTitle, message: message, configuration: configuration)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
-            alert.add(action: cancel)
-            alert.add(action: ignore)
-            alert.show(in: view)
+            alert.addAction(cancel)
+            alert.addAction(ignore)
+            view.presentAlert(alert)
             
         case .cornerRadius:
             
@@ -183,9 +199,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let alert = MessageAlert(title: alertTitle, message: message, configuration: configuration)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
-            alert.add(action: cancel)
-            alert.add(action: ignore)
-            alert.show(in: view)
+            alert.addAction(cancel)
+            alert.addAction(ignore)
+            view.presentAlert(alert)
             
         case .attributedTitleAndMessage:
             var range = (alertTitle as NSString).range(of: "Meizu-0D23-5G")
@@ -212,9 +228,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let alert = MessageAlert(title: attrTitle, message: attrMessage)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
-            alert.add(action: cancel)
-            alert.add(action: ignore)
-            alert.show(in: view)
+            alert.addAction(cancel)
+            alert.addAction(ignore)
+            view.presentAlert(alert)
         }
     }
 }
