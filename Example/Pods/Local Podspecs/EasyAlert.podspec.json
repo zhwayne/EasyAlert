@@ -1,6 +1,6 @@
 {
   "name": "EasyAlert",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "summary": "A short description of EasyAlert.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/zhwayne/EasyAlert",
@@ -13,10 +13,10 @@
   },
   "source": {
     "git": "https://github.com/zhwayne/EasyAlert.git",
-    "tag": "0.1.5"
+    "tag": "0.2.0"
   },
   "platforms": {
-    "ios": "10.0"
+    "ios": "11.0"
   },
   "swift_versions": "5.7",
   "source_files": "EasyAlert/Classes/**/*",
