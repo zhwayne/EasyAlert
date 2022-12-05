@@ -11,10 +11,12 @@ open class ActionAlert: Alert {
     
     let alertContentView: ContentView
     
-    let configuration: ActionAlertConfiguration
+    let configuration: ActionAlertbleConfigurable
     
-    public required init(customView: CustomizedView,
-                         configuration: ActionAlertConfiguration = ActionAlert.Configuration.global) {
+    public required init(
+        customView: CustomizedView,
+        configuration: ActionAlertbleConfigurable = ActionAlert.Configuration.globalConfiguration
+    ) {
         self.configuration = configuration
         alertContentView = ContentView(customView: customView)
         super.init(customView: alertContentView)
@@ -152,7 +154,7 @@ extension ActionAlert {
                 button.addTarget(self, action: selector, for: .touchUpInside)
                 return button
             }
-            if actionLayout is ActionLayout {
+            if actionLayout is AlertActionLayout {
                 separatorView.isHidden = false
             } else {
                 separatorView.isHidden = true

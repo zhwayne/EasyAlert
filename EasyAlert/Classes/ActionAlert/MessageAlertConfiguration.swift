@@ -15,17 +15,9 @@ private var defaultTextColor: UIColor {
     }
 }
 
-public protocol MessageAlertConfiguration: ActionAlertConfiguration {
+extension MessageAlert {
     
-    var titleConfiguration: MessageAlert.TitleConfiguration { get set }
-   
-    var messageConfiguration: MessageAlert.MessageConfiguration { get set }
-}
-
-
-public extension MessageAlert {
-    
-    struct Configuration: MessageAlertConfiguration {
+    public struct Configuration: ActionAlertbleConfigurable {
         
         public var cornerRadius: CGFloat {
             get { actionAlertConfiguration.cornerRadius }
@@ -50,13 +42,13 @@ public extension MessageAlert {
         
         public init() {}
         
-        public static var global = Configuration()
+        public static var globalConfiguration = MessageAlert.Configuration()
     }
 }
 
-public extension MessageAlert {
+extension MessageAlert {
     
-    struct TitleConfiguration {
+    public struct TitleConfiguration {
         
         public var alignment: NSTextAlignment = .center
         
@@ -66,9 +58,12 @@ public extension MessageAlert {
         
         public init() {}
     }
+}
+
+
+extension MessageAlert {
     
-    
-    struct MessageConfiguration {
+    public struct MessageConfiguration {
 
         public var alignment: NSTextAlignment = .center
 

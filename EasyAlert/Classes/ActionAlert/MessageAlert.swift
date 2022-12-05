@@ -47,7 +47,7 @@ public final class MessageAlert: ActionAlert {
     public required init(
         title: Title?,
         message: Message?,
-        configuration: MessageAlertConfiguration = MessageAlert.Configuration.global
+        configuration: Configuration = .globalConfiguration
     ) {
         self.titleConfiguration = configuration.titleConfiguration
         self.messageConfiguration = configuration.messageConfiguration
@@ -60,7 +60,7 @@ public final class MessageAlert: ActionAlert {
     }
     
     @available(*, unavailable)
-    public required init(customView: CustomizedView, configuration: ActionAlertConfiguration? = nil) {
+    public required init(customView: CustomizedView, configuration: ActionAlertbleConfigurable? = nil) {
         fatalError("init(customView:config:) has not been implemented")
     }
     

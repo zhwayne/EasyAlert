@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        configuration.actionViewType = MyActionView.self
 //        configuration.titleConfiguration.alignment = .left
 //        configuration.messageConfiguration.alignment = .left
-//        MessageAlert.Configuration.global = configuration
+//        MessageAlert.Configuration.globalConfiguration = configuration
         return true
     }
 
