@@ -14,6 +14,8 @@ enum Section {
     
     case customMessage(title: String?, items: [Item])
     
+    case sheet(title: String?, items: [Item])
+    
     enum Item {
         
         case systemAlert(String)
@@ -24,6 +26,8 @@ enum Section {
         case leftAlignment(String)
         case cornerRadius(String)
         case attributedTitleAndMessage(String)
+        
+        case systemActionSheet(String)
     }
 }
 
@@ -33,6 +37,7 @@ extension Section {
         switch self {
         case let .message(_, items): return items
         case let .customMessage(_, items):  return items
+        case let .sheet(_, items): return items
         }
     }
 }

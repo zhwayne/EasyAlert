@@ -22,8 +22,7 @@ let ok = Action(title: "OK", style: .default) { _ in
 }
 alert.addAction(cancel)
 alert.addAction(ok)
-window.present(alert)
-```
+alert.show(on: view)
 
 ## Installation
 

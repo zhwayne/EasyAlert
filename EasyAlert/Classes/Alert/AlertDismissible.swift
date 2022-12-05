@@ -23,7 +23,7 @@ public extension AlertDismissible where Self: UIView {
     var alert: Alertble? {
         var alertble: Alertble?
         for view in sequence(first: superview, next: { $0?.superview }) {
-            if let backgroundView = view as? BackgroundView {
+            if let backgroundView = view as? DimmingKnockoutBackdropView {
                 alertble = backgroundView.alert
                 break
             }

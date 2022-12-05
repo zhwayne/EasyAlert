@@ -17,6 +17,7 @@ final class ActionRepresentationSequenceView: UIView {
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(contentView)
         isUserInteractionEnabled = false
+        translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {

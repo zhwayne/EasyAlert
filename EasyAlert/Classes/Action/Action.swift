@@ -25,7 +25,7 @@ public final class Action {
     
     var view: CustomizedView?
     
-    weak var representationView: ActionRepresentationView?
+    weak var representationView: ActionCustomViewRepresentationView?
     
     public init(title: String, style: Style, handler: Handelr? = nil) {
         self.title = title
@@ -49,7 +49,7 @@ public final class Action {
     /// isEnabled 为 true 时，action view 将无法点击。
     public var isEnabled: Bool = true {
         didSet {
-            guard let representationView = view?.superview as? ActionRepresentationView else {
+            guard let representationView = view?.superview as? ActionCustomViewRepresentationView else {
                 return
             }
             representationView.isEnabled = isEnabled

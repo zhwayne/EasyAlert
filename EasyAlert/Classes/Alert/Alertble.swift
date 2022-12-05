@@ -7,4 +7,7 @@
 
 import UIKit
 
-public protocol Alertble : AlertDismissible { }
+public protocol Alertble : AlertDismissible {
+    
+    func show(on view: UIView?)
+}

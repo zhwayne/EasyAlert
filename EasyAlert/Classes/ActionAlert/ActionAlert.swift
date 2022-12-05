@@ -60,22 +60,19 @@ extension ActionAlert {
         
         var actions: [Action] = []
         
-        let customView: CustomizedView
+        private let customView: CustomizedView
         
-        let backgroundView: UIVisualEffectView
+        private let backgroundView: UIVisualEffectView
         
-        let actionContainerView = ActionRepresentationSequenceView()
+        private let representationSequenceView = ActionRepresentationSequenceView()
         
-        private var representationView: ActionRepresentationView?
+        private var activeRepresentationView: ActionCustomViewRepresentationView?
         
+        private lazy var separatorView = ActionVibrantSeparatorView()
+
         private let feedback = UISelectionFeedbackGenerator()
-                
-        private lazy var contentStackView: UIStackView = {
-            let stackView = UIStackView()
-            stackView.axis = .vertical
-            // stackView.spacing = 1 / UIScreen.main.scale
-            return stackView
-        }()
+        
+        private let groupView = UIView()
         
         required init(customView: CustomizedView) {
             if #available(iOS 13.0, *) {
@@ -94,22 +91,46 @@ extension ActionAlert {
             backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             backgroundView.translatesAutoresizingMaskIntoConstraints = false
             addSubview(backgroundView)
+            
+            groupView.frame = bounds
+            groupView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            addSubview(groupView)            
         }
         
         override func didMoveToSuperview() {
             super.didMoveToSuperview()
             guard superview != nil else { return }
  
-            contentStackView.addArrangedSubview(customView)
+            customView.removeFromSuperview()
+            groupView.addSubview(customView)
+            customView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.deactivate(customView.constraints)
+            customView.topAnchor.constraint(equalTo: groupView.topAnchor).isActive = true
+            customView.leftAnchor.constraint(equalTo: groupView.leftAnchor).isActive = true
+            customView.rightAnchor.constraint(equalTo: groupView.rightAnchor).isActive = true
+            customView.widthAnchor.constraint(equalTo: groupView.widthAnchor).isActive = true
+            let customBottomConstraint = customView.bottomAnchor.constraint(equalTo: groupView.bottomAnchor)
+            customBottomConstraint.priority = .defaultHigh - 1
+            customBottomConstraint.isActive = true
+            
             if !actions.isEmpty {
-                contentStackView.addArrangedSubview(actionContainerView)
+                separatorView.removeFromSuperview()
+                groupView.addSubview(separatorView)
+                separatorView.translatesAutoresizingMaskIntoConstraints = false
+                separatorView.topAnchor.constraint(equalTo: customView.bottomAnchor).isActive = true
+                separatorView.centerXAnchor.constraint(equalTo: groupView.centerXAnchor).isActive = true
+                separatorView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
+                separatorView.widthAnchor.constraint(equalTo: groupView.widthAnchor).isActive = true
+                separatorView.setContentHuggingPriority(.required, for: .vertical)
+                
+                representationSequenceView.removeFromSuperview()
+                groupView.addSubview(representationSequenceView)
+                representationSequenceView.translatesAutoresizingMaskIntoConstraints = false
+                representationSequenceView.topAnchor.constraint(equalTo: customView.bottomAnchor).isActive = true
+                representationSequenceView.centerXAnchor.constraint(equalTo: groupView.centerXAnchor).isActive = true
+                representationSequenceView.widthAnchor.constraint(equalTo: groupView.widthAnchor).isActive = true
+                representationSequenceView.bottomAnchor.constraint(equalTo: groupView.bottomAnchor).isActive = true
             }
-            addSubview(contentStackView)
-            contentStackView.translatesAutoresizingMaskIntoConstraints = false
-            contentStackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-            contentStackView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-            contentStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-            contentStackView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         }
         
         @available(*, unavailable)
@@ -118,18 +139,17 @@ extension ActionAlert {
         }
         
         func updateLayout(interfaceOrientation: UIInterfaceOrientation, width: Width) {
-            actionContainerView.contentView.subviews.forEach {
+            representationSequenceView.contentView.subviews.forEach {
                 $0.removeFromSuperview()
             }
             guard !actions.isEmpty else { return }
             
-            // FIXME: 这里需要一套高效的diff方式，避免不必要的重新构建view。
             let buttons = actions.map { action -> UIView in
                 if let representationView = action.representationView {
                     return representationView
                 }
-                
-                let button = ActionRepresentationView()
+    
+                let button = ActionCustomViewRepresentationView()
                 defer { action.representationView = button }
                 button.action = action
                 button.isEnabled = action.isEnabled
@@ -138,11 +158,16 @@ extension ActionAlert {
                 button.addTarget(self, action: selector, for: .touchUpInside)
                 return button
             }
-            actionLayout.layout(actionViews: buttons, container: actionContainerView.contentView)
+            if actionLayout is ActionLayout {
+                separatorView.isHidden = false
+            } else {
+                separatorView.isHidden = true
+            }
+            actionLayout.layout(actionViews: buttons, container: representationSequenceView.contentView)
         }
         
         @objc
-        private func handleActionButtonTouchUpInside(_ button: ActionRepresentationView) {
+        private func handleActionButtonTouchUpInside(_ button: ActionCustomViewRepresentationView) {
             if let action = button.action {
                 action.handler?(action)
                 if action.allowAutoDismiss {
@@ -153,7 +178,7 @@ extension ActionAlert {
         
         func setCornerRadius(_ radius: CGFloat) {
             backgroundView.layer.cornerRadius = radius
-            actionContainerView.contentView.setCornerRadius(radius)
+            representationSequenceView.contentView.setCornerRadius(radius)
         }
         
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -165,10 +190,10 @@ extension ActionAlert {
         }
         
         override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-            defer { representationView = nil }
-            if let representationView, representationView.isHighlighted {
-                representationView.isHighlighted = false
-                representationView.sendActions(for: .touchUpInside)
+            defer { activeRepresentationView = nil }
+            if let activeRepresentationView, activeRepresentationView.isHighlighted {
+                activeRepresentationView.isHighlighted = false
+                activeRepresentationView.sendActions(for: .touchUpInside)
             }
             super.touchesEnded(touches, with: event)
         }
@@ -186,7 +211,7 @@ extension ActionAlert {
         }
         
         private func handleTracking(_ touch: UITouch, with event: UIEvent?, isTracking: Bool) {
-            guard let targetViews = actionContainerView.contentView.findActionRepresentationViews() else {
+            guard let targetViews = representationSequenceView.contentView.findActionRepresentationViews() else {
                 resetRepresentationView()
                 return
             }
@@ -197,45 +222,46 @@ extension ActionAlert {
                 resetRepresentationView()
                 return
             }
-            representationView = touched
-            
+            activeRepresentationView = touched
+            for view in targetViews where view != touched && view.isHighlighted {
+                view.isHighlighted = false
+            }
             if !touched.isHighlighted {
                 touched.isHighlighted = true
                 if isTracking {
                     feedback.selectionChanged()
                 }
             }
-            for view in targetViews where view != touched && view.isHighlighted {
-                view.isHighlighted = false
-            }
         }
         
         private func resetRepresentationView() {
-            if let representationView, representationView.isHighlighted {
-                representationView.isHighlighted = false
+            if let activeRepresentationView, activeRepresentationView.isHighlighted {
+                activeRepresentationView.isHighlighted = false
             }
-            representationView = nil
+            activeRepresentationView = nil
         }
     }
 }
 
 extension UIView {
     
-    fileprivate func findActionRepresentationViews() -> [ActionRepresentationView]? {
+    fileprivate func findActionRepresentationViews() -> [ActionCustomViewRepresentationView]? {
+        findSubviews(ofClass: ActionCustomViewRepresentationView.self)
+    }
+    
+    func findSubviews<T: UIView>(ofClass: T.Type) -> [T]? {
         guard subviews.isEmpty == false else { return nil }
-        var allButtons = [UIView]()
-        for view in subviews where view is ActionRepresentationView{
-            if (view as! ActionRepresentationView).isEnabled {
-                allButtons.append(view)
-            }
+        var allViews = [T]()
+        for view in subviews where view is T {
+            allViews.append(view as! T)
         }
-        if allButtons.isEmpty {
+        if allViews.isEmpty {
             for view in subviews {
-                if let buttons = view.findActionRepresentationViews() {
-                    allButtons.append(contentsOf: buttons)
+                if let buttons = view.findSubviews(ofClass: T.self) {
+                    allViews.append(contentsOf: buttons)
                 }
             }
         }
-        return (allButtons as! [ActionRepresentationView])
+        return allViews
     }
 }

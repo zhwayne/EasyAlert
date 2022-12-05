@@ -81,7 +81,7 @@ final class ActionView: Action.CustomizedView {
     
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
-        size.height = 45
+        size.height = 44
         return size
     }
 }

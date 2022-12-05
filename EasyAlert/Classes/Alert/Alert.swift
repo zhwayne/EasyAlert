@@ -20,7 +20,7 @@ open class Alert: Alertble {
     
     public var transitionCoordinator: TransitionCoordinator = AlertTransitionCoordinator()
         
-    private let backgroundView = BackgroundView()
+    private let backgroundView = DimmingKnockoutBackdropView()
 
     private let dimmingView = DimmingView()
         
@@ -78,10 +78,10 @@ open class Alert: Alertble {
     
     open func didLayoutContainer() { }
     
-    func show(in view: UIView?) {
+    public func show(on view: UIView? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard let parent = findParentView(view),
-              canShow(in: parent) else {
+              canShow(on: parent) else {
             return
         }
         defer { isShowing = true }
@@ -153,7 +153,7 @@ extension Alert {
         }
     }
     
-    private func canShow(in view: UIView) -> Bool {
+    private func canShow(on view: UIView) -> Bool {
         return !isShowing && !view.subviews.contains(backgroundView)
     }
     

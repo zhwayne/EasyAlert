@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         .message(title: "消息弹框", items: [
             .systemAlert("iOS系统消息弹框"),
             .messageAlert("仿系统消息弹框"),
-            .threeActions("3个按钮")
+            .threeActions("3个按钮, 2秒后自动消失")
         ]),
         .customMessage(title: "自定义消息弹框", items: [
             .allowTapBackground("允许点击背景消失"),
@@ -25,6 +25,9 @@ class ViewController: UIViewController {
             .leftAlignment("标题和内容左对齐"),
             .cornerRadius("自定义按钮UI和布局"),
             .attributedTitleAndMessage("支持富文本"),
+        ]),
+        .sheet(title: "ActionSheets", items: [
+            .systemActionSheet("系统 ActionSheet")
         ])
     ]
     
@@ -73,6 +76,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         switch sections[section] {
         case let .message(title, _): return title
         case let .customMessage(title, _):  return title
+        case let .sheet(title, _): return title
         }
     }
     
@@ -85,11 +89,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case let .systemAlert(title): cell.textLabel?.text = title
         case let .messageAlert(title): cell.textLabel?.text = title
         case let .threeActions(title): cell.textLabel?.text = title
+            
         case let .allowTapBackground(title): cell.textLabel?.text = title
         case let .effectBackground(title): cell.textLabel?.text = title
         case let .leftAlignment(title): cell.textLabel?.text = title
         case let .cornerRadius(title): cell.textLabel?.text = title
         case let .attributedTitleAndMessage(title): cell.textLabel?.text = title
+            
+        case let .systemActionSheet(title): cell.textLabel?.text = title
         }
         return cell
     }
@@ -112,10 +119,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
             let cancel = UIAlertAction(title: "取消", style: .cancel)
             let ignore = UIAlertAction(title: "忽略", style: .destructive)
-            let other = UIAlertAction(title: "其他", style: .destructive)
             alertController.addAction(cancel)
             alertController.addAction(ignore)
-            alertController.addAction(other)
             present(alertController, animated: true)
             
         case .messageAlert:
@@ -124,7 +129,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            view.present(alert)
+            view.presentAlertble(alert)
             
         case .threeActions:
             let alert = MessageAlert(title: alertTitle, message: message)
@@ -141,10 +146,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }, didDismiss: {
                 print("Alert did dismiss.")
             })
-            view.present(alert)
+            alert.show(on: view)
+            
             if #available(iOS 13.0, *) {
                 Task {
-                    try? await Task.sleep(nanoseconds:1_000_000_000)
+                    try? await Task.sleep(nanoseconds:2_000_000_000)
                     await alert.dismiss()
                     print("Alert destroyed.")
                 }
@@ -157,7 +163,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            view.present(alert)
+            alert.show()
 
         case .effectBackground:
             let alert = MessageAlert(title: alertTitle, message: message)
@@ -174,7 +180,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.callback = LiftcycleCallback(didDismiss: {
                 animator.stopAnimation(true)
             })
-            view.present(alert)
+            alert.show()
             
         case .leftAlignment:
             var configuration = MessageAlert.Configuration()
@@ -186,7 +192,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            view.present(alert)
+            alert.show()
             
         case .cornerRadius:
             
@@ -201,7 +207,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            view.present(alert)
+            alert.show()
             
         case .attributedTitleAndMessage:
             var range = (alertTitle as NSString).range(of: "Meizu-0D23-5G")
@@ -230,7 +236,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            view.present(alert)
+            alert.show()
+            
+        case .systemActionSheet:
+            print("todo")
         }
     }
 }

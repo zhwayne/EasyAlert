@@ -1,5 +1,5 @@
 //
-//  BackgroundView.swift
+//  DimmingKnockoutBackdropView.swift
 //  EasyAlert
 //
 //  Created by 张尉 on 2021/7/27.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BackgroundView: UIView {
+final class DimmingKnockoutBackdropView: UIView {
 
     weak var alert: Alertble?
     
