@@ -13,11 +13,17 @@ public protocol Message { }
 extension String: Title, Message { }
 extension NSAttributedString: Title, Message { }
 
+@available(iOS 15.0, *)
+extension AttributedString: Title, Message { }
+
 extension MessageAlert {
     
     func text(for title: Title?) -> NSAttributedString? {
         if let text = title as? String {
             return attributedTitle(text)
+        }
+        if #available(iOS 15, *), let text = title as? AttributedString {
+            return NSAttributedString(text)
         }
         return title as? NSAttributedString
     }
@@ -25,6 +31,9 @@ extension MessageAlert {
     func text(for message: Message?) -> NSAttributedString? {
         if let text = message as? String {
             return attributedMessage(text)
+        }
+        if #available(iOS 15, *), let text = message as? AttributedString {
+            return NSAttributedString(text)
         }
         return message as? NSAttributedString
     }
