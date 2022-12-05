@@ -10,6 +10,11 @@ import Foundation
 public protocol ActionAlertble: Alertble {
     
     func addAction(_ action: Action)
+}
+
+public extension ActionAlertble {
     
-    func addActions(_ actions: [Action])
+    func addActions(_ actions: [Action]) {
+        actions.forEach { addAction($0) }
+    }
 }

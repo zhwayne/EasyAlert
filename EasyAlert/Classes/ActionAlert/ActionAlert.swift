@@ -38,12 +38,6 @@ extension ActionAlert: ActionAlertble {
         setViewForAction(action)
     }
     
-    public func addActions(_ actions: [Action]) {
-        assert(isShowing == false)
-        alertContentView.actions.append(contentsOf: actions)
-        actions.forEach { setViewForAction($0) }
-    }
-    
     private func setViewForAction(_ action: Action) {
         if action.view == nil {
             action.view = configuration.actionViewType.init(style: action.style)
