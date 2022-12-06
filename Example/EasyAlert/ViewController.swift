@@ -130,7 +130,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            alert.show(on: view)
+            alert.show(in: view)
             
         case .threeActions:
             let alert = MessageAlert(title: alertTitle, message: message)
@@ -138,7 +138,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let confirm = Action(title: "确定", style: .default)
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addActions([cancel, confirm, ignore])
-            alert.callback = LiftcycleCallback(willShow: {
+            alert.addCallback(LiftcycleCallback(willShow: {
                 print("Alert will show.")
             }, didShow: {
                 print("Alert did show.")
@@ -146,8 +146,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 print("Alert will dismiss.")
             }, didDismiss: {
                 print("Alert did dismiss.")
-            })
-            alert.show(on: view)
+            }))
+            alert.show(in: view)
             
             if #available(iOS 13.0, *) {
                 Task {
@@ -178,9 +178,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            alert.callback = LiftcycleCallback(didDismiss: {
+            alert.addCallback(LiftcycleCallback(didDismiss: {
                 animator.stopAnimation(true)
-            })
+            }))
             alert.show()
             
         case .leftAlignment:

@@ -28,7 +28,7 @@ open class Alert: Alertble {
         
     private(set) var isShowing = false
     
-    public var callback = LiftcycleCallback()
+    private var callbacks: [LiftcycleCallback] = []
     
     private var orientationChangeToken: NotificationToken?
             
@@ -78,10 +78,14 @@ open class Alert: Alertble {
     
     open func didLayoutContainer() { }
     
-    public func show(on view: UIView? = nil) {
+    public func addCallback(_ callback: LiftcycleCallback) {
+        callbacks.append(callback)
+    }
+    
+    public func show(in view: UIView? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard let parent = findParentView(view),
-              canShow(on: parent) else {
+              canShow(in: parent) else {
             return
         }
         defer { isShowing = true }
@@ -97,11 +101,11 @@ open class Alert: Alertble {
         }
         
         willDismiss()
-        callback.willDismiss?()
+        callbacks.forEach { $0.willDismiss?() }
         
         transitionCoordinator.dismiss(context: transitioningContext) { [weak self] in
             self?.didDismiss()
-            self?.callback.didDismiss?()
+            self?.callbacks.forEach { $0.didDismiss?() }
             completion?()
             self?.windup()
         }
@@ -153,7 +157,7 @@ extension Alert {
         }
     }
     
-    private func canShow(on view: UIView) -> Bool {
+    private func canShow(in view: UIView) -> Bool {
         return !isShowing && !view.subviews.contains(backgroundView)
     }
     
@@ -196,11 +200,11 @@ extension Alert {
         backgroundView.layoutIfNeeded()
 
         willShow()
-        callback.willShow?()
+        callbacks.forEach { $0.willShow?() }
         
         transitionCoordinator.show(context: transitioningContext) { [weak self] in
             self?.didShow()
-            self?.callback.didShow?()
+            self?.callbacks.forEach { $0.didShow?() }
         }
     }
     

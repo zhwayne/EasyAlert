@@ -9,5 +9,5 @@ import UIKit
 
 public protocol Alertble : AlertDismissible {
     
-    func show(on view: UIView?)
+    func show(in view: UIView?)
 }
