@@ -240,7 +240,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.show()
             
         case .systemActionSheet:
-            print("todo")
+            let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: .actionSheet)
+            let cancel = UIAlertAction(title: "取消", style: .cancel)
+            let confirm = UIAlertAction(title: "确定", style: .default)
+            let ignore = UIAlertAction(title: "忽略", style: .destructive)
+            alertController.addAction(cancel)
+            alertController.addAction(confirm)
+            alertController.addAction(ignore)
+            present(alertController, animated: true)
         }
     }
 }

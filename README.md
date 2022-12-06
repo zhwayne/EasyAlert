@@ -23,6 +23,7 @@ let ok = Action(title: "OK", style: .default) { _ in
 alert.addAction(cancel)
 alert.addAction(ok)
 alert.show(on: view)
+```
 
 ## Installation
 
