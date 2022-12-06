@@ -9,7 +9,7 @@ import Foundation
 
 final class ActionAlertTransitionCoordinator : AlertTransitionCoordinator {
     
-    weak var alertCustomView: ActionAlert.ContentView?
+    weak var alertCustomView: ActionGroupView?
     
     override func update(context: TransitionCoordinatorContext) {
         super.update(context: context)

@@ -16,7 +16,7 @@ extension NSAttributedString: Title, Message { }
 @available(iOS 15.0, *)
 extension AttributedString: Title, Message { }
 
-extension MessageAlert {
+extension ActionAlert {
     
     func text(for title: Title?) -> NSAttributedString? {
         if let text = title as? String {
@@ -39,10 +39,13 @@ extension MessageAlert {
     }
 }
 
-extension MessageAlert {
+extension ActionAlert {
     
     var titleAttributes: [NSAttributedString.Key: Any] {
         var attributes: [NSAttributedString.Key: Any] = [:]
+        let titleConfiguration = titleConfiguration
+        ?? Configuration.globalConfiguration.titleConfiguration
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.1
         paragraphStyle.alignment = titleConfiguration.alignment
@@ -54,6 +57,9 @@ extension MessageAlert {
     
     var messageAttributes: [NSAttributedString.Key: Any] {
         var attributes: [NSAttributedString.Key: Any] = [:]
+        let messageConfiguration = messageConfiguration
+        ?? Configuration.globalConfiguration.messageConfiguration
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.05
         paragraphStyle.alignment = messageConfiguration.alignment

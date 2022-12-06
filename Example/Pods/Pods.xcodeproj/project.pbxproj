@@ -13,7 +13,9 @@
 		048C5CD225A81C5E23ED15F822D719E5 /* ActionCustomViewRepresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC1A8DBFDFD2E24FD8EA818297CE727 /* ActionCustomViewRepresentationView.swift */; };
 		05E5204A1E3C3E742E4B4CA2AE475DFD /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCD415ACB05F4A209B0213D5B65B13B /* Action.swift */; };
 		0AEA84561A432EE2B8031809CF703D4D /* DimmingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD288D4B2009405BB7BB6AF81524258B /* DimmingView.swift */; };
-		0B474BA81F429F307F2657FB3F7188C4 /* MessageAlertConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7FCB296E16C89F9944FEFAC5AAD364 /* MessageAlertConfiguration.swift */; };
+		0BCC3FEF293F3A9C004D83FB /* ActionGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCC3FEE293F3A9C004D83FB /* ActionGroupView.swift */; };
+		0BCC3FF1293F3CB7004D83FB /* ActionSheetConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCC3FF0293F3CB7004D83FB /* ActionSheetConfiguration.swift */; };
+		0BCC3FF3293F3CFD004D83FB /* AlertSheetLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCC3FF2293F3CFD004D83FB /* AlertSheetLayout.swift */; };
 		0BCEE569293E2E6D004DECFA /* ActionAlertbleConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCEE568293E2E6D004DECFA /* ActionAlertbleConfigurable.swift */; };
 		1CA5490C612A3A9442C3B58FEA75FAC1 /* AlertTransitionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BE6AD3DE7EC77DC6D519A1FE24FE4D /* AlertTransitionCoordinator.swift */; };
 		1FFBF2229A3428A5F7B47B15A6ECFE16 /* ActionVibrantSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3D1C31D51E36610F85E8FDF1D0E782 /* ActionVibrantSeparatorView.swift */; };
@@ -35,7 +37,6 @@
 		84A7A3FC0D783855E049146BAD2E40BF /* EasyAlert-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5822A6BA4AA7D7AF918684DE2F54E249 /* EasyAlert-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8AA2CA6FBFBDEBD9DC7ED8F1848CE289 /* EasyAlert-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 487E3237B81C42F153C8E81D3C22DFDE /* EasyAlert-dummy.m */; };
 		8F85BCD9D84592674C6778EF12DB3D91 /* ActionSeparatableSequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDF2C47C5E8666574B27EAE88B4F8FD /* ActionSeparatableSequenceView.swift */; };
-		92C6B10AE712E7B2859C71CEA75D5FDB /* MessageAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883609E566974CD0C7F40150047985A1 /* MessageAlert.swift */; };
 		9DA147253DBF54F401E87536AED1C283 /* ActionAlertTransitionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA2C3A925677C59FE5D805A4F7E7E2 /* ActionAlertTransitionCoordinator.swift */; };
 		AA3EDE7F045FE256510F1445D294AF45 /* ActionLayoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD95506B7EB0589D5C09E4BC2FEC2D64 /* ActionLayoutable.swift */; };
 		B1E788B22EBB4312EAF176E1F5919785 /* AlertDismissible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9F1908E84DB66A5D7E0E7985B011EF /* AlertDismissible.swift */; };
@@ -72,6 +73,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0BCC3FEE293F3A9C004D83FB /* ActionGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionGroupView.swift; sourceTree = "<group>"; };
+		0BCC3FF0293F3CB7004D83FB /* ActionSheetConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetConfiguration.swift; sourceTree = "<group>"; };
+		0BCC3FF2293F3CFD004D83FB /* AlertSheetLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertSheetLayout.swift; sourceTree = "<group>"; };
 		0BCEE568293E2E6D004DECFA /* ActionAlertbleConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionAlertbleConfigurable.swift; sourceTree = "<group>"; };
 		0D9A202DDAB68E7396B920DBFDA7C3B3 /* Sheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		1531A1475F55210E16D9C40BF81036D6 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -107,7 +111,6 @@
 		7A707E92249B3AB369DBA9E328DC494C /* Pods-EasyAlert_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-EasyAlert_Tests-dummy.m"; sourceTree = "<group>"; };
 		8490B92E40F6898575B53A937798E97F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		8522FB4F9436AE740220D989B3DDB5AB /* Pods-EasyAlert_Example */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-EasyAlert_Example"; path = Pods_EasyAlert_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		883609E566974CD0C7F40150047985A1 /* MessageAlert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageAlert.swift; sourceTree = "<group>"; };
 		88DB2061DB7212CA65C8A36F8AD9EDD7 /* Alertble.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Alertble.swift; sourceTree = "<group>"; };
 		9130EF53207F392581B526CB558E9572 /* NotificationToken.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		9175D641C5975179B5D1A029AB7BFD14 /* Pods-EasyAlert_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EasyAlert_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -139,7 +142,6 @@
 		F41C3398B903323BD2722A74F4D99DFA /* Pods-EasyAlert_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-EasyAlert_Tests.modulemap"; sourceTree = "<group>"; };
 		F7949CB9B500D7D7B7B205F6D1D23E4C /* ActionSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSheet.swift; sourceTree = "<group>"; };
 		F9549E8F364DA2A1D27727AD74B93B6A /* Pods-EasyAlert_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-EasyAlert_Example-dummy.m"; sourceTree = "<group>"; };
-		FD7FCB296E16C89F9944FEFAC5AAD364 /* MessageAlertConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageAlertConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -318,6 +320,8 @@
 			children = (
 				F7949CB9B500D7D7B7B205F6D1D23E4C /* ActionSheet.swift */,
 				0D9A202DDAB68E7396B920DBFDA7C3B3 /* Sheet.swift */,
+				0BCC3FF0293F3CB7004D83FB /* ActionSheetConfiguration.swift */,
+				0BCC3FF2293F3CFD004D83FB /* AlertSheetLayout.swift */,
 			);
 			name = Sheet;
 			path = EasyAlert/Classes/Sheet;
@@ -330,8 +334,6 @@
 				3F38967E74E0BE529B225A72A0295C90 /* ActionAlert.swift */,
 				B302134B0BB13511D39014D6A4CF1C51 /* AlertActionLayout.swift */,
 				3895D4CE007DE2951C23D94AB361E95A /* ActionAlertConfiguration.swift */,
-				883609E566974CD0C7F40150047985A1 /* MessageAlert.swift */,
-				FD7FCB296E16C89F9944FEFAC5AAD364 /* MessageAlertConfiguration.swift */,
 				43F373DA5592EA213DF9A6356F3A17BC /* TitleAndMessage.swift */,
 			);
 			name = ActionAlert;
@@ -369,6 +371,7 @@
 				3D3D1C31D51E36610F85E8FDF1D0E782 /* ActionVibrantSeparatorView.swift */,
 				ADD4DF4A111E69426A96A398440A262A /* ActionView.swift */,
 				0BCEE568293E2E6D004DECFA /* ActionAlertbleConfigurable.swift */,
+				0BCC3FEE293F3A9C004D83FB /* ActionGroupView.swift */,
 			);
 			name = Action;
 			path = EasyAlert/Classes/Action;
@@ -539,8 +542,10 @@
 				D8DAF5072B1679ED97D7B42823254E3B /* ActionAlertble.swift in Sources */,
 				9DA147253DBF54F401E87536AED1C283 /* ActionAlertTransitionCoordinator.swift in Sources */,
 				038FDC1E8BC6512FFFAADA3005C43BD9 /* ActionCustomizable.swift in Sources */,
+				0BCC3FF1293F3CB7004D83FB /* ActionSheetConfiguration.swift in Sources */,
 				0BCEE569293E2E6D004DECFA /* ActionAlertbleConfigurable.swift in Sources */,
 				048C5CD225A81C5E23ED15F822D719E5 /* ActionCustomViewRepresentationView.swift in Sources */,
+				0BCC3FF3293F3CFD004D83FB /* AlertSheetLayout.swift in Sources */,
 				3CC4E61F81A1B73C4FE81560651DD69D /* AlertActionLayout.swift in Sources */,
 				AA3EDE7F045FE256510F1445D294AF45 /* ActionLayoutable.swift in Sources */,
 				D81276D0FAD9D8D6C07E634E350D9F7B /* ActionRepresentationSequenceView.swift in Sources */,
@@ -560,10 +565,9 @@
 				57D529F4AD54A62E40E9BAA4108BA970 /* ActionAlertConfiguration.swift in Sources */,
 				DE53385D1E63125244C1F3786D58E8A8 /* DimmingKnockoutBackdropView.swift in Sources */,
 				0AEA84561A432EE2B8031809CF703D4D /* DimmingView.swift in Sources */,
+				0BCC3FEF293F3A9C004D83FB /* ActionGroupView.swift in Sources */,
 				8AA2CA6FBFBDEBD9DC7ED8F1848CE289 /* EasyAlert-dummy.m in Sources */,
 				BF75498B5ECB452C9AC8B20C69F7192D /* KeyboardResponsiveView.swift in Sources */,
-				92C6B10AE712E7B2859C71CEA75D5FDB /* MessageAlert.swift in Sources */,
-				0B474BA81F429F307F2657FB3F7188C4 /* MessageAlertConfiguration.swift in Sources */,
 				048C585102F729DAB792CDF91B99C900 /* NotificationToken.swift in Sources */,
 				701FE22D21B1E562565DD8A74A54E6D0 /* Proxy.swift in Sources */,
 				29A994B35D53979B434ECD119756E92C /* Sheet.swift in Sources */,

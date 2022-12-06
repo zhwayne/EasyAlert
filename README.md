@@ -11,9 +11,9 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Usage
 
-Example for `MessageAlert`:
+Example for `ActionAlert`:
 ```swift
-let alert = MessageAlert(title: "Error", message: "\(error)")
+let alert = ActionAlert(title: "Error", message: "\(error)")
 let cancel = Action(title: "Cancel", style: .cancel)
 let ok = Action(title: "OK", style: .default) { _ in
     if let url = result.videoURL {

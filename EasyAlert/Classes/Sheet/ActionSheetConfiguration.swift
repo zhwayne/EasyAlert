@@ -1,16 +1,16 @@
 //
-//  ActionAlertConfiguration.swift
+//  ActionSheetConfiguration.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2022/5/26.
+//  Created by iya on 2022/12/6.
 //
 
 import Foundation
 
-extension ActionAlert {
+extension ActionSheet {
     
     public struct Configuration: ActionAlertbleConfigurable {
-            
+        
         public var cornerRadius: CGFloat = 13
         
         public var actionViewType: Action.CustomizedView.Type = ActionView.self
@@ -23,7 +23,7 @@ extension ActionAlert {
         
         public init() {}
         
-        public static var globalConfiguration = ActionAlert.Configuration()
+        public static var globalConfiguration = ActionSheet.Configuration()
     }
 }
 
@@ -35,13 +35,13 @@ private var defaultTextColor: UIColor {
     }
 }
 
-extension ActionAlert {
+extension ActionSheet {
     
     public struct TitleConfiguration {
         
         public var alignment: NSTextAlignment = .center
         
-        public var font: UIFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        public var font: UIFont = UIFont.systemFont(ofSize: 13, weight: .semibold)
         
         public var color: UIColor = defaultTextColor
         
@@ -50,7 +50,7 @@ extension ActionAlert {
 }
 
 
-extension ActionAlert {
+extension ActionSheet {
     
     public struct MessageConfiguration {
         
