@@ -28,6 +28,8 @@ enum Section {
         case attributedTitleAndMessage(String)
         
         case systemActionSheet(String)
+        
+        case customActionSheet(String)
     }
 }
 

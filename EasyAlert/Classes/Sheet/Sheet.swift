@@ -12,5 +12,6 @@ open class Sheet: Alert {
     public override init(customView: Alert.CustomizedView) {
         super.init(customView: customView)
         self.transitionCoordinator = SheetTransitionCoordinator()
+        backgroundProvider.allowDismissWhenBackgroundTouch = true
     }
 }

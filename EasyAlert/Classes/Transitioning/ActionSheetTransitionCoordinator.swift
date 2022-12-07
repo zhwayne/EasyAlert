@@ -1,13 +1,13 @@
 //
-//  ActionAlertTransitionCoordinator.swift
+//  ActionSheetTransitionCoordinator.swift
 //  EasyAlert
 //
-//  Created by iya on 2022/5/31.
+//  Created by iya on 2022/12/7.
 //
 
 import Foundation
 
-struct ActionAlertTransitionCoordinator : TransitionCoordinator {
+struct ActionSheetTransitionCoordinator: TransitionCoordinator {
     
     private var coordinator: TransitionCoordinator
     private weak var actionGroupView: ActionGroupView?

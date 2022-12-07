@@ -43,7 +43,7 @@ public struct TransitionCoordinatorContext {
 
 public protocol TransitionCoordinator {
     
-    var duration: TimeInterval { get }
+    var duration: TimeInterval { get set }
 
     var size: Size { get set }
     
@@ -52,4 +52,24 @@ public protocol TransitionCoordinator {
     func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void)
     
     func update(context: TransitionCoordinatorContext)
+}
+
+@available(iOS 13.0, *)
+extension TransitionCoordinator {
+    
+    func show(context: TransitionCoordinatorContext) async {
+        await withUnsafeContinuation({ continuation in
+            show(context: context) {
+                continuation.resume()
+            }
+        })
+    }
+    
+    func dismiss(context: TransitionCoordinatorContext) async {
+        await withUnsafeContinuation({ continuation in
+            dismiss(context: context) {
+                continuation.resume()
+            }
+        })
+    }
 }

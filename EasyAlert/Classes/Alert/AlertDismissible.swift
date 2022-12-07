@@ -11,7 +11,7 @@ public protocol AlertDismissible : AnyObject {
     
     /// 关掉 alert。
     /// - Parameter completion: 完成回调。
-    func dismiss(completion: (() -> Void)?)
+    @MainActor func dismiss(completion: (() -> Void)?)
     
     @available(iOS 13.0, *)
     @MainActor func dismiss() async
@@ -33,7 +33,7 @@ public extension AlertDismissible where Self: UIView {
     
     /// 关掉 alert。
     /// - Parameter completion: 完成回调。
-    func dismiss(completion: (() -> Void)? = nil) {
+    @MainActor func dismiss(completion: (() -> Void)? = nil) {
         alert?.dismiss(completion: completion)
     }
     

@@ -17,23 +17,44 @@ open class ActionSheet: Sheet {
     
     public required init(
         customView: CustomizedView,
-        configuration: ActionAlertbleConfigurable = ActionSheet.Configuration.globalConfiguration
+        configuration: ActionAlertbleConfigurable? = nil
     ) {
-        self.configuration = configuration
+        self.configuration = configuration ?? ActionSheet.Configuration.global
         actionGroupView = ActionGroupView(customView: customView,
                                           actionLayout: self.configuration.actionLayout)
-        super.init(customView: actionGroupView)
+        let containerView = ActionSheet.ContainerView()
+        containerView.addSubview(actionGroupView)
+        actionGroupView.translatesAutoresizingMaskIntoConstraints = false
+        actionGroupView.leftAnchor.constraint(
+            equalTo: containerView.safeAreaLayoutGuide.leftAnchor,
+            constant: self.configuration.edgeInsets.left
+        ).isActive = true
+        actionGroupView.rightAnchor.constraint(
+            equalTo: containerView.safeAreaLayoutGuide.rightAnchor,
+            constant: -self.configuration.edgeInsets.right
+        ).isActive = true
+        actionGroupView.topAnchor.constraint(
+            equalTo: containerView.safeAreaLayoutGuide.topAnchor,
+            constant: self.configuration.edgeInsets.top
+        ).isActive = true
+        actionGroupView.bottomAnchor.constraint(
+            equalTo: containerView.safeAreaLayoutGuide.bottomAnchor,
+            constant: -self.configuration.edgeInsets.bottom
+        ).isActive = true
+
+        super.init(customView: containerView)
+        
+        let decorator = TransitionCoordinatorActionGroupDecorator(
+            coordinator: SheetTransitionCoordinator(),
+            actionGroupView: actionGroupView
+        )
+        self.transitionCoordinator = decorator
     }
     
-//    open override func willLayoutContainer() {
-//        super.willLayoutContainer()
-//        actionGroupView.setCornerRadius(configuration.cornerRadius)
-//    }
-    
-    // MARK: - Message and Title
-    
-    var titleConfiguration: TitleConfiguration?
-    var messageConfiguration: MessageConfiguration?
+    open override func willLayoutContainer() {
+        super.willLayoutContainer()
+        actionGroupView.setCornerRadius(configuration.cornerRadius)
+    }
 }
 
 extension ActionSheet: ActionAlertble {

@@ -7,40 +7,47 @@
 
 import Foundation
 
-open class AlertTransitionCoordinator : TransitionCoordinator {
+struct AlertTransitionCoordinator : TransitionCoordinator {
     
-    public var duration: TimeInterval = 0.25
+    var duration: TimeInterval = 0.25
     
-    public var size: Size = Size(
+    var size: Size = Size(
         width: .fixed(270),
         height: .automic
     )
     
-    public func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
+    func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
         context.container.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         context.container.alpha = 0
         context.dimmingView.alpha = 0
-        
-        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
+
+        let timing = UISpringTimingParameters()
+        let animator = UIViewPropertyAnimator(duration: duration, timingParameters: timing)
+        animator.addAnimations {
             context.dimmingView.alpha = 1
             context.container.alpha = 1
             context.container.transform = .identity
-        } completion: { _ in
-            completion()
         }
+        animator.addCompletion { position in
+            if position == .end { completion() }
+        }
+        animator.startAnimation()
     }
     
-    public func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
-        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
+    func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
+        let timing = UISpringTimingParameters()
+        let animator = UIViewPropertyAnimator(duration: duration, timingParameters: timing)
+        animator.addAnimations {
             context.container.alpha = 0
             context.dimmingView.alpha = 0
-        } completion: { finished in
-            completion()
         }
+        animator.addCompletion { position in
+            if position == .end { completion() }
+        }
+        animator.startAnimation()
     }
     
-    public func update(context: TransitionCoordinatorContext) {
-        context.container.translatesAutoresizingMaskIntoConstraints = false
+    func update(context: TransitionCoordinatorContext) {
         guard let superview = context.container.superview else { return }
         NSLayoutConstraint.deactivate(context.container.constraints)
         switch size.width {

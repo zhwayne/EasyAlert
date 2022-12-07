@@ -17,6 +17,9 @@ extension ActionAlert {
         
         public var actionLayout: ActionLayoutable = AlertActionLayout()
         
+        // Unused for now.
+        public var edgeInsets: UIEdgeInsets = .zero
+        
         public init() { }
         
         public static var global = Configuration()

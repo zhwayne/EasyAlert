@@ -28,7 +28,8 @@ class ViewController: UIViewController {
             .attributedTitleAndMessage("支持富文本"),
         ]),
         .sheet(title: "ActionSheets", items: [
-            .systemActionSheet("系统 ActionSheet")
+            .systemActionSheet("系统 ActionSheet"),
+            .customActionSheet("仿系统 ActionSheet")
         ])
     ]
     
@@ -98,6 +99,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case let .attributedTitleAndMessage(title): cell.textLabel?.text = title
             
         case let .systemActionSheet(title): cell.textLabel?.text = title
+        case let .customActionSheet(title): cell.textLabel?.text = title
         }
         return cell
     }
@@ -248,6 +250,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alertController.addAction(confirm)
             alertController.addAction(ignore)
             present(alertController, animated: true)
+            
+        case .customActionSheet:
+            let sheet = MyActionSheet()
+            let cancel = Action(title: "取消", style: .cancel)
+            let confirm = Action(title: "确定", style: .default)
+            let ignore = Action(title: "忽略", style: .destructive)
+            sheet.addActions([cancel, confirm])
+            sheet.show()
         }
     }
 }

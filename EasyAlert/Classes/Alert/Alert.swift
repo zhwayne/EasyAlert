@@ -34,12 +34,12 @@ open class Alert: Alertble {
             
     public init(customView: CustomizedView) {
         self.customView = customView
-        
+        containerView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.frame = UIScreen.main.bounds
         backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backgroundView.willRemoveFromSuperviewObserver = { [weak self] in
-            if let alert = self?.backgroundView.alert {
-                alert.dismiss(completion: nil)
+            DispatchQueue.main.async {
+                self?.dismiss()
             }
         }
         backgroundView.addGestureRecognizer(tapTarget.tapGestureRecognizer)
@@ -53,7 +53,9 @@ open class Alert: Alertble {
         tapTarget.tapHandler = { [unowned self] in
             backgroundView.endEditing(false)
             if backgroundProvider.allowDismissWhenBackgroundTouch {
-                dismiss()
+                DispatchQueue.main.async {
+                    self.dismiss()
+                }
             }
         }
         
@@ -82,7 +84,7 @@ open class Alert: Alertble {
         callbacks.append(callback)
     }
     
-    public func show(in view: UIView? = nil) {
+    @MainActor public func show(in view: UIView? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard let parent = findParentView(view),
               canShow(in: parent) else {
@@ -94,7 +96,7 @@ open class Alert: Alertble {
         showAlert(in: parent)
     }
     
-    public func dismiss(completion: (() -> Void)? = nil) {
+    @MainActor public func dismiss(completion: (() -> Void)? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard canDismiss() else {
             return

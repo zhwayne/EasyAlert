@@ -1,5 +1,5 @@
 //
-//  AlertSheetLayout.swift
+//  SheetActionLayout.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/12/6.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AlertSheetLayout: ActionLayoutable {
+struct SheetActionLayout: ActionLayoutable {
     
     private let stackView: UIStackView
     

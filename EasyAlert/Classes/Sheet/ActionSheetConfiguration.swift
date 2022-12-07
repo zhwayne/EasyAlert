@@ -15,52 +15,12 @@ extension ActionSheet {
         
         public var actionViewType: Action.CustomizedView.Type = ActionView.self
         
-        public var actionLayout: ActionLayoutable = AlertActionLayout()
+        public var actionLayout: ActionLayoutable = SheetActionLayout()
         
-        public var titleConfiguration = TitleConfiguration()
+        public var edgeInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         
-        public var messageConfiguration = MessageConfiguration()
+        public init() { }
         
-        public init() {}
-        
-        public static var globalConfiguration = ActionSheet.Configuration()
+        public static var global = Configuration()
     }
 }
-
-private var defaultTextColor: UIColor {
-    if #available(iOS 13.0, *) {
-        return UIColor.label
-    } else {
-        return UIColor(white: 0.33, alpha: 0.6)
-    }
-}
-
-extension ActionSheet {
-    
-    public struct TitleConfiguration {
-        
-        public var alignment: NSTextAlignment = .center
-        
-        public var font: UIFont = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        
-        public var color: UIColor = defaultTextColor
-        
-        public init() {}
-    }
-}
-
-
-extension ActionSheet {
-    
-    public struct MessageConfiguration {
-        
-        public var alignment: NSTextAlignment = .center
-        
-        public var font: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular)
-        
-        public var color: UIColor = defaultTextColor
-        
-        public init() {}
-    }
-}
-

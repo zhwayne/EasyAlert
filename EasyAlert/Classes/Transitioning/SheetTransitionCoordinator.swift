@@ -7,43 +7,50 @@
 
 import Foundation
 
-open class SheetTransitionCoordinator : TransitionCoordinator {
+struct SheetTransitionCoordinator : TransitionCoordinator {
     
-    public var duration: TimeInterval = 0.25
+    var duration: TimeInterval = 0.25
     
-    public var size: Size = Size(
+    var size: Size = Size(
         width: .multiplied(1),
         height: .automic
     )
     
-    public func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
+    func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
         context.container.layoutIfNeeded()
         let height = context.container.bounds.height
         context.container.transform = CGAffineTransform(translationX: 0, y: height)
         context.dimmingView.alpha = 0
         
-        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
+        let timing = UISpringTimingParameters()
+        let animator = UIViewPropertyAnimator(duration: duration, timingParameters: timing)
+        animator.addAnimations {
             context.dimmingView.alpha = 1
             context.container.transform = .identity
-        } completion: { _ in
-            completion()
         }
+        animator.addCompletion { position in
+            if position == .end { completion() }
+        }
+        animator.startAnimation()
     }
     
-    public func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
+    func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
         context.container.layoutIfNeeded()
         let height = context.container.bounds.height
         
-        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseInOut) {
+        let timing = UISpringTimingParameters()
+        let animator = UIViewPropertyAnimator(duration: duration, timingParameters: timing)
+        animator.addAnimations {
             context.dimmingView.alpha = 0
             context.container.transform = CGAffineTransform(translationX: 0, y: height)
-        } completion: { finished in
-            completion()
         }
+        animator.addCompletion { position in
+            if position == .end { completion() }
+        }
+        animator.startAnimation()
     }
     
-    public func update(context: TransitionCoordinatorContext) {
-        context.container.translatesAutoresizingMaskIntoConstraints = false
+    func update(context: TransitionCoordinatorContext) {
         guard let superview = context.container.superview else { return }
         NSLayoutConstraint.deactivate(context.container.constraints)
         switch size.width {

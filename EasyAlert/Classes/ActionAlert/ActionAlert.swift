@@ -23,9 +23,12 @@ open class ActionAlert: Alert {
         actionGroupView = ActionGroupView(customView: customView,
                                            actionLayout: self.configuration.actionLayout)
         super.init(customView: actionGroupView)
-        let transitionCoordinator = ActionAlertTransitionCoordinator()
-        transitionCoordinator.alertCustomView = actionGroupView
-        self.transitionCoordinator = transitionCoordinator
+        
+        let decorator = TransitionCoordinatorActionGroupDecorator(
+            coordinator: AlertTransitionCoordinator(),
+            actionGroupView: actionGroupView
+        )
+        self.transitionCoordinator = decorator
     }
     
     open override func willLayoutContainer() {
