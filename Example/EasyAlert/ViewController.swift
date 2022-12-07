@@ -125,7 +125,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             present(alertController, animated: true)
             
         case .messageAlert:
-            let alert = ActionAlert(title: alertTitle, message: message)
+            let alert = MessageAlert(title: alertTitle, message: message)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
@@ -133,7 +133,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.show(in: view)
             
         case .threeActions:
-            let alert = ActionAlert(title: alertTitle, message: message)
+            let alert = MessageAlert(title: alertTitle, message: message)
             let cancel = Action(title: "取消", style: .cancel)
             let confirm = Action(title: "确定", style: .default)
             let ignore = Action(title: "忽略", style: .destructive)
@@ -158,7 +158,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
         case .allowTapBackground:
-            let alert = ActionAlert(title: alertTitle, message: message)
+            let alert = MessageAlert(title: alertTitle, message: message)
             alert.backgroundProvider.allowDismissWhenBackgroundTouch = true
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
@@ -167,7 +167,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.show()
 
         case .effectBackground:
-            let alert = ActionAlert(title: alertTitle, message: message)
+            let alert = MessageAlert(title: alertTitle, message: message)
             let effectView = UIVisualEffectView()
             let animator = UIViewPropertyAnimator(duration: 0, curve: .linear) {
                 effectView.effect = UIBlurEffect(style: .regular)
@@ -184,11 +184,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.show()
             
         case .leftAlignment:
-            var configuration = ActionAlert.Configuration()
+            var configuration = MessageAlert.Configuration()
             configuration.titleConfiguration.alignment = .left
             configuration.messageConfiguration.alignment = .left
             
-            let alert = ActionAlert(title: alertTitle, message: message, configuration: configuration)
+            let alert = MessageAlert(title: alertTitle, message: message, configuration: configuration)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
@@ -197,13 +197,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             
         case .cornerRadius:
             
-            var configuration = ActionAlert.Configuration()
+            var configuration = MessageAlert.Configuration()
             configuration.titleConfiguration.alignment = .left
             configuration.messageConfiguration.alignment = .left
             configuration.actionLayout = MyActionLayout()
             configuration.actionViewType = MyActionView.self
             
-            let alert = ActionAlert(title: alertTitle, message: message, configuration: configuration)
+            let alert = MessageAlert(title: alertTitle, message: message, configuration: configuration)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
@@ -232,7 +232,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             messageParagraphStyle.alignment = .center
             attrMessage.addAttribute(.paragraphStyle, value: messageParagraphStyle.copy(), range: range)
             
-            let alert = ActionAlert(title: attrTitle, message: attrMessage)
+            let alert = MessageAlert(title: attrTitle, message: attrMessage)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)

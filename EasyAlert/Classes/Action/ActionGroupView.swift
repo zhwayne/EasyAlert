@@ -43,7 +43,6 @@ class ActionGroupView: Alert.CustomizedView {
         super.init(frame: .zero)
         backgroundView.frame = bounds
         backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(backgroundView)
         
         groupView.frame = bounds
@@ -55,14 +54,14 @@ class ActionGroupView: Alert.CustomizedView {
         super.didMoveToSuperview()
         guard superview != nil else { return }
         
-        customView.removeFromSuperview()
+        groupView.subviews.forEach { $0.removeFromSuperview() }
+        
         groupView.addSubview(customView)
         customView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.deactivate(customView.constraints)
+
         customView.topAnchor.constraint(equalTo: groupView.topAnchor).isActive = true
         customView.leftAnchor.constraint(equalTo: groupView.leftAnchor).isActive = true
         customView.rightAnchor.constraint(equalTo: groupView.rightAnchor).isActive = true
-        customView.widthAnchor.constraint(equalTo: groupView.widthAnchor).isActive = true
         let customBottomConstraint = customView.bottomAnchor.constraint(equalTo: groupView.bottomAnchor)
         customBottomConstraint.priority = .defaultHigh - 1
         customBottomConstraint.isActive = true

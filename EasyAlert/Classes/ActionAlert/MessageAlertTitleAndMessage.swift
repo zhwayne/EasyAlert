@@ -1,5 +1,5 @@
 //
-//  TitleAndMessage.swift
+//  MessageAlertTitleAndMessage.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/5/13.
@@ -7,16 +7,7 @@
 
 import Foundation
 
-public protocol Title { }
-public protocol Message { }
-
-extension String: Title, Message { }
-extension NSAttributedString: Title, Message { }
-
-@available(iOS 15.0, *)
-extension AttributedString: Title, Message { }
-
-extension ActionAlert {
+extension MessageAlert {
     
     func text(for title: Title?) -> NSAttributedString? {
         if let text = title as? String {
@@ -39,12 +30,11 @@ extension ActionAlert {
     }
 }
 
-extension ActionAlert {
+extension MessageAlert {
     
-    var titleAttributes: [NSAttributedString.Key: Any] {
+    private var titleAttributes: [NSAttributedString.Key: Any] {
         var attributes: [NSAttributedString.Key: Any] = [:]
         let titleConfiguration = titleConfiguration
-        ?? Configuration.globalConfiguration.titleConfiguration
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.1
@@ -55,10 +45,9 @@ extension ActionAlert {
         return attributes
     }
     
-    var messageAttributes: [NSAttributedString.Key: Any] {
+    private var messageAttributes: [NSAttributedString.Key: Any] {
         var attributes: [NSAttributedString.Key: Any] = [:]
         let messageConfiguration = messageConfiguration
-        ?? Configuration.globalConfiguration.messageConfiguration
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.05

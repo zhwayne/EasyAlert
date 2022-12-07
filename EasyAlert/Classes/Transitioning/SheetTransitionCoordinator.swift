@@ -51,7 +51,9 @@ open class SheetTransitionCoordinator : TransitionCoordinator {
         case let .flexible(value): context.container.widthAnchor.constraint(lessThanOrEqualToConstant: value).isActive = true
         case let .multiplied(value):
             if context.interfaceOrientation.isPortrait {
-                context.container.widthAnchor.constraint(equalTo: superview.widthAnchor, multiplier: value).isActive = true
+                let constraint = context.container.widthAnchor.constraint(equalTo: superview.widthAnchor, multiplier: value)
+                constraint.isActive = true
+                constraint.priority = .defaultHigh
             } else {
                 context.container.widthAnchor.constraint(equalTo: superview.heightAnchor, multiplier: value).isActive = true
             }

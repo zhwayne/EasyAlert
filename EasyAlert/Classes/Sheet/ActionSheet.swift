@@ -11,6 +11,8 @@ open class ActionSheet: Sheet {
     
     private let actionGroupView: ActionGroupView
     
+    private var cancelActionGroupView: ActionGroupView?
+    
     private let configuration: ActionAlertbleConfigurable
     
     public required init(
@@ -21,15 +23,17 @@ open class ActionSheet: Sheet {
         actionGroupView = ActionGroupView(customView: customView,
                                           actionLayout: self.configuration.actionLayout)
         super.init(customView: actionGroupView)
-        let transitionCoordinator = ActionAlertTransitionCoordinator()
-        transitionCoordinator.alertCustomView = actionGroupView
-        self.transitionCoordinator = transitionCoordinator
     }
     
-    open override func willLayoutContainer() {
-        super.willLayoutContainer()
-        actionGroupView.setCornerRadius(configuration.cornerRadius)
-    }
+//    open override func willLayoutContainer() {
+//        super.willLayoutContainer()
+//        actionGroupView.setCornerRadius(configuration.cornerRadius)
+//    }
+    
+    // MARK: - Message and Title
+    
+    var titleConfiguration: TitleConfiguration?
+    var messageConfiguration: MessageConfiguration?
 }
 
 extension ActionSheet: ActionAlertble {
