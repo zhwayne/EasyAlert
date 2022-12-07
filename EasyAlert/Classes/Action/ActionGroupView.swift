@@ -13,21 +13,17 @@ class ActionGroupView: Alert.CustomizedView {
     
     var actions: [Action] = []
     
-    let customView: Alert.CustomizedView
+    let customView: Alert.CustomizedView?
     
     private let backgroundView: UIVisualEffectView
     
     private let representationSequenceView = ActionRepresentationSequenceView()
     
-    private var activeRepresentationView: ActionCustomViewRepresentationView?
-    
     private lazy var separatorView = ActionVibrantSeparatorView()
     
-    private let feedback = UISelectionFeedbackGenerator()
+    private let containerView = UIView()
     
-    private let groupView = UIView()
-    
-    required init(customView: Alert.CustomizedView, actionLayout: ActionLayoutable) {
+    required init(customView: Alert.CustomizedView?, actionLayout: ActionLayoutable) {
         self.actionLayout = actionLayout
         if #available(iOS 13.0, *) {
             self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
@@ -45,44 +41,49 @@ class ActionGroupView: Alert.CustomizedView {
         backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(backgroundView)
         
-        groupView.frame = bounds
-        groupView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        addSubview(groupView)
+        containerView.frame = bounds
+        containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(containerView)
     }
     
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
         guard superview != nil else { return }
         
-        groupView.subviews.forEach { $0.removeFromSuperview() }
+        containerView.subviews.forEach { $0.removeFromSuperview() }
         
-        groupView.addSubview(customView)
-        customView.translatesAutoresizingMaskIntoConstraints = false
-
-        customView.topAnchor.constraint(equalTo: groupView.topAnchor).isActive = true
-        customView.leftAnchor.constraint(equalTo: groupView.leftAnchor).isActive = true
-        customView.rightAnchor.constraint(equalTo: groupView.rightAnchor).isActive = true
-        let customBottomConstraint = customView.bottomAnchor.constraint(equalTo: groupView.bottomAnchor)
-        customBottomConstraint.priority = .defaultHigh - 1
-        customBottomConstraint.isActive = true
+        if let customView {
+            containerView.addSubview(customView)
+            customView.translatesAutoresizingMaskIntoConstraints = false
+            
+            customView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+            customView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+            customView.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+            let customBottomConstraint = customView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            customBottomConstraint.priority = .defaultHigh - 1
+            customBottomConstraint.isActive = true
+        }
         
         if !actions.isEmpty {
             separatorView.removeFromSuperview()
-            groupView.addSubview(separatorView)
-            separatorView.translatesAutoresizingMaskIntoConstraints = false
-            separatorView.topAnchor.constraint(equalTo: customView.bottomAnchor).isActive = true
-            separatorView.centerXAnchor.constraint(equalTo: groupView.centerXAnchor).isActive = true
-            separatorView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
-            separatorView.widthAnchor.constraint(equalTo: groupView.widthAnchor).isActive = true
-            separatorView.setContentHuggingPriority(.required, for: .vertical)
+            if let customView {
+                containerView.addSubview(separatorView)
+                separatorView.topAnchor.constraint(equalTo: customView.bottomAnchor).isActive = true
+                separatorView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+                separatorView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
+                separatorView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
+            }
             
             representationSequenceView.removeFromSuperview()
-            groupView.addSubview(representationSequenceView)
-            representationSequenceView.translatesAutoresizingMaskIntoConstraints = false
-            representationSequenceView.topAnchor.constraint(equalTo: customView.bottomAnchor).isActive = true
-            representationSequenceView.centerXAnchor.constraint(equalTo: groupView.centerXAnchor).isActive = true
-            representationSequenceView.widthAnchor.constraint(equalTo: groupView.widthAnchor).isActive = true
-            representationSequenceView.bottomAnchor.constraint(equalTo: groupView.bottomAnchor).isActive = true
+            containerView.addSubview(representationSequenceView)
+            if customView != nil {
+                representationSequenceView.topAnchor.constraint(equalTo: separatorView.bottomAnchor).isActive = true
+            } else {
+                representationSequenceView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+            }
+            representationSequenceView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+            representationSequenceView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
+            representationSequenceView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
         }
     }
     
@@ -111,11 +112,12 @@ class ActionGroupView: Alert.CustomizedView {
             button.addTarget(self, action: selector, for: .touchUpInside)
             return button
         }
-        if actionLayout is AlertActionLayout {
-            separatorView.isHidden = false
-        } else {
-            separatorView.isHidden = true
-        }
+//        if actionLayout is AlertActionLayout || actionLayout is SheetActionLayout {
+//            separatorView.isHidden = false
+//        } else {
+//            separatorView.isHidden = true
+//        }
+        separatorView.isHidden = actionLayout.prefersSeparatorHidden
         actionLayout.layout(actionViews: buttons, container: representationSequenceView.contentView)
     }
     
@@ -132,88 +134,5 @@ class ActionGroupView: Alert.CustomizedView {
     func setCornerRadius(_ radius: CGFloat) {
         backgroundView.layer.cornerRadius = radius
         representationSequenceView.contentView.setCornerRadius(radius)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        resetRepresentationView()
-        if let touch = touches.first {
-            handleTracking(touch, with: event, isTracking: false)
-        }
-        super.touchesBegan(touches, with: event)
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        defer { activeRepresentationView = nil }
-        if let activeRepresentationView, activeRepresentationView.isHighlighted {
-            activeRepresentationView.isHighlighted = false
-            activeRepresentationView.sendActions(for: .touchUpInside)
-        }
-        super.touchesEnded(touches, with: event)
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        resetRepresentationView()
-        super.touchesCancelled(touches, with: event)
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            handleTracking(touch, with: event, isTracking: true)
-        }
-        super.touchesMoved(touches, with: event)
-    }
-    
-    private func handleTracking(_ touch: UITouch, with event: UIEvent?, isTracking: Bool) {
-        guard let targetViews = representationSequenceView.contentView.findActionRepresentationViews() else {
-            resetRepresentationView()
-            return
-        }
-        guard let touched = targetViews.first(where: { view in
-            let point = touch.location(in: view)
-            return view.point(inside: point, with: event)
-        }) else {
-            resetRepresentationView()
-            return
-        }
-        activeRepresentationView = touched
-        for view in targetViews where view != touched && view.isHighlighted {
-            view.isHighlighted = false
-        }
-        if !touched.isHighlighted {
-            touched.isHighlighted = true
-            if isTracking {
-                feedback.selectionChanged()
-            }
-        }
-    }
-    
-    private func resetRepresentationView() {
-        if let activeRepresentationView, activeRepresentationView.isHighlighted {
-            activeRepresentationView.isHighlighted = false
-        }
-        activeRepresentationView = nil
-    }
-}
-
-extension UIView {
-    
-    fileprivate func findActionRepresentationViews() -> [ActionCustomViewRepresentationView]? {
-        findSubviews(ofClass: ActionCustomViewRepresentationView.self)
-    }
-    
-    func findSubviews<T: UIView>(ofClass: T.Type) -> [T]? {
-        guard subviews.isEmpty == false else { return nil }
-        var allViews = [T]()
-        for view in subviews where view is T {
-            allViews.append(view as! T)
-        }
-        if allViews.isEmpty {
-            for view in subviews {
-                if let buttons = view.findSubviews(ofClass: T.self) {
-                    allViews.append(contentsOf: buttons)
-                }
-            }
-        }
-        return allViews
     }
 }

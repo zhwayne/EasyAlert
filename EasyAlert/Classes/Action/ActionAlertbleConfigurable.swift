@@ -14,6 +14,4 @@ public protocol ActionAlertbleConfigurable {
     var actionViewType: Action.CustomizedView.Type { get set }
     
     var actionLayout: ActionLayoutable { get set }
-    
-    var edgeInsets: UIEdgeInsets { get set }
 }

@@ -7,7 +7,16 @@
 
 import Foundation
 
-open class ActionSheet: Sheet {
+open class ActionSheet: Sheet, ActionAddable {
+    
+    var actions: [Action] {
+        if let cancelActions = cancelActionGroupView?.actions {
+            return actionGroupView.actions + cancelActions
+        }
+        return actionGroupView.actions
+    }
+    
+    private let containerView = ActionSheet.ContainerView()
     
     private let actionGroupView: ActionGroupView
     
@@ -22,52 +31,87 @@ open class ActionSheet: Sheet {
         self.configuration = configuration ?? ActionSheet.Configuration.global
         actionGroupView = ActionGroupView(customView: customView,
                                           actionLayout: self.configuration.actionLayout)
-        let containerView = ActionSheet.ContainerView()
-        containerView.addSubview(actionGroupView)
-        actionGroupView.translatesAutoresizingMaskIntoConstraints = false
-        actionGroupView.leftAnchor.constraint(
-            equalTo: containerView.safeAreaLayoutGuide.leftAnchor,
-            constant: self.configuration.edgeInsets.left
-        ).isActive = true
-        actionGroupView.rightAnchor.constraint(
-            equalTo: containerView.safeAreaLayoutGuide.rightAnchor,
-            constant: -self.configuration.edgeInsets.right
-        ).isActive = true
-        actionGroupView.topAnchor.constraint(
-            equalTo: containerView.safeAreaLayoutGuide.topAnchor,
-            constant: self.configuration.edgeInsets.top
-        ).isActive = true
-        actionGroupView.bottomAnchor.constraint(
-            equalTo: containerView.safeAreaLayoutGuide.bottomAnchor,
-            constant: -self.configuration.edgeInsets.bottom
-        ).isActive = true
-
         super.init(customView: containerView)
         
+        var coordinator = SheetTransitionCoordinator()
+        coordinator.layoutGuide.edgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: -8)
+        coordinator.layoutGuide.ignoreBottomSafeArea = false
         let decorator = TransitionCoordinatorActionGroupDecorator(
-            coordinator: SheetTransitionCoordinator(),
+            coordinator: coordinator,
             actionGroupView: actionGroupView
         )
         self.transitionCoordinator = decorator
     }
     
     open override func willLayoutContainer() {
+        configActionGroupContainer()
         super.willLayoutContainer()
         actionGroupView.setCornerRadius(configuration.cornerRadius)
     }
+    
 }
 
-extension ActionSheet: ActionAlertble {
+extension ActionSheet {
+    
+    private func configActionGroupContainer() {
+        if actionGroupView.superview != containerView {
+            containerView.addSubview(actionGroupView)
+            actionGroupView.translatesAutoresizingMaskIntoConstraints = false
+            
+            actionGroupView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+            actionGroupView.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+            actionGroupView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+            let constraint = actionGroupView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            constraint.priority = .defaultHigh - 1
+            constraint.isActive = true
+        }
+        
+//        if actions.count > 1 && cancelActionGroupView == nil {
+//            cancelActionGroupView = ActionGroupView(customView: nil,
+//                                                    actionLayout: self.configuration.actionLayout)
+//            actionGroupContainerView.addSubview(cancelActionGroupView!)
+//            actionGroupView!.translatesAutoresizingMaskIntoConstraints = false
+//
+//            actionGroupView.leftAnchor.constraint(
+//                equalTo: actionGroupContainerView.safeAreaLayoutGuide.leftAnchor,
+//                constant: self.configuration.edgeInsets.left
+//            ).isActive = true
+//            actionGroupView.rightAnchor.constraint(
+//                equalTo: actionGroupContainerView.safeAreaLayoutGuide.rightAnchor,
+//                constant: -self.configuration.edgeInsets.right
+//            ).isActive = true
+//            actionGroupView.topAnchor.constraint(
+//                equalTo: actionGroupView.bottomAnchor.topAnchor,
+//                constant: self.configuration.edgeInsets.top
+//            ).isActive = true
+//            actionGroupView.bottomAnchor.constraint(
+//                equalTo: actionGroupContainerView.safeAreaLayoutGuide.bottomAnchor,
+//                constant: -self.configuration.edgeInsets.bottom
+//            ).isActive = true
+//        }
+    }
+}
+
+extension ActionSheet {
     
     public func addAction(_ action: Action) {
-        assert(isShowing == false)
-        actionGroupView.actions.append(action)
+        guard canAddAction(action) else { return }
+        
+        if action.style != .cancel {
+            actionGroupView.actions.append(action)
+        } else {
+            cancelActionGroupView?.actions.append(action)
+        }
         setViewForAction(action)
     }
     
     private func setViewForAction(_ action: Action) {
         if action.view == nil {
-            action.view = configuration.actionViewType.init(style: action.style)
+            if configuration.actionViewType == ActionView.self {
+                action.view = ActionView(style: action.style, alertbleStyle: .sheet)
+            } else {
+                action.view = configuration.actionViewType.init(style: action.style)
+            }
             action.view?.title = action.title
         }
     }

@@ -7,8 +7,10 @@
 
 import UIKit
 
-open class ActionAlert: Alert {
+open class ActionAlert: Alert, ActionAddable {
     
+    var actions: [Action] { actionGroupView.actions }
+
     public static var globalConfiguration = Configuration()
     
     private let actionGroupView: ActionGroupView
@@ -37,10 +39,11 @@ open class ActionAlert: Alert {
     }
 }
 
-extension ActionAlert: ActionAlertble {
+extension ActionAlert {
     
     public func addAction(_ action: Action) {
-        assert(isShowing == false)
+        guard canAddAction(action) else { return }
+        
         actionGroupView.actions.append(action)
         setViewForAction(action)
     }

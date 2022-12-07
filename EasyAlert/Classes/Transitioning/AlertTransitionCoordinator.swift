@@ -10,11 +10,8 @@ import Foundation
 struct AlertTransitionCoordinator : TransitionCoordinator {
     
     var duration: TimeInterval = 0.25
-    
-    var size: Size = Size(
-        width: .fixed(270),
-        height: .automic
-    )
+
+    var layoutGuide = LayoutGuide(width: .fixed(270))
     
     func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
         context.container.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
@@ -50,20 +47,51 @@ struct AlertTransitionCoordinator : TransitionCoordinator {
     func update(context: TransitionCoordinatorContext) {
         guard let superview = context.container.superview else { return }
         NSLayoutConstraint.deactivate(context.container.constraints)
-        switch size.width {
-        case let .fixed(value): context.container.widthAnchor.constraint(equalToConstant: value).isActive = true
-        case let .flexible(value): context.container.widthAnchor.constraint(lessThanOrEqualToConstant: value).isActive = true
+        
+        let edgeInsets = layoutGuide.edgeInsets
+        let container = context.container
+        
+        switch layoutGuide.width {
+        case let .fixed(value):
+            let width = value + (edgeInsets.left + edgeInsets.right)
+            container.widthAnchor
+                .constraint(equalToConstant: width)
+                .isActive = true
+            
+        case let .flexible(value):
+            let width = value + (edgeInsets.left + edgeInsets.right)
+            container.widthAnchor
+                .constraint(lessThanOrEqualToConstant: width)
+                .isActive = true
+            
         case let .multiplied(value):
+            let constant = edgeInsets.left + edgeInsets.left
             if context.interfaceOrientation.isPortrait {
-                context.container.widthAnchor.constraint(equalTo: superview.widthAnchor, multiplier: value).isActive = true
+                container.widthAnchor
+                    .constraint(equalTo: superview.widthAnchor, multiplier: value, constant: constant)
+                    .isActive = true
             } else {
-                context.container.widthAnchor.constraint(equalTo: superview.heightAnchor, multiplier: value).isActive = true
+                container.widthAnchor
+                    .constraint(equalTo: superview.heightAnchor, multiplier: value,  constant: constant)
+                    .isActive = true
             }
         }
-        if case let .greaterThanOrEqualTo(value) = size.height {
-            context.container.heightAnchor.constraint(greaterThanOrEqualToConstant: value).isActive = true
+        if case let .greaterThanOrEqualTo(value) = layoutGuide.height {
+            let height = value + edgeInsets.top + edgeInsets.bottom
+            container.heightAnchor
+                .constraint(greaterThanOrEqualToConstant: height)
+                .isActive = true
+        } else {
+            let height = edgeInsets.top + edgeInsets.bottom
+            container.heightAnchor
+                .constraint(greaterThanOrEqualToConstant: height)
+                .isActive = true
         }
-        context.container.centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = true
-        context.container.centerYAnchor.constraint(equalTo: superview.centerYAnchor).isActive = true
+        container.centerXAnchor
+            .constraint(equalTo: superview.centerXAnchor)
+            .isActive = true
+        container.centerYAnchor
+            .constraint(equalTo: superview.centerYAnchor)
+            .isActive = true
     }
 }

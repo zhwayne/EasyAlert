@@ -17,9 +17,9 @@ struct TransitionCoordinatorActionGroupDecorator: TransitionCoordinator {
         set { coordinator.duration = newValue }
     }
     
-    var size: Size {
-        get { coordinator.size }
-        set { coordinator.size = newValue }
+    var layoutGuide: LayoutGuide {
+        get { coordinator.layoutGuide }
+        set { coordinator.layoutGuide = newValue }
     }
     
     init(coordinator: TransitionCoordinator, actionGroupView: ActionGroupView) {
@@ -29,7 +29,7 @@ struct TransitionCoordinatorActionGroupDecorator: TransitionCoordinator {
     
     func update(context: TransitionCoordinatorContext) {
         coordinator.update(context: context)
-        actionGroupView?.updateLayout(interfaceOrientation: context.interfaceOrientation, width: size.width)
+        actionGroupView?.updateLayout(interfaceOrientation: context.interfaceOrientation, width: layoutGuide.width)
     }
     
     func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {

@@ -8,12 +8,12 @@
 import Foundation
 
 public enum Width {
-    
-    case fixed(CGFloat)         // equal to value.
-    
-    case flexible(CGFloat)      // less than or equal to value.
-    
-    case multiplied(CGFloat)    // multiples of superview's width.
+    // equal to value.
+    case fixed(CGFloat)
+    // less than or equal to value.
+    case flexible(CGFloat)
+    // multiples of superview's width.
+    case multiplied(CGFloat)
 }
 
 public enum Height {
@@ -23,11 +23,16 @@ public enum Height {
     case greaterThanOrEqualTo(CGFloat)
 }
 
-public struct Size {
+public struct LayoutGuide {
     
     public var width: Width
     
-    public var height: Height
+    public var height: Height = .automic
+    
+    public var edgeInsets: UIEdgeInsets = .zero
+    
+    // Only for Sheet.
+    public var ignoreBottomSafeArea: Bool = true
 }
 
 public struct TransitionCoordinatorContext {
@@ -45,7 +50,7 @@ public protocol TransitionCoordinator {
     
     var duration: TimeInterval { get set }
 
-    var size: Size { get set }
+    var layoutGuide: LayoutGuide { get set }
     
     func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void)
     

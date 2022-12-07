@@ -9,5 +9,12 @@ import Foundation
 
 public protocol ActionLayoutable {
     
+    var prefersSeparatorHidden: Bool { get }
+    
     func layout(actionViews: [UIView], container: UIView)
+}
+
+public extension ActionLayoutable {
+    
+    var prefersSeparatorHidden: Bool { true }
 }

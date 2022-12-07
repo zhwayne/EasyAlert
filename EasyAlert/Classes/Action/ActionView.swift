@@ -22,6 +22,8 @@ final class ActionView: Action.CustomizedView {
     
     let style: Action.Style
     
+    let alertbleStyle: Action.AlertbleStyle
+    
     var isEnabled: Bool = true {
         didSet {
             highlightedOverlay.alpha = isEnabled ? 0 : 1
@@ -42,14 +44,15 @@ final class ActionView: Action.CustomizedView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = style.font
+        label.font = style.font(for: alertbleStyle)
         label.textAlignment = .center
         label.textColor = style.color
         return label
     }()
     
-    required init(style: Action.Style) {
+    required init(style: Action.Style, alertbleStyle: Action.AlertbleStyle) {
         self.style = style
+        self.alertbleStyle = alertbleStyle
         super.init(frame: .zero)
         
         clipsToBounds = true
@@ -69,6 +72,10 @@ final class ActionView: Action.CustomizedView {
         titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     
+    convenience init(style: Action.Style) {
+        self.init(style: style, alertbleStyle: .alert)
+    }
+    
     @available(*, unavailable)
     override init(frame: CGRect) {
         fatalError("using init(style:) instead.")
@@ -81,7 +88,10 @@ final class ActionView: Action.CustomizedView {
     
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
-        size.height = 44
+        switch alertbleStyle {
+        case .alert: size.height = 44
+        case .sheet: size.height = 57
+        }
         return size
     }
 }
@@ -96,11 +106,16 @@ fileprivate extension Action.Style {
         }
     }
     
-    var font: UIFont {
+    func font(for alertbleStyle: Action.AlertbleStyle) -> UIFont {
+        let fontSize: CGFloat
+        switch alertbleStyle {
+        case .alert: fontSize = 17
+        case .sheet: fontSize = 20
+        }
         switch self {
-        case .`default`: return .systemFont(ofSize: 17, weight: .regular)
-        case .cancel: return .systemFont(ofSize: 17, weight: .semibold)
-        case .destructive: return .systemFont(ofSize: 17, weight: .regular)
+        case .`default`: return .systemFont(ofSize: fontSize, weight: .regular)
+        case .cancel: return .systemFont(ofSize: fontSize, weight: .semibold)
+        case .destructive: return .systemFont(ofSize: fontSize, weight: .regular)
         }
     }
 }

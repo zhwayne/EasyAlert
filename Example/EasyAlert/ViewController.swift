@@ -178,8 +178,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.backgroundProvider.dimming = .view(effectView)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
-            alert.addAction(cancel)
             alert.addAction(ignore)
+            alert.addAction(cancel)
             alert.addCallback(LiftcycleCallback(didDismiss: {
                 animator.stopAnimation(true)
             }))
@@ -256,7 +256,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let cancel = Action(title: "取消", style: .cancel)
             let confirm = Action(title: "确定", style: .default)
             let ignore = Action(title: "忽略", style: .destructive)
-            sheet.addActions([cancel, confirm])
+            sheet.addActions([cancel, confirm, ignore])
             sheet.show()
         }
     }

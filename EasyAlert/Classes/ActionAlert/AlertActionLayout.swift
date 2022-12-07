@@ -9,6 +9,8 @@ import Foundation
 
 struct AlertActionLayout: ActionLayoutable {
     
+    var prefersSeparatorHidden: Bool { false }
+    
     private let stackView: UIStackView
     
     init() {

@@ -18,3 +18,24 @@ public extension ActionAlertble {
         actions.forEach { addAction($0) }
     }
 }
+
+protocol ActionAddable: ActionAlertble {
+    
+    var actions: [Action] { get }
+}
+
+extension ActionAddable where Self: Alertble {
+    
+    func canAddAction(_ action: Action) -> Bool {
+#if DEBUG
+        assert(!isShowing)
+        assert(!isDuplicateCancelAction(action))
+#endif
+        return !isShowing && !isDuplicateCancelAction(action)
+    }
+    
+    func isDuplicateCancelAction(_ action: Action) -> Bool {
+        guard action.style == .cancel else { return false }
+        return actions.contains { $0.style == .cancel }
+    }
+}

@@ -16,7 +16,9 @@ open class Alert: Alertble {
     
     public var backgroundProvider: BackgroundProvider = DefaultBackgroundProvider()
     
-    let containerView: UIView = UIView()
+    private let alertViewController = AlertViewController()
+    
+    private var view: UIView { alertViewController.view }
     
     public var transitionCoordinator: TransitionCoordinator = AlertTransitionCoordinator()
         
@@ -26,7 +28,7 @@ open class Alert: Alertble {
         
     private let tapTarget = TapTarget()
         
-    private(set) var isShowing = false
+    public private(set) var isShowing = false
     
     private var callbacks: [LiftcycleCallback] = []
     
@@ -34,7 +36,6 @@ open class Alert: Alertble {
             
     public init(customView: CustomizedView) {
         self.customView = customView
-        containerView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.frame = UIScreen.main.bounds
         backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backgroundView.willRemoveFromSuperviewObserver = { [weak self] in
@@ -47,7 +48,7 @@ open class Alert: Alertble {
         tapTarget.gestureRecognizerShouldBeginBlock = { [unowned self] gestureRecognizer in
             guard let backgroundView = gestureRecognizer.view else { return false }
             let point = gestureRecognizer.location(in: backgroundView)
-            return !containerView.frame.contains(point)
+            return !view.frame.contains(point)
         }
         
         tapTarget.tapHandler = { [unowned self] in
@@ -138,7 +139,7 @@ extension Alert {
     
     private var transitioningContext: TransitionCoordinatorContext {
         TransitionCoordinatorContext(
-            container: containerView,
+            container: view,
             dimmingView: dimmingView,
             interfaceOrientation: interfaceOrientation,
             frame: backgroundView.bounds
@@ -179,9 +180,10 @@ extension Alert {
     }
     
     private func configContainer() {
-        backgroundView.addSubview(containerView)
-        containerView.addSubview(customView)
-        customView.frame = containerView.bounds
+        view.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.addSubview(view)
+        view.addSubview(customView)
+        customView.frame = view.bounds
         customView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         layoutIfNeeded()
     }
@@ -191,7 +193,7 @@ extension Alert {
         willLayoutContainer()
         transitionCoordinator.update(context: transitioningContext)
         didLayoutContainer()
-        containerView.layoutIfNeeded()
+        view.layoutIfNeeded()
     }
     
     private func showAlert(in parent: UIView) {

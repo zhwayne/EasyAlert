@@ -26,7 +26,7 @@ class MyActionSheet: ActionSheet {
             view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20).isActive = true
             view.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
             
-            view.heightAnchor.constraint(equalToConstant: 236).isActive = true
+            view.heightAnchor.constraint(equalToConstant: 200).isActive = true
 ////            view.widthAnchor.constraint(equalToConstant: 300).isActive = true
 //
 //            setContentHuggingPriority(.defaultLow - 2, for: .horizontal)

@@ -25,11 +25,6 @@ extension MessageAlert {
             get { actionAlertConfiguration.actionLayout }
             set { actionAlertConfiguration.actionLayout = newValue }
         }
-        
-        public var edgeInsets: UIEdgeInsets {
-            get { actionAlertConfiguration.edgeInsets }
-            set { actionAlertConfiguration.edgeInsets = newValue }
-        }
                 
         private var actionAlertConfiguration: ActionAlert.Configuration
         
