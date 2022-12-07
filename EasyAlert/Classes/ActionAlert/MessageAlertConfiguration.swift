@@ -21,9 +21,9 @@ extension MessageAlert {
             set { actionAlertConfiguration.actionViewType = newValue }
         }
         
-        public var actionLayout: ActionLayoutable {
-            get { actionAlertConfiguration.actionLayout }
-            set { actionAlertConfiguration.actionLayout = newValue }
+        public var actionLayoutType: ActionLayoutable.Type {
+            get { actionAlertConfiguration.actionLayoutType }
+            set { actionAlertConfiguration.actionLayoutType = newValue }
         }
                 
         private var actionAlertConfiguration: ActionAlert.Configuration

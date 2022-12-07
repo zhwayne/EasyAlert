@@ -13,5 +13,5 @@ public protocol ActionAlertbleConfigurable {
         
     var actionViewType: Action.CustomizedView.Type { get set }
     
-    var actionLayout: ActionLayoutable { get set }
+    var actionLayoutType: ActionLayoutable.Type { get set }
 }

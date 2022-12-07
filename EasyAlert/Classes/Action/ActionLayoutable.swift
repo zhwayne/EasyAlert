@@ -12,6 +12,8 @@ public protocol ActionLayoutable {
     var prefersSeparatorHidden: Bool { get }
     
     func layout(actionViews: [UIView], container: UIView)
+    
+    init() 
 }
 
 public extension ActionLayoutable {

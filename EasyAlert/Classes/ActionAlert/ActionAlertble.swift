@@ -38,4 +38,8 @@ extension ActionAddable where Self: Alertble {
         guard action.style == .cancel else { return false }
         return actions.contains { $0.style == .cancel }
     }
+    
+    var cancelActionIndex: Int? {
+        return actions.firstIndex(where: { $0.style == .cancel })
+    }
 }

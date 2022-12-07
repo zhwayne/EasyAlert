@@ -15,7 +15,7 @@ extension ActionAlert {
         
         public var actionViewType: Action.CustomizedView.Type = ActionView.self
         
-        public var actionLayout: ActionLayoutable = AlertActionLayout()
+        public var actionLayoutType: ActionLayoutable.Type = AlertActionLayout.self
         
         public init() { }
         

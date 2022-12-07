@@ -15,7 +15,7 @@ extension ActionSheet {
         
         public var actionViewType: Action.CustomizedView.Type = ActionView.self
         
-        public var actionLayout: ActionLayoutable = SheetActionLayout()
+        public var actionLayoutType: ActionLayoutable.Type = SheetActionLayout.self
                 
         public init() { }
         

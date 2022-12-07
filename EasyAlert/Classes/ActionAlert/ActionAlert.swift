@@ -22,8 +22,9 @@ open class ActionAlert: Alert, ActionAddable {
         configuration: ActionAlertbleConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionAlert.Configuration.global
+        let actionLayout = self.configuration.actionLayoutType.init()
         actionGroupView = ActionGroupView(customView: customView,
-                                           actionLayout: self.configuration.actionLayout)
+                                           actionLayout: actionLayout)
         super.init(customView: actionGroupView)
         
         let decorator = TransitionCoordinatorActionGroupDecorator(
@@ -46,6 +47,16 @@ extension ActionAlert {
         
         actionGroupView.actions.append(action)
         setViewForAction(action)
+        
+        if let index = cancelActionIndex {
+            let cancelAction = actionGroupView.actions.remove(at: index)
+            // action 数量为 1 时，将 cancelAction 放置在第一个，否则放在最后一个。
+            if actionGroupView.actions.count == 1 {
+                actionGroupView.actions.insert(cancelAction, at: 0)
+            } else {
+                actionGroupView.actions.append(cancelAction)
+            }
+        }
     }
     
     private func setViewForAction(_ action: Action) {

@@ -112,12 +112,10 @@ class ActionGroupView: Alert.CustomizedView {
             button.addTarget(self, action: selector, for: .touchUpInside)
             return button
         }
-//        if actionLayout is AlertActionLayout || actionLayout is SheetActionLayout {
-//            separatorView.isHidden = false
-//        } else {
-//            separatorView.isHidden = true
-//        }
         separatorView.isHidden = actionLayout.prefersSeparatorHidden
+        let contentSubviews = representationSequenceView.contentView.subviews
+        contentSubviews.forEach { $0.removeFromSuperview() }
+        buttons.forEach { $0.removeFromSuperview() }
         actionLayout.layout(actionViews: buttons, container: representationSequenceView.contentView)
     }
     

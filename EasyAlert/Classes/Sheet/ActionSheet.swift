@@ -29,8 +29,9 @@ open class ActionSheet: Sheet, ActionAddable {
         configuration: ActionAlertbleConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionSheet.Configuration.global
+        let actionLayout = self.configuration.actionLayoutType.init()
         actionGroupView = ActionGroupView(customView: customView,
-                                          actionLayout: self.configuration.actionLayout)
+                                          actionLayout: actionLayout)
         super.init(customView: containerView)
         
         var coordinator = SheetTransitionCoordinator()
@@ -68,7 +69,7 @@ extension ActionSheet {
         
 //        if actions.count > 1 && cancelActionGroupView == nil {
 //            cancelActionGroupView = ActionGroupView(customView: nil,
-//                                                    actionLayout: self.configuration.actionLayout)
+//                                                    actionLayoutType: self.configuration.actionLayoutType)
 //            actionGroupContainerView.addSubview(cancelActionGroupView!)
 //            actionGroupView!.translatesAutoresizingMaskIntoConstraints = false
 //
@@ -97,6 +98,8 @@ extension ActionSheet {
     public func addAction(_ action: Action) {
         guard canAddAction(action) else { return }
         
+        // cancelAction 放置在  `cancelActionGroupView.actions` 中，其他类型的 action 放置在
+        // `actionGroupView.actions` 中。`cancelActionGroupView.actions` 的数量为 0 或者 1。
         if action.style != .cancel {
             actionGroupView.actions.append(action)
         } else {

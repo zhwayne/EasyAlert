@@ -202,7 +202,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             var configuration = MessageAlert.Configuration()
             configuration.titleConfiguration.alignment = .left
             configuration.messageConfiguration.alignment = .left
-            configuration.actionLayout = MyActionLayout()
+            configuration.actionLayoutType = MyActionLayout.self
             configuration.actionViewType = MyActionView.self
             
             let alert = MessageAlert(title: alertTitle, message: message, configuration: configuration)

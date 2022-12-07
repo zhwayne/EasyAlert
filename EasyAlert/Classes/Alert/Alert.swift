@@ -180,8 +180,6 @@ extension Alert {
     }
     
     private func configContainer() {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.addSubview(view)
         view.addSubview(customView)
         customView.frame = view.bounds
         customView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -189,6 +187,9 @@ extension Alert {
     }
     
     private func layoutIfNeeded() {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.removeFromSuperview()
+        backgroundView.addSubview(view)
         backgroundView.layoutIfNeeded()
         willLayoutContainer()
         transitionCoordinator.update(context: transitioningContext)
