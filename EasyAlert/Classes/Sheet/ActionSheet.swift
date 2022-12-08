@@ -7,20 +7,15 @@
 
 import Foundation
 
-open class ActionSheet: Sheet, ActionAddable {
+open class ActionSheet: Sheet, _ActionAlertble {
     
-    var actions: [Action] {
-        if let cancelActions = cancelActionGroupView?.actions {
-            return actionGroupView.actions + cancelActions
-        }
-        return actionGroupView.actions
-    }
+    var actions: [Action] { actionGroupView.actions + cancelActionGroupView.actions }
     
     private let containerView = ActionSheet.ContainerView()
     
     private let actionGroupView: ActionGroupView
     
-    private var cancelActionGroupView: ActionGroupView?
+    private var cancelActionGroupView: ActionGroupView
     
     private let configuration: ActionAlertbleConfigurable
     
@@ -30,8 +25,9 @@ open class ActionSheet: Sheet, ActionAddable {
     ) {
         self.configuration = configuration ?? ActionSheet.Configuration.global
         let actionLayout = self.configuration.actionLayoutType.init()
-        actionGroupView = ActionGroupView(customView: customView,
-                                          actionLayout: actionLayout)
+        let cancelActionLayout = self.configuration.actionLayoutType.init()
+        actionGroupView = ActionGroupView(customView: customView, actionLayout: actionLayout)
+        cancelActionGroupView = ActionGroupView(customView: nil, actionLayout: cancelActionLayout)
         super.init(customView: containerView)
         
         var coordinator = SheetTransitionCoordinator()
@@ -39,7 +35,7 @@ open class ActionSheet: Sheet, ActionAddable {
         coordinator.layoutGuide.ignoreBottomSafeArea = false
         let decorator = TransitionCoordinatorActionGroupDecorator(
             coordinator: coordinator,
-            actionGroupView: actionGroupView
+            actionGroupViews: [actionGroupView, cancelActionGroupView]
         )
         self.transitionCoordinator = decorator
     }
@@ -48,6 +44,7 @@ open class ActionSheet: Sheet, ActionAddable {
         configActionGroupContainer()
         super.willLayoutContainer()
         actionGroupView.setCornerRadius(configuration.cornerRadius)
+        cancelActionGroupView.setCornerRadius(configuration.cornerRadius)
     }
     
 }
@@ -67,29 +64,25 @@ extension ActionSheet {
             constraint.isActive = true
         }
         
-//        if actions.count > 1 && cancelActionGroupView == nil {
-//            cancelActionGroupView = ActionGroupView(customView: nil,
-//                                                    actionLayoutType: self.configuration.actionLayoutType)
-//            actionGroupContainerView.addSubview(cancelActionGroupView!)
-//            actionGroupView!.translatesAutoresizingMaskIntoConstraints = false
-//
-//            actionGroupView.leftAnchor.constraint(
-//                equalTo: actionGroupContainerView.safeAreaLayoutGuide.leftAnchor,
-//                constant: self.configuration.edgeInsets.left
-//            ).isActive = true
-//            actionGroupView.rightAnchor.constraint(
-//                equalTo: actionGroupContainerView.safeAreaLayoutGuide.rightAnchor,
-//                constant: -self.configuration.edgeInsets.right
-//            ).isActive = true
-//            actionGroupView.topAnchor.constraint(
-//                equalTo: actionGroupView.bottomAnchor.topAnchor,
-//                constant: self.configuration.edgeInsets.top
-//            ).isActive = true
-//            actionGroupView.bottomAnchor.constraint(
-//                equalTo: actionGroupContainerView.safeAreaLayoutGuide.bottomAnchor,
-//                constant: -self.configuration.edgeInsets.bottom
-//            ).isActive = true
-//        }
+        if cancelActionGroupView.superview != containerView {
+            containerView.addSubview(cancelActionGroupView)
+            cancelActionGroupView.translatesAutoresizingMaskIntoConstraints = false
+            
+            cancelActionGroupView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+            cancelActionGroupView.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+            cancelActionGroupView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
+            
+            var offset: CGFloat = 0
+            let mirror = Mirror(reflecting: self.configuration)
+            for child in mirror.children {
+                if child.label == "cancelSpacing" {
+                    offset = child.value as! CGFloat
+                    break
+                }
+            }
+            let constraint = cancelActionGroupView.topAnchor.constraint(equalTo: actionGroupView.bottomAnchor, constant: offset)
+            constraint.isActive = true
+        }
     }
 }
 
@@ -103,7 +96,7 @@ extension ActionSheet {
         if action.style != .cancel {
             actionGroupView.actions.append(action)
         } else {
-            cancelActionGroupView?.actions.append(action)
+            cancelActionGroupView.actions.append(action)
         }
         setViewForAction(action)
     }

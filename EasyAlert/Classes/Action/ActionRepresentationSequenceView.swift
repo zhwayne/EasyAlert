@@ -9,13 +9,13 @@ import UIKit
 
 final class ActionRepresentationSequenceView: UIView {
     
-    let contentView = ActionSeparatableSequenceView()
+    let separatableSequenceView = ActionSeparatableSequenceView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.frame = bounds
-        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        addSubview(contentView)
+        separatableSequenceView.frame = bounds
+        separatableSequenceView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(separatableSequenceView)
         isUserInteractionEnabled = false
         translatesAutoresizingMaskIntoConstraints = false
     }

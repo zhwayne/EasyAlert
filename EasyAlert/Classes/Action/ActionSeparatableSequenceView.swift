@@ -25,23 +25,11 @@ final class ActionSeparatableSequenceView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setCornerRadius(_ radius: CGFloat) {
-        if #available(iOS 11.0, *) {
-            layer.cornerRadius = radius
-            layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        } else {
-            let path = UIBezierPath(
-                roundedRect: bounds,
-                byRoundingCorners: [.bottomLeft, .bottomRight],
-                cornerRadii: CGSize(
-                    width: radius,
-                    height: radius
-                )
-            )
-            let mask = CAShapeLayer()
-            mask.path = path.cgPath
-            layer.mask = mask
-        }
+    func setCornerRadius(_ radius: CGFloat, maskedCorners: CACornerMask? = nil) {
+        let maskedCorners = maskedCorners
+        ?? [.layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        layer.cornerRadius = radius
+        layer.maskedCorners = maskedCorners
     }
     
     func horizontalSeparator(at index: Int) -> UIView {

@@ -37,7 +37,6 @@ open class Alert: Alertble {
     public init(customView: CustomizedView) {
         self.customView = customView
         backgroundView.frame = UIScreen.main.bounds
-        backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backgroundView.willRemoveFromSuperviewObserver = { [weak self] in
             DispatchQueue.main.async {
                 self?.dismiss()
@@ -140,6 +139,7 @@ extension Alert {
     private var transitioningContext: TransitionCoordinatorContext {
         TransitionCoordinatorContext(
             container: view,
+            backgroundView: backgroundView,
             dimmingView: dimmingView,
             interfaceOrientation: interfaceOrientation,
             frame: backgroundView.bounds
@@ -180,6 +180,7 @@ extension Alert {
     }
     
     private func configContainer() {
+        backgroundView.addSubview(view)
         view.addSubview(customView)
         customView.frame = view.bounds
         customView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -187,9 +188,6 @@ extension Alert {
     }
     
     private func layoutIfNeeded() {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.removeFromSuperview()
-        backgroundView.addSubview(view)
         backgroundView.layoutIfNeeded()
         willLayoutContainer()
         transitionCoordinator.update(context: transitioningContext)

@@ -13,7 +13,7 @@ public enum Width {
     // less than or equal to value.
     case flexible(CGFloat)
     // multiples of superview's width.
-    case multiplied(CGFloat)
+    case multiplied(CGFloat, maximumWidth: CGFloat = 0)
 }
 
 public enum Height {
@@ -39,6 +39,8 @@ public struct TransitionCoordinatorContext {
     
     public let container: UIView
     
+    public let backgroundView: UIView
+    
     public let dimmingView: UIView
     
     public let interfaceOrientation: UIInterfaceOrientation
@@ -56,7 +58,7 @@ public protocol TransitionCoordinator {
     
     func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void)
     
-    func update(context: TransitionCoordinatorContext)
+    mutating func update(context: TransitionCoordinatorContext)
 }
 
 @available(iOS 13.0, *)

@@ -23,7 +23,7 @@ final class DimmingKnockoutBackdropView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backgroundColor = .clear
         isOpaque = false
     }

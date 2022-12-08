@@ -256,7 +256,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let cancel = Action(title: "取消", style: .cancel)
             let confirm = Action(title: "确定", style: .default)
             let ignore = Action(title: "忽略", style: .destructive)
-            sheet.addActions([cancel, confirm, ignore])
+            let other = Action(title: "其他", style: .default)
+            sheet.addActions([cancel, confirm, ignore, other])
             sheet.show()
         }
     }

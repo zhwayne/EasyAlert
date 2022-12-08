@@ -19,17 +19,17 @@ public extension ActionAlertble {
     }
 }
 
-protocol ActionAddable: ActionAlertble {
+protocol _ActionAlertble: ActionAlertble {
     
     var actions: [Action] { get }
 }
 
-extension ActionAddable where Self: Alertble {
+extension _ActionAlertble {
     
     func canAddAction(_ action: Action) -> Bool {
 #if DEBUG
-        assert(!isShowing)
-        assert(!isDuplicateCancelAction(action))
+        assert(!isShowing, "\(self) can only add one action if is not display.`")
+        assert(!isDuplicateCancelAction(action), "\(self) can only have one action with a style of `Action.Style.cancel`.")
 #endif
         return !isShowing && !isDuplicateCancelAction(action)
     }

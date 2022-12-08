@@ -10,7 +10,8 @@ import Foundation
 struct TransitionCoordinatorActionGroupDecorator: TransitionCoordinator {
     
     private var coordinator: TransitionCoordinator
-    private weak var actionGroupView: ActionGroupView?
+    private var actionGroupViews: [ActionGroupView] = []
+    
     
     var duration: TimeInterval {
         get { coordinator.duration }
@@ -22,14 +23,16 @@ struct TransitionCoordinatorActionGroupDecorator: TransitionCoordinator {
         set { coordinator.layoutGuide = newValue }
     }
     
-    init(coordinator: TransitionCoordinator, actionGroupView: ActionGroupView) {
+    init(coordinator: TransitionCoordinator, actionGroupViews: [ActionGroupView]) {
         self.coordinator = coordinator
-        self.actionGroupView = actionGroupView
+        self.actionGroupViews = actionGroupViews
     }
     
-    func update(context: TransitionCoordinatorContext) {
+    mutating func update(context: TransitionCoordinatorContext) {
         coordinator.update(context: context)
-        actionGroupView?.updateLayout(interfaceOrientation: context.interfaceOrientation, width: layoutGuide.width)
+        actionGroupViews.forEach { view in
+            view.updateLayout(interfaceOrientation: context.interfaceOrientation, width: layoutGuide.width)
+        }
     }
     
     func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {

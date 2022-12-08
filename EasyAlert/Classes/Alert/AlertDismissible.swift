@@ -17,10 +17,10 @@ public protocol AlertDismissible : AnyObject {
     @MainActor func dismiss() async
 }
 
-public extension AlertDismissible where Self: UIView {
+extension AlertDismissible where Self: UIView {
     
     /// 获取和 view 关联的 alert。
-    private var alert: Alertble? {
+    var alert: Alertble? {
         var alertble: Alertble?
         for view in sequence(first: superview, next: { $0?.superview }) {
             if let backgroundView = view as? DimmingKnockoutBackdropView {
@@ -33,12 +33,12 @@ public extension AlertDismissible where Self: UIView {
     
     /// 关掉 alert。
     /// - Parameter completion: 完成回调。
-    @MainActor func dismiss(completion: (() -> Void)? = nil) {
+    @MainActor public func dismiss(completion: (() -> Void)? = nil) {
         alert?.dismiss(completion: completion)
     }
     
     @available(iOS 13.0, *)
-    @MainActor func dismiss() async {
+    @MainActor public func dismiss() async {
         await withUnsafeContinuation({ continuation in
             dismiss { continuation.resume() }
         })

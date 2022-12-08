@@ -13,6 +13,8 @@ extension ActionSheet {
         
         public var cornerRadius: CGFloat = 13
         
+        public var cancelSpacing: CGFloat = 8
+        
         public var actionViewType: Action.CustomizedView.Type = ActionView.self
         
         public var actionLayoutType: ActionLayoutable.Type = SheetActionLayout.self

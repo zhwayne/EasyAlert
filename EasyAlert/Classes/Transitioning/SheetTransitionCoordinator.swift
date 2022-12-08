@@ -11,9 +11,12 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
     
     var duration: TimeInterval = 0.25
     
-    var layoutGuide = LayoutGuide(width: .multiplied(1))
+    var layoutGuide = LayoutGuide(width: .multiplied(1, maximumWidth: 414))
+    
+    private var constraints: [NSLayoutConstraint] = []
     
     func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
+        context.container.superview?.isUserInteractionEnabled = false
         context.container.layoutIfNeeded()
         let height = context.container.bounds.height + context.dimmingView.safeAreaInsets.bottom
         context.container.transform = CGAffineTransform(translationX: 0, y: height)
@@ -26,12 +29,14 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
             context.container.transform = .identity
         }
         animator.addCompletion { position in
-            if position == .end { completion() }
+            completion()
+            context.container.superview?.isUserInteractionEnabled = true
         }
         animator.startAnimation()
     }
     
     func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
+        context.container.superview?.isUserInteractionEnabled = false
         context.container.layoutIfNeeded()
         let height = context.frame.height - context.container.frame.minY
         
@@ -42,14 +47,18 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
             context.container.transform = CGAffineTransform(translationX: 0, y: height)
         }
         animator.addCompletion { position in
-            if position == .end { completion() }
+            completion()
+            context.container.superview?.isUserInteractionEnabled = true
         }
         animator.startAnimation()
     }
     
-    func update(context: TransitionCoordinatorContext) {
+    mutating func update(context: TransitionCoordinatorContext) {
         guard let superview = context.container.superview else { return }
-        NSLayoutConstraint.deactivate(context.container.constraints)
+        superview.layoutIfNeeded()
+        NSLayoutConstraint.deactivate(constraints)
+        constraints.removeAll()
+        defer { NSLayoutConstraint.activate(constraints) }
         
         let edgeInsets = layoutGuide.edgeInsets
         let container = context.container
@@ -57,51 +66,46 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
         switch layoutGuide.width {
         case let .fixed(value):
             let width = value + (edgeInsets.left + edgeInsets.right)
-            container.widthAnchor
-                .constraint(equalToConstant: width)
-                .isActive = true
+            constraints.append(container.widthAnchor.constraint(equalToConstant: width))
             
         case let .flexible(value):
             let width = value + (edgeInsets.left + edgeInsets.right)
-            container.widthAnchor
-                .constraint(lessThanOrEqualToConstant: width)
-                .isActive = true
+            constraints.append(container.widthAnchor.constraint(lessThanOrEqualToConstant: width))
             
-        case let .multiplied(value):
+        case let .multiplied(value, maximumWidth):
             let constant = edgeInsets.left + edgeInsets.left
-            if context.interfaceOrientation.isPortrait {
-                container.widthAnchor
-                    .constraint(equalTo: superview.widthAnchor, multiplier: value, constant: constant)
-                    .isActive = true
-            } else {
-                container.widthAnchor
-                    .constraint(equalTo: superview.heightAnchor, multiplier: value, constant: constant)
-                    .isActive = true
+            let multiplierConstraint = container.widthAnchor.constraint(
+                equalTo: superview.widthAnchor, multiplier: value, constant: constant)
+            multiplierConstraint.priority = .required - 1
+            constraints.append(multiplierConstraint)
+            if maximumWidth > 0 {
+                let maximumWidthConstraint = container.widthAnchor
+                    .constraint(lessThanOrEqualToConstant: maximumWidth)
+                constraints.append(maximumWidthConstraint)
             }
         }
+        
         if case let .greaterThanOrEqualTo(value) = layoutGuide.height {
             let height = value + edgeInsets.top + edgeInsets.bottom
-            container.heightAnchor
-                .constraint(greaterThanOrEqualToConstant: height)
-                .isActive = true
+            let constraint = container.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
+            constraints.append(constraint)
         } else {
             let height = edgeInsets.top + edgeInsets.bottom
-            container.heightAnchor
-                .constraint(greaterThanOrEqualToConstant: height)
-                .isActive = true
+            let constraint = container.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
+            constraints.append(constraint)
         }
-        container.centerXAnchor
-            .constraint(equalTo: superview.centerXAnchor)
-            .isActive = true
         
         if layoutGuide.ignoreBottomSafeArea {
-            container.bottomAnchor
-                .constraint(equalTo: superview.bottomAnchor, constant: -edgeInsets.bottom)
-                .isActive = true
+            let constraint = container.bottomAnchor.constraint(
+                equalTo: superview.bottomAnchor, constant: -edgeInsets.bottom)
+            constraints.append(constraint)
         } else {
-            container.bottomAnchor
-                .constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom)
-                .isActive = true
+            let constraint =  container.bottomAnchor.constraint(
+                equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom)
+            constraints.append(constraint)
         }
+        
+        constraints.append(container.centerXAnchor.constraint(equalTo: superview.centerXAnchor))
     }
 }
+

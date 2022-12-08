@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class ActionAlert: Alert, ActionAddable {
+open class ActionAlert: Alert, _ActionAlertble {
     
     var actions: [Action] { actionGroupView.actions }
 
@@ -29,7 +29,7 @@ open class ActionAlert: Alert, ActionAddable {
         
         let decorator = TransitionCoordinatorActionGroupDecorator(
             coordinator: AlertTransitionCoordinator(),
-            actionGroupView: actionGroupView
+            actionGroupViews: [actionGroupView] 
         )
         self.transitionCoordinator = decorator
     }

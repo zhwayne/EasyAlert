@@ -11,7 +11,7 @@ public protocol ActionLayoutable {
     
     var prefersSeparatorHidden: Bool { get }
     
-    func layout(actionViews: [UIView], container: UIView)
+    mutating func layout(actionViews: [UIView], container: UIView)
     
     init() 
 }
@@ -19,4 +19,11 @@ public protocol ActionLayoutable {
 public extension ActionLayoutable {
     
     var prefersSeparatorHidden: Bool { true }
+}
+
+public extension ActionLayoutable {
+    
+    func generateSeparatorView() -> UIView {
+        ActionVibrantSeparatorView()
+    }
 }

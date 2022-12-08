@@ -21,11 +21,11 @@ public protocol BackgroundProvider {
     var allowDismissWhenBackgroundTouch: Bool { get set }
 }
 
-public struct DefaultBackgroundProvider: BackgroundProvider {
+struct DefaultBackgroundProvider: BackgroundProvider {
     
-    public var dimming: Dimming = .color(Self.alertDimmingViewColor)
-    
-    public var allowDismissWhenBackgroundTouch: Bool = false
+   var dimming: Dimming = .color(Self.alertDimmingViewColor)
+   
+   var allowDismissWhenBackgroundTouch: Bool = false
 }
 
 extension DefaultBackgroundProvider {

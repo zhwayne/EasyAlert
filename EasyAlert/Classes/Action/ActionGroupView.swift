@@ -93,7 +93,7 @@ class ActionGroupView: Alert.CustomizedView {
     }
     
     func updateLayout(interfaceOrientation: UIInterfaceOrientation, width: Width) {
-        representationSequenceView.contentView.subviews.forEach {
+        representationSequenceView.separatableSequenceView.subviews.forEach {
             $0.removeFromSuperview()
         }
         guard !actions.isEmpty else { return }
@@ -113,10 +113,8 @@ class ActionGroupView: Alert.CustomizedView {
             return button
         }
         separatorView.isHidden = actionLayout.prefersSeparatorHidden
-        let contentSubviews = representationSequenceView.contentView.subviews
-        contentSubviews.forEach { $0.removeFromSuperview() }
-        buttons.forEach { $0.removeFromSuperview() }
-        actionLayout.layout(actionViews: buttons, container: representationSequenceView.contentView)
+        let separatableSequenceView = representationSequenceView.separatableSequenceView
+        actionLayout.layout(actionViews: buttons, container: separatableSequenceView)
     }
     
     @objc
@@ -131,6 +129,11 @@ class ActionGroupView: Alert.CustomizedView {
     
     func setCornerRadius(_ radius: CGFloat) {
         backgroundView.layer.cornerRadius = radius
-        representationSequenceView.contentView.setCornerRadius(radius)
+        let view = representationSequenceView.separatableSequenceView
+        if actions.count == 1 && actions[0].style == .cancel {
+            view.setCornerRadius(radius)
+        } else {
+            view.setCornerRadius(radius, maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+        }
     }
 }

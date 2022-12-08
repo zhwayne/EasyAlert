@@ -9,6 +9,8 @@ import UIKit
 
 final class ActionCustomViewRepresentationView: UIControl {
     
+    private let cancelBackgroundView = ActionSheetCancelBackgroundView()
+    
     var action: Action? {
         didSet {
             oldValue?.view?.removeFromSuperview()
@@ -53,6 +55,10 @@ final class ActionCustomViewRepresentationView: UIControl {
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
+        
+        addSubview(cancelBackgroundView)
+        cancelBackgroundView.frame = bounds
+        cancelBackgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
     @available(*, unavailable)
@@ -66,7 +72,14 @@ final class ActionCustomViewRepresentationView: UIControl {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        action?.view?.frame = bounds
-        action?.view?.isUserInteractionEnabled = false
+        
+        if let action, let view = action.view {
+            view.frame = bounds
+            if view.alert is ActionSheet {
+                cancelBackgroundView.isHidden = action.style != .cancel
+            } else {
+                cancelBackgroundView.isHidden = true
+            }
+        }
     }
 }
