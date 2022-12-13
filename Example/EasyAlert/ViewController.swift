@@ -119,12 +119,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 
         switch item {
         case .systemAlert:
-            let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
-            let cancel = UIAlertAction(title: "取消", style: .cancel)
-            let ignore = UIAlertAction(title: "忽略", style: .destructive)
-            alertController.addAction(cancel)
-            alertController.addAction(ignore)
-            present(alertController, animated: true)
+//            let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
+//            let cancel = UIAlertAction(title: "取消", style: .cancel)
+//            let ignore = UIAlertAction(title: "忽略", style: .destructive)
+//            alertController.addAction(cancel)
+//            alertController.addAction(ignore)
+//            present(alertController, animated: true)
+            Toast.show("This is a toast.")
             
         case .messageAlert:
             let alert = MessageAlert(title: alertTitle, message: message)

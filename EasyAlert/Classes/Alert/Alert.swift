@@ -22,7 +22,7 @@ open class Alert: Alertble {
     
     public var transitionCoordinator: TransitionCoordinator = AlertTransitionCoordinator()
         
-    private let backgroundView = DimmingKnockoutBackdropView()
+    private let backdropView = DimmingKnockoutBackdropView()
 
     private let dimmingView = DimmingView()
         
@@ -33,16 +33,21 @@ open class Alert: Alertble {
     private var callbacks: [LiftcycleCallback] = []
     
     private var orientationChangeToken: NotificationToken?
+    
+    var isUserInteractionEnabled: Bool {
+        get { backdropView.isUserInteractionEnabled }
+        set { backdropView.isUserInteractionEnabled = newValue }
+    }
             
     public init(customView: CustomizedView) {
         self.customView = customView
-        backgroundView.frame = UIScreen.main.bounds
-        backgroundView.willRemoveFromSuperviewObserver = { [weak self] in
+        backdropView.frame = UIScreen.main.bounds
+        backdropView.willRemoveFromSuperviewObserver = { [weak self] in
             DispatchQueue.main.async {
                 self?.dismiss()
             }
         }
-        backgroundView.addGestureRecognizer(tapTarget.tapGestureRecognizer)
+        backdropView.addGestureRecognizer(tapTarget.tapGestureRecognizer)
         
         tapTarget.gestureRecognizerShouldBeginBlock = { [unowned self] gestureRecognizer in
             guard let backgroundView = gestureRecognizer.view else { return false }
@@ -51,7 +56,7 @@ open class Alert: Alertble {
         }
         
         tapTarget.tapHandler = { [unowned self] in
-            backgroundView.endEditing(false)
+            backdropView.endEditing(false)
             if backgroundProvider.allowDismissWhenBackgroundTouch {
                 DispatchQueue.main.async {
                     self.dismiss()
@@ -84,7 +89,7 @@ open class Alert: Alertble {
         callbacks.append(callback)
     }
     
-    @MainActor public func show(in view: UIView? = nil) {
+    public func show(in view: UIView? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard let parent = findParentView(view),
               canShow(in: parent) else {
@@ -96,7 +101,7 @@ open class Alert: Alertble {
         showAlert(in: parent)
     }
     
-    @MainActor public func dismiss(completion: (() -> Void)? = nil) {
+    public func dismiss(completion: (() -> Void)? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard canDismiss() else {
             return
@@ -105,9 +110,11 @@ open class Alert: Alertble {
         willDismiss()
         callbacks.forEach { $0.willDismiss?() }
         
-        let parent = backgroundView.superview!
+        let parent = backdropView.superview!
         let oldParentUserInteractionEnabled = parent.isUserInteractionEnabled
-        parent.isUserInteractionEnabled = false
+        if isUserInteractionEnabled {
+            parent.isUserInteractionEnabled = false
+        }
         transitionCoordinator.dismiss(context: transitioningContext) { [weak self] in
             self?.didDismiss()
             self?.callbacks.forEach { $0.didDismiss?() }
@@ -118,7 +125,7 @@ open class Alert: Alertble {
     }
     
     @available(iOS 13.0, *)
-    @MainActor public func dismissAsync() async {
+    public func dismissAsync() async {
         await withUnsafeContinuation({ continuation in
             dismiss { continuation.resume() }
         })
@@ -143,10 +150,10 @@ extension Alert {
     private var transitioningContext: TransitionCoordinatorContext {
         TransitionCoordinatorContext(
             container: view,
-            backgroundView: backgroundView,
+            backgroundView: backdropView,
             dimmingView: dimmingView,
             interfaceOrientation: interfaceOrientation,
-            frame: backgroundView.bounds
+            frame: backdropView.bounds
         )
     }
     
@@ -165,11 +172,11 @@ extension Alert {
     }
     
     private func canShow(in view: UIView) -> Bool {
-        return !isShowing && !view.subviews.contains(backgroundView)
+        return !isShowing && !view.subviews.contains(backdropView)
     }
     
     private func canDismiss() -> Bool {
-        return isShowing || backgroundView.superview != nil
+        return isShowing || backdropView.superview != nil
     }
     
     private func configDimming() {
@@ -181,13 +188,13 @@ extension Alert {
             dimmingView.contentView = blurView
         }
         dimmingView.isUserInteractionEnabled = false
-        dimmingView.frame = backgroundView.bounds
+        dimmingView.frame = backdropView.bounds
         dimmingView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        backgroundView.insertSubview(dimmingView, at: 0)
+        backdropView.insertSubview(dimmingView, at: 0)
     }
     
     private func configContainer() {
-        backgroundView.addSubview(view)
+        backdropView.addSubview(view)
         view.addSubview(customView)
         customView.frame = view.bounds
         customView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -195,7 +202,7 @@ extension Alert {
     }
     
     private func layoutIfNeeded() {
-        backgroundView.layoutIfNeeded()
+        backdropView.layoutIfNeeded()
         willLayoutContainer()
         transitionCoordinator.update(context: transitioningContext)
         didLayoutContainer()
@@ -204,16 +211,18 @@ extension Alert {
     
     private func showAlert(in parent: UIView) {
         parent.attach(alert: self)
-        backgroundView.alert = self
-        backgroundView.frame = parent.bounds
-        parent.addSubview(backgroundView)
-        backgroundView.layoutIfNeeded()
+        backdropView.alert = self
+        backdropView.frame = parent.bounds
+        parent.addSubview(backdropView)
+        backdropView.layoutIfNeeded()
 
         willShow()
         callbacks.forEach { $0.willShow?() }
         
         let oldParentUserInteractionEnabled = parent.isUserInteractionEnabled
-        parent.isUserInteractionEnabled = false
+        if !isUserInteractionEnabled {
+            parent.isUserInteractionEnabled = false
+        }
         transitionCoordinator.show(context: transitioningContext) { [weak self] in
             self?.didShow()
             self?.callbacks.forEach { $0.didShow?() }
@@ -223,12 +232,12 @@ extension Alert {
     
     private func windup() {
         defer {
-            if let parent = backgroundView.superview {
+            if let parent = backdropView.superview {
                 parent.detach(alert: self)
-                backgroundView.removeFromSuperview()
+                backdropView.removeFromSuperview()
             }
         }
-        backgroundView.alert = nil
+        backdropView.alert = nil
         isShowing = false
     }
 }

@@ -11,12 +11,12 @@ public protocol Alertble : AlertDismissible {
     
     var isShowing: Bool { get }
     
-    @MainActor func show(in view: UIView?)
+    func show(in view: UIView?)
 }
 
 public extension Alertble {
     
-    @MainActor func show(in viewController: UIViewController?) {
+    func show(in viewController: UIViewController?) {
         show(in: viewController?.view)
     }
 }
