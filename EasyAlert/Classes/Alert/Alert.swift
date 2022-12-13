@@ -176,9 +176,8 @@ extension Alert {
         switch backgroundProvider.dimming {
         case let .color(color): dimmingView.backgroundColor = color
         case let .view(view):   dimmingView.contentView = view
-        case let .blur(style, level, color):
+        case let .blur(style, level):
             let blurView = BlurEffectView(effect: UIBlurEffect(style: style), intensity: level)
-            if let color { blurView.contentView.backgroundColor = color }
             dimmingView.contentView = blurView
         }
         dimmingView.isUserInteractionEnabled = false
