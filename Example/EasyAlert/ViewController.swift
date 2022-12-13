@@ -171,10 +171,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case .effectBackground:
             let alert = MessageAlert(title: alertTitle, message: message)
             if #available(iOS 13.0, *) {
-                alert.backgroundProvider.dimming = .blur(.systemThinMaterialDark, level: 0.6)
+                alert.backgroundProvider.dimming = .blur(style: .systemThinMaterialDark, level: 0.6)
             } else {
                 // Fallback on earlier versions
-                alert.backgroundProvider.dimming = .blur(.dark, level: 0.6)
+                alert.backgroundProvider.dimming = .blur(style: .dark, level: 0.6)
             }
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)

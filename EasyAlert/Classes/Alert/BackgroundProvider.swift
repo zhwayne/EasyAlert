@@ -10,7 +10,7 @@ import UIKit
 public enum Dimming {
     case color(UIColor)
     case view(UIView)
-    case blur(UIBlurEffect.Style, level: Float = 0.5)
+    case blur(style: UIBlurEffect.Style, level: Float = 0.5)
 }
 
 public protocol BackgroundProvider {
