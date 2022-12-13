@@ -16,7 +16,6 @@ struct AlertTransitionCoordinator : TransitionCoordinator {
     private var constraints: [NSLayoutConstraint] = []
     
     func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
-        context.container.superview?.isUserInteractionEnabled = false
         context.container.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         context.container.alpha = 0
         context.dimmingView.alpha = 0
@@ -30,13 +29,11 @@ struct AlertTransitionCoordinator : TransitionCoordinator {
         }
         animator.addCompletion { position in
             completion()
-            context.container.superview?.isUserInteractionEnabled = true
         }
         animator.startAnimation()
     }
     
     func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
-        context.container.superview?.isUserInteractionEnabled = false
         let timing = UISpringTimingParameters()
         let animator = UIViewPropertyAnimator(duration: duration, timingParameters: timing)
         animator.addAnimations {
@@ -45,7 +42,6 @@ struct AlertTransitionCoordinator : TransitionCoordinator {
         }
         animator.addCompletion { position in
             completion()
-            context.container.superview?.isUserInteractionEnabled = true
         }
         animator.startAnimation()
     }

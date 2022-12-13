@@ -27,7 +27,7 @@ final class ActionSeparatableSequenceView: UIView {
     
     func setCornerRadius(_ radius: CGFloat, maskedCorners: CACornerMask? = nil) {
         let maskedCorners = maskedCorners
-        ?? [.layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        ?? [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         layer.cornerRadius = radius
         layer.maskedCorners = maskedCorners
     }

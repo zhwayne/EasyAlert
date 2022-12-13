@@ -16,7 +16,6 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
     private var constraints: [NSLayoutConstraint] = []
     
     func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
-        context.container.superview?.isUserInteractionEnabled = false
         context.container.layoutIfNeeded()
         let height = context.container.bounds.height + context.dimmingView.safeAreaInsets.bottom
         context.container.transform = CGAffineTransform(translationX: 0, y: height)
@@ -30,13 +29,11 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
         }
         animator.addCompletion { position in
             completion()
-            context.container.superview?.isUserInteractionEnabled = true
         }
         animator.startAnimation()
     }
     
     func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
-        context.container.superview?.isUserInteractionEnabled = false
         context.container.layoutIfNeeded()
         let height = context.frame.height - context.container.frame.minY
         
@@ -48,7 +45,6 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
         }
         animator.addCompletion { position in
             completion()
-            context.container.superview?.isUserInteractionEnabled = true
         }
         animator.startAnimation()
     }

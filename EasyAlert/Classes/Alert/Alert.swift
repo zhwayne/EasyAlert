@@ -105,11 +105,15 @@ open class Alert: Alertble {
         willDismiss()
         callbacks.forEach { $0.willDismiss?() }
         
+        let parent = backgroundView.superview!
+        let oldParentUserInteractionEnabled = parent.isUserInteractionEnabled
+        parent.isUserInteractionEnabled = false
         transitionCoordinator.dismiss(context: transitioningContext) { [weak self] in
             self?.didDismiss()
             self?.callbacks.forEach { $0.didDismiss?() }
             completion?()
             self?.windup()
+            parent.isUserInteractionEnabled = oldParentUserInteractionEnabled
         }
     }
     
@@ -170,8 +174,12 @@ extension Alert {
     
     private func configDimming() {
         switch backgroundProvider.dimming {
-        case .color(let color): dimmingView.backgroundColor = color
-        case .view(let view):   dimmingView.contentView = view
+        case let .color(color): dimmingView.backgroundColor = color
+        case let .view(view):   dimmingView.contentView = view
+        case let .blur(style, level, color):
+            let blurView = BlurEffectView(effect: UIBlurEffect(style: style), intensity: level)
+            if let color { blurView.contentView.backgroundColor = color }
+            dimmingView.contentView = blurView
         }
         dimmingView.isUserInteractionEnabled = false
         dimmingView.frame = backgroundView.bounds
@@ -205,9 +213,12 @@ extension Alert {
         willShow()
         callbacks.forEach { $0.willShow?() }
         
+        let oldParentUserInteractionEnabled = parent.isUserInteractionEnabled
+        parent.isUserInteractionEnabled = false
         transitionCoordinator.show(context: transitioningContext) { [weak self] in
             self?.didShow()
             self?.callbacks.forEach { $0.didShow?() }
+            parent.isUserInteractionEnabled = oldParentUserInteractionEnabled
         }
     }
     

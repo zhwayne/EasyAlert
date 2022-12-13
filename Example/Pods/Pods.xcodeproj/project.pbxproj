@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		043BB82008061438A39E7E4BEDEAE05F /* UIView+EasyAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2E26F93245EC62C024105BFE0E16949 /* UIView+EasyAlert.swift */; };
 		08C87DA1E43B10C7A07DE45D6BD8EF94 /* ActionRepresentationSequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E528472395822BDAE8C0014AA0DF816 /* ActionRepresentationSequenceView.swift */; };
+		0B05FFDA294844E10025F46A /* BlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05FFD9294844E10025F46A /* BlurEffectView.swift */; };
 		0BC9026FE25988C34F4B3F83DBE71CCC /* ActionGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14E4911731CB56779617C60D3F31317 /* ActionGroupView.swift */; };
 		0BCC40152941AA3F004D83FB /* ActionSheetCancelBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCC40142941AA3F004D83FB /* ActionSheetCancelBackgroundView.swift */; };
 		13D5830A9C31FDE2C51F4F2D81ADE91B /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C65BD4545E9C19A3B38EE97EDE6313 /* Action.swift */; };
@@ -80,6 +81,7 @@
 
 /* Begin PBXFileReference section */
 		0377252FB6F5EBB89D876AAB0FC37BE7 /* Alertble.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Alertble.swift; sourceTree = "<group>"; };
+		0B05FFD9294844E10025F46A /* BlurEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurEffectView.swift; sourceTree = "<group>"; };
 		0BCC40142941AA3F004D83FB /* ActionSheetCancelBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCancelBackgroundView.swift; sourceTree = "<group>"; };
 		0CE8D077002A12C2830E53502CCCE061 /* DimmingKnockoutBackdropView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DimmingKnockoutBackdropView.swift; sourceTree = "<group>"; };
 		146529816EB772F9BF8EF59FCF908251 /* Alert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 				15D584FD6AAD32643D2EAF81FED77259 /* DimmingView.swift */,
 				CA95F2B360555B0CCAA77FF6EA9D778F /* KeyboardResponsiveView.swift */,
 				A2E26F93245EC62C024105BFE0E16949 /* UIView+EasyAlert.swift */,
+				0B05FFD9294844E10025F46A /* BlurEffectView.swift */,
 			);
 			name = Alert;
 			path = EasyAlert/Classes/Alert;
@@ -561,6 +564,7 @@
 				57A6B6EBC5B71DBC306CE951A84A2A29 /* ActionSheet.swift in Sources */,
 				D252A6FEE14870D35C083CEA86878391 /* ActionSheetConfiguration.swift in Sources */,
 				603CC3F63E60942956B3C46C55ADA3E1 /* ActionSheetContainerView.swift in Sources */,
+				0B05FFDA294844E10025F46A /* BlurEffectView.swift in Sources */,
 				2C5A3D493FE0A07E0F6FD8152CFBE958 /* ActionVibrantSeparatorView.swift in Sources */,
 				C546075EDF3FF27C10031E7C6DB066AE /* ActionView.swift in Sources */,
 				A52805233FCB49FE25A325F479AA8D6E /* Alert.swift in Sources */,

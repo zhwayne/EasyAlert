@@ -170,19 +170,16 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
         case .effectBackground:
             let alert = MessageAlert(title: alertTitle, message: message)
-            let effectView = UIVisualEffectView()
-            let animator = UIViewPropertyAnimator(duration: 0, curve: .linear) {
-                effectView.effect = UIBlurEffect(style: .regular)
+            if #available(iOS 13.0, *) {
+                alert.backgroundProvider.dimming = .blur(.systemThinMaterialDark, level: 0.6)
+            } else {
+                // Fallback on earlier versions
+                alert.backgroundProvider.dimming = .blur(.dark, level: 0.6)
             }
-            animator.fractionComplete = 0.2
-            alert.backgroundProvider.dimming = .view(effectView)
             let cancel = Action(title: "取消", style: .cancel)
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(ignore)
             alert.addAction(cancel)
-            alert.addCallback(LiftcycleCallback(didDismiss: {
-                animator.stopAnimation(true)
-            }))
             alert.show()
             
         case .leftAlignment:
