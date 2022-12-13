@@ -114,7 +114,7 @@ open class Alert: Alertble {
     }
     
     @available(iOS 13.0, *)
-    @MainActor public func dismiss() async {
+    @MainActor public func dismissAsync() async {
         await withUnsafeContinuation({ continuation in
             dismiss { continuation.resume() }
         })

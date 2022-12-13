@@ -14,7 +14,7 @@ public protocol AlertDismissible : AnyObject {
     @MainActor func dismiss(completion: (() -> Void)?)
     
     @available(iOS 13.0, *)
-    @MainActor func dismiss() async
+    @MainActor func dismissAsync() async
 }
 
 extension AlertDismissible where Self: UIView {
@@ -38,7 +38,7 @@ extension AlertDismissible where Self: UIView {
     }
     
     @available(iOS 13.0, *)
-    @MainActor public func dismiss() async {
+    @MainActor public func dismissAsync() async {
         await withUnsafeContinuation({ continuation in
             dismiss { continuation.resume() }
         })

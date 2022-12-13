@@ -13,3 +13,10 @@ public protocol Alertble : AlertDismissible {
     
     @MainActor func show(in view: UIView?)
 }
+
+public extension Alertble {
+    
+    @MainActor func show(in viewController: UIViewController) {
+        show(in: viewController.view)
+    }
+}
