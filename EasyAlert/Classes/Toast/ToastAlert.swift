@@ -73,7 +73,7 @@ final class ToastAlert: Alert {
     
     var rawCustomView: ContentView { customView as! ContentView }
     
-    public  required init(message: Message) {
+    public required init(message: Message) {
         let contentView = ContentView()
         contentView.label.attributedText = message.attributedText
         super.init(customView: contentView)

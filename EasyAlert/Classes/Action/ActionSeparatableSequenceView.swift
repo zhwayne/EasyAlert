@@ -18,7 +18,6 @@ final class ActionSeparatableSequenceView: UIView {
         if #available(iOS 13.0, *) {
             layer.cornerCurve = .continuous
         }
-        isUserInteractionEnabled = false
     }
     
     required init(coder: NSCoder) {

@@ -7,15 +7,50 @@
 
 import Foundation
 
-public final class Toast {
+public struct Toast {
+        
+    private static var alert: ToastAlert?
     
-    private static let shared = Toast()
+    private static var dismissWork: DispatchWorkItem?
     
-    private var alert: ToastAlert?
+    private static func dismissAfter(duration: TimeInterval) {
+        dismissWork = DispatchWorkItem(qos: .userInteractive, block: {
+            Self.alert?.dismiss()
+            Self.alert = nil
+            Self.dismissWork = nil
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: dismissWork!)
+    }
+}
+
+extension Toast {
     
-    private var dismissWork: DispatchWorkItem?
+    private static func duration(of text: String) -> TimeInterval {
+        // 5 个字以内显示时长固定位一秒
+        let threshold = 5
+        let minimumDuratuon: TimeInterval = 1
+        
+        if text.count <= threshold { return minimumDuratuon }
+        let leftTextLen = text.count - threshold
+        let extDuration = log10(Double(leftTextLen) * 1.13) * 1.25
+        return minimumDuratuon + extDuration
+    }
+}
+
+extension Toast {
     
-    private func show(_ message: Message, duration: TimeInterval = 0) {
+    public enum Position {
+        case center, bottom
+    }
+}
+
+extension Toast {
+    
+    public static func show(
+        _ message: Message,
+        duration: TimeInterval = 0,
+        position: Position = .bottom
+    ) {
         guard let string = message.attributedText?.string else { return }
         var duration = duration
         if duration == 0 { duration = Toast.duration(of: string)}
@@ -29,35 +64,12 @@ public final class Toast {
             alert.rawCustomView.label.attributedText = message.attributedText
         } else {
             alert = ToastAlert(message: message)
+            if var coordinator = alert?.transitionCoordinator as? ToastTransitionCoordinator {
+                coordinator.position = position
+                alert?.transitionCoordinator = coordinator
+            }
             alert?.show()
         }
         dismissAfter(duration: duration)
-    }
-    
-    private func dismissAfter(duration: TimeInterval) {
-        dismissWork = DispatchWorkItem(qos: .userInteractive, block: { [weak self] in
-            self?.alert?.dismiss()
-            self?.alert = nil
-            self?.dismissWork = nil
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: dismissWork!)
-    }
-    
-    public static func show(_ message: Message, duration: TimeInterval = 0) {
-        shared.show(message, duration: duration)
-    }
-}
-
-extension Toast {
-    
-    private static func duration(of text: String) -> TimeInterval {
-        // 7 个字以内显示时长固定位一秒
-        let threshold = 7
-        let minimumDuratuon: TimeInterval = 1
-        
-        if text.count <= threshold { return minimumDuratuon }
-        let leftTextLen = text.count - threshold
-        let extDuration = log10(Double(leftTextLen) * 1.13) * 1.25
-        return minimumDuratuon + extDuration
     }
 }

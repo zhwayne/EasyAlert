@@ -13,10 +13,12 @@ struct ToastTransitionCoordinator : TransitionCoordinator {
         
     private var constraints: [NSLayoutConstraint] = []
     
+    var position: Toast.Position = .bottom
+    
     func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
         context.container.layoutIfNeeded()
         
-        let transform = CGAffineTransform(scaleX: 0.9, y: 0.9).translatedBy(x: 0, y: 20)
+        let transform = CGAffineTransform(scaleX: 0.9, y: 0.9).translatedBy(x: 0, y: 16)
         context.container.transform = transform
         context.container.alpha = 0
         
@@ -35,7 +37,7 @@ struct ToastTransitionCoordinator : TransitionCoordinator {
     func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
         context.container.layoutIfNeeded()
         
-        let transform = CGAffineTransform(scaleX: 0.9, y: 0.9).translatedBy(x: 0, y: 8)
+        let transform = CGAffineTransform(scaleX: 0.9, y: 0.9).translatedBy(x: 0, y: 20)
         
         let timing = UISpringTimingParameters()
         let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
@@ -92,10 +94,16 @@ struct ToastTransitionCoordinator : TransitionCoordinator {
             constraints.append(constraint)
         }
         
-        let bottomOffset = superview.frame.height * 0.15
-        let constraint = container.bottomAnchor.constraint(
-            equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom - bottomOffset)
-        constraints.append(constraint)
+        switch position {
+        case .center:
+            let constraint = container.centerYAnchor.constraint(equalTo: superview.centerYAnchor)
+            constraints.append(constraint)
+        case .bottom:
+            let bottomOffset = superview.frame.height * 0.2
+            let constraint = container.bottomAnchor.constraint(
+                equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom - bottomOffset)
+            constraints.append(constraint)
+        }
         
         constraints.append(container.centerXAnchor.constraint(equalTo: superview.centerXAnchor))
     }
