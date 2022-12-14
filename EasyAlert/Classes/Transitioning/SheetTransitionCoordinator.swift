@@ -8,12 +8,16 @@
 import Foundation
 
 struct SheetTransitionCoordinator : TransitionCoordinator {
-    
-    var duration: TimeInterval = 0.25
-    
+        
     var layoutGuide = LayoutGuide(width: .multiplied(1, maximumWidth: 414))
     
     private var constraints: [NSLayoutConstraint] = []
+    
+    private weak var sheet: Sheet?
+    
+    init(sheet: Sheet) {
+        self.sheet = sheet
+    }
     
     func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
         context.container.layoutIfNeeded()
@@ -22,7 +26,7 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
         context.dimmingView.alpha = 0
         
         let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: duration, timingParameters: timing)
+        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignore.*/, timingParameters: timing)
         animator.addAnimations {
             context.dimmingView.alpha = 1
             context.container.transform = .identity
@@ -37,8 +41,8 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
         context.container.layoutIfNeeded()
         let height = context.frame.height - context.container.frame.minY
         
-        let timing = UICubicTimingParameters(animationCurve: .easeOut)
-        let animator = UIViewPropertyAnimator(duration: duration, timingParameters: timing)
+        let timing = UISpringTimingParameters()
+        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
         animator.addAnimations {
             context.dimmingView.alpha = 0
             context.container.transform = CGAffineTransform(translationX: 0, y: height)
@@ -50,14 +54,15 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
     }
     
     mutating func update(context: TransitionCoordinatorContext) {
-        guard let superview = context.container.superview else { return }
-        superview.layoutIfNeeded()
+
+        context.backdropView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
         constraints.removeAll()
         defer { NSLayoutConstraint.activate(constraints) }
         
         let edgeInsets = layoutGuide.edgeInsets
         let container = context.container
+        let superview = context.backdropView
         
         switch layoutGuide.width {
         case let .fixed(value):
@@ -91,7 +96,7 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
             constraints.append(constraint)
         }
         
-        if layoutGuide.ignoreBottomSafeArea {
+        if let sheet, sheet.ignoreBottomSafeArea {
             let constraint = container.bottomAnchor.constraint(
                 equalTo: superview.bottomAnchor, constant: -edgeInsets.bottom)
             constraints.append(constraint)

@@ -30,6 +30,9 @@ class ViewController: UIViewController {
         .sheet(title: "ActionSheets", items: [
             .systemActionSheet("系统 ActionSheet"),
             .customActionSheet("仿系统 ActionSheet")
+        ]),
+        .toast(title: "Toast", items: [
+            .messageToast("显示 Toast")
         ])
     ]
     
@@ -79,6 +82,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case let .message(title, _): return title
         case let .customMessage(title, _):  return title
         case let .sheet(title, _): return title
+        case let .toast(title, _): return title
         }
     }
     
@@ -100,6 +104,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             
         case let .systemActionSheet(title): cell.textLabel?.text = title
         case let .customActionSheet(title): cell.textLabel?.text = title
+            
+        case let .messageToast(title): cell.textLabel?.text = title
         }
         return cell
     }
@@ -119,13 +125,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 
         switch item {
         case .systemAlert:
-//            let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
-//            let cancel = UIAlertAction(title: "取消", style: .cancel)
-//            let ignore = UIAlertAction(title: "忽略", style: .destructive)
-//            alertController.addAction(cancel)
-//            alertController.addAction(ignore)
-//            present(alertController, animated: true)
-            Toast.show("This is a toast.")
+            let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "取消", style: .cancel)
+            let ignore = UIAlertAction(title: "忽略", style: .destructive)
+            alertController.addAction(cancel)
+            alertController.addAction(ignore)
+            present(alertController, animated: true)
             
         case .messageAlert:
             let alert = MessageAlert(title: alertTitle, message: message)
@@ -257,6 +262,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let other = Action(title: "其他", style: .default)
             sheet.addActions([cancel, confirm, ignore, other])
             sheet.show()
+            
+        case .messageToast:
+            Toast.show(message)
         }
     }
 }

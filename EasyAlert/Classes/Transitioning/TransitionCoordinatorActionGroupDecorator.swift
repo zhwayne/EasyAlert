@@ -12,12 +12,6 @@ struct TransitionCoordinatorActionGroupDecorator: TransitionCoordinator {
     private var coordinator: TransitionCoordinator
     private var actionGroupViews: [ActionGroupView] = []
     
-    
-    var duration: TimeInterval {
-        get { coordinator.duration }
-        set { coordinator.duration = newValue }
-    }
-    
     var layoutGuide: LayoutGuide {
         get { coordinator.layoutGuide }
         set { coordinator.layoutGuide = newValue }
@@ -35,11 +29,11 @@ struct TransitionCoordinatorActionGroupDecorator: TransitionCoordinator {
         }
     }
     
-    func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
+    mutating func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
         coordinator.show(context: context, completion: completion)
     }
     
-    func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
+    mutating func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
         coordinator.dismiss(context: context, completion: completion)
     }
 }

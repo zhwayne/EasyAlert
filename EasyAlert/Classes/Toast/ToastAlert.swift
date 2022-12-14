@@ -47,7 +47,7 @@ final class ToastAlert: Alert {
             effectView.clipsToBounds = true
             effectView.frame = bounds
             effectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            effectView.layer.cornerRadius = 16
+            effectView.layer.cornerRadius = 15
             if #available(iOS 13.0, *) {
                 effectView.layer.cornerCurve = .continuous
             }

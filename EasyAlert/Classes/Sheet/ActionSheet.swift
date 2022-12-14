@@ -30,14 +30,15 @@ open class ActionSheet: Sheet, _ActionAlertble {
         cancelActionGroupView = ActionGroupView(customView: nil, actionLayout: cancelActionLayout)
         super.init(customView: containerView)
         
-        var coordinator = SheetTransitionCoordinator()
+        ignoreBottomSafeArea = false
+        
+        var coordinator = transitionCoordinator
         coordinator.layoutGuide.edgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: -8)
-        coordinator.layoutGuide.ignoreBottomSafeArea = false
         let decorator = TransitionCoordinatorActionGroupDecorator(
             coordinator: coordinator,
             actionGroupViews: [actionGroupView, cancelActionGroupView]
         )
-        self.transitionCoordinator = decorator
+        transitionCoordinator = decorator
     }
     
     open override func willLayoutContainer() {

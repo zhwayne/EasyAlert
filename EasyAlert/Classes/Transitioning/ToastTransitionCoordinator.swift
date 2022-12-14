@@ -9,23 +9,19 @@ import Foundation
 
 struct ToastTransitionCoordinator : TransitionCoordinator {
     
-    var duration: TimeInterval = 0.1
-
-    var layoutGuide = LayoutGuide(width: .flexible(UIScreen.main.bounds.size.width - 64))
-    
-    private let bottomOffset: CGFloat = 100
-    
+    var layoutGuide = LayoutGuide(width: .flexible(UIScreen.main.bounds.size.width * 0.8))
+        
     private var constraints: [NSLayoutConstraint] = []
     
     func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
         context.container.layoutIfNeeded()
         
-        let transform = CGAffineTransform(scaleX: 0.92, y: 0.92).translatedBy(x: 0, y: 20)
+        let transform = CGAffineTransform(scaleX: 0.9, y: 0.9).translatedBy(x: 0, y: 20)
         context.container.transform = transform
         context.container.alpha = 0
         
         let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: duration, timingParameters: timing)
+        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
         animator.addAnimations {
             context.container.alpha = 1
             context.container.transform = .identity
@@ -39,10 +35,10 @@ struct ToastTransitionCoordinator : TransitionCoordinator {
     func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
         context.container.layoutIfNeeded()
         
-        let transform = CGAffineTransform(scaleX: 0.92, y: 0.92).translatedBy(x: 0, y: 20)
+        let transform = CGAffineTransform(scaleX: 0.9, y: 0.9).translatedBy(x: 0, y: 8)
         
         let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: duration, timingParameters: timing)
+        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
         animator.addAnimations {
             context.container.alpha = 0
             context.container.transform = transform
@@ -54,14 +50,15 @@ struct ToastTransitionCoordinator : TransitionCoordinator {
     }
     
     mutating func update(context: TransitionCoordinatorContext) {
-        guard let superview = context.container.superview else { return }
-        superview.layoutIfNeeded()
+
+        context.backdropView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
         constraints.removeAll()
         defer { NSLayoutConstraint.activate(constraints) }
         
         let edgeInsets = layoutGuide.edgeInsets
         let container = context.container
+        let superview = context.backdropView
         
         switch layoutGuide.width {
         case let .fixed(value):
@@ -95,7 +92,8 @@ struct ToastTransitionCoordinator : TransitionCoordinator {
             constraints.append(constraint)
         }
         
-        let constraint =  container.bottomAnchor.constraint(
+        let bottomOffset = superview.frame.height * 0.15
+        let constraint = container.bottomAnchor.constraint(
             equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom - bottomOffset)
         constraints.append(constraint)
         

@@ -9,8 +9,6 @@ import Foundation
 
 struct AlertTransitionCoordinator : TransitionCoordinator {
     
-    var duration: TimeInterval = 0.25
-
     var layoutGuide = LayoutGuide(width: .fixed(270))
     
     private var constraints: [NSLayoutConstraint] = []
@@ -21,7 +19,7 @@ struct AlertTransitionCoordinator : TransitionCoordinator {
         context.dimmingView.alpha = 0
 
         let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: duration, timingParameters: timing)
+        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
         animator.addAnimations {
             context.dimmingView.alpha = 1
             context.container.alpha = 1
@@ -35,7 +33,7 @@ struct AlertTransitionCoordinator : TransitionCoordinator {
     
     func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
         let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: duration, timingParameters: timing)
+        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
         animator.addAnimations {
             context.container.alpha = 0
             context.dimmingView.alpha = 0
@@ -47,14 +45,15 @@ struct AlertTransitionCoordinator : TransitionCoordinator {
     }
     
     mutating func update(context: TransitionCoordinatorContext) {
-        guard let superview = context.container.superview else { return }
-        superview.layoutIfNeeded()
+
+        context.backdropView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
         constraints.removeAll()
         defer { NSLayoutConstraint.activate(constraints) }
         
         let edgeInsets = layoutGuide.edgeInsets
         let container = context.container
+        let superview = context.backdropView
         
         switch layoutGuide.width {
         case let .fixed(value):

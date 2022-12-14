@@ -16,6 +16,8 @@ enum Section {
     
     case sheet(title: String?, items: [Item])
     
+    case toast(title: String?, items: [Item])
+    
     enum Item {
         
         case systemAlert(String)
@@ -30,6 +32,8 @@ enum Section {
         case systemActionSheet(String)
         
         case customActionSheet(String)
+        
+        case messageToast(String)
     }
 }
 
@@ -40,6 +44,7 @@ extension Section {
         case let .message(_, items): return items
         case let .customMessage(_, items):  return items
         case let .sheet(_, items): return items
+        case let .toast(_, items): return items
         }
     }
 }

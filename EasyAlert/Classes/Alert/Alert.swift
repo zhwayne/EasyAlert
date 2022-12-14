@@ -150,10 +150,9 @@ extension Alert {
     private var transitioningContext: TransitionCoordinatorContext {
         TransitionCoordinatorContext(
             container: view,
-            backgroundView: backdropView,
+            backdropView: backdropView,
             dimmingView: dimmingView,
-            interfaceOrientation: interfaceOrientation,
-            frame: backdropView.bounds
+            interfaceOrientation: interfaceOrientation
         )
     }
     
