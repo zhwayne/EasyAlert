@@ -56,7 +56,10 @@ struct ToastTransitionCoordinator : TransitionCoordinator {
         context.backdropView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
         constraints.removeAll()
-        defer { NSLayoutConstraint.activate(constraints) }
+        defer {
+            constraints.forEach { $0.priority -= 100 }
+            NSLayoutConstraint.activate(constraints)
+        }
         
         let edgeInsets = layoutGuide.edgeInsets
         let container = context.container
