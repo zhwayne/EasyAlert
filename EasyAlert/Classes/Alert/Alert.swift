@@ -89,16 +89,27 @@ open class Alert: Alertble {
         callbacks.append(callback)
     }
     
-    public func show(in view: UIView? = nil) {
-        Dispatch.dispatchPrecondition(condition: .onQueue(.main))
-        guard let parent = findParentView(view),
-              canShow(in: parent) else {
-            return
+    public func show(in container: AlertContainerable? = nil) {
+        
+        func _show(in view: UIView? = nil) {
+            Dispatch.dispatchPrecondition(condition: .onQueue(.main))
+            guard let parent = findParentView(view),
+                  canShow(in: parent) else {
+                return
+            }
+            defer { isShowing = true }
+            configDimming()
+            configContainer()
+            showAlert(in: parent)
         }
-        defer { isShowing = true }
-        configDimming()
-        configContainer()
-        showAlert(in: parent)
+        
+        if let container = container as? UIView {
+            _show(in: container)
+        } else if let container = container as? UIViewController {
+            _show(in: container.view)
+        } else {
+            _show(in: nil)
+        }
     }
     
     public func dismiss(completion: (() -> Void)? = nil) {

@@ -7,16 +7,15 @@
 
 import UIKit
 
+public protocol AlertContainerable: AnyObject { }
+
+extension UIView: AlertContainerable { }
+
+extension UIViewController: AlertContainerable { }
+
 public protocol Alertble : AlertDismissible {
     
     var isShowing: Bool { get }
     
-    func show(in view: UIView?)
-}
-
-public extension Alertble {
-    
-    func show(in viewController: UIViewController?) {
-        show(in: viewController?.view)
-    }
+    func show(in container: AlertContainerable?)
 }

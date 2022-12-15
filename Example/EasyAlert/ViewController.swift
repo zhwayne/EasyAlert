@@ -138,7 +138,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let ignore = Action(title: "忽略", style: .destructive)
             alert.addAction(cancel)
             alert.addAction(ignore)
-            alert.show(in: view)
+            alert.show(in: self)
             
         case .threeActions:
             let alert = MessageAlert(title: alertTitle, message: message)
