@@ -102,7 +102,7 @@ struct ToastTransitionCoordinator : TransitionCoordinator {
             let constraint = container.centerYAnchor.constraint(equalTo: superview.centerYAnchor)
             constraints.append(constraint)
         case .bottom:
-            let bottomOffset = superview.frame.height * 0.2
+            let bottomOffset = superview.frame.height * 0.15
             let constraint = container.bottomAnchor.constraint(
                 equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom - bottomOffset)
             constraints.append(constraint)

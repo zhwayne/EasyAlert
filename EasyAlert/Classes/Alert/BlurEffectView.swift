@@ -9,12 +9,15 @@ import UIKit
 
 class BlurEffectView: UIVisualEffectView {
     
+    private let intensity: Float
+    
     /// Create visual effect view with given effect and its intensity
     ///
     /// - Parameters:
     ///   - effect: visual effect, eg UIBlurEffect(style: .dark)
     ///   - intensity: custom intensity from 0.0 (no effect) to 1.0 (full effect) using linear scale
     init(effect: UIVisualEffect, intensity: Float) {
+        self.intensity = intensity
         super.init(effect: nil)
         animator = UIViewPropertyAnimator(duration: 1, curve: .linear) { [unowned self] in self.effect = effect }
         animator.fractionComplete = CGFloat(intensity)
@@ -25,5 +28,11 @@ class BlurEffectView: UIVisualEffectView {
     }
     
     // MARK: Private
-    private var animator: UIViewPropertyAnimator!
+    var animator: UIViewPropertyAnimator!
+    
+    override var alpha: CGFloat {
+        didSet {
+            animator.fractionComplete = alpha * CGFloat(intensity)
+        }
+    }
 }

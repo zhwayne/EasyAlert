@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// The base alert.
 open class Alert: Alertble {
     
     public typealias CustomizedView = UIView & AlertCustomizable
@@ -14,50 +15,54 @@ open class Alert: Alertble {
     /// The view that can be customized according to your ideas.
     public let customView: CustomizedView
     
-    public var backgroundProvider: BackgroundProvider = DefaultBackgroundProvider()
+    /// A Provider that interacts with the backdrop
+    public var backdropProvider: BackdropProvider = DefaultBackdropProvider()
+    
+    public var transitionCoordinator: TransitionCoordinator = AlertTransitionCoordinator()
+    
+    public private(set) var isShowing = false
     
     private let alertViewController = AlertViewController()
     
-    private var view: UIView { alertViewController.view }
-    
-    public var transitionCoordinator: TransitionCoordinator = AlertTransitionCoordinator()
+    private var alertContainerView: UIView { alertViewController.view }
         
     private let backdropView = DimmingKnockoutBackdropView()
 
     private let dimmingView = DimmingView()
         
     private let tapTarget = TapTarget()
-        
-    public private(set) var isShowing = false
     
     private var callbacks: [LiftcycleCallback] = []
     
     private var orientationChangeToken: NotificationToken?
-    
-    var isUserInteractionEnabled: Bool {
-        get { backdropView.isUserInteractionEnabled }
-        set { backdropView.isUserInteractionEnabled = newValue }
-    }
             
     public init(customView: CustomizedView) {
         self.customView = customView
+        backdropView.addGestureRecognizer(tapTarget.tapGestureRecognizer)
         backdropView.frame = UIScreen.main.bounds
+        backdropView.hitTest = { [unowned self] view, point in
+            switch backdropProvider.penetrateScope {
+            case .none: return false
+            case .all: return true
+            case .dimming:
+                let point = view.convert(point, to: alertContainerView)
+                return !alertContainerView.bounds.contains(point)
+            }
+        }
         backdropView.willRemoveFromSuperviewObserver = { [weak self] in
             DispatchQueue.main.async {
                 self?.dismiss()
             }
         }
-        backdropView.addGestureRecognizer(tapTarget.tapGestureRecognizer)
         
         tapTarget.gestureRecognizerShouldBeginBlock = { [unowned self] gestureRecognizer in
             guard let backgroundView = gestureRecognizer.view else { return false }
             let point = gestureRecognizer.location(in: backgroundView)
-            return !view.frame.contains(point)
+            return !alertContainerView.frame.contains(point)
         }
-        
         tapTarget.tapHandler = { [unowned self] in
             backdropView.endEditing(false)
-            if backgroundProvider.allowDismissWhenBackgroundTouch {
+            if backdropProvider.allowDismissWhenBackgroundTouch {
                 DispatchQueue.main.async {
                     self.dismiss()
                 }
@@ -121,17 +126,15 @@ open class Alert: Alertble {
         willDismiss()
         callbacks.forEach { $0.willDismiss?() }
         
-        let parent = backdropView.superview!
-        let oldParentUserInteractionEnabled = parent.isUserInteractionEnabled
-        if isUserInteractionEnabled {
-            parent.isUserInteractionEnabled = false
-        }
+        alertContainerView.isUserInteractionEnabled = false
+        tapTarget.tapGestureRecognizer.isEnabled = false
         transitionCoordinator.dismiss(context: transitioningContext) { [weak self] in
             self?.didDismiss()
             self?.callbacks.forEach { $0.didDismiss?() }
             completion?()
             self?.windup()
-            parent.isUserInteractionEnabled = oldParentUserInteractionEnabled
+            self?.alertContainerView.isUserInteractionEnabled = true
+            self?.tapTarget.tapGestureRecognizer.isEnabled = true
         }
     }
     
@@ -158,9 +161,17 @@ extension Alert {
         }
     }
     
+    //    private var blurAnimator: UIViewPropertyAnimator? {
+    //        guard case .blur = backdropProvider.dimming,
+    //              let effectView = dimmingView.contentView as? BlurEffectView else {
+    //            return nil
+    //        }
+    //        return effectView.animator
+    //    }
+    
     private var transitioningContext: TransitionCoordinatorContext {
         TransitionCoordinatorContext(
-            container: view,
+            container: alertContainerView,
             backdropView: backdropView,
             dimmingView: dimmingView,
             interfaceOrientation: interfaceOrientation
@@ -190,7 +201,7 @@ extension Alert {
     }
     
     private func configDimming() {
-        switch backgroundProvider.dimming {
+        switch backdropProvider.dimming {
         case let .color(color): dimmingView.backgroundColor = color
         case let .view(view):   dimmingView.contentView = view
         case let .blur(style, level):
@@ -204,9 +215,9 @@ extension Alert {
     }
     
     private func configContainer() {
-        backdropView.addSubview(view)
-        view.addSubview(customView)
-        customView.frame = view.bounds
+        backdropView.addSubview(alertContainerView)
+        alertContainerView.addSubview(customView)
+        customView.frame = alertContainerView.bounds
         customView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         layoutIfNeeded()
     }
@@ -216,7 +227,7 @@ extension Alert {
         willLayoutContainer()
         transitionCoordinator.update(context: transitioningContext)
         didLayoutContainer()
-        view.layoutIfNeeded()
+        alertContainerView.layoutIfNeeded()
     }
     
     private func showAlert(in parent: UIView) {
@@ -229,14 +240,13 @@ extension Alert {
         willShow()
         callbacks.forEach { $0.willShow?() }
         
-        let oldParentUserInteractionEnabled = parent.isUserInteractionEnabled
-        if !isUserInteractionEnabled {
-            parent.isUserInteractionEnabled = false
-        }
+        alertContainerView.isUserInteractionEnabled = false
+        tapTarget.tapGestureRecognizer.isEnabled = false
         transitionCoordinator.show(context: transitioningContext) { [weak self] in
             self?.didShow()
             self?.callbacks.forEach { $0.didShow?() }
-            parent.isUserInteractionEnabled = oldParentUserInteractionEnabled
+            self?.alertContainerView.isUserInteractionEnabled = true
+            self?.tapTarget.tapGestureRecognizer.isEnabled = true
         }
     }
     

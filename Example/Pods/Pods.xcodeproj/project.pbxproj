@@ -42,7 +42,7 @@
 		7D3C700794ED3C5C5DD317EA6E4ED599 /* AlertDismissible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96492A43BEF04C8E08291BC156B20FAD /* AlertDismissible.swift */; };
 		8509D7A45FECEA6D5419B2A556586061 /* ActionSeparatableSequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D117FF17DCB8119BD424629CC39A6 /* ActionSeparatableSequenceView.swift */; };
 		8EDBE664B28C2C83975CD8BC645DC02B /* ActionSheetCancelBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869C1531C4B6D6BE416A6839E55FB5C0 /* ActionSheetCancelBackgroundView.swift */; };
-		90DD5BBBF3ACE59D97912A572E414CAF /* BackgroundProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E18E8E8525D99F01678BDBD0CA601E /* BackgroundProvider.swift */; };
+		90DD5BBBF3ACE59D97912A572E414CAF /* BackdropProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E18E8E8525D99F01678BDBD0CA601E /* BackdropProvider.swift */; };
 		994D9C2FA224234CBAC0455128A7B1AA /* TransitionCoordinatorActionGroupDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E4ED07F9D2047F6E312797BD4D869E /* TransitionCoordinatorActionGroupDecorator.swift */; };
 		9AF2EBE0D4B93515CA038694C5052875 /* MessageAlertConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C93C2D790AA23D7900E237C02373F6 /* MessageAlertConfiguration.swift */; };
 		9FF7753CDC0BF74A49DCD8312E325892 /* ToastAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559E8EA82436EC3E3B599D1884549BBA /* ToastAlert.swift */; };
@@ -136,7 +136,7 @@
 		A925329B8D2E69FBFEF9BB98FE18CF8A /* Pods-EasyAlert_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-EasyAlert_Example-umbrella.h"; sourceTree = "<group>"; };
 		BAB02199B71D3BBD91F93B42B5092567 /* Pods-EasyAlert_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-EasyAlert_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		C1D35A1A8BAB071A30D60FFD36011076 /* ActionAlert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionAlert.swift; sourceTree = "<group>"; };
-		C2E18E8E8525D99F01678BDBD0CA601E /* BackgroundProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BackgroundProvider.swift; sourceTree = "<group>"; };
+		C2E18E8E8525D99F01678BDBD0CA601E /* BackdropProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BackdropProvider.swift; sourceTree = "<group>"; };
 		C537B6FE745B422B0DFB768A209FBC02 /* ActionSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSheet.swift; sourceTree = "<group>"; };
 		C64F623946C1BE6E3EFA423A67B2F15B /* Pods-EasyAlert_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-EasyAlert_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		CB4589A7A7FC287F727C442613319C7E /* BlurEffectView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BlurEffectView.swift; sourceTree = "<group>"; };
@@ -297,7 +297,7 @@
 				96492A43BEF04C8E08291BC156B20FAD /* AlertDismissible.swift */,
 				2864E2A29C1AC2489FF1B36566FF5BF7 /* AlertTapTarget.swift */,
 				43E1E89AE32C44484AFA9DCE08866F9E /* AlertViewController.swift */,
-				C2E18E8E8525D99F01678BDBD0CA601E /* BackgroundProvider.swift */,
+				C2E18E8E8525D99F01678BDBD0CA601E /* BackdropProvider.swift */,
 				CB4589A7A7FC287F727C442613319C7E /* BlurEffectView.swift */,
 				79ADD73BEE7AE27FA4DC45810193B1B3 /* DimmingKnockoutBackdropView.swift */,
 				7D4F997EA801228E38F51687BD18A845 /* DimmingView.swift */,
@@ -613,7 +613,7 @@
 				CE37DD31E29AAE7AAB7DAC00268FD85B /* AlertTapTarget.swift in Sources */,
 				D40EE7778EB233EF5F3E657C149383A1 /* AlertTransitionCoordinator.swift in Sources */,
 				4617E3DA3C3559E6298A877DB46D643F /* AlertViewController.swift in Sources */,
-				90DD5BBBF3ACE59D97912A572E414CAF /* BackgroundProvider.swift in Sources */,
+				90DD5BBBF3ACE59D97912A572E414CAF /* BackdropProvider.swift in Sources */,
 				4230D6CA234C60026AE0C33F112B6820 /* BlurEffectView.swift in Sources */,
 				D8418AFB308DBB5AD0074FA4AE9053C0 /* DimmingKnockoutBackdropView.swift in Sources */,
 				D98764B1FD3B2FC6348781F6278E1AD9 /* DimmingView.swift in Sources */,

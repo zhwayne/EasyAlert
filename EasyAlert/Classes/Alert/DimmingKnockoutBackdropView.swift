@@ -12,6 +12,8 @@ final class DimmingKnockoutBackdropView: UIView {
     weak var alert: Alertble?
     
     var willRemoveFromSuperviewObserver: (() -> Void)?
+    
+    var hitTest: ((UIView, CGPoint) -> Bool)?
 
     public override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
@@ -30,5 +32,12 @@ final class DimmingKnockoutBackdropView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if let returnsNil = hitTest?(self, point), returnsNil == true {
+            return nil
+        }
+        return super.hitTest(point, with: event)
     }
 }
