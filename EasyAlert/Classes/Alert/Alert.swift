@@ -41,7 +41,7 @@ open class Alert: Alertble {
         backdropView.addGestureRecognizer(tapTarget.tapGestureRecognizer)
         backdropView.frame = UIScreen.main.bounds
         backdropView.hitTest = { [unowned self] view, point in
-            switch backdropProvider.penetrateScope {
+            switch backdropProvider.penetrationScope {
             case .none: return false
             case .all: return true
             case .dimming:

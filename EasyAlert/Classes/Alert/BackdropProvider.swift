@@ -23,12 +23,17 @@ public enum Dimming {
     case blur(style: UIBlurEffect.Style, level: Float = 0.5)
 }
 
+/// The scape of penetration. It allows clicking on background events to penetrate
+/// to the view below.
 public enum PenetrateScope {
     
+    /// No penetration allowed.
     case none
     
+    /// Allows click events to penetrate the backdrop.
     case dimming
     
+    /// Penetrate all click events, i.e. the pop-up no longer allows user interaction.
     case all
 }
 
@@ -41,7 +46,8 @@ public protocol BackdropProvider {
     /// Automatically dismiss alert when background is clicked if set to `true`.
     var allowDismissWhenBackgroundTouch: Bool { get set }
     
-    var penetrateScope: PenetrateScope { get set }
+    /// The scape of penetration.
+    var penetrationScope: PenetrateScope { get set }
 }
 
 struct DefaultBackdropProvider: BackdropProvider {
@@ -50,7 +56,7 @@ struct DefaultBackdropProvider: BackdropProvider {
    
     var allowDismissWhenBackgroundTouch: Bool = false
     
-    var penetrateScope: PenetrateScope = .none
+    var penetrationScope: PenetrateScope = .none
 }
 
 extension DefaultBackdropProvider {

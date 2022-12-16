@@ -80,7 +80,7 @@ final class ToastAlert: Alert {
         
         transitionCoordinator = ToastTransitionCoordinator()
         backdropProvider.dimming = .color(.clear)
-        backdropProvider.penetrateScope = .all
+        backdropProvider.penetrationScope = .all
     }
     
     @available(*, unavailable)
