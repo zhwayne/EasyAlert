@@ -25,7 +25,7 @@ public enum Dimming {
 
 /// The scape of penetration. It allows clicking on background events to penetrate
 /// to the view below.
-public enum PenetrateScope {
+public enum PenetrationScope {
     
     /// No penetration allowed.
     case none
@@ -47,7 +47,7 @@ public protocol BackdropProvider {
     var allowDismissWhenBackgroundTouch: Bool { get set }
     
     /// The scape of penetration.
-    var penetrationScope: PenetrateScope { get set }
+    var penetrationScope: PenetrationScope { get set }
 }
 
 struct DefaultBackdropProvider: BackdropProvider {
@@ -56,7 +56,7 @@ struct DefaultBackdropProvider: BackdropProvider {
    
     var allowDismissWhenBackgroundTouch: Bool = false
     
-    var penetrationScope: PenetrateScope = .none
+    var penetrationScope: PenetrationScope = .none
 }
 
 extension DefaultBackdropProvider {
