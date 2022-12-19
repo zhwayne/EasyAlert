@@ -19,27 +19,25 @@ public protocol AlertDismissible : AlertFetchable {
     @MainActor func dismissAsync() async
 }
 
-extension AlertFetchable where Self : UIView {
+extension AlertFetchable {
     
-    /// 获取和 view 关联的 alert。
+    // 获取和 view 关联的 alert。
     var alert: Alertble? {
-        for view in sequence(first: superview, next: { $0?.superview }) {
-            if let responder = view?.next as? AlertViewController {
-                return responder.weakAlert
+        if let view = self as? UIView {
+            for view in sequence(first: view.superview, next: { $0?.superview }) {
+                if let responder = view?.next as? AlertViewController {
+                    return responder.weakAlert
+                }
             }
-        }
-        return nil
-    }
-}
-
-extension AlertFetchable where Self : UIViewController {
-    
-    /// 获取和 view 关联的 alert。
-    var alert: Alertble? {
-        guard let parent = self.parent as? AlertViewController else {
             return nil
         }
-        return parent.weakAlert
+        if let viewController = self as? UIViewController {
+            guard let parent = viewController.parent as? AlertViewController else {
+                return nil
+            }
+            return parent.weakAlert
+        }
+        return nil
     }
 }
 
@@ -47,18 +45,16 @@ extension AlertDismissible {
     
     /// 关掉 alert。
     /// - Parameter completion: 完成回调。
-    public func dismiss(completion: (() -> Void)? = nil) where Self: UIView {
-        alert?.dismiss(completion: completion)
-    }
-    
-    public func dismiss(completion: (() -> Void)? = nil) where Self: UIViewController {
-        alert?.dismiss(completion: completion)
+    public func dismiss(completion: (() -> Void)? = nil) {
+        guard let alert = alert else { return }
+        alert.dismiss(completion: completion)
     }
     
     @available(iOS 13.0, *)
     @MainActor public func dismissAsync() async {
+        guard let alert = alert else { return }
         await withUnsafeContinuation({ continuation in
-            dismiss { continuation.resume() }
+            alert.dismiss { continuation.resume() }
         })
     }
 }
