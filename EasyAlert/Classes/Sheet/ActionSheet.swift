@@ -19,16 +19,26 @@ open class ActionSheet: Sheet, _ActionAlertble {
     
     private let configuration: ActionAlertbleConfigurable
     
-    public required init(
-        customView: CustomizedView,
+    public required init<T: AlertCustomizable>(
+        customizable: T,
         configuration: ActionAlertbleConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionSheet.Configuration.global
         let actionLayout = self.configuration.actionLayoutType.init()
         let cancelActionLayout = self.configuration.actionLayoutType.init()
-        actionGroupView = ActionGroupView(customView: customView, actionLayout: actionLayout)
+        
+        if let view = customizable as? UIView {
+            actionGroupView = ActionGroupView(customView: view,
+                                              actionLayout: actionLayout)
+        } else if let viewController = customizable as? UIViewController {
+            actionGroupView = ActionGroupView(customView: viewController.view,
+                                              actionLayout: actionLayout)
+        } else {
+            fatalError()
+        }
+
         cancelActionGroupView = ActionGroupView(customView: nil, actionLayout: cancelActionLayout)
-        super.init(customView: containerView)
+        super.init(customizable: containerView)
         
         ignoreBottomSafeArea = false
         

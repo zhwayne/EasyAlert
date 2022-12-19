@@ -8,8 +8,6 @@
 import UIKit
 
 final class DimmingKnockoutBackdropView: UIView {
-
-    weak var alert: Alertble?
     
     var willRemoveFromSuperviewObserver: (() -> Void)?
     

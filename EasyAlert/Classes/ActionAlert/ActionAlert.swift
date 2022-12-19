@@ -17,19 +17,26 @@ open class ActionAlert: Alert, _ActionAlertble {
     
     private let configuration: ActionAlertbleConfigurable
     
-    public required init(
-        customView: CustomizedView,
+    public required init<T: AlertCustomizable>(
+        customizable: T,
         configuration: ActionAlertbleConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionAlert.Configuration.global
         let actionLayout = self.configuration.actionLayoutType.init()
-        actionGroupView = ActionGroupView(customView: customView,
-                                           actionLayout: actionLayout)
-        super.init(customView: actionGroupView)
+        if let view = customizable as? UIView {
+            actionGroupView = ActionGroupView(customView: view,
+                                              actionLayout: actionLayout)
+        } else if let viewController = customizable as? UIViewController {
+            actionGroupView = ActionGroupView(customView: viewController.view,
+                                              actionLayout: actionLayout)
+        } else {
+            fatalError()
+        }
+        super.init(customizable: actionGroupView)
         
         let decorator = TransitionCoordinatorActionGroupDecorator(
             coordinator: AlertTransitionCoordinator(),
-            actionGroupViews: [actionGroupView] 
+            actionGroupViews: [actionGroupView]
         )
         self.transitionCoordinator = decorator
     }

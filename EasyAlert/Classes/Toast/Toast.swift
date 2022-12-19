@@ -32,7 +32,7 @@ extension Toast {
         
         if text.count <= threshold { return minimumDuratuon }
         let leftTextLen = text.count - threshold
-        let extDuration = log10(Double(leftTextLen) * 1.13) * 1.25
+        let extDuration = Double(leftTextLen) * 0.13
         return minimumDuratuon + extDuration
     }
 }

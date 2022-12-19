@@ -71,20 +71,15 @@ final class ToastAlert: Alert {
         }
     }
     
-    var rawCustomView: ContentView { customView as! ContentView }
+    var rawCustomView: ContentView { customizable as! ContentView }
     
     public required init(message: Message) {
         let contentView = ContentView()
         contentView.label.attributedText = message.attributedText
-        super.init(customView: contentView)
+        super.init(customizable: contentView)
         
         transitionCoordinator = ToastTransitionCoordinator()
         backdropProvider.dimming = .color(.clear)
         backdropProvider.penetrationScope = .all
-    }
-    
-    @available(*, unavailable)
-    override init(customView: Alert.CustomizedView) {
-        fatalError("Use `init(message:)` instead.")
     }
 }

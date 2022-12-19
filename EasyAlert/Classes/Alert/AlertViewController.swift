@@ -9,6 +9,10 @@ import UIKit
 
 class AlertViewController: UIViewController {
     
+    weak var weakAlert: Alertble?
+    
+    override var shouldAutomaticallyForwardAppearanceMethods: Bool { false }
+    
     private var activeRepresentationView: ActionCustomViewRepresentationView?
     
     private let feedback = UISelectionFeedbackGenerator()

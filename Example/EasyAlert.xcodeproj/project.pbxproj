@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B07712829501C7D0027221A /* MyAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B07712729501C7D0027221A /* MyAlertViewController.swift */; };
 		0B2BF3A52801D4040017F987 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B2BF3A32801D4040017F987 /* Main.storyboard */; };
 		0B3151C0282F789F00F0F9B8 /* MyActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3151BF282F789F00F0F9B8 /* MyActionView.swift */; };
 		0B3151C2282F7C4D00F0F9B8 /* MyActionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3151C1282F7C4D00F0F9B8 /* MyActionLayout.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0B07712729501C7D0027221A /* MyAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAlertViewController.swift; sourceTree = "<group>"; };
 		0B2BF3A42801D4040017F987 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0B3151BF282F789F00F0F9B8 /* MyActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActionView.swift; sourceTree = "<group>"; };
 		0B3151C1282F7C4D00F0F9B8 /* MyActionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActionLayout.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				0B07712729501C7D0027221A /* MyAlertViewController.swift */,
 				0B61E8502841CC52006CFC2C /* Section.swift */,
 				0B3151BF282F789F00F0F9B8 /* MyActionView.swift */,
 				0B3151C1282F7C4D00F0F9B8 /* MyActionLayout.swift */,
@@ -350,6 +353,7 @@
 				0B3151C0282F789F00F0F9B8 /* MyActionView.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				0BCC3FF5293F55AF004D83FB /* MyActionSheet.swift in Sources */,
+				0B07712829501C7D0027221A /* MyAlertViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

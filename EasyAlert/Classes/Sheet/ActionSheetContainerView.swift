@@ -9,5 +9,5 @@ import Foundation
 
 extension ActionSheet {
     
-    class ContainerView: CustomizedView { }
+    class ContainerView: UIView & AlertCustomizable { }
 }

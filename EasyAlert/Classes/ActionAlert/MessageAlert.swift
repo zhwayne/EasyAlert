@@ -53,7 +53,7 @@ public final class MessageAlert: ActionAlert {
         }
         
         contentView = ContentView()
-        super.init(customView: contentView, configuration: configuration)
+        super.init(customizable: contentView, configuration: configuration)
         configAttributes()
         contentView.titleLabel.attributedText = text(for: title)
         contentView.messageLabel.attributedText = text(for: message)
@@ -61,10 +61,10 @@ public final class MessageAlert: ActionAlert {
     }
 
     @available(*, unavailable)
-    public required init(customView: CustomizedView, configuration: ActionAlertbleConfigurable? = nil) {
-        fatalError("init(customView:config:) has not been implemented")
+    public required init<T>(customizable: T, configuration: ActionAlertbleConfigurable? = nil) where T : AlertCustomizable {
+        fatalError("init(customizable:configuration:) has not been implemented")
     }
-
+    
     private func configAttributes() {
         contentView.titleLabel.textAlignment = titleConfiguration.alignment
         contentView.titleLabel.textColor = titleConfiguration.color

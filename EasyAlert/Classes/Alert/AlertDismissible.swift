@@ -7,7 +7,9 @@
 
 import Foundation
 
-public protocol AlertDismissible : AnyObject {
+public protocol AlertFetchable: AnyObject { }
+
+public protocol AlertDismissible : AlertFetchable {
     
     /// 关掉 alert。
     /// - Parameter completion: 完成回调。
@@ -17,23 +19,39 @@ public protocol AlertDismissible : AnyObject {
     @MainActor func dismissAsync() async
 }
 
-extension AlertDismissible where Self: UIView {
+extension AlertFetchable where Self : UIView {
     
     /// 获取和 view 关联的 alert。
     var alert: Alertble? {
-        var alertble: Alertble?
         for view in sequence(first: superview, next: { $0?.superview }) {
-            if let backgroundView = view as? DimmingKnockoutBackdropView {
-                alertble = backgroundView.alert
-                break
+            if let responder = view?.next as? AlertViewController {
+                return responder.weakAlert
             }
         }
-        return alertble
+        return nil
     }
+}
+
+extension AlertFetchable where Self : UIViewController {
+    
+    /// 获取和 view 关联的 alert。
+    var alert: Alertble? {
+        guard let parent = self.parent as? AlertViewController else {
+            return nil
+        }
+        return parent.weakAlert
+    }
+}
+
+extension AlertDismissible {
     
     /// 关掉 alert。
     /// - Parameter completion: 完成回调。
-    public func dismiss(completion: (() -> Void)? = nil) {
+    public func dismiss(completion: (() -> Void)? = nil) where Self: UIView {
+        alert?.dismiss(completion: completion)
+    }
+    
+    public func dismiss(completion: (() -> Void)? = nil) where Self: UIViewController {
         alert?.dismiss(completion: completion)
     }
     

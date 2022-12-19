@@ -7,13 +7,13 @@
 
 import UIKit
 
-class ActionGroupView: Alert.CustomizedView {
+class ActionGroupView: UIView, AlertCustomizable {
     
     var actionLayout: ActionLayoutable
     
     var actions: [Action] = []
     
-    let customView: Alert.CustomizedView?
+    let customView: UIView?
     
     private let backgroundView: UIVisualEffectView
     
@@ -23,7 +23,7 @@ class ActionGroupView: Alert.CustomizedView {
     
     private let containerView = UIView()
     
-    required init(customView: Alert.CustomizedView?, actionLayout: ActionLayoutable) {
+    required init(customView: UIView?, actionLayout: ActionLayoutable) {
         self.actionLayout = actionLayout
         if #available(iOS 13.0, *) {
             self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
