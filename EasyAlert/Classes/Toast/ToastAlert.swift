@@ -82,4 +82,11 @@ final class ToastAlert: Alert {
         backdropProvider.dimming = .color(.clear)
         backdropProvider.penetrationScope = .all
     }
+    
+    override func willShow() {
+        super.willShow()
+        if let window = rawCustomView.window {
+            window.windowLevel = UIWindow.Level(.greatestFiniteMagnitude)
+        }
+    }
 }

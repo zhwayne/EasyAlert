@@ -15,7 +15,7 @@ extension ActionSheet {
         
         public var cancelSpacing: CGFloat = 8
         
-        public var actionViewType: Action.CustomizedView.Type = ActionView.self
+        public var actionViewType: (UIView & ActionCustomizable).Type = ActionView.self
         
         public var actionLayoutType: ActionLayoutable.Type = SheetActionLayout.self
                 

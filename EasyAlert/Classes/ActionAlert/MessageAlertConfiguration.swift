@@ -16,7 +16,7 @@ extension MessageAlert {
             set { actionAlertConfiguration.cornerRadius = newValue }
         }
         
-        public var actionViewType: Action.CustomizedView.Type {
+        public var actionViewType: (UIView & ActionCustomizable).Type {
             get { actionAlertConfiguration.actionViewType }
             set { actionAlertConfiguration.actionViewType = newValue }
         }

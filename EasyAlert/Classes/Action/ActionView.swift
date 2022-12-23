@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ActionView: Action.CustomizedView {
+final class ActionView: UIView, ActionCustomizable {
     
     var title: String? {
         get { titleLabel.text }

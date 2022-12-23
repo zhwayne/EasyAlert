@@ -9,7 +9,6 @@ import UIKit
 
 public final class Action {
     
-    public typealias CustomizedView = UIView & ActionCustomizable
     public typealias Handelr = (Action) -> Void
     
     /// 当 allowAutoDismiss 为 true 时，点击 action view 后，alert 会立即消失。
@@ -23,7 +22,7 @@ public final class Action {
     
     let handler: Handelr?
     
-    var view: CustomizedView?
+    var view: (UIView & ActionCustomizable)?
     
     weak var representationView: ActionCustomViewRepresentationView?
     
@@ -33,7 +32,7 @@ public final class Action {
         self.handler = handler
     }
     
-    public init(view: CustomizedView, handler: Handelr? = nil) {
+    public init(view: UIView & ActionCustomizable, handler: Handelr? = nil) {
         self.view = view
         self.title = view.title
         self.style = view.style

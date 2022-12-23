@@ -17,7 +17,7 @@ open class Alert: Alertble {
     
     public var transitionCoordinator: TransitionCoordinator = AlertTransitionCoordinator()
     
-    public private(set) var isShowing = false
+    public var isShowing: Bool { backdropView.superview != nil }
     
     private let alertViewController = AlertViewController()
                 
@@ -30,6 +30,8 @@ open class Alert: Alertble {
     private var callbacks: [LiftcycleCallback] = []
     
     private var orientationChangeToken: NotificationToken?
+    
+    private var window: AlertWindow?
     
     public init<T: AlertCustomizable>(customizable: T) {
         guard customizable is UIView || customizable is UIViewController else {
@@ -103,11 +105,8 @@ open class Alert: Alertble {
         
         func _show(in view: UIView? = nil) {
             Dispatch.dispatchPrecondition(condition: .onQueue(.main))
-            guard let parent = findParentView(view),
-                  canShow(in: parent) else {
-                return
-            }
-            defer { isShowing = true }
+            guard !isShowing else { return }
+            let parent = findParentView(view)
             configDimming()
             configContainer()
             showAlert(in: parent)
@@ -181,22 +180,24 @@ extension Alert {
         )
     }
     
-    private func findParentView(_ view: UIView?) -> UIView? {
+    private func findParentView(_ view: UIView?) -> UIView {
         if let view = view { return view } else {
-            if #available(iOS 13.0, *) {
-                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                    return windowScene.windows.first { $0.isKeyWindow }
-                } else {
-                    return nil
-                }
-            } else {
-                return UIApplication.shared.keyWindow
+//            if #available(iOS 13.0, *) {
+//                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+//                    return windowScene.windows.first { $0.isKeyWindow }
+//                } else {
+//                    return nil
+//                }
+//            } else {
+//                return UIApplication.shared.keyWindow
+//            }
+            if window == nil {
+                window = AlertWindow(frame: UIScreen.main.bounds)
             }
+            window?.windowLevel = .alert
+            window?.makeKeyAndVisible()
+            return window!
         }
-    }
-    
-    private func canShow(in view: UIView) -> Bool {
-        return !isShowing && !view.subviews.contains(backdropView)
     }
     
     private func canDismiss() -> Bool {
@@ -284,7 +285,6 @@ extension Alert {
     
     private func windup() {
         alertViewController.weakAlert = nil
-        isShowing = false
         
         if let view = customizable as? UIView {
             view.removeFromSuperview()
@@ -298,5 +298,8 @@ extension Alert {
             alertViewController.view.removeFromSuperview()
             backdropView.removeFromSuperview()
         }
+        window?.resignKey()
+        window?.isHidden = true
+        window = nil
     }
 }

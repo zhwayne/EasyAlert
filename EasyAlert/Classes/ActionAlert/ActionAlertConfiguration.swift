@@ -13,7 +13,7 @@ extension ActionAlert {
         
         public var cornerRadius: CGFloat = 13
         
-        public var actionViewType: Action.CustomizedView.Type = ActionView.self
+        public var actionViewType: (UIView & ActionCustomizable).Type = ActionView.self
         
         public var actionLayoutType: ActionLayoutable.Type = AlertActionLayout.self
         

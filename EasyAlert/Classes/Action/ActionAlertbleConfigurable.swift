@@ -11,7 +11,7 @@ public protocol ActionAlertbleConfigurable {
     
     var cornerRadius: CGFloat { get set }
         
-    var actionViewType: Action.CustomizedView.Type { get set }
+    var actionViewType: (UIView & ActionCustomizable).Type { get set }
     
     var actionLayoutType: ActionLayoutable.Type { get set }
 }

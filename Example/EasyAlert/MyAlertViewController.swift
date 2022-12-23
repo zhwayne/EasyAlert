@@ -33,8 +33,6 @@ class MyAlertViewController: UIViewController, AlertCustomizable {
         view.translatesAutoresizingMaskIntoConstraints = false
 
         view.heightAnchor.constraint(equalToConstant: 375).isActive = true
-        
-        preferredContentSize
     }
     
     @objc

@@ -28,11 +28,5 @@ class BlurEffectView: UIVisualEffectView {
     }
     
     // MARK: Private
-    var animator: UIViewPropertyAnimator!
-    
-    override var alpha: CGFloat {
-        didSet {
-            animator.fractionComplete = alpha * CGFloat(intensity)
-        }
-    }
+    private var animator: UIViewPropertyAnimator!
 }
