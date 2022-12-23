@@ -46,8 +46,11 @@ open class Alert: Alertble {
         if !UIDevice.current.isGeneratingDeviceOrientationNotifications {
             UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         }
-        let name = UIDevice.orientationDidChangeNotification
-        orientationChangeToken = NotificationCenter.default.observe(name: name, object: nil, queue: nil, using: { [weak self] _ in
+        let name = UIApplication.willChangeStatusBarOrientationNotification
+        orientationChangeToken = NotificationCenter.default.observe(name: name, object: nil, queue: nil, using: { [weak self] note in
+            if let window = self?.window {
+                window.frame = UIScreen.main.bounds
+            }
             self?.layoutIfNeeded()
         })
     }
@@ -247,6 +250,9 @@ extension Alert {
     }
     
     private func layoutIfNeeded() {
+        if let window {
+            window.layoutIfNeeded()
+        }
         backdropView.layoutIfNeeded()
         willLayoutContainer()
         transitionCoordinator.update(context: transitioningContext)

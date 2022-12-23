@@ -9,7 +9,7 @@ import Foundation
 
 struct ToastTransitionCoordinator : TransitionCoordinator {
     
-    var layoutGuide = LayoutGuide(width: .flexible(UIScreen.main.bounds.size.width * 0.8))
+    var layoutGuide = LayoutGuide(width: .flexible(1))
         
     private var constraints: [NSLayoutConstraint] = []
     
@@ -52,7 +52,11 @@ struct ToastTransitionCoordinator : TransitionCoordinator {
     }
     
     mutating func update(context: TransitionCoordinatorContext) {
-
+        let bounds = UIScreen.main.bounds
+        let width = min(bounds.width, bounds.height)
+        layoutGuide = LayoutGuide(width: .flexible(width),
+                                  edgeInsets: UIEdgeInsets(top: 0, left: -32, bottom: 0, right: -32))
+        
         context.backdropView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
         constraints.removeAll()

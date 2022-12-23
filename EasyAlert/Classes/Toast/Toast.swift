@@ -26,13 +26,13 @@ public struct Toast {
 extension Toast {
     
     private static func duration(of text: String) -> TimeInterval {
-        // 5 个字以内显示时长固定位一秒
+        // 5 个字以内显示时长固定位 1.5 秒
         let threshold = 5
-        let minimumDuratuon: TimeInterval = 1
+        let minimumDuratuon: TimeInterval = 1.5
         
         if text.count <= threshold { return minimumDuratuon }
         let leftTextLen = text.count - threshold
-        let extDuration = Double(leftTextLen) * 0.13
+        let extDuration = Double(leftTextLen) * 0.12
         return minimumDuratuon + extDuration
     }
 }
