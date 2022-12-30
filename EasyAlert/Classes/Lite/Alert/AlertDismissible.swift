@@ -22,7 +22,7 @@ public protocol AlertDismissible : AlertFetchable {
 extension AlertFetchable {
     
     // 获取和 view 关联的 alert。
-    var alert: Alertble? {
+    var alert: Alert? {
         if let view = self as? UIView {
             for view in sequence(first: view.superview, next: { $0?.superview }) {
                 if let responder = view?.next as? AlertViewController {

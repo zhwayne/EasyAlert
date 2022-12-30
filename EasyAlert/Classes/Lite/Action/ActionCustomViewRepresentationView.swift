@@ -75,7 +75,7 @@ final class ActionCustomViewRepresentationView: UIControl {
         
         if let action, let view = action.view {
             view.frame = bounds
-            if view.alert is ActionSheet {
+            if view.alert?.isSheet ?? false {
                 cancelBackgroundView.isHidden = action.style != .cancel
             } else {
                 cancelBackgroundView.isHidden = true

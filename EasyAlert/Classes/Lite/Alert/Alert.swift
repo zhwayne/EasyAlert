@@ -31,6 +31,8 @@ open class Alert: Alertble {
     
     private var orientationChangeToken: NotificationToken?
     
+    var isSheet: Bool = false
+    
     public init<T: AlertCustomizable>(customizable: T) {
         guard customizable is UIView || customizable is UIViewController else {
             fatalError()

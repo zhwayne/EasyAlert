@@ -68,10 +68,3 @@ public extension Action {
         case `default`, cancel, destructive
     }
 }
-
-extension Action {
-    
-    enum AlertbleStyle {
-        case alert, sheet
-    }
-}

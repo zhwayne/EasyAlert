@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'EasyAlert'
-  s.version          = '0.3.1'
+  s.version          = '0.3.2'
   s.summary          = 'A short description of EasyAlert.'
 
 # This description is used to generate tags and improve search results.
@@ -32,6 +32,10 @@ TODO: Add long description of the pod here.
 
   s.swift_version = '5.7'
   s.source_files = 'EasyAlert/Classes/**/*'
+  
+  s.subspec 'Lite' do |a|
+    a.source_files = 'EasyAlert/Classes/Lite/**/*'
+  end
   
   # s.resource_bundles = {
   #   'EasyAlert' => ['EasyAlert/Assets/*.png']

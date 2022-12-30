@@ -7,73 +7,73 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03F3A1F9C0E75126F1F2ACEB48500376 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA51687DF1CB03D36EE010B4E9EAC640 /* Toast.swift */; };
-		0E1260D7DAE9930BFABF55D169DBC9B3 /* ActionRepresentationSequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F88B1A5962A8766E562B0979F6B259 /* ActionRepresentationSequenceView.swift */; };
-		0E76B74B0BB125EC82902EC3DC16F7D7 /* Alertble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C7924F0F8374D3000486760482962D /* Alertble.swift */; };
-		129F394D2F24D2228F4D7171D7C70D19 /* AlertDismissible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912D09FDF56106B7A8A66723CFDFAA85 /* AlertDismissible.swift */; };
-		19ABAC4A7ECE56D6EEDD99BAF22EF3B1 /* BlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E6DA1D0D6E2E334CE062CCC97AF428 /* BlurEffectView.swift */; };
-		1A093B4EF888372C30324E5CB1A8A11F /* MessageAlertTitleAndMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA292B8735C08581B657FD6B8A3A5B67 /* MessageAlertTitleAndMessage.swift */; };
-		21CF4D76D06B398A190E1247A3EED833 /* ActionAlertbleConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8219579DF8BC969BC2D86E662CFB9A2B /* ActionAlertbleConfigurable.swift */; };
-		248DE4168D102F27D50564E1F75D37ED /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B32C4B28A46E7394E51CDDF5C809BA /* Sheet.swift */; };
-		2FD6B89F415936F2A5A51E01F94D73E7 /* ActionLayoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2225BFBF5A7D13FE07413B79A101960 /* ActionLayoutable.swift */; };
-		376C190E0EF3DFB7D0879E0693D3F6CC /* SheetActionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6671A89C89979049A11CACD81E25C1C1 /* SheetActionLayout.swift */; };
+		00D76AF34874ABE8740203CD5101E37B /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD2A182B13D8BA1660EC015885F3EDF /* Action.swift */; };
+		02D6AA6D26789147BE95038337D1C809 /* DimmingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCCCC3440BB97564B058C02E2CEF4CB /* DimmingView.swift */; };
+		0C9D09DBCF1050DAD394C6598828F176 /* ToastAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FD181EC5D16D3856D3188A2C288B34 /* ToastAlert.swift */; };
+		0EBFE2B4178730F73878375D0EE9491A /* MessageAlertTitleAndMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D72C83D3AAC352C7D45CC44B801E67C /* MessageAlertTitleAndMessage.swift */; };
+		0F44FFDA490CF01863E0485F530BBE1B /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2782E47D27851D7A56BBC96E209EC2 /* AlertViewController.swift */; };
+		0FE7F45902B0BF322EF9218837683105 /* UIView+EasyAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE960942CAF20A386509882A2314486A /* UIView+EasyAlert.swift */; };
+		1E5C2A12780E2C30CB115DF3D1D0BAEA /* TransitionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED44B608F68DFE618FCDB9D9D4B1F405 /* TransitionCoordinator.swift */; };
+		21635B9DB1F0153D01B5410AF588D8BB /* MessageAlertConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67519E596FAB30AA0C374C3C5E0043FD /* MessageAlertConfiguration.swift */; };
+		2370DDF99E7C83C4B6998AA09FC4E89F /* ToastTransitionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 070AE7C05F81C914A54E5AFBF98BEA55 /* ToastTransitionCoordinator.swift */; };
+		2766D9B94595F25E5D526539F3381024 /* Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0AD49E360C273090F6ED095E8CC98A0 /* Proxy.swift */; };
+		331BA6240A24B321FBD8B180201E86CB /* ActionVibrantSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C07C2891EAB0AD6A8B097FC3F5C3A13 /* ActionVibrantSeparatorView.swift */; };
+		332ACF5F8D1FC47A5B1FF62533B62620 /* ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BDF3E64BC9A2371D1E0C4D3EF07F02 /* ActionSheet.swift */; };
 		3D99710572C0744363A89D02BE1BD130 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		44F5BFF80F630239A922C225CA97A899 /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C17115B9F35E053B27DCAF277CC685 /* NotificationToken.swift */; };
 		45F8FF07E39FEE01213BA31F7A9B41E0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
 		46E53E4A8CD83A7B989AB917F0E6B097 /* Pods-EasyAlert_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A707E92249B3AB369DBA9E328DC494C /* Pods-EasyAlert_Tests-dummy.m */; };
-		485864EA8BAC548056824D491C347E7E /* AlertCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DFE6968E5D232A81AEF09D719DF99A /* AlertCallback.swift */; };
-		5E744A8A3129E8015C9B9AA305AFA83C /* AlertActionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F2862F739C959FA3C607A6E5C4AFF /* AlertActionLayout.swift */; };
-		5F2787695777F12803EE298C62DF4102 /* EasyAlert-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F02DB5870AC0286635360382D6C874E /* EasyAlert-dummy.m */; };
-		5FA360EB01008DC165B7EF4A6FD2D4B3 /* AlertTapTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207D24F2659F59576085A2C3DF81B353 /* AlertTapTarget.swift */; };
-		60F517E44F179126112A32654F8437DD /* ActionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B2105F76BD26AA78C6A5FB65F62942 /* ActionAlert.swift */; };
-		651793B9332CC8D8E2D83A9C245D62D3 /* ToastAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFC19D09BC4AFE067B6B1A708FFC9F0 /* ToastAlert.swift */; };
-		674BEBA7BF4A519621F3978FD6863B94 /* MessageAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF338FFA08A636FE9FABFAAFE3062F95 /* MessageAlert.swift */; };
-		6A131DE404E543B4BCF87AF709200E30 /* ActionSheetCancelBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2C3F8CDD97A3E3C63B0BB44ED4B613 /* ActionSheetCancelBackgroundView.swift */; };
-		6A2B1BBC6A78C6395CED9DF12941A2DD /* Alertble+Conveniences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544113E8A6F29FE2355D92410EE18974 /* Alertble+Conveniences.swift */; };
-		6C42C3CE83631F233587800873B6648D /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24D65FE438EDBD73791B0E24F2DD126 /* Alert.swift */; };
-		75B4D0DF5D4C1BCF9A4741EBF7D8186B /* TransitionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B19E9AC25CA74CE048ECE570846DB21 /* TransitionCoordinator.swift */; };
+		4A17D8F707CFB9F039C0438E00D516DE /* DimmingKnockoutBackdropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD62BC8F888BE954FA95C9B3B0E0A6C2 /* DimmingKnockoutBackdropView.swift */; };
+		5010027EB4804B37BA2AAD6C0BDDFEDE /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EBE3B20B21FBE965559345E46A0B1D /* ActionView.swift */; };
+		53E10AD5800A11B82AEF64F2389C7B2D /* AlertDismissible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61ACC6F28CD713E3B18F0E61BC69C54A /* AlertDismissible.swift */; };
+		5D56F4A61327F05599D37AD6815FE7C5 /* ActionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C44AA5640A8DC7605A38306B8C553E /* ActionAlert.swift */; };
+		5F78EBB9B064382846CC021F41EE5041 /* AlertActionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D052AAE1842BAB4B0F62E3D3EDBE4627 /* AlertActionLayout.swift */; };
+		6150E28815F528796AA455139EC8B3E9 /* SheetActionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441A03F45860DDAFE36DE00E2EBAD153 /* SheetActionLayout.swift */; };
+		687758BDE43DC6FE4BF2CD2A176818AA /* SheetTransitionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41677E39A6B47AFE148E230BCE044953 /* SheetTransitionCoordinator.swift */; };
+		6B9FB1A97A6B8C4D7EFA8727FA5DC290 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF51BBD78FEB4B72975E3F4424715C4 /* Sheet.swift */; };
+		6F8EC1A3851560C77DAE7E059D54D026 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6649E277AA4FBDBCF6BBD7094A5DF547 /* Toast.swift */; };
+		7A1FB10F1B79800AB4E59B19B97A2439 /* ActionAlertble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5707343F829D677B39F1C0EF0CE6EDFC /* ActionAlertble.swift */; };
+		7AA80D1522377DA8E2EF3E91D3C9D228 /* Alertble+Conveniences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DD8FB46B244D7BF8AAC1F188C205F0 /* Alertble+Conveniences.swift */; };
+		7B146E92306FBB0194B6C99EDA3EE16D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1416965E696091A223A3A7442939377 /* NotificationToken.swift */; };
 		7B82DDEC09F9546B31E207F4FE673C3C /* Pods-EasyAlert_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A925329B8D2E69FBFEF9BB98FE18CF8A /* Pods-EasyAlert_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		831765953B1B98D44A7C8882CDC84029 /* ActionCustomViewRepresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B94052F14C02D12CD9FF11734200D1 /* ActionCustomViewRepresentationView.swift */; };
-		901D54B20A8A5734361B9A8203664678 /* EasyAlert-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E89878E474586ACD41E60C5B392BF25 /* EasyAlert-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9B26C0FDE5F993A835FBDC8470507F5F /* UIView+EasyAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AB89DDF4B813F53B0D6B777062DF6D /* UIView+EasyAlert.swift */; };
-		A0E0DC480A76DE6D17C976ABD6C81BBE /* AlertCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3CF5E950516264E9828B5217EF68B3 /* AlertCustomizable.swift */; };
-		ACE5BD62FA9B689698BBFA9D81734A39 /* ActionSeparatableSequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50D93109E152CBE6DE783E7FDF2C113 /* ActionSeparatableSequenceView.swift */; };
-		B236DF3260A9996E186EBF2ECDB4DE3C /* ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8386FB469721CF98FDBC83CADE1C03C /* ActionSheet.swift */; };
-		B3BDD189589C0D196AB013FF5A1D94F7 /* DimmingKnockoutBackdropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70880AA85CADFC4E8C7E59F1FEF7E9B3 /* DimmingKnockoutBackdropView.swift */; };
-		B54233A320BEC410B07F8B10E5C5572B /* ActionSheetContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14C476C1EC16B1F5AFC40F0017AD5DB /* ActionSheetContainerView.swift */; };
-		BDCDC7DF6E9BB9D76EE1888F280C23BC /* AlertTransitionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADBFDB655E27B374556DD8751FC8B31 /* AlertTransitionCoordinator.swift */; };
-		C13F2F0ACB843AF82387E72544348FD8 /* ActionVibrantSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFE751F60901D7426A6AE4295621565 /* ActionVibrantSeparatorView.swift */; };
-		C41FC41BD8CD0F060CB32183AB0153B3 /* MessageAlertConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5395EB2EB5ED034F8FEBFD01624CD8DC /* MessageAlertConfiguration.swift */; };
-		C5136F49D7DBE774440CA94F02BFE03B /* DimmingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2302BC1B4D04E09D0BFD7C46A556A7 /* DimmingView.swift */; };
-		CCD245329DF15C56E39B02A4B03DD28F /* KeyboardResponsiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E88C039F278C1AA869B30618DD3772F /* KeyboardResponsiveView.swift */; };
-		CD8BB68C32183A8A2CD4044AF0828378 /* ActionSheetConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BC5B6B9D3159402ED659BFA09844D /* ActionSheetConfiguration.swift */; };
-		CDFB86057298E2B442A8FBE517A374C7 /* SheetTransitionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2C4A0AF557606CAC8A18CCF3F7F4BD /* SheetTransitionCoordinator.swift */; };
-		CE72D30FEB8CDE05F45CFEE66DE5ADBE /* ActionAlertConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB11108672E78D0E0D18028854E74C8 /* ActionAlertConfiguration.swift */; };
-		DE010043CBF7EC28EE993D66AF03D83F /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C3FF979CF16B71205099A1684A4E0 /* AlertViewController.swift */; };
-		E06AF7F0721F567F6A23AF2055F81F2D /* ActionAlertble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58639FCBC53C9239378603D6ED46B66D /* ActionAlertble.swift */; };
+		7C7B731F70E29103603F74EE7B40765D /* ActionSheetContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBC290061B8B69054DBC3ED0C59E75D /* ActionSheetContainerView.swift */; };
+		7CEE8145DDBB117642557E28E9C6FDE9 /* AlertCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD9593AEBFC03DD91FCAA692DD3FBC /* AlertCallback.swift */; };
+		7E719DB2304F742740B81CA2B20B1AB1 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF551F2662D5196853D6C01AFC38D88 /* Alert.swift */; };
+		82BCF2E3FF3CE4BEB684082B304AF5AF /* AlertCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62261D582B9C3571C4B4064B9FE5D2DE /* AlertCustomizable.swift */; };
+		8588489819555B4630AE633AEFEA01F7 /* MessageAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB85BD128E7B930F413CD62BD56C107 /* MessageAlert.swift */; };
+		901D54B20A8A5734361B9A8203664678 /* EasyAlert-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D18DB4BC6B5B7693A2C3B8A9F821E5C /* EasyAlert-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		929B585FF83778039C8BB288992201B3 /* KeyboardResponsiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0C359AE15FA876F911BDA304811E46 /* KeyboardResponsiveView.swift */; };
+		929EC493F8EB9A49ABA938BDB7C674DB /* TransitionCoordinatorActionGroupDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2900C654661B1B6FBC926AF45CB0B220 /* TransitionCoordinatorActionGroupDecorator.swift */; };
+		92E487893955747A3F39BF34AAE0D81C /* ActionAlertbleConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAA02B88EDA29EB322391A853AA9570 /* ActionAlertbleConfigurable.swift */; };
+		978AAAA14CA27BE030BC7B4E78A0F1BE /* ActionLayoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B7724F2C338C665780647CA81EA3EF /* ActionLayoutable.swift */; };
+		98297305C0585B3B876C7ECCFEE652BC /* ActionCustomViewRepresentationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687EDAA8EC687A271A07B4CA91611089 /* ActionCustomViewRepresentationView.swift */; };
+		996E9021DDC1FF622613F445E6772C4E /* ActionRepresentationSequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E60EEDB5904358CFAEFA3B34D80F87 /* ActionRepresentationSequenceView.swift */; };
+		99FC9EE91D4C4B2433E325367C4066EF /* ActionSheetConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE4952FDBBF8583F421B2BDEB914BFF /* ActionSheetConfiguration.swift */; };
+		9F5102FE36C781959004053BF504FEFA /* AlertTapTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E6E143A9D99AA1893182F646F76FD2 /* AlertTapTarget.swift */; };
+		9FC2444AF979BDD39925D399EA19EC9F /* BlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851CEEE441FF1DB3F5D8484A9F41B0D0 /* BlurEffectView.swift */; };
+		A12ABD944C0A2291636D28DD32E71856 /* Alertble.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0434854C39DA2F2713F8DB39BB88848 /* Alertble.swift */; };
+		B08AFC596FD280EB2CC8CC891533D31F /* ActionSeparatableSequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF672F49291A888B278A6B18C576031 /* ActionSeparatableSequenceView.swift */; };
+		B9F9752462B513F25CFB6FF39E0ACF7C /* BackdropProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F26BCFDA552D51B8FA6A289AB29F4E /* BackdropProvider.swift */; };
+		CEE7105E2E92BD9BB4777594E4503624 /* ActionAlertConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A17179C40AB37006E8221B0A747F1C /* ActionAlertConfiguration.swift */; };
+		D42CF16146C1827AF633E51DB457A87F /* ActionSheetCancelBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D8D53A09607AD85931C85D418C68E2 /* ActionSheetCancelBackgroundView.swift */; };
 		E1433575C2462675713FA6D00A7B300E /* Pods-EasyAlert_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CE75B767C7344211A1AE813F07C27543 /* Pods-EasyAlert_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E2E90A2873666C53CA43ADCA6E75DB21 /* ToastTransitionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C45FB61EDB5DF2857AB68BAF46F0CBA /* ToastTransitionCoordinator.swift */; };
-		E38226F34192D3ADEE6221845ADA7E97 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD4F482ACF37410F7BB8D917D3347AC /* ActionView.swift */; };
-		E3E91D2B12F4A9B0B11FEB162440E6C5 /* ActionCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B332987C9627B6DD61E8418AE9F9AD8A /* ActionCustomizable.swift */; };
-		E7D9F5D5029405B70281C7D55C9BC61A /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773EBEC5C9095A2B1234CA3323C224B0 /* Action.swift */; };
-		E8416E472EE03B09DEA37A997215117C /* BackdropProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE6E50BE36A876D9BCBB200AD7879E8 /* BackdropProvider.swift */; };
 		EB4CB298C58B134126367A3F6DF35859 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		ED4C16BF00450CDF42C0D86C5BC15420 /* TransitionCoordinatorActionGroupDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41197F5037AEDA3ADE49E68447998474 /* TransitionCoordinatorActionGroupDecorator.swift */; };
-		F02BD1D6EC231E8A481B0011AC6C453E /* Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09575F28B931968F24768CC7D047B525 /* Proxy.swift */; };
-		F28FC8A958105E9946A2849114C68B42 /* ActionGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52D651AA4644341638DA015B9B56C4E /* ActionGroupView.swift */; };
+		EF20C566724D1AC8D29F03A65D4A9527 /* EasyAlert-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D76021A43C12EBDEC642C21E2683D0 /* EasyAlert-dummy.m */; };
+		F4D7D59FEB4EB6086BF23FB1A2BBB7A6 /* TitleAndMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B26A5C25390A6B6444A66ED492ED3 /* TitleAndMessage.swift */; };
 		F63B8E3D66D4DEC455D805982A425B31 /* Pods-EasyAlert_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F9549E8F364DA2A1D27727AD74B93B6A /* Pods-EasyAlert_Example-dummy.m */; };
-		FB4B69495D8717DD0FF67A31EE5CB777 /* TitleAndMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1547A075846123C158E96A077CF24F /* TitleAndMessage.swift */; };
+		F9E73F806B02B0328FAC1DD2BD9F8C11 /* AlertTransitionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CD7B621E0889EE96DE14177D406885 /* AlertTransitionCoordinator.swift */; };
+		FA5DAA8F05A980AAF83EB125DBA507BB /* ActionGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0235C293B9CE8101D750D088A6E83899 /* ActionGroupView.swift */; };
+		FDE76DE30885CBF9E378B9BB9CAE8F79 /* ActionCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E079E6999742D2B08739484670E1943 /* ActionCustomizable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		480815646626C412F57C11081EC05E15 /* PBXContainerItemProxy */ = {
+		71BDF84C17D1D1FD52FCD9B53904D6E1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 1347C0721B72551EF426046292741CDA;
 			remoteInfo = "Pods-EasyAlert_Example";
 		};
-		CBC2B591519E020150D38B2B1008C3B4 /* PBXContainerItemProxy */ = {
+		9FCC91CA481CE16A48EA2E71B4496394 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -83,85 +83,85 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		09575F28B931968F24768CC7D047B525 /* Proxy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Proxy.swift; sourceTree = "<group>"; };
-		0C2C3F8CDD97A3E3C63B0BB44ED4B613 /* ActionSheetCancelBackgroundView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSheetCancelBackgroundView.swift; sourceTree = "<group>"; };
-		0FB11108672E78D0E0D18028854E74C8 /* ActionAlertConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionAlertConfiguration.swift; sourceTree = "<group>"; };
-		199BC5B6B9D3159402ED659BFA09844D /* ActionSheetConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSheetConfiguration.swift; sourceTree = "<group>"; };
-		207D24F2659F59576085A2C3DF81B353 /* AlertTapTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertTapTarget.swift; sourceTree = "<group>"; };
-		29DFE6968E5D232A81AEF09D719DF99A /* AlertCallback.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertCallback.swift; sourceTree = "<group>"; };
-		3C45FB61EDB5DF2857AB68BAF46F0CBA /* ToastTransitionCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ToastTransitionCoordinator.swift; sourceTree = "<group>"; };
-		3E89878E474586ACD41E60C5B392BF25 /* EasyAlert-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EasyAlert-umbrella.h"; sourceTree = "<group>"; };
-		41197F5037AEDA3ADE49E68447998474 /* TransitionCoordinatorActionGroupDecorator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TransitionCoordinatorActionGroupDecorator.swift; sourceTree = "<group>"; };
-		495DC2A42B4159A246EF303B44EB223A /* EasyAlert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EasyAlert.debug.xcconfig; sourceTree = "<group>"; };
-		4EFC19D09BC4AFE067B6B1A708FFC9F0 /* ToastAlert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ToastAlert.swift; sourceTree = "<group>"; };
-		5395EB2EB5ED034F8FEBFD01624CD8DC /* MessageAlertConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageAlertConfiguration.swift; sourceTree = "<group>"; };
-		544113E8A6F29FE2355D92410EE18974 /* Alertble+Conveniences.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Alertble+Conveniences.swift"; sourceTree = "<group>"; };
+		0235C293B9CE8101D750D088A6E83899 /* ActionGroupView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionGroupView.swift; sourceTree = "<group>"; };
+		04B7724F2C338C665780647CA81EA3EF /* ActionLayoutable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionLayoutable.swift; sourceTree = "<group>"; };
+		070AE7C05F81C914A54E5AFBF98BEA55 /* ToastTransitionCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ToastTransitionCoordinator.swift; sourceTree = "<group>"; };
+		090C91DDE4DD3587F0C4B2B0B4BCACD6 /* EasyAlert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EasyAlert.release.xcconfig; sourceTree = "<group>"; };
+		0DB85BD128E7B930F413CD62BD56C107 /* MessageAlert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageAlert.swift; sourceTree = "<group>"; };
+		0E079E6999742D2B08739484670E1943 /* ActionCustomizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionCustomizable.swift; sourceTree = "<group>"; };
+		100E954A7F629201B66FF12B22192DFD /* EasyAlert-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EasyAlert-prefix.pch"; sourceTree = "<group>"; };
+		10EBE3B20B21FBE965559345E46A0B1D /* ActionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
+		1D0C359AE15FA876F911BDA304811E46 /* KeyboardResponsiveView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeyboardResponsiveView.swift; sourceTree = "<group>"; };
+		1D72C83D3AAC352C7D45CC44B801E67C /* MessageAlertTitleAndMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageAlertTitleAndMessage.swift; sourceTree = "<group>"; };
+		2406F114B8E2709BCE8D2CF2BC0420E9 /* EasyAlert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EasyAlert.debug.xcconfig; sourceTree = "<group>"; };
+		2900C654661B1B6FBC926AF45CB0B220 /* TransitionCoordinatorActionGroupDecorator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TransitionCoordinatorActionGroupDecorator.swift; sourceTree = "<group>"; };
+		2CF672F49291A888B278A6B18C576031 /* ActionSeparatableSequenceView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSeparatableSequenceView.swift; sourceTree = "<group>"; };
+		32CD9593AEBFC03DD91FCAA692DD3FBC /* AlertCallback.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertCallback.swift; sourceTree = "<group>"; };
+		3BF51BBD78FEB4B72975E3F4424715C4 /* Sheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
+		40BA738ED2CE72B939BF8A81F131171E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		41677E39A6B47AFE148E230BCE044953 /* SheetTransitionCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SheetTransitionCoordinator.swift; sourceTree = "<group>"; };
+		441A03F45860DDAFE36DE00E2EBAD153 /* SheetActionLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SheetActionLayout.swift; sourceTree = "<group>"; };
+		4C07C2891EAB0AD6A8B097FC3F5C3A13 /* ActionVibrantSeparatorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionVibrantSeparatorView.swift; sourceTree = "<group>"; };
+		53E60EEDB5904358CFAEFA3B34D80F87 /* ActionRepresentationSequenceView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionRepresentationSequenceView.swift; sourceTree = "<group>"; };
 		558CD9F716CD78AEAB9B338D5B855F20 /* Pods-EasyAlert_Tests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-EasyAlert_Tests"; path = Pods_EasyAlert_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5707343F829D677B39F1C0EF0CE6EDFC /* ActionAlertble.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionAlertble.swift; sourceTree = "<group>"; };
 		574C21C91CACAF78200AE8DCCFE9A951 /* Pods-EasyAlert_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-EasyAlert_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		58639FCBC53C9239378603D6ED46B66D /* ActionAlertble.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionAlertble.swift; sourceTree = "<group>"; };
 		5C66FE4B7F3055D2E7ADD5D7396EF696 /* Pods-EasyAlert_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-EasyAlert_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		5DD4F482ACF37410F7BB8D917D3347AC /* ActionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
 		5F43BF6FA081F63F5626C406A2629761 /* Pods-EasyAlert_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-EasyAlert_Tests-Info.plist"; sourceTree = "<group>"; };
-		6671A89C89979049A11CACD81E25C1C1 /* SheetActionLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SheetActionLayout.swift; sourceTree = "<group>"; };
+		61ACC6F28CD713E3B18F0E61BC69C54A /* AlertDismissible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertDismissible.swift; sourceTree = "<group>"; };
+		62261D582B9C3571C4B4064B9FE5D2DE /* AlertCustomizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertCustomizable.swift; sourceTree = "<group>"; };
+		63D8D53A09607AD85931C85D418C68E2 /* ActionSheetCancelBackgroundView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSheetCancelBackgroundView.swift; sourceTree = "<group>"; };
+		6649E277AA4FBDBCF6BBD7094A5DF547 /* Toast.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		67519E596FAB30AA0C374C3C5E0043FD /* MessageAlertConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageAlertConfiguration.swift; sourceTree = "<group>"; };
+		687EDAA8EC687A271A07B4CA91611089 /* ActionCustomViewRepresentationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionCustomViewRepresentationView.swift; sourceTree = "<group>"; };
 		6A1F53430FDDC0AEF2903B2AA45F2E4A /* Pods-EasyAlert_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EasyAlert_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		6A3CF5E950516264E9828B5217EF68B3 /* AlertCustomizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertCustomizable.swift; sourceTree = "<group>"; };
-		6B19E9AC25CA74CE048ECE570846DB21 /* TransitionCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TransitionCoordinator.swift; sourceTree = "<group>"; };
-		70880AA85CADFC4E8C7E59F1FEF7E9B3 /* DimmingKnockoutBackdropView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DimmingKnockoutBackdropView.swift; sourceTree = "<group>"; };
+		6BFE36097F019D6117FCF8BFB6F17ACB /* EasyAlert.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = EasyAlert.modulemap; sourceTree = "<group>"; };
+		6EF551F2662D5196853D6C01AFC38D88 /* Alert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		6FCCCC3440BB97564B058C02E2CEF4CB /* DimmingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DimmingView.swift; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		75B32C4B28A46E7394E51CDDF5C809BA /* Sheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
-		773EBEC5C9095A2B1234CA3323C224B0 /* Action.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		78CD7B621E0889EE96DE14177D406885 /* AlertTransitionCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertTransitionCoordinator.swift; sourceTree = "<group>"; };
 		7A707E92249B3AB369DBA9E328DC494C /* Pods-EasyAlert_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-EasyAlert_Tests-dummy.m"; sourceTree = "<group>"; };
-		7F02DB5870AC0286635360382D6C874E /* EasyAlert-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "EasyAlert-dummy.m"; sourceTree = "<group>"; };
-		8219579DF8BC969BC2D86E662CFB9A2B /* ActionAlertbleConfigurable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionAlertbleConfigurable.swift; sourceTree = "<group>"; };
+		7E2782E47D27851D7A56BBC96E209EC2 /* AlertViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		804B26A5C25390A6B6444A66ED492ED3 /* TitleAndMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TitleAndMessage.swift; sourceTree = "<group>"; };
+		82E6E143A9D99AA1893182F646F76FD2 /* AlertTapTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertTapTarget.swift; sourceTree = "<group>"; };
+		851CEEE441FF1DB3F5D8484A9F41B0D0 /* BlurEffectView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BlurEffectView.swift; sourceTree = "<group>"; };
 		8522FB4F9436AE740220D989B3DDB5AB /* Pods-EasyAlert_Example */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-EasyAlert_Example"; path = Pods_EasyAlert_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		88222AEEFE4351C6D76E4DFED1438A2A /* EasyAlert.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = EasyAlert.modulemap; sourceTree = "<group>"; };
-		8A8F2862F739C959FA3C607A6E5C4AFF /* AlertActionLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertActionLayout.swift; sourceTree = "<group>"; };
-		8E88C039F278C1AA869B30618DD3772F /* KeyboardResponsiveView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeyboardResponsiveView.swift; sourceTree = "<group>"; };
-		912D09FDF56106B7A8A66723CFDFAA85 /* AlertDismissible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertDismissible.swift; sourceTree = "<group>"; };
+		87DD8FB46B244D7BF8AAC1F188C205F0 /* Alertble+Conveniences.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Alertble+Conveniences.swift"; sourceTree = "<group>"; };
+		8AE4952FDBBF8583F421B2BDEB914BFF /* ActionSheetConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSheetConfiguration.swift; sourceTree = "<group>"; };
+		8CBC290061B8B69054DBC3ED0C59E75D /* ActionSheetContainerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSheetContainerView.swift; sourceTree = "<group>"; };
+		8D18DB4BC6B5B7693A2C3B8A9F821E5C /* EasyAlert-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EasyAlert-umbrella.h"; sourceTree = "<group>"; };
 		9175D641C5975179B5D1A029AB7BFD14 /* Pods-EasyAlert_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EasyAlert_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		92529A755EB4E710522FE18AFD0DE837 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
-		92C3DDBE828BC68DCE459BB9BF6CA56F /* EasyAlert-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "EasyAlert-Info.plist"; sourceTree = "<group>"; };
-		9ADBFDB655E27B374556DD8751FC8B31 /* AlertTransitionCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertTransitionCoordinator.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9F2C4A0AF557606CAC8A18CCF3F7F4BD /* SheetTransitionCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SheetTransitionCoordinator.swift; sourceTree = "<group>"; };
-		A50D93109E152CBE6DE783E7FDF2C113 /* ActionSeparatableSequenceView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSeparatableSequenceView.swift; sourceTree = "<group>"; };
-		A5B94052F14C02D12CD9FF11734200D1 /* ActionCustomViewRepresentationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionCustomViewRepresentationView.swift; sourceTree = "<group>"; };
+		A0FD181EC5D16D3856D3188A2C288B34 /* ToastAlert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ToastAlert.swift; sourceTree = "<group>"; };
+		A3A17179C40AB37006E8221B0A747F1C /* ActionAlertConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionAlertConfiguration.swift; sourceTree = "<group>"; };
+		A4BDF3E64BC9A2371D1E0C4D3EF07F02 /* ActionSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSheet.swift; sourceTree = "<group>"; };
+		A810D7AA09BF5BD9C6331844724DBC39 /* EasyAlert.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = EasyAlert.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A925329B8D2E69FBFEF9BB98FE18CF8A /* Pods-EasyAlert_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-EasyAlert_Example-umbrella.h"; sourceTree = "<group>"; };
-		AF1547A075846123C158E96A077CF24F /* TitleAndMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TitleAndMessage.swift; sourceTree = "<group>"; };
-		B332987C9627B6DD61E8418AE9F9AD8A /* ActionCustomizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionCustomizable.swift; sourceTree = "<group>"; };
-		B3F88B1A5962A8766E562B0979F6B259 /* ActionRepresentationSequenceView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionRepresentationSequenceView.swift; sourceTree = "<group>"; };
-		B52D651AA4644341638DA015B9B56C4E /* ActionGroupView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionGroupView.swift; sourceTree = "<group>"; };
-		BA292B8735C08581B657FD6B8A3A5B67 /* MessageAlertTitleAndMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageAlertTitleAndMessage.swift; sourceTree = "<group>"; };
+		AD62BC8F888BE954FA95C9B3B0E0A6C2 /* DimmingKnockoutBackdropView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DimmingKnockoutBackdropView.swift; sourceTree = "<group>"; };
+		AE960942CAF20A386509882A2314486A /* UIView+EasyAlert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIView+EasyAlert.swift"; sourceTree = "<group>"; };
 		BAB02199B71D3BBD91F93B42B5092567 /* Pods-EasyAlert_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-EasyAlert_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		BB2302BC1B4D04E09D0BFD7C46A556A7 /* DimmingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DimmingView.swift; sourceTree = "<group>"; };
-		BE1F8D2B3B063D103EBAC9A5036B4E66 /* EasyAlert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EasyAlert.release.xcconfig; sourceTree = "<group>"; };
-		BEFE751F60901D7426A6AE4295621565 /* ActionVibrantSeparatorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionVibrantSeparatorView.swift; sourceTree = "<group>"; };
-		C14C476C1EC16B1F5AFC40F0017AD5DB /* ActionSheetContainerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSheetContainerView.swift; sourceTree = "<group>"; };
+		C0AD49E360C273090F6ED095E8CC98A0 /* Proxy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Proxy.swift; sourceTree = "<group>"; };
+		C5F26BCFDA552D51B8FA6A289AB29F4E /* BackdropProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BackdropProvider.swift; sourceTree = "<group>"; };
 		C64F623946C1BE6E3EFA423A67B2F15B /* Pods-EasyAlert_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-EasyAlert_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		C8B2105F76BD26AA78C6A5FB65F62942 /* ActionAlert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionAlert.swift; sourceTree = "<group>"; };
 		CE75B767C7344211A1AE813F07C27543 /* Pods-EasyAlert_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-EasyAlert_Tests-umbrella.h"; sourceTree = "<group>"; };
-		CF338FFA08A636FE9FABFAAFE3062F95 /* MessageAlert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageAlert.swift; sourceTree = "<group>"; };
-		D1AB89DDF4B813F53B0D6B777062DF6D /* UIView+EasyAlert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIView+EasyAlert.swift"; sourceTree = "<group>"; };
-		D2C7924F0F8374D3000486760482962D /* Alertble.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Alertble.swift; sourceTree = "<group>"; };
-		D8C17115B9F35E053B27DCAF277CC685 /* NotificationToken.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
-		DA51687DF1CB03D36EE010B4E9EAC640 /* Toast.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
-		E0FEE3577DE057CB769894A9C6A2FA7F /* EasyAlert-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EasyAlert-prefix.pch"; sourceTree = "<group>"; };
-		E1E6DA1D0D6E2E334CE062CCC97AF428 /* BlurEffectView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BlurEffectView.swift; sourceTree = "<group>"; };
+		D052AAE1842BAB4B0F62E3D3EDBE4627 /* AlertActionLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertActionLayout.swift; sourceTree = "<group>"; };
+		DDD2A182B13D8BA1660EC015885F3EDF /* Action.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		E2F30C2AEF36C6408BBEFEF01C1E5311 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		E45E54004CDD828BB4D975FE2F5F8F23 /* Pods-EasyAlert_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-EasyAlert_Example.modulemap"; sourceTree = "<group>"; };
-		E57C3FF979CF16B71205099A1684A4E0 /* AlertViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		E4D76021A43C12EBDEC642C21E2683D0 /* EasyAlert-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "EasyAlert-dummy.m"; sourceTree = "<group>"; };
 		E7408A841E5AF519A1F5FB8D9AB4E476 /* EasyAlert */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = EasyAlert; path = EasyAlert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E8386FB469721CF98FDBC83CADE1C03C /* ActionSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSheet.swift; sourceTree = "<group>"; };
+		EBAA02B88EDA29EB322391A853AA9570 /* ActionAlertbleConfigurable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionAlertbleConfigurable.swift; sourceTree = "<group>"; };
 		ECDC7B0A9ED0CBAAD08D2C856412E6FD /* Pods-EasyAlert_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EasyAlert_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		EE4D892DEEB8355E667AB390C4C2A8AC /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		ED44B608F68DFE618FCDB9D9D4B1F405 /* TransitionCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TransitionCoordinator.swift; sourceTree = "<group>"; };
+		F0434854C39DA2F2713F8DB39BB88848 /* Alertble.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Alertble.swift; sourceTree = "<group>"; };
+		F1416965E696091A223A3A7442939377 /* NotificationToken.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		F1BC882A514ACB4FB320FF6BC3C9D08B /* Pods-EasyAlert_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-EasyAlert_Example-Info.plist"; sourceTree = "<group>"; };
-		F2225BFBF5A7D13FE07413B79A101960 /* ActionLayoutable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionLayoutable.swift; sourceTree = "<group>"; };
-		F24D65FE438EDBD73791B0E24F2DD126 /* Alert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		F2E888FA8F331C0122450F2DD57F75E1 /* Pods-EasyAlert_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EasyAlert_Example.release.xcconfig"; sourceTree = "<group>"; };
-		F325D4D188F23A21AA325967315C7847 /* EasyAlert.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = EasyAlert.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		F35EDFF4CDDC581108B19832D51C8EB5 /* Pods-EasyAlert_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-EasyAlert_Example-frameworks.sh"; sourceTree = "<group>"; };
 		F41C3398B903323BD2722A74F4D99DFA /* Pods-EasyAlert_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-EasyAlert_Tests.modulemap"; sourceTree = "<group>"; };
+		F68CE35112243C4B613633A27B327618 /* EasyAlert-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "EasyAlert-Info.plist"; sourceTree = "<group>"; };
+		F7C44AA5640A8DC7605A38306B8C553E /* ActionAlert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionAlert.swift; sourceTree = "<group>"; };
 		F9549E8F364DA2A1D27727AD74B93B6A /* Pods-EasyAlert_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-EasyAlert_Example-dummy.m"; sourceTree = "<group>"; };
-		FFE6E50BE36A876D9BCBB200AD7879E8 /* BackdropProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BackdropProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +192,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05F59786BC5EA120982C9849B2777F82 /* ActionAlert */ = {
+			isa = PBXGroup;
+			children = (
+				F7C44AA5640A8DC7605A38306B8C553E /* ActionAlert.swift */,
+				5707343F829D677B39F1C0EF0CE6EDFC /* ActionAlertble.swift */,
+				A3A17179C40AB37006E8221B0A747F1C /* ActionAlertConfiguration.swift */,
+				D052AAE1842BAB4B0F62E3D3EDBE4627 /* AlertActionLayout.swift */,
+				0DB85BD128E7B930F413CD62BD56C107 /* MessageAlert.swift */,
+				67519E596FAB30AA0C374C3C5E0043FD /* MessageAlertConfiguration.swift */,
+				1D72C83D3AAC352C7D45CC44B801E67C /* MessageAlertTitleAndMessage.swift */,
+				2900C654661B1B6FBC926AF45CB0B220 /* TransitionCoordinatorActionGroupDecorator.swift */,
+			);
+			name = ActionAlert;
+			path = ActionAlert;
+			sourceTree = "<group>";
+		};
 		0E8E008DE3B6D6795E2537446330CB2B /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,14 +243,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3BEBDFEE49AC96F9014F2B3A5CFE24A2 /* Toast */ = {
+		4CF64E31B6CCC9A7744807B6104260BE /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				DA51687DF1CB03D36EE010B4E9EAC640 /* Toast.swift */,
-				4EFC19D09BC4AFE067B6B1A708FFC9F0 /* ToastAlert.swift */,
+				6BFE36097F019D6117FCF8BFB6F17ACB /* EasyAlert.modulemap */,
+				E4D76021A43C12EBDEC642C21E2683D0 /* EasyAlert-dummy.m */,
+				F68CE35112243C4B613633A27B327618 /* EasyAlert-Info.plist */,
+				100E954A7F629201B66FF12B22192DFD /* EasyAlert-prefix.pch */,
+				8D18DB4BC6B5B7693A2C3B8A9F821E5C /* EasyAlert-umbrella.h */,
+				2406F114B8E2709BCE8D2CF2BC0420E9 /* EasyAlert.debug.xcconfig */,
+				090C91DDE4DD3587F0C4B2B0B4BCACD6 /* EasyAlert.release.xcconfig */,
 			);
-			name = Toast;
-			path = EasyAlert/Classes/Toast;
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/EasyAlert";
 			sourceTree = "<group>";
 		};
 		524FACFFB21573C8673CF51D47672DDB /* Pods-EasyAlert_Example */ = {
@@ -262,121 +283,117 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		6E1796F7DCF99CD26D6B0D43747DE5CB /* Support Files */ = {
+		59B0BBF48ECC2B7F9C77FEF82BBDDB6E /* EasyAlert */ = {
 			isa = PBXGroup;
 			children = (
-				88222AEEFE4351C6D76E4DFED1438A2A /* EasyAlert.modulemap */,
-				7F02DB5870AC0286635360382D6C874E /* EasyAlert-dummy.m */,
-				92C3DDBE828BC68DCE459BB9BF6CA56F /* EasyAlert-Info.plist */,
-				E0FEE3577DE057CB769894A9C6A2FA7F /* EasyAlert-prefix.pch */,
-				3E89878E474586ACD41E60C5B392BF25 /* EasyAlert-umbrella.h */,
-				495DC2A42B4159A246EF303B44EB223A /* EasyAlert.debug.xcconfig */,
-				BE1F8D2B3B063D103EBAC9A5036B4E66 /* EasyAlert.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/EasyAlert";
-			sourceTree = "<group>";
-		};
-		7E22721B9340EE61A5358CACECBA2AD5 /* Alert */ = {
-			isa = PBXGroup;
-			children = (
-				F24D65FE438EDBD73791B0E24F2DD126 /* Alert.swift */,
-				D2C7924F0F8374D3000486760482962D /* Alertble.swift */,
-				544113E8A6F29FE2355D92410EE18974 /* Alertble+Conveniences.swift */,
-				29DFE6968E5D232A81AEF09D719DF99A /* AlertCallback.swift */,
-				6A3CF5E950516264E9828B5217EF68B3 /* AlertCustomizable.swift */,
-				912D09FDF56106B7A8A66723CFDFAA85 /* AlertDismissible.swift */,
-				207D24F2659F59576085A2C3DF81B353 /* AlertTapTarget.swift */,
-				E57C3FF979CF16B71205099A1684A4E0 /* AlertViewController.swift */,
-				FFE6E50BE36A876D9BCBB200AD7879E8 /* BackdropProvider.swift */,
-				E1E6DA1D0D6E2E334CE062CCC97AF428 /* BlurEffectView.swift */,
-				70880AA85CADFC4E8C7E59F1FEF7E9B3 /* DimmingKnockoutBackdropView.swift */,
-				BB2302BC1B4D04E09D0BFD7C46A556A7 /* DimmingView.swift */,
-				8E88C039F278C1AA869B30618DD3772F /* KeyboardResponsiveView.swift */,
-				D1AB89DDF4B813F53B0D6B777062DF6D /* UIView+EasyAlert.swift */,
-			);
-			name = Alert;
-			path = EasyAlert/Classes/Alert;
-			sourceTree = "<group>";
-		};
-		89C2265F4A4A475BB7AF670705AD4689 /* EasyAlert */ = {
-			isa = PBXGroup;
-			children = (
-				990E894B0F887C36F83FD1EC2900A2C2 /* Action */,
-				CC8B1C4F2A5C1194F513330C06913FE6 /* ActionAlert */,
-				7E22721B9340EE61A5358CACECBA2AD5 /* Alert */,
-				C20C51C47799D9D9F38D166146C135F4 /* Pod */,
-				D3C45788DF4935E60A92643717EBAEE4 /* Sheet */,
-				6E1796F7DCF99CD26D6B0D43747DE5CB /* Support Files */,
-				3BEBDFEE49AC96F9014F2B3A5CFE24A2 /* Toast */,
-				D4EDABF9B5E8A1AC101C6DA57415160C /* Transitioning */,
-				FA9787E7F6AB0BEB54328E4BD46F4F23 /* Utils */,
+				A09BA62D840B167450698CA38FFB93AC /* Extra */,
+				D59DF07D51783BD88E7541AB4AC543F5 /* Lite */,
+				BAE8A8ECE813FC673E1AC66E59E91359 /* Pod */,
+				4CF64E31B6CCC9A7744807B6104260BE /* Support Files */,
 			);
 			name = EasyAlert;
 			path = ../..;
 			sourceTree = "<group>";
 		};
-		92F594F31854D80437EBBA06089F4A6D /* Development Pods */ = {
+		676C0C91B357AD9B2C2D6AC92C1AFA42 /* Toast */ = {
 			isa = PBXGroup;
 			children = (
-				89C2265F4A4A475BB7AF670705AD4689 /* EasyAlert */,
+				6649E277AA4FBDBCF6BBD7094A5DF547 /* Toast.swift */,
+				A0FD181EC5D16D3856D3188A2C288B34 /* ToastAlert.swift */,
+				070AE7C05F81C914A54E5AFBF98BEA55 /* ToastTransitionCoordinator.swift */,
 			);
-			name = "Development Pods";
+			name = Toast;
+			path = Toast;
 			sourceTree = "<group>";
 		};
-		990E894B0F887C36F83FD1EC2900A2C2 /* Action */ = {
+		975EDA758310364D94E479FE84055269 /* Action */ = {
 			isa = PBXGroup;
 			children = (
-				773EBEC5C9095A2B1234CA3323C224B0 /* Action.swift */,
-				8219579DF8BC969BC2D86E662CFB9A2B /* ActionAlertbleConfigurable.swift */,
-				B332987C9627B6DD61E8418AE9F9AD8A /* ActionCustomizable.swift */,
-				A5B94052F14C02D12CD9FF11734200D1 /* ActionCustomViewRepresentationView.swift */,
-				B52D651AA4644341638DA015B9B56C4E /* ActionGroupView.swift */,
-				F2225BFBF5A7D13FE07413B79A101960 /* ActionLayoutable.swift */,
-				B3F88B1A5962A8766E562B0979F6B259 /* ActionRepresentationSequenceView.swift */,
-				A50D93109E152CBE6DE783E7FDF2C113 /* ActionSeparatableSequenceView.swift */,
-				BEFE751F60901D7426A6AE4295621565 /* ActionVibrantSeparatorView.swift */,
-				5DD4F482ACF37410F7BB8D917D3347AC /* ActionView.swift */,
-				AF1547A075846123C158E96A077CF24F /* TitleAndMessage.swift */,
+				DDD2A182B13D8BA1660EC015885F3EDF /* Action.swift */,
+				EBAA02B88EDA29EB322391A853AA9570 /* ActionAlertbleConfigurable.swift */,
+				0E079E6999742D2B08739484670E1943 /* ActionCustomizable.swift */,
+				687EDAA8EC687A271A07B4CA91611089 /* ActionCustomViewRepresentationView.swift */,
+				0235C293B9CE8101D750D088A6E83899 /* ActionGroupView.swift */,
+				04B7724F2C338C665780647CA81EA3EF /* ActionLayoutable.swift */,
+				53E60EEDB5904358CFAEFA3B34D80F87 /* ActionRepresentationSequenceView.swift */,
+				2CF672F49291A888B278A6B18C576031 /* ActionSeparatableSequenceView.swift */,
+				63D8D53A09607AD85931C85D418C68E2 /* ActionSheetCancelBackgroundView.swift */,
+				4C07C2891EAB0AD6A8B097FC3F5C3A13 /* ActionVibrantSeparatorView.swift */,
+				10EBE3B20B21FBE965559345E46A0B1D /* ActionView.swift */,
+				804B26A5C25390A6B6444A66ED492ED3 /* TitleAndMessage.swift */,
 			);
 			name = Action;
-			path = EasyAlert/Classes/Action;
+			path = Action;
 			sourceTree = "<group>";
 		};
-		C20C51C47799D9D9F38D166146C135F4 /* Pod */ = {
+		A09BA62D840B167450698CA38FFB93AC /* Extra */ = {
 			isa = PBXGroup;
 			children = (
-				F325D4D188F23A21AA325967315C7847 /* EasyAlert.podspec */,
-				92529A755EB4E710522FE18AFD0DE837 /* LICENSE */,
-				EE4D892DEEB8355E667AB390C4C2A8AC /* README.md */,
+				05F59786BC5EA120982C9849B2777F82 /* ActionAlert */,
+				BDB8B8E9C1FC7C1FF5C27DB6059AA825 /* Sheet */,
+				676C0C91B357AD9B2C2D6AC92C1AFA42 /* Toast */,
+			);
+			name = Extra;
+			path = EasyAlert/Classes/Extra;
+			sourceTree = "<group>";
+		};
+		BAE8A8ECE813FC673E1AC66E59E91359 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				A810D7AA09BF5BD9C6331844724DBC39 /* EasyAlert.podspec */,
+				40BA738ED2CE72B939BF8A81F131171E /* LICENSE */,
+				E2F30C2AEF36C6408BBEFEF01C1E5311 /* README.md */,
 			);
 			name = Pod;
 			sourceTree = "<group>";
 		};
-		CC8B1C4F2A5C1194F513330C06913FE6 /* ActionAlert */ = {
+		BDB8B8E9C1FC7C1FF5C27DB6059AA825 /* Sheet */ = {
 			isa = PBXGroup;
 			children = (
-				C8B2105F76BD26AA78C6A5FB65F62942 /* ActionAlert.swift */,
-				58639FCBC53C9239378603D6ED46B66D /* ActionAlertble.swift */,
-				0FB11108672E78D0E0D18028854E74C8 /* ActionAlertConfiguration.swift */,
-				8A8F2862F739C959FA3C607A6E5C4AFF /* AlertActionLayout.swift */,
-				CF338FFA08A636FE9FABFAAFE3062F95 /* MessageAlert.swift */,
-				5395EB2EB5ED034F8FEBFD01624CD8DC /* MessageAlertConfiguration.swift */,
-				BA292B8735C08581B657FD6B8A3A5B67 /* MessageAlertTitleAndMessage.swift */,
+				A4BDF3E64BC9A2371D1E0C4D3EF07F02 /* ActionSheet.swift */,
+				8AE4952FDBBF8583F421B2BDEB914BFF /* ActionSheetConfiguration.swift */,
+				8CBC290061B8B69054DBC3ED0C59E75D /* ActionSheetContainerView.swift */,
+				3BF51BBD78FEB4B72975E3F4424715C4 /* Sheet.swift */,
+				441A03F45860DDAFE36DE00E2EBAD153 /* SheetActionLayout.swift */,
+				41677E39A6B47AFE148E230BCE044953 /* SheetTransitionCoordinator.swift */,
 			);
-			name = ActionAlert;
-			path = EasyAlert/Classes/ActionAlert;
+			name = Sheet;
+			path = Sheet;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
-				92F594F31854D80437EBBA06089F4A6D /* Development Pods */,
+				DA8940CD7ED2412137B4CA5FBE012DE5 /* Development Pods */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
 				2E1B268161556BEE1F57A064F1D5316F /* Products */,
 				0E8E008DE3B6D6795E2537446330CB2B /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		CFCAC0D7CD8B2C66935F527980794907 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				6EF551F2662D5196853D6C01AFC38D88 /* Alert.swift */,
+				F0434854C39DA2F2713F8DB39BB88848 /* Alertble.swift */,
+				87DD8FB46B244D7BF8AAC1F188C205F0 /* Alertble+Conveniences.swift */,
+				32CD9593AEBFC03DD91FCAA692DD3FBC /* AlertCallback.swift */,
+				62261D582B9C3571C4B4064B9FE5D2DE /* AlertCustomizable.swift */,
+				61ACC6F28CD713E3B18F0E61BC69C54A /* AlertDismissible.swift */,
+				82E6E143A9D99AA1893182F646F76FD2 /* AlertTapTarget.swift */,
+				78CD7B621E0889EE96DE14177D406885 /* AlertTransitionCoordinator.swift */,
+				7E2782E47D27851D7A56BBC96E209EC2 /* AlertViewController.swift */,
+				C5F26BCFDA552D51B8FA6A289AB29F4E /* BackdropProvider.swift */,
+				851CEEE441FF1DB3F5D8484A9F41B0D0 /* BlurEffectView.swift */,
+				AD62BC8F888BE954FA95C9B3B0E0A6C2 /* DimmingKnockoutBackdropView.swift */,
+				6FCCCC3440BB97564B058C02E2CEF4CB /* DimmingView.swift */,
+				1D0C359AE15FA876F911BDA304811E46 /* KeyboardResponsiveView.swift */,
+				ED44B608F68DFE618FCDB9D9D4B1F405 /* TransitionCoordinator.swift */,
+				AE960942CAF20A386509882A2314486A /* UIView+EasyAlert.swift */,
+			);
+			name = Alert;
+			path = Alert;
 			sourceTree = "<group>";
 		};
 		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
@@ -387,41 +404,33 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D3C45788DF4935E60A92643717EBAEE4 /* Sheet */ = {
+		D59DF07D51783BD88E7541AB4AC543F5 /* Lite */ = {
 			isa = PBXGroup;
 			children = (
-				E8386FB469721CF98FDBC83CADE1C03C /* ActionSheet.swift */,
-				0C2C3F8CDD97A3E3C63B0BB44ED4B613 /* ActionSheetCancelBackgroundView.swift */,
-				199BC5B6B9D3159402ED659BFA09844D /* ActionSheetConfiguration.swift */,
-				C14C476C1EC16B1F5AFC40F0017AD5DB /* ActionSheetContainerView.swift */,
-				75B32C4B28A46E7394E51CDDF5C809BA /* Sheet.swift */,
-				6671A89C89979049A11CACD81E25C1C1 /* SheetActionLayout.swift */,
+				975EDA758310364D94E479FE84055269 /* Action */,
+				CFCAC0D7CD8B2C66935F527980794907 /* Alert */,
+				DB6A46B9677E34D4C32C55AC69F950FD /* Utils */,
 			);
-			name = Sheet;
-			path = EasyAlert/Classes/Sheet;
+			name = Lite;
+			path = EasyAlert/Classes/Lite;
 			sourceTree = "<group>";
 		};
-		D4EDABF9B5E8A1AC101C6DA57415160C /* Transitioning */ = {
+		DA8940CD7ED2412137B4CA5FBE012DE5 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9ADBFDB655E27B374556DD8751FC8B31 /* AlertTransitionCoordinator.swift */,
-				9F2C4A0AF557606CAC8A18CCF3F7F4BD /* SheetTransitionCoordinator.swift */,
-				3C45FB61EDB5DF2857AB68BAF46F0CBA /* ToastTransitionCoordinator.swift */,
-				6B19E9AC25CA74CE048ECE570846DB21 /* TransitionCoordinator.swift */,
-				41197F5037AEDA3ADE49E68447998474 /* TransitionCoordinatorActionGroupDecorator.swift */,
+				59B0BBF48ECC2B7F9C77FEF82BBDDB6E /* EasyAlert */,
 			);
-			name = Transitioning;
-			path = EasyAlert/Classes/Transitioning;
+			name = "Development Pods";
 			sourceTree = "<group>";
 		};
-		FA9787E7F6AB0BEB54328E4BD46F4F23 /* Utils */ = {
+		DB6A46B9677E34D4C32C55AC69F950FD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				D8C17115B9F35E053B27DCAF277CC685 /* NotificationToken.swift */,
-				09575F28B931968F24768CC7D047B525 /* Proxy.swift */,
+				F1416965E696091A223A3A7442939377 /* NotificationToken.swift */,
+				C0AD49E360C273090F6ED095E8CC98A0 /* Proxy.swift */,
 			);
 			name = Utils;
-			path = EasyAlert/Classes/Utils;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -466,7 +475,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				B29D0FC40AAB7C9516315AB626B8BDBA /* PBXTargetDependency */,
+				102F95E3CE6F5F6A9619BD220BADCB16 /* PBXTargetDependency */,
 			);
 			name = "Pods-EasyAlert_Example";
 			productName = Pods_EasyAlert_Example;
@@ -478,7 +487,7 @@
 			buildConfigurationList = 5B8A66D8AC97333BE61C2CB76B5679D6 /* Build configuration list for PBXNativeTarget "EasyAlert" */;
 			buildPhases = (
 				87B07B8CF9362DBF0AD0CFD6831CE949 /* Headers */,
-				4C522DB965D7300AF17D6269E07C27F2 /* Sources */,
+				857D17C2322C416AE7A433E5BC3D1935 /* Sources */,
 				AA73FDBF87B3A5995AE74FABCE4B7AD3 /* Frameworks */,
 				6E427F5B87B570B52D3E9C0AD4F2BB1E /* Resources */,
 			);
@@ -503,7 +512,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				3038570BD4405039F0F244BB8288CA7F /* PBXTargetDependency */,
+				CD943040818E7E08FD24C0B60AAF16F6 /* PBXTargetDependency */,
 			);
 			name = "Pods-EasyAlert_Tests";
 			productName = Pods_EasyAlert_Tests;
@@ -564,58 +573,58 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		4C522DB965D7300AF17D6269E07C27F2 /* Sources */ = {
+		857D17C2322C416AE7A433E5BC3D1935 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7D9F5D5029405B70281C7D55C9BC61A /* Action.swift in Sources */,
-				60F517E44F179126112A32654F8437DD /* ActionAlert.swift in Sources */,
-				E06AF7F0721F567F6A23AF2055F81F2D /* ActionAlertble.swift in Sources */,
-				21CF4D76D06B398A190E1247A3EED833 /* ActionAlertbleConfigurable.swift in Sources */,
-				CE72D30FEB8CDE05F45CFEE66DE5ADBE /* ActionAlertConfiguration.swift in Sources */,
-				E3E91D2B12F4A9B0B11FEB162440E6C5 /* ActionCustomizable.swift in Sources */,
-				831765953B1B98D44A7C8882CDC84029 /* ActionCustomViewRepresentationView.swift in Sources */,
-				F28FC8A958105E9946A2849114C68B42 /* ActionGroupView.swift in Sources */,
-				2FD6B89F415936F2A5A51E01F94D73E7 /* ActionLayoutable.swift in Sources */,
-				0E1260D7DAE9930BFABF55D169DBC9B3 /* ActionRepresentationSequenceView.swift in Sources */,
-				ACE5BD62FA9B689698BBFA9D81734A39 /* ActionSeparatableSequenceView.swift in Sources */,
-				B236DF3260A9996E186EBF2ECDB4DE3C /* ActionSheet.swift in Sources */,
-				6A131DE404E543B4BCF87AF709200E30 /* ActionSheetCancelBackgroundView.swift in Sources */,
-				CD8BB68C32183A8A2CD4044AF0828378 /* ActionSheetConfiguration.swift in Sources */,
-				B54233A320BEC410B07F8B10E5C5572B /* ActionSheetContainerView.swift in Sources */,
-				C13F2F0ACB843AF82387E72544348FD8 /* ActionVibrantSeparatorView.swift in Sources */,
-				E38226F34192D3ADEE6221845ADA7E97 /* ActionView.swift in Sources */,
-				6C42C3CE83631F233587800873B6648D /* Alert.swift in Sources */,
-				5E744A8A3129E8015C9B9AA305AFA83C /* AlertActionLayout.swift in Sources */,
-				0E76B74B0BB125EC82902EC3DC16F7D7 /* Alertble.swift in Sources */,
-				6A2B1BBC6A78C6395CED9DF12941A2DD /* Alertble+Conveniences.swift in Sources */,
-				485864EA8BAC548056824D491C347E7E /* AlertCallback.swift in Sources */,
-				A0E0DC480A76DE6D17C976ABD6C81BBE /* AlertCustomizable.swift in Sources */,
-				129F394D2F24D2228F4D7171D7C70D19 /* AlertDismissible.swift in Sources */,
-				5FA360EB01008DC165B7EF4A6FD2D4B3 /* AlertTapTarget.swift in Sources */,
-				BDCDC7DF6E9BB9D76EE1888F280C23BC /* AlertTransitionCoordinator.swift in Sources */,
-				DE010043CBF7EC28EE993D66AF03D83F /* AlertViewController.swift in Sources */,
-				E8416E472EE03B09DEA37A997215117C /* BackdropProvider.swift in Sources */,
-				19ABAC4A7ECE56D6EEDD99BAF22EF3B1 /* BlurEffectView.swift in Sources */,
-				B3BDD189589C0D196AB013FF5A1D94F7 /* DimmingKnockoutBackdropView.swift in Sources */,
-				C5136F49D7DBE774440CA94F02BFE03B /* DimmingView.swift in Sources */,
-				5F2787695777F12803EE298C62DF4102 /* EasyAlert-dummy.m in Sources */,
-				CCD245329DF15C56E39B02A4B03DD28F /* KeyboardResponsiveView.swift in Sources */,
-				674BEBA7BF4A519621F3978FD6863B94 /* MessageAlert.swift in Sources */,
-				C41FC41BD8CD0F060CB32183AB0153B3 /* MessageAlertConfiguration.swift in Sources */,
-				1A093B4EF888372C30324E5CB1A8A11F /* MessageAlertTitleAndMessage.swift in Sources */,
-				44F5BFF80F630239A922C225CA97A899 /* NotificationToken.swift in Sources */,
-				F02BD1D6EC231E8A481B0011AC6C453E /* Proxy.swift in Sources */,
-				248DE4168D102F27D50564E1F75D37ED /* Sheet.swift in Sources */,
-				376C190E0EF3DFB7D0879E0693D3F6CC /* SheetActionLayout.swift in Sources */,
-				CDFB86057298E2B442A8FBE517A374C7 /* SheetTransitionCoordinator.swift in Sources */,
-				FB4B69495D8717DD0FF67A31EE5CB777 /* TitleAndMessage.swift in Sources */,
-				03F3A1F9C0E75126F1F2ACEB48500376 /* Toast.swift in Sources */,
-				651793B9332CC8D8E2D83A9C245D62D3 /* ToastAlert.swift in Sources */,
-				E2E90A2873666C53CA43ADCA6E75DB21 /* ToastTransitionCoordinator.swift in Sources */,
-				75B4D0DF5D4C1BCF9A4741EBF7D8186B /* TransitionCoordinator.swift in Sources */,
-				ED4C16BF00450CDF42C0D86C5BC15420 /* TransitionCoordinatorActionGroupDecorator.swift in Sources */,
-				9B26C0FDE5F993A835FBDC8470507F5F /* UIView+EasyAlert.swift in Sources */,
+				00D76AF34874ABE8740203CD5101E37B /* Action.swift in Sources */,
+				5D56F4A61327F05599D37AD6815FE7C5 /* ActionAlert.swift in Sources */,
+				7A1FB10F1B79800AB4E59B19B97A2439 /* ActionAlertble.swift in Sources */,
+				92E487893955747A3F39BF34AAE0D81C /* ActionAlertbleConfigurable.swift in Sources */,
+				CEE7105E2E92BD9BB4777594E4503624 /* ActionAlertConfiguration.swift in Sources */,
+				FDE76DE30885CBF9E378B9BB9CAE8F79 /* ActionCustomizable.swift in Sources */,
+				98297305C0585B3B876C7ECCFEE652BC /* ActionCustomViewRepresentationView.swift in Sources */,
+				FA5DAA8F05A980AAF83EB125DBA507BB /* ActionGroupView.swift in Sources */,
+				978AAAA14CA27BE030BC7B4E78A0F1BE /* ActionLayoutable.swift in Sources */,
+				996E9021DDC1FF622613F445E6772C4E /* ActionRepresentationSequenceView.swift in Sources */,
+				B08AFC596FD280EB2CC8CC891533D31F /* ActionSeparatableSequenceView.swift in Sources */,
+				332ACF5F8D1FC47A5B1FF62533B62620 /* ActionSheet.swift in Sources */,
+				D42CF16146C1827AF633E51DB457A87F /* ActionSheetCancelBackgroundView.swift in Sources */,
+				99FC9EE91D4C4B2433E325367C4066EF /* ActionSheetConfiguration.swift in Sources */,
+				7C7B731F70E29103603F74EE7B40765D /* ActionSheetContainerView.swift in Sources */,
+				331BA6240A24B321FBD8B180201E86CB /* ActionVibrantSeparatorView.swift in Sources */,
+				5010027EB4804B37BA2AAD6C0BDDFEDE /* ActionView.swift in Sources */,
+				7E719DB2304F742740B81CA2B20B1AB1 /* Alert.swift in Sources */,
+				5F78EBB9B064382846CC021F41EE5041 /* AlertActionLayout.swift in Sources */,
+				A12ABD944C0A2291636D28DD32E71856 /* Alertble.swift in Sources */,
+				7AA80D1522377DA8E2EF3E91D3C9D228 /* Alertble+Conveniences.swift in Sources */,
+				7CEE8145DDBB117642557E28E9C6FDE9 /* AlertCallback.swift in Sources */,
+				82BCF2E3FF3CE4BEB684082B304AF5AF /* AlertCustomizable.swift in Sources */,
+				53E10AD5800A11B82AEF64F2389C7B2D /* AlertDismissible.swift in Sources */,
+				9F5102FE36C781959004053BF504FEFA /* AlertTapTarget.swift in Sources */,
+				F9E73F806B02B0328FAC1DD2BD9F8C11 /* AlertTransitionCoordinator.swift in Sources */,
+				0F44FFDA490CF01863E0485F530BBE1B /* AlertViewController.swift in Sources */,
+				B9F9752462B513F25CFB6FF39E0ACF7C /* BackdropProvider.swift in Sources */,
+				9FC2444AF979BDD39925D399EA19EC9F /* BlurEffectView.swift in Sources */,
+				4A17D8F707CFB9F039C0438E00D516DE /* DimmingKnockoutBackdropView.swift in Sources */,
+				02D6AA6D26789147BE95038337D1C809 /* DimmingView.swift in Sources */,
+				EF20C566724D1AC8D29F03A65D4A9527 /* EasyAlert-dummy.m in Sources */,
+				929B585FF83778039C8BB288992201B3 /* KeyboardResponsiveView.swift in Sources */,
+				8588489819555B4630AE633AEFEA01F7 /* MessageAlert.swift in Sources */,
+				21635B9DB1F0153D01B5410AF588D8BB /* MessageAlertConfiguration.swift in Sources */,
+				0EBFE2B4178730F73878375D0EE9491A /* MessageAlertTitleAndMessage.swift in Sources */,
+				7B146E92306FBB0194B6C99EDA3EE16D /* NotificationToken.swift in Sources */,
+				2766D9B94595F25E5D526539F3381024 /* Proxy.swift in Sources */,
+				6B9FB1A97A6B8C4D7EFA8727FA5DC290 /* Sheet.swift in Sources */,
+				6150E28815F528796AA455139EC8B3E9 /* SheetActionLayout.swift in Sources */,
+				687758BDE43DC6FE4BF2CD2A176818AA /* SheetTransitionCoordinator.swift in Sources */,
+				F4D7D59FEB4EB6086BF23FB1A2BBB7A6 /* TitleAndMessage.swift in Sources */,
+				6F8EC1A3851560C77DAE7E059D54D026 /* Toast.swift in Sources */,
+				0C9D09DBCF1050DAD394C6598828F176 /* ToastAlert.swift in Sources */,
+				2370DDF99E7C83C4B6998AA09FC4E89F /* ToastTransitionCoordinator.swift in Sources */,
+				1E5C2A12780E2C30CB115DF3D1D0BAEA /* TransitionCoordinator.swift in Sources */,
+				929EC493F8EB9A49ABA938BDB7C674DB /* TransitionCoordinatorActionGroupDecorator.swift in Sources */,
+				0FE7F45902B0BF322EF9218837683105 /* UIView+EasyAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,17 +647,17 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3038570BD4405039F0F244BB8288CA7F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Pods-EasyAlert_Example";
-			target = 1347C0721B72551EF426046292741CDA /* Pods-EasyAlert_Example */;
-			targetProxy = 480815646626C412F57C11081EC05E15 /* PBXContainerItemProxy */;
-		};
-		B29D0FC40AAB7C9516315AB626B8BDBA /* PBXTargetDependency */ = {
+		102F95E3CE6F5F6A9619BD220BADCB16 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = EasyAlert;
 			target = 46E218687B29B09EE98AD83FA2DB15E2 /* EasyAlert */;
-			targetProxy = CBC2B591519E020150D38B2B1008C3B4 /* PBXContainerItemProxy */;
+			targetProxy = 9FCC91CA481CE16A48EA2E71B4496394 /* PBXContainerItemProxy */;
+		};
+		CD943040818E7E08FD24C0B60AAF16F6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-EasyAlert_Example";
+			target = 1347C0721B72551EF426046292741CDA /* Pods-EasyAlert_Example */;
+			targetProxy = 71BDF84C17D1D1FD52FCD9B53904D6E1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -855,7 +864,7 @@
 		};
 		A373DEAFD709E6A0627F163C3DA7D10B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BE1F8D2B3B063D103EBAC9A5036B4E66 /* EasyAlert.release.xcconfig */;
+			baseConfigurationReference = 090C91DDE4DD3587F0C4B2B0B4BCACD6 /* EasyAlert.release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -954,7 +963,7 @@
 		};
 		D5000CDAE0665914C825E5A57634DD6D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 495DC2A42B4159A246EF303B44EB223A /* EasyAlert.debug.xcconfig */;
+			baseConfigurationReference = 2406F114B8E2709BCE8D2CF2BC0420E9 /* EasyAlert.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
