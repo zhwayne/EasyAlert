@@ -9,7 +9,7 @@ import UIKit
 
 final class AlertViewController: UIViewController {
     
-    weak var weakAlert: Alertble?
+    weak var weakAlert: Alert?
     
     override var shouldAutomaticallyForwardAppearanceMethods: Bool { false }
     

@@ -22,7 +22,7 @@ final class ActionView: UIView, ActionCustomizable {
     
     let style: Action.Style
     
-    let alertbleStyle: Action.AlertbleStyle
+    let alertbleStyle: AlertbleStyle
     
     var isEnabled: Bool = true {
         didSet {
@@ -50,7 +50,7 @@ final class ActionView: UIView, ActionCustomizable {
         return label
     }()
     
-    required init(style: Action.Style, alertbleStyle: Action.AlertbleStyle) {
+    required init(style: Action.Style, alertbleStyle: AlertbleStyle) {
         self.style = style
         self.alertbleStyle = alertbleStyle
         super.init(frame: .zero)
@@ -106,7 +106,7 @@ fileprivate extension Action.Style {
         }
     }
     
-    func font(for alertbleStyle: Action.AlertbleStyle) -> UIFont {
+    func font(for alertbleStyle: AlertbleStyle) -> UIFont {
         let fontSize: CGFloat
         switch alertbleStyle {
         case .alert: fontSize = 17

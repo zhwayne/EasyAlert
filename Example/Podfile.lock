@@ -1,5 +1,7 @@
 PODS:
-  - EasyAlert (0.3.0)
+  - EasyAlert (0.3.2):
+    - EasyAlert/Lite (= 0.3.2)
+  - EasyAlert/Lite (0.3.2)
 
 DEPENDENCIES:
   - EasyAlert (from `../`)
@@ -9,7 +11,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  EasyAlert: 77f744cf84cbf1d0382083cbeb51901452ab39f8
+  EasyAlert: da762f640d908cc35e8ec4e83e138ca0eb09f310
 
 PODFILE CHECKSUM: 8a08b798b926d4b1756e9b2d8972bf0f20db5369
 
