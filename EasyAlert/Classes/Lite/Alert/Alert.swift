@@ -110,8 +110,7 @@ open class Alert: Alertble {
         
         func _show(in view: UIView? = nil) {
             Dispatch.dispatchPrecondition(condition: .onQueue(.main))
-            guard !isShowing else { return }
-            let parent = findParentView(view)
+            guard !isShowing, let parent = findParentView(view) else { return }
             configDimming()
             configContainer()
             showAlert(in: parent)
@@ -185,7 +184,7 @@ extension Alert {
         )
     }
     
-    private func findParentView(_ view: UIView?) -> UIView {
+    private func findParentView(_ view: UIView?) -> UIView? {
         if let view = view { return view } else {
 //            if #available(iOS 13.0, *) {
 //                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
@@ -197,8 +196,22 @@ extension Alert {
 //                return UIApplication.shared.keyWindow
 //            }
             if window == nil {
-                window = AlertWindow(frame: UIScreen.main.bounds)
+                if #available(iOS 13.0, *) {
+                    let windowScene = UIApplication.shared
+                        .connectedScenes
+                        .filter { $0.activationState == .foregroundActive }
+                        .first
+                    if let windowScene = windowScene as? UIWindowScene {
+                        window = AlertWindow(windowScene: windowScene)
+                        window?.frame = UIScreen.main.bounds
+                    } else {
+                        return nil
+                    }
+                } else {
+                    window = AlertWindow(frame: UIScreen.main.bounds)
+                }
             }
+            window?.backgroundColor = .clear
             window?.windowLevel = .alert
             window?.makeKeyAndVisible()
             return window!
