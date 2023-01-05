@@ -1,31 +1,32 @@
 //
-//  ToastTransitionCoordinator.swift
+//  SheetTransitionAnimator.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2022/12/13.
+//  Created by iya on 2022/5/31.
 //
 
 import Foundation
 
-struct ToastTransitionCoordinator : TransitionCoordinator {
-    
-    var layoutGuide = LayoutGuide(width: .flexible(1))
-        
+struct SheetTransitionAnimator : TransitionAnimator {
+            
     private var constraints: [NSLayoutConstraint] = []
     
-    var position: Toast.Position = .bottom
+    private weak var sheet: Sheet?
     
-    func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
+    init(sheet: Sheet) {
+        self.sheet = sheet
+    }
+    
+    func show(context: TransitionContext, completion: @escaping () -> Void) {
         context.container.layoutIfNeeded()
-        
-        let transform = CGAffineTransform(scaleX: 0.9, y: 0.9).translatedBy(x: 0, y: 16)
-        context.container.transform = transform
-        context.container.alpha = 0
+        let height = context.container.bounds.height + context.dimmingView.safeAreaInsets.bottom
+        context.container.transform = CGAffineTransform(translationX: 0, y: height)
+        context.dimmingView.alpha = 0
         
         let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
+        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignore.*/, timingParameters: timing)
         animator.addAnimations {
-            context.container.alpha = 1
+            context.dimmingView.alpha = 1
             context.container.transform = .identity
         }
         animator.addCompletion { position in
@@ -34,16 +35,15 @@ struct ToastTransitionCoordinator : TransitionCoordinator {
         animator.startAnimation()
     }
     
-    func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
+    func dismiss(context: TransitionContext, completion: @escaping () -> Void) {
         context.container.layoutIfNeeded()
-        
-        let transform = CGAffineTransform(scaleX: 0.9, y: 0.9).translatedBy(x: 0, y: 20)
+        let height = context.frame.height - context.container.frame.minY
         
         let timing = UISpringTimingParameters()
         let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
         animator.addAnimations {
-            context.container.alpha = 0
-            context.container.transform = transform
+            context.dimmingView.alpha = 0
+            context.container.transform = CGAffineTransform(translationX: 0, y: height)
         }
         animator.addCompletion { position in
             completion()
@@ -51,12 +51,8 @@ struct ToastTransitionCoordinator : TransitionCoordinator {
         animator.startAnimation()
     }
     
-    mutating func update(context: TransitionCoordinatorContext) {
-        let bounds = UIScreen.main.bounds
-        let width = min(bounds.width, bounds.height)
-        layoutGuide = LayoutGuide(width: .flexible(width),
-                                  edgeInsets: UIEdgeInsets(top: 0, left: -32, bottom: 0, right: -32))
-        
+    mutating func update(context: TransitionContext, layoutGuide: LayoutGuide) {
+
         context.backdropView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
         constraints.removeAll()
@@ -101,17 +97,17 @@ struct ToastTransitionCoordinator : TransitionCoordinator {
             constraints.append(constraint)
         }
         
-        switch position {
-        case .center:
-            let constraint = container.centerYAnchor.constraint(equalTo: superview.centerYAnchor)
-            constraints.append(constraint)
-        case .bottom:
-            let bottomOffset = superview.frame.height * 0.15
+        if let sheet, sheet.ignoreBottomSafeArea {
             let constraint = container.bottomAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom - bottomOffset)
+                equalTo: superview.bottomAnchor, constant: -edgeInsets.bottom)
+            constraints.append(constraint)
+        } else {
+            let constraint =  container.bottomAnchor.constraint(
+                equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom)
             constraints.append(constraint)
         }
         
         constraints.append(container.centerXAnchor.constraint(equalTo: superview.centerXAnchor))
     }
 }
+

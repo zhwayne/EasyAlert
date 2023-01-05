@@ -15,9 +15,11 @@ open class Alert: Alertble {
     /// A Provider that interacts with the backdrop
     public var backdropProvider: BackdropProvider = DefaultBackdropProvider()
     
-    public var transitionCoordinator: TransitionCoordinator = AlertTransitionCoordinator()
+    public var transitionAniamtor: TransitionAnimator = AlertTransitionAnimator()
     
     public var isShowing: Bool { backdropView.superview != nil }
+    
+    public var layoutGuide = LayoutGuide(width: .fixed(270))
     
     private let alertViewController = AlertViewController()
                 
@@ -32,8 +34,6 @@ open class Alert: Alertble {
     private var orientationChangeToken: NotificationToken?
     
     private var window: AlertWindow?
-
-    var isSheet: Bool = false
     
     public init<T: AlertCustomizable>(customizable: T) {
         guard customizable is UIView || customizable is UIViewController else {
@@ -139,7 +139,7 @@ open class Alert: Alertble {
         
         alertViewController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
-        transitionCoordinator.dismiss(context: transitioningContext) { [weak self] in
+        transitionAniamtor.dismiss(context: transitioningContext) { [weak self] in
             self?.didDismiss()
             self?.callbacks.forEach { $0.didDismiss?() }
             if let viewController = self?.customizable as? UIViewController {
@@ -175,8 +175,8 @@ extension Alert {
         }
     }
     
-    private var transitioningContext: TransitionCoordinatorContext {
-        TransitionCoordinatorContext(
+    private var transitioningContext: TransitionContext {
+        TransitionContext(
             container: alertViewController.view,
             backdropView: backdropView,
             dimmingView: dimmingView,
@@ -270,7 +270,7 @@ extension Alert {
         }
         backdropView.layoutIfNeeded()
         willLayoutContainer()
-        transitionCoordinator.update(context: transitioningContext)
+        transitionAniamtor.update(context: transitioningContext, layoutGuide: layoutGuide)
         didLayoutContainer()
         alertViewController.view.layoutIfNeeded()
     }
@@ -293,7 +293,7 @@ extension Alert {
         
         alertViewController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
-        transitionCoordinator.show(context: transitioningContext) { [weak self] in
+        transitionAniamtor.show(context: transitioningContext) { [weak self] in
             self?.didShow()
             self?.callbacks.forEach { $0.didShow?() }
             self?.alertViewController.view.isUserInteractionEnabled = true

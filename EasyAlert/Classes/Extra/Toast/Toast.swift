@@ -32,7 +32,7 @@ extension Toast {
         
         if text.count <= threshold { return minimumDuratuon }
         let leftTextLen = text.count - threshold
-        let extDuration = Double(leftTextLen) * 0.12
+        let extDuration = Double(leftTextLen) * 0.14
         return minimumDuratuon + extDuration
     }
 }
@@ -49,9 +49,9 @@ extension Toast {
     public static func show(
         _ message: Message,
         duration: TimeInterval = 0,
-        position: Position = .bottom
+        position: Position = .center
     ) {
-        guard let string = message.attributedText?.string else { return }
+        guard let string = Toast.text(for: message)?.string else { return }
         var duration = duration
         if duration == 0 { duration = Toast.duration(of: string)}
         
@@ -61,12 +61,12 @@ extension Toast {
         }
         
         if let alert = alert {
-            alert.rawCustomView.label.attributedText = message.attributedText
+            alert.rawCustomView.label.attributedText = Toast.text(for: message)
         } else {
             alert = ToastAlert(message: message)
-            if var coordinator = alert?.transitionCoordinator as? ToastTransitionCoordinator {
-                coordinator.position = position
-                alert?.transitionCoordinator = coordinator
+            if var aniamtor = alert?.transitionAniamtor as? ToastTransitionAnimator {
+                aniamtor.position = position
+                alert?.transitionAniamtor = aniamtor
             }
             alert?.show()
         }

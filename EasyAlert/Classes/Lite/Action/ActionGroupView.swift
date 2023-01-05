@@ -92,7 +92,7 @@ class ActionGroupView: UIView, AlertCustomizable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateLayout(interfaceOrientation: UIInterfaceOrientation, width: Width) {
+    func updateLayout(interfaceOrientation: UIInterfaceOrientation) {
         representationSequenceView.separatableSequenceView.subviews.forEach {
             $0.removeFromSuperview()
         }

@@ -1,5 +1,5 @@
 //
-//  SheetTransitionCoordinator.swift
+//  AlertTransitionAnimator.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/5/31.
@@ -7,28 +7,20 @@
 
 import Foundation
 
-struct SheetTransitionCoordinator : TransitionCoordinator {
-        
-    var layoutGuide = LayoutGuide(width: .multiplied(1, maximumWidth: 414))
+struct AlertTransitionAnimator : TransitionAnimator {
     
     private var constraints: [NSLayoutConstraint] = []
     
-    private weak var sheet: Sheet?
-    
-    init(sheet: Sheet) {
-        self.sheet = sheet
-    }
-    
-    func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
-        context.container.layoutIfNeeded()
-        let height = context.container.bounds.height + context.dimmingView.safeAreaInsets.bottom
-        context.container.transform = CGAffineTransform(translationX: 0, y: height)
+    func show(context: TransitionContext, completion: @escaping () -> Void) {
+        context.container.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        context.container.alpha = 0
         context.dimmingView.alpha = 0
-        
+
         let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignore.*/, timingParameters: timing)
+        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
         animator.addAnimations {
             context.dimmingView.alpha = 1
+            context.container.alpha = 1
             context.container.transform = .identity
         }
         animator.addCompletion { position in
@@ -37,15 +29,12 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
         animator.startAnimation()
     }
     
-    func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
-        context.container.layoutIfNeeded()
-        let height = context.frame.height - context.container.frame.minY
-        
+    func dismiss(context: TransitionContext, completion: @escaping () -> Void) {
         let timing = UISpringTimingParameters()
         let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
         animator.addAnimations {
+            context.container.alpha = 0
             context.dimmingView.alpha = 0
-            context.container.transform = CGAffineTransform(translationX: 0, y: height)
         }
         animator.addCompletion { position in
             completion()
@@ -53,7 +42,7 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
         animator.startAnimation()
     }
     
-    mutating func update(context: TransitionCoordinatorContext) {
+    mutating func update(context: TransitionContext, layoutGuide: LayoutGuide) {
 
         context.backdropView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
@@ -99,17 +88,7 @@ struct SheetTransitionCoordinator : TransitionCoordinator {
             constraints.append(constraint)
         }
         
-        if let sheet, sheet.ignoreBottomSafeArea {
-            let constraint = container.bottomAnchor.constraint(
-                equalTo: superview.bottomAnchor, constant: -edgeInsets.bottom)
-            constraints.append(constraint)
-        } else {
-            let constraint =  container.bottomAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom)
-            constraints.append(constraint)
-        }
-        
         constraints.append(container.centerXAnchor.constraint(equalTo: superview.centerXAnchor))
+        constraints.append(container.centerYAnchor.constraint(equalTo: superview.centerYAnchor))
     }
 }
-

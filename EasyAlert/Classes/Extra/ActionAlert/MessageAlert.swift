@@ -57,7 +57,6 @@ public final class MessageAlert: ActionAlert {
         configAttributes()
         contentView.titleLabel.attributedText = text(for: title)
         contentView.messageLabel.attributedText = text(for: message)
-        transitionCoordinator.layoutGuide.width = .fixed(270)
     }
 
     @available(*, unavailable)

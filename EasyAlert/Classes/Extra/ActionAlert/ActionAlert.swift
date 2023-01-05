@@ -34,11 +34,11 @@ open class ActionAlert: Alert, _ActionAlertble {
         }
         super.init(customizable: actionGroupView)
         
-        let decorator = TransitionCoordinatorActionGroupDecorator(
-            coordinator: AlertTransitionCoordinator(),
+        let decorator = TransitionAnimatorActionGroupDecorator(
+            aniamtor: AlertTransitionAnimator(),
             actionGroupViews: [actionGroupView]
         )
-        self.transitionCoordinator = decorator
+        self.transitionAniamtor = decorator
     }
     
     open override func willLayoutContainer() {

@@ -7,22 +7,6 @@
 
 import UIKit
 
-extension Message {
-    
-    var attributedText: NSAttributedString? {
-        if let string = self as? String {
-            return NSAttributedString(string: string)
-        }
-        if let string = self as? NSAttributedString {
-            return string
-        }
-        if #available(iOS 15, *), let string = self as? AttributedString {
-            return NSAttributedString(string)
-        }
-        return nil
-    }
-}
-
 final class ToastAlert: Alert {
     
     class ContentView: UIView, AlertCustomizable {
@@ -33,9 +17,9 @@ final class ToastAlert: Alert {
             super.init(frame: frame)
 
             layer.shadowColor = UIColor.black.cgColor
-            layer.shadowOffset = CGSize(width: 0, height: 3)
-            layer.shadowOpacity = 0.2
-            layer.shadowRadius = 4
+            layer.shadowOffset = CGSize(width: 0, height: 2)
+            layer.shadowOpacity = 0.1
+            layer.shadowRadius = 5
             
             let blurEffect: UIBlurEffect
             if #available(iOS 13.0, *) {
@@ -43,26 +27,24 @@ final class ToastAlert: Alert {
             } else {
                 blurEffect = UIBlurEffect(style: .dark)
             }
-            let effectView = UIVisualEffectView(effect: blurEffect)
+            let effectView = BlurEffectView(effect: blurEffect, intensity: 0.75)
             effectView.clipsToBounds = true
             effectView.frame = bounds
             effectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            effectView.layer.cornerRadius = 15
+            effectView.layer.cornerRadius = 13
+            effectView.contentView.backgroundColor = UIColor(white: 0, alpha: 0.2)
             if #available(iOS 13.0, *) {
                 effectView.layer.cornerCurve = .continuous
             }
             addSubview(effectView)
             
-            label.textColor = .white
-            label.font = .systemFont(ofSize: 15)
             label.numberOfLines = 0
-            label.textAlignment = .center
             label.translatesAutoresizingMaskIntoConstraints = false
             addSubview(label)
             
-            label.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
+            label.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
             label.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-            label.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
+            label.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
             label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
         }
         
@@ -75,12 +57,17 @@ final class ToastAlert: Alert {
     
     public required init(message: Message) {
         let contentView = ContentView()
-        contentView.label.attributedText = message.attributedText
         super.init(customizable: contentView)
+        contentView.label.attributedText = Toast.text(for: message)
         
-        transitionCoordinator = ToastTransitionCoordinator()
+        transitionAniamtor = ToastTransitionAnimator()
         backdropProvider.dimming = .color(.clear)
         backdropProvider.penetrationScope = .all
+        
+        let bounds = UIScreen.main.bounds
+        let width = min(bounds.width, bounds.height)
+        layoutGuide = LayoutGuide(width: .flexible(width),
+                                  edgeInsets: UIEdgeInsets(top: 0, left: -50, bottom: 0, right: -50))
     }
     
     override func willShow() {
@@ -88,5 +75,41 @@ final class ToastAlert: Alert {
         if let window = rawCustomView.window {
             window.windowLevel = UIWindow.Level(.greatestFiniteMagnitude)
         }
+    }
+}
+
+extension Toast {
+    
+    static func text(for message: Message?) -> NSAttributedString? {
+        if let text = message as? String {
+            return attributedMessage(text)
+        }
+        if #available(iOS 15, *), let text = message as? AttributedString {
+            return NSAttributedString(text)
+        }
+        return message as? NSAttributedString
+    }
+}
+
+extension Toast {
+    
+    static private var messageAttributes: [NSAttributedString.Key: Any] {
+        var attributes: [NSAttributedString.Key: Any] = [:]
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        paragraphStyle.alignment = .center
+        paragraphStyle.lineBreakMode = .byCharWrapping
+        attributes[.font] = UIFont.systemFont(ofSize: 15)
+        attributes[.foregroundColor] = UIColor.white
+        attributes[.paragraphStyle] = paragraphStyle.copy()
+        return attributes
+    }
+    
+    static func attributedMessage(_ message: String) -> NSAttributedString {
+        let range = NSMakeRange(0, message.count)
+        let attributedMessage = NSMutableAttributedString(string: message)
+        attributedMessage.addAttributes(messageAttributes, range: range)
+        return NSAttributedString(attributedString: attributedMessage)
     }
 }

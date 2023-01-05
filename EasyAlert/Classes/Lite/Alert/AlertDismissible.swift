@@ -11,8 +11,8 @@ public protocol AlertFetchable: AnyObject { }
 
 public protocol AlertDismissible : AlertFetchable {
     
-    /// 关掉 alert。
-    /// - Parameter completion: 完成回调。
+    /// Dismiss the alert.
+    /// - Parameter completion: the `completion` callback will invoke after alert dismissed.
     func dismiss(completion: (() -> Void)?)
     
     @available(iOS 13.0, *)
@@ -21,7 +21,7 @@ public protocol AlertDismissible : AlertFetchable {
 
 extension AlertFetchable {
     
-    // 获取和 view 关联的 alert。
+    // Gets the alert in the current UIView or UIViewController.
     var alert: Alert? {
         if let view = self as? UIView {
             for view in sequence(first: view.superview, next: { $0?.superview }) {
@@ -43,8 +43,8 @@ extension AlertFetchable {
 
 extension AlertDismissible {
     
-    /// 关掉 alert。
-    /// - Parameter completion: 完成回调。
+    /// Dismiss the alert.
+    /// - Parameter completion: the `completion` callback will invoke after alert dismissed.
     public func dismiss(completion: (() -> Void)? = nil) {
         guard let alert = alert else { return }
         alert.dismiss(completion: completion)

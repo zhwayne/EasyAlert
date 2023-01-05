@@ -42,13 +42,13 @@ open class ActionSheet: Sheet, _ActionAlertble {
         
         ignoreBottomSafeArea = false
         
-        var coordinator = transitionCoordinator
-        coordinator.layoutGuide.edgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: -8)
-        let decorator = TransitionCoordinatorActionGroupDecorator(
-            coordinator: coordinator,
+        var aniamtor = transitionAniamtor
+        layoutGuide.edgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: -8)
+        let decorator = TransitionAnimatorActionGroupDecorator(
+            aniamtor: aniamtor,
             actionGroupViews: [actionGroupView, cancelActionGroupView]
         )
-        transitionCoordinator = decorator
+        transitionAniamtor = decorator
     }
     
     open override func willLayoutContainer() {

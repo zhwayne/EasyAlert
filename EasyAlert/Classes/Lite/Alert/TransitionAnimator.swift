@@ -1,5 +1,5 @@
 //
-//  TransitionCoordinator.swift
+//  TransitionAnimator.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/5/31.
@@ -47,38 +47,38 @@ public struct LayoutGuide {
     }
 }
 
-public struct TransitionCoordinatorContext {
+public struct TransitionContext {
     
+    /// The container that displays the custom view.
     public let container: UIView
     
+    /// The backdrop view of this alert.
     public let backdropView: UIView
         
+    /// The dimming view of this alert.
     public let dimmingView: UIView
     
+    /// The current interface orientation.
     public let interfaceOrientation: UIInterfaceOrientation
     
     /// The bounds of backdropView
     public var frame: CGRect { backdropView.bounds }
 }
 
-public protocol TransitionCoordinator {
+public protocol TransitionAnimator {
     
-    /* var duration: TimeInterval { get set } */
-
-    var layoutGuide: LayoutGuide { get set }
+    mutating func show(context: TransitionContext, completion: @escaping () -> Void)
     
-    mutating func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void)
+    mutating func dismiss(context: TransitionContext, completion: @escaping () -> Void)
     
-    mutating func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void)
-    
-    mutating func update(context: TransitionCoordinatorContext)
+    mutating func update(context: TransitionContext, layoutGuide: LayoutGuide)
 }
 
 @available(iOS 13.0, *)
-extension TransitionCoordinator {
+extension TransitionAnimator {
     
     @MainActor
-    mutating func show(context: TransitionCoordinatorContext) async {
+    mutating func show(context: TransitionContext) async {
         await withUnsafeContinuation({ continuation in
             show(context: context) {
                 continuation.resume()
@@ -87,7 +87,7 @@ extension TransitionCoordinator {
     }
     
     @MainActor
-    mutating func dismiss(context: TransitionCoordinatorContext) async {
+    mutating func dismiss(context: TransitionContext) async {
         await withUnsafeContinuation({ continuation in
             dismiss(context: context) {
                 continuation.resume()

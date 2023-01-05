@@ -14,7 +14,8 @@ open class Sheet: Alert {
     
     public override init<T>(customizable: T) where T : AlertCustomizable {
         super.init(customizable: customizable)
-        self.transitionCoordinator = SheetTransitionCoordinator(sheet: self)
+        self.transitionAniamtor = SheetTransitionAnimator(sheet: self)
         backdropProvider.allowDismissWhenBackgroundTouch = true
+        layoutGuide = LayoutGuide(width: .multiplied(1, maximumWidth: 414))
     }
 }

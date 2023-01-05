@@ -1,27 +1,30 @@
 //
-//  AlertTransitionCoordinator.swift
+//  ToastTransitionAnimator.swift
 //  EasyAlert
 //
-//  Created by iya on 2022/5/31.
+//  Created by 张尉 on 2022/12/13.
 //
 
 import Foundation
 
-struct AlertTransitionCoordinator : TransitionCoordinator {
+struct ToastTransitionAnimator : TransitionAnimator {
     
-    var layoutGuide = LayoutGuide(width: .fixed(270))
-    
+    var layoutGuide = LayoutGuide(width: .flexible(1))
+        
     private var constraints: [NSLayoutConstraint] = []
     
-    func show(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
-        context.container.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+    var position: Toast.Position = .bottom
+    
+    func show(context: TransitionContext, completion: @escaping () -> Void) {
+        context.container.layoutIfNeeded()
+        
+        let transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        context.container.transform = transform
         context.container.alpha = 0
-        context.dimmingView.alpha = 0
-
+        
         let timing = UISpringTimingParameters()
         let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
         animator.addAnimations {
-            context.dimmingView.alpha = 1
             context.container.alpha = 1
             context.container.transform = .identity
         }
@@ -31,12 +34,16 @@ struct AlertTransitionCoordinator : TransitionCoordinator {
         animator.startAnimation()
     }
     
-    func dismiss(context: TransitionCoordinatorContext, completion: @escaping () -> Void) {
+    func dismiss(context: TransitionContext, completion: @escaping () -> Void) {
+        context.container.layoutIfNeeded()
+        
+        let transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        
         let timing = UISpringTimingParameters()
         let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
         animator.addAnimations {
             context.container.alpha = 0
-            context.dimmingView.alpha = 0
+            context.container.transform = transform
         }
         animator.addCompletion { position in
             completion()
@@ -44,8 +51,8 @@ struct AlertTransitionCoordinator : TransitionCoordinator {
         animator.startAnimation()
     }
     
-    mutating func update(context: TransitionCoordinatorContext) {
-
+    mutating func update(context: TransitionContext, layoutGuide: LayoutGuide) {
+        
         context.backdropView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
         constraints.removeAll()
@@ -90,7 +97,17 @@ struct AlertTransitionCoordinator : TransitionCoordinator {
             constraints.append(constraint)
         }
         
+        switch position {
+        case .center:
+            let constraint = container.centerYAnchor.constraint(equalTo: superview.centerYAnchor)
+            constraints.append(constraint)
+        case .bottom:
+            let bottomOffset = superview.frame.height * 0.15
+            let constraint = container.bottomAnchor.constraint(
+                equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom - bottomOffset)
+            constraints.append(constraint)
+        }
+        
         constraints.append(container.centerXAnchor.constraint(equalTo: superview.centerXAnchor))
-        constraints.append(container.centerYAnchor.constraint(equalTo: superview.centerYAnchor))
     }
 }
