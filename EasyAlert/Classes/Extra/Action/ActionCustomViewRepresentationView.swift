@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ActionCustomViewRepresentationView: UIControl {
+final class ActionCustomViewRepresentationView: UIControl, RepresentationMarking {
         
     var action: Action? {
         didSet {
@@ -30,7 +30,7 @@ final class ActionCustomViewRepresentationView: UIControl {
                 }
             }
             guard let target = separatableSequenceView,
-                  let separators = target.findSubviews(ofClass: ActionVibrantSeparatorView.self) else {
+                  let separators = target.findSubviews(ofType: ActionVibrantSeparatorView.self) else {
                 return
             }
             

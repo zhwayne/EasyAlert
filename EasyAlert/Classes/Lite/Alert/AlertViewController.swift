@@ -13,7 +13,7 @@ final class AlertViewController: UIViewController {
     
     override var shouldAutomaticallyForwardAppearanceMethods: Bool { false }
     
-    private var activeRepresentationView: ActionCustomViewRepresentationView?
+    private var activeRepresentationView: (any UIControl & RepresentationMarking)?
     
     private let feedback = UISelectionFeedbackGenerator()
     
@@ -65,7 +65,7 @@ final class AlertViewController: UIViewController {
             return
         }
         activeRepresentationView = touched
-        for view in targetViews where view != touched && view.isHighlighted {
+        for view in targetViews where view !== touched && view.isHighlighted {
             view.isHighlighted = false
         }
         if !touched.isHighlighted {
@@ -86,11 +86,11 @@ final class AlertViewController: UIViewController {
 
 extension UIView {
     
-    fileprivate func findActionRepresentationViews() -> [ActionCustomViewRepresentationView]? {
-        findSubviews(ofClass: ActionCustomViewRepresentationView.self)
+    fileprivate func findActionRepresentationViews() -> [any UIControl & RepresentationMarking]? {
+        findSubviews(ofType: (any UIControl & RepresentationMarking).self)
     }
     
-    func findSubviews<T: UIView>(ofClass: T.Type) -> [T]? {
+    func findSubviews<T>(ofType: T.Type) -> [T]? {
         guard subviews.isEmpty == false else { return nil }
         var allViews = [T]()
         for view in subviews where view is T {
@@ -98,7 +98,7 @@ extension UIView {
         }
         if allViews.isEmpty {
             for view in subviews {
-                if let buttons = view.findSubviews(ofClass: T.self) {
+                if let buttons = view.findSubviews(ofType: T.self) {
                     allViews.append(contentsOf: buttons)
                 }
             }

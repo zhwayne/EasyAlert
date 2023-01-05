@@ -23,7 +23,3 @@ public protocol Alertble : AlertDismissible {
     /// `AlertContainerable`.
     func show(in container: AlertContainerable?)
 }
-
-enum AlertbleStyle {
-    case alert, sheet
-}

@@ -114,11 +114,7 @@ extension ActionSheet {
     
     private func setViewForAction(_ action: Action) {
         if action.view == nil {
-            if configuration.actionViewType == ActionView.self {
-                action.view = ActionView(style: action.style, alertbleStyle: .sheet)
-            } else {
-                action.view = configuration.actionViewType.init(style: action.style)
-            }
+            action.view = configuration.actionViewType.init(style: action.style)
             action.view?.title = action.title
         }
     }
