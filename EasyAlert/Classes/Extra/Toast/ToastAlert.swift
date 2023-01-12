@@ -42,10 +42,10 @@ final class ToastAlert: Alert {
             label.translatesAutoresizingMaskIntoConstraints = false
             addSubview(label)
             
-            label.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-            label.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
-            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
+            label.leftAnchor.constraint(equalTo: leftAnchor, constant: 12).isActive = true
+            label.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
+            label.rightAnchor.constraint(equalTo: rightAnchor, constant: -12).isActive = true
+            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12).isActive = true
         }
         
         required init?(coder: NSCoder) {

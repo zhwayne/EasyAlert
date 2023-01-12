@@ -49,7 +49,8 @@ extension Toast {
     public static func show(
         _ message: Message,
         duration: TimeInterval = 0,
-        position: Position = .center
+        position: Position = .center,
+        penetrationScope: PenetrationScope = .all
     ) {
         guard let string = Toast.text(for: message)?.string else { return }
         var duration = duration
@@ -70,6 +71,7 @@ extension Toast {
             }
             alert?.show()
         }
+        alert?.backdropProvider.penetrationScope = penetrationScope
         dismissAfter(duration: duration)
     }
 }

@@ -13,7 +13,9 @@ open class Alert: Alertble {
     public let customizable: AlertCustomizable
     
     /// A Provider that interacts with the backdrop
-    public var backdropProvider: BackdropProvider = DefaultBackdropProvider()
+    public var backdropProvider: BackdropProvider = DefaultBackdropProvider() {
+        didSet { configDimming() }
+    }
     
     public var transitionAniamtor: TransitionAnimator = AlertTransitionAnimator()
     
@@ -250,7 +252,6 @@ extension Alert {
             viewController.didMove(toParent: alertViewController)
             layoutFill(viewController.view)
         }
-        layoutIfNeeded()
     }
     
     private func layoutFill(_ view: UIView) {
@@ -284,6 +285,8 @@ extension Alert {
         backdropView.frame = parent.bounds
         parent.addSubview(backdropView)
         backdropView.layoutIfNeeded()
+        
+        layoutIfNeeded()
 
         if let viewController = customizable as? UIViewController {
             viewController.beginAppearanceTransition(true, animated: true)
