@@ -58,37 +58,40 @@ struct AlertTransitionAnimator : TransitionAnimator {
         
         switch layoutGuide.width {
         case let .fixed(value):
-            let width = value + (edgeInsets.left + edgeInsets.right)
+            let width = value - (edgeInsets.left + edgeInsets.right)
             constraints.append(container.widthAnchor.constraint(equalToConstant: width))
             
         case let .flexible(value):
-            let width = value + (edgeInsets.left + edgeInsets.right)
+            let width = value - (edgeInsets.left + edgeInsets.right)
             constraints.append(container.widthAnchor.constraint(lessThanOrEqualToConstant: width))
             
         case let .multiplied(value, maximumWidth):
-            let constant = edgeInsets.left + edgeInsets.left
+            let constant = -(edgeInsets.left + edgeInsets.right)
             let multiplierConstraint = container.widthAnchor.constraint(
-                equalTo: superview.widthAnchor, multiplier: value, constant: constant)
+                equalTo: superview.widthAnchor,
+                multiplier: value,
+                constant: constant)
             multiplierConstraint.priority = .required - 1
             constraints.append(multiplierConstraint)
             if maximumWidth > 0 {
-                let maximumWidthConstraint = container.widthAnchor
-                    .constraint(lessThanOrEqualToConstant: maximumWidth)
+                let maximumWidthConstraint = container.widthAnchor.constraint(lessThanOrEqualToConstant: maximumWidth)
                 constraints.append(maximumWidthConstraint)
             }
         }
         
         if case let .greaterThanOrEqualTo(value) = layoutGuide.height {
-            let height = value + edgeInsets.top + edgeInsets.bottom
-            let constraint = container.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
-            constraints.append(constraint)
-        } else {
-            let height = edgeInsets.top + edgeInsets.bottom
+            let height = value - (edgeInsets.top + edgeInsets.bottom)
             let constraint = container.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
             constraints.append(constraint)
         }
         
-        constraints.append(container.centerXAnchor.constraint(equalTo: superview.centerXAnchor))
-        constraints.append(container.centerYAnchor.constraint(equalTo: superview.centerYAnchor))
+        constraints.append(
+            container.centerXAnchor.constraint(
+                equalTo: superview.centerXAnchor,
+                constant: (abs(edgeInsets.left) - abs(edgeInsets.right)) / 2))
+        constraints.append(
+            container.centerYAnchor.constraint(
+                equalTo: superview.centerYAnchor,
+                constant: (abs(edgeInsets.top) - abs(edgeInsets.bottom)) / 2))
     }
 }

@@ -42,7 +42,7 @@ open class ActionSheet: Sheet, _ActionAlertble {
         
         ignoreBottomSafeArea = false
         
-        layoutGuide.edgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: -8)
+        layoutGuide.edgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         let decorator = TransitionAnimatorActionGroupDecorator(
             aniamtor: transitionAniamtor,
             actionGroupViews: [actionGroupView, cancelActionGroupView]

@@ -16,7 +16,7 @@ public enum Width {
     case flexible(CGFloat)
     
     /// multiples of superview's width but less than the `maximumWidth`.
-    case multiplied(CGFloat, maximumWidth: CGFloat = 0)
+    case multiplied(_ by: CGFloat, maximumWidth: CGFloat = 0)
 }
 
 /// The height of an alert.
@@ -35,10 +35,10 @@ public struct LayoutGuide {
     public var width: Width
     
     /// The height of an alert.
-    public var height: Height
+    public var height: Height = .automic
     
     /// The edge insets of an alert.
-    public var edgeInsets: UIEdgeInsets
+    public var edgeInsets: UIEdgeInsets = .zero
     
     public init(width: Width, height: Height = .automic, edgeInsets: UIEdgeInsets = .zero) {
         self.width = width
