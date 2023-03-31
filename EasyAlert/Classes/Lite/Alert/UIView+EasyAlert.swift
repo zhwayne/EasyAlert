@@ -9,6 +9,8 @@ import UIKit
 
 extension UIView {
     
+    // MARK: - Associated Objects
+    
     private var alerts: [Alertble] {
         get {
             if let alerts = objc_getAssociatedObject(self, &AssociatedKey.alerts) as? [Alertble] {
@@ -22,6 +24,10 @@ extension UIView {
         }
     }
     
+    // MARK: - Public Methods
+    
+    /// Attach an alert to the view.
+    /// - Parameter alert: The alert to be attached.
     func attach(alert: Alertble) {
         if alerts.contains(where: { alert === $0 }) {
             return
@@ -29,6 +35,8 @@ extension UIView {
         alerts.append(alert)
     }
     
+    /// Detach an alert from the view.
+    /// - Parameter alert: The alert to be detached.
     func detach(alert: Alertble) {
         if let index = alerts.lastIndex(where: { $0 === alert }) {
             alerts.remove(at: index)
@@ -39,4 +47,3 @@ extension UIView {
 fileprivate struct AssociatedKey {
     static var alerts = "alerts"
 }
-

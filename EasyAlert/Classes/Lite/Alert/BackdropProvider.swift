@@ -7,60 +7,62 @@
 
 import UIKit
 
-/// Defines a layer to fill the backdrop.
+/// This enum defines the different types of backdrops that can be used with an alert.
 public enum Dimming {
     
-    /// Fill with color. Color values can have an alpha channel.
+    /// A solid color can be used as the backdrop, with an optional alpha channel.
     case color(UIColor)
     
-    /// Use a custom view to fill the backdrop. For example, you can fill the
-    /// backdrop with an image. You just use 'UIImageView'.
+    /// An optional custom view can be used as the backdrop, such as an image or a gradient.
     case view(UIView)
     
-    /// This is a good option if you want to blur the backdrop when displaying
-    /// alert. A gaussian blur effect will appear on the backdrop. You can
-    /// specify the blur level in the range [0, 1]. 0.5 by default.
+    /// The backdrop can be blurred with a Gaussian blur effect, with a specified blur level in the range of 0 to 1.
     case blur(style: UIBlurEffect.Style, level: Float = 0.5)
 }
 
-/// The scape of penetration. It allows clicking on background events to penetrate
-/// to the view below.
+/// This enum defines the different penetration scopes for the backdrop.
+/// It specifies if clicking on the backdrop should allow click events to penetrate to the view below.
 public enum PenetrationScope {
     
-    /// No penetration allowed.
+    /// No penetration is allowed.
     case none
     
-    /// Allows click events to penetrate the backdrop.
+    /// Only click events for the backdrop itself are allowed to penetrate.
     case dimming
     
-    /// Penetrate all click events, i.e. the pop-up no longer allows user interaction.
+    /// All click events can penetrate, making the alert not interactive.
     case all
 }
 
-/// A Provider that interacts with the backdrop.
+/// This protocol defines the properties and methods that interact with the alert backdrop.
 public protocol BackdropProvider {
     
-    /// A layer to fill the background.
+    /// This property defines the type of backdrop used by the alert.
     var dimming: Dimming { get set }
     
-    /// Automatically dismiss alert when background is clicked if set to `true`.
+    /// This property determines whether tapping on the backdrop should automatically dismiss the alert.
     var allowDismissWhenBackgroundTouch: Bool { get set }
     
-    /// The scape of penetration.
+    /// This property specifies the penetration scope for the backdrop.
     var penetrationScope: PenetrationScope { get set }
 }
 
+/// This struct implements the `BackdropProvider` protocol with default values.
 struct DefaultBackdropProvider: BackdropProvider {
     
+    /// This property sets the default type of backdrop to be a semi-transparent black color.
     var dimming: Dimming = .color(Self.alertDimmingViewColor)
-   
+    
+    /// This property is set to `false` by default, which means tapping on the backdrop does not dismiss the alert.
     var allowDismissWhenBackgroundTouch: Bool = false
     
+    /// This property is set to `none` by default, which means clicking on the backdrop does not allow any events to penetrate.
     var penetrationScope: PenetrationScope = .none
 }
 
 extension DefaultBackdropProvider {
     
+    /// This method returns the color for the semi-transparent black backdrop view used in alerts.
     static var alertDimmingViewColor: UIColor {
         if #available(iOS 13.0, *) {
             return UIColor { traitCollection in
