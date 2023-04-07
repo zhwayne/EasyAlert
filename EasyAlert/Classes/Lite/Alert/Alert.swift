@@ -8,7 +8,7 @@
 import UIKit
 
 /// The base alert.
-open class Alert: Alertble {
+@MainActor open class Alert: Alertble {
     
     public let customizable: AlertCustomizable
     
@@ -155,7 +155,7 @@ open class Alert: Alertble {
     }
     
     @available(iOS 13.0, *)
-    public func dismissAsync() async {
+    public func dismiss() async {
         await withUnsafeContinuation({ continuation in
             dismiss { continuation.resume() }
         })

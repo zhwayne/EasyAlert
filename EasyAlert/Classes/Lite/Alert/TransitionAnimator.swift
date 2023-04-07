@@ -66,7 +66,7 @@ public struct TransitionContext {
 }
 
 /// A protocol for objects that can perform transition animations for an alert.
-public protocol TransitionAnimator {
+@MainActor public protocol TransitionAnimator {
     /// Performs the animation for showing the alert.
     mutating func show(context: TransitionContext, completion: @escaping () -> Void)
     

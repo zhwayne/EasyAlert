@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol ActionAlertble: Alertble {
+@MainActor public protocol ActionAlertble: Alertble {
     
     func addAction(_ action: Action)
 }
@@ -19,7 +19,7 @@ public extension ActionAlertble {
     }
 }
 
-protocol _ActionAlertble: ActionAlertble {
+@MainActor protocol _ActionAlertble: ActionAlertble {
     
     var actions: [Action] { get }
 }

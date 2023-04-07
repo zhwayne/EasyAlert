@@ -160,7 +160,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             if #available(iOS 13.0, *) {
                 Task {
                     try? await Task.sleep(nanoseconds:2_000_000_000)
-                    await alert.dismissAsync()
+                    await alert.dismiss()
                     print("Alert destroyed.")
                 }
             }

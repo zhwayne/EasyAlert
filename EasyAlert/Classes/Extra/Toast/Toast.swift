@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Toast {
+@MainActor public struct Toast {
         
     private static var alert: ToastAlert?
     

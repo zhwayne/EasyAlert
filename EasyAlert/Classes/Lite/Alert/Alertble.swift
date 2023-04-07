@@ -7,13 +7,13 @@
 
 import UIKit
 
-public protocol AlertContainerable: AnyObject { }
+@MainActor public protocol AlertContainerable: AnyObject { }
 
 extension UIView: AlertContainerable { }
 
 extension UIViewController: AlertContainerable { }
 
-public protocol Alertble : AlertDismissible {
+@MainActor public protocol Alertble : AlertDismissible {
     
     /// A value that marks whether an alert is being displayed.
     var isShowing: Bool { get }

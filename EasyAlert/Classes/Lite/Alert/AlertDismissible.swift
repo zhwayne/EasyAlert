@@ -7,16 +7,16 @@
 
 import Foundation
 
-public protocol AlertFetchable: AnyObject { }
+@MainActor public protocol AlertFetchable: AnyObject { }
 
-public protocol AlertDismissible : AlertFetchable {
+@MainActor public protocol AlertDismissible : AlertFetchable {
     
     /// Dismiss the alert.
     /// - Parameter completion: the `completion` callback will invoke after alert dismissed.
     func dismiss(completion: (() -> Void)?)
     
     @available(iOS 13.0, *)
-    @MainActor func dismissAsync() async
+    func dismiss() async
 }
 
 extension AlertFetchable {
@@ -45,13 +45,13 @@ extension AlertDismissible {
     
     /// Dismiss the alert.
     /// - Parameter completion: the `completion` callback will invoke after alert dismissed.
-    public func dismiss(completion: (() -> Void)? = nil) {
+    @MainActor public func dismiss(completion: (() -> Void)? = nil) {
         guard let alert = alert else { return }
         alert.dismiss(completion: completion)
     }
     
     @available(iOS 13.0, *)
-    @MainActor public func dismissAsync() async {
+    @MainActor public func dismiss() async {
         guard let alert = alert else { return }
         await withUnsafeContinuation({ continuation in
             alert.dismiss { continuation.resume() }
