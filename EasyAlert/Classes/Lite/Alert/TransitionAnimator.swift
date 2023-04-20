@@ -17,7 +17,7 @@ public enum Width {
     case flexible(CGFloat)
     
     /// A width that is a multiple of the superview's width, but less than the specified maximum width.
-    case multiplied(_ by: CGFloat, maximumWidth: CGFloat? = nil)
+    case multiplied(by: CGFloat, maximumWidth: CGFloat? = nil)
 }
 
 /// An enumeration representing the height of an alert.
@@ -33,6 +33,9 @@ public enum Height {
     
     /// The height is greater than or equal to the specified value.
     case greaterThanOrEqualTo(CGFloat)
+    
+    /// A height that is a multiple of the superview's height, but less than the specified maximum height.
+    case multiplied(by: CGFloat, maximumHeight: CGFloat? = nil)
 }
 
 /// A guide for describing the layout of an alert.

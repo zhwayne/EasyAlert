@@ -106,6 +106,19 @@ struct ToastTransitionAnimator : TransitionAnimator {
             let height = value - (edgeInsets.top + edgeInsets.bottom)
             let constraint = container.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
             constraints.append(constraint)
+            
+        case let .multiplied(value, maximumHeight):
+            let constant = -(edgeInsets.top + edgeInsets.bottom)
+            let multiplierConstraint = container.widthAnchor.constraint(
+                equalTo: superview.heightAnchor,
+                multiplier: value,
+                constant: constant)
+            multiplierConstraint.priority = .required - 1
+            constraints.append(multiplierConstraint)
+            if let maximumHeight, maximumHeight > 0 {
+                let maximumHeightConstraint = container.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight)
+                constraints.append(maximumHeightConstraint)
+            }
         }
         
         switch position {

@@ -87,20 +87,33 @@ struct AlertTransitionAnimator : TransitionAnimator {
             let constraint = container.heightAnchor.constraint(lessThanOrEqualToConstant: height)
             constraints.append(constraint)
             
-        case .fixed(let value):
+        case let .fixed(value):
             let height = value - (edgeInsets.top + edgeInsets.bottom)
             let constraint = container.heightAnchor.constraint(equalToConstant: height)
             constraints.append(constraint)
             
-        case .flexible(let value):
+        case let .flexible(value):
             let height = value - (edgeInsets.top + edgeInsets.bottom)
             let constraint = container.heightAnchor.constraint(lessThanOrEqualToConstant: height)
             constraints.append(constraint)
             
-        case .greaterThanOrEqualTo(let value):
+        case let .greaterThanOrEqualTo(value):
             let height = value - (edgeInsets.top + edgeInsets.bottom)
             let constraint = container.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
             constraints.append(constraint)
+            
+        case let .multiplied(value, maximumHeight):
+            let constant = -(edgeInsets.top + edgeInsets.bottom)
+            let multiplierConstraint = container.widthAnchor.constraint(
+                equalTo: superview.heightAnchor,
+                multiplier: value,
+                constant: constant)
+            multiplierConstraint.priority = .required - 1
+            constraints.append(multiplierConstraint)
+            if let maximumHeight, maximumHeight > 0 {
+                let maximumHeightConstraint = container.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight)
+                constraints.append(maximumHeightConstraint)
+            }
         }
         
         constraints.append(
