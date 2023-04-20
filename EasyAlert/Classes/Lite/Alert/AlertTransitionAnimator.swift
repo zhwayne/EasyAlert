@@ -104,7 +104,7 @@ struct AlertTransitionAnimator : TransitionAnimator {
             
         case let .multiplied(value, maximumHeight):
             let constant = -(edgeInsets.top + edgeInsets.bottom)
-            let multiplierConstraint = container.widthAnchor.constraint(
+            let multiplierConstraint = container.heightAnchor.constraint(
                 equalTo: superview.heightAnchor,
                 multiplier: value,
                 constant: constant)
