@@ -67,7 +67,6 @@ extension Toast {
             alert = ToastAlert(message: message)
             if var aniamtor = alert?.transitionAniamtor as? ToastTransitionAnimator {
                 aniamtor.position = position
-                alert?.transitionAniamtor = aniamtor
             }
             alert?.show()
         }

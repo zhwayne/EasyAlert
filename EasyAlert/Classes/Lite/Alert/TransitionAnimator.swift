@@ -9,6 +9,7 @@ import Foundation
 
 /// An enumeration representing the width of an alert.
 public enum Width {
+    
     /// A fixed width equal to the specified value.
     case fixed(CGFloat)
     
@@ -16,13 +17,19 @@ public enum Width {
     case flexible(CGFloat)
     
     /// A width that is a multiple of the superview's width, but less than the specified maximum width.
-    case multiplied(_ by: CGFloat, maximumWidth: CGFloat = 0)
+    case multiplied(_ by: CGFloat, maximumWidth: CGFloat? = nil)
 }
 
 /// An enumeration representing the height of an alert.
 public enum Height {
     /// The height is determined entirely by the content of the alert.
     case automatic
+    
+    /// A fixed height equal to the specified value.
+    case fixed(CGFloat)
+    
+    /// A flexible height that can grow up to the specified value.
+    case flexible(CGFloat)
     
     /// The height is greater than or equal to the specified value.
     case greaterThanOrEqualTo(CGFloat)

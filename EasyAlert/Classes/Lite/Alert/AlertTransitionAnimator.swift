@@ -56,6 +56,7 @@ struct AlertTransitionAnimator : TransitionAnimator {
         let container = context.container
         let superview = context.backdropView
         
+        // layout guide width.
         switch layoutGuide.width {
         case let .fixed(value):
             let width = value - (edgeInsets.left + edgeInsets.right)
@@ -73,13 +74,30 @@ struct AlertTransitionAnimator : TransitionAnimator {
                 constant: constant)
             multiplierConstraint.priority = .required - 1
             constraints.append(multiplierConstraint)
-            if maximumWidth > 0 {
+            if let maximumWidth, maximumWidth > 0 {
                 let maximumWidthConstraint = container.widthAnchor.constraint(lessThanOrEqualToConstant: maximumWidth)
                 constraints.append(maximumWidthConstraint)
             }
         }
         
-        if case let .greaterThanOrEqualTo(value) = layoutGuide.height {
+        // layout guide height.
+        switch layoutGuide.height {
+        case .automatic:
+            let height = superview.frame.height
+            let constraint = container.heightAnchor.constraint(lessThanOrEqualToConstant: height)
+            constraints.append(constraint)
+            
+        case .fixed(let value):
+            let height = value - (edgeInsets.top + edgeInsets.bottom)
+            let constraint = container.heightAnchor.constraint(equalToConstant: height)
+            constraints.append(constraint)
+            
+        case .flexible(let value):
+            let height = value - (edgeInsets.top + edgeInsets.bottom)
+            let constraint = container.heightAnchor.constraint(lessThanOrEqualToConstant: height)
+            constraints.append(constraint)
+            
+        case .greaterThanOrEqualTo(let value):
             let height = value - (edgeInsets.top + edgeInsets.bottom)
             let constraint = container.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
             constraints.append(constraint)
