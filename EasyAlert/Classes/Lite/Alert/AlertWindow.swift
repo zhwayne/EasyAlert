@@ -11,7 +11,7 @@ class AlertWindow: UIWindow {
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let view = super.hitTest(point, with: event)
-        if view == self { return nil }
+        if view === self || view === rootViewController?.view { return nil }
         return view
     }
 }

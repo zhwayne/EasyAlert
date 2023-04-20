@@ -23,7 +23,7 @@ import UIKit
     
     public var layoutGuide = LayoutGuide(width: .fixed(270))
     
-    private let alertViewController = AlertViewController()
+    private let alertContainerViewController = AlertContainerViewController()
                 
     private let backdropView = DimmingKnockoutBackdropView()
 
@@ -67,8 +67,8 @@ import UIKit
             case .none: return false
             case .all: return true
             case .dimming:
-                let point = view.convert(point, to: alertViewController.view)
-                return !alertViewController.view.bounds.contains(point)
+                let point = view.convert(point, to: alertContainerViewController.view)
+                return !alertContainerViewController.view.bounds.contains(point)
             }
         }
         backdropView.willRemoveFromSuperviewObserver = { [weak self] in
@@ -80,7 +80,7 @@ import UIKit
         tapTarget.gestureRecognizerShouldBeginBlock = { [unowned self] gestureRecognizer in
             guard let backgroundView = gestureRecognizer.view else { return false }
             let point = gestureRecognizer.location(in: backgroundView)
-            return !alertViewController.view.frame.contains(point)
+            return !alertContainerViewController.view.frame.contains(point)
         }
         tapTarget.tapHandler = { [unowned self] in
             backdropView.endEditing(false)
@@ -91,7 +91,33 @@ import UIKit
             }
         }
     }
-
+    
+    public func addCallback(_ callback: LiftcycleCallback) {
+        callbacks.append(callback)
+    }
+    
+    public func show(in container: AlertContainerable? = nil) {
+        Dispatch.dispatchPrecondition(condition: .onQueue(.main))
+        guard !isShowing else { return }
+        
+        configDimming()
+        configContainer()
+        showAlert(in: container)
+    }
+    
+    public func dismiss(completion: (() -> Void)? = nil) {
+        Dispatch.dispatchPrecondition(condition: .onQueue(.main))
+        guard canDismiss() else { return }
+        dismissAlert(completion: completion)
+    }
+    
+    @available(iOS 13.0, *)
+    public func dismiss() async {
+        await withUnsafeContinuation({ continuation in
+            dismiss { continuation.resume() }
+        })
+    }
+    
     open func willShow() { }
     
     open func didShow() { }
@@ -103,99 +129,19 @@ import UIKit
     open func willLayoutContainer() { }
     
     open func didLayoutContainer() { }
-    
-    public func addCallback(_ callback: LiftcycleCallback) {
-        callbacks.append(callback)
-    }
-    
-    public func show(in container: AlertContainerable? = nil) {
-        
-        func _show(in view: UIView? = nil) {
-            Dispatch.dispatchPrecondition(condition: .onQueue(.main))
-            guard !isShowing, let parent = findParentView(view) else { return }
-            configDimming()
-            configContainer()
-            showAlert(in: parent)
-        }
-        
-        if let container = container as? UIView {
-            _show(in: container)
-        } else if let container = container as? UIViewController {
-            _show(in: container.view)
-        } else {
-            _show(in: nil)
-        }
-    }
-    
-    public func dismiss(completion: (() -> Void)? = nil) {
-        Dispatch.dispatchPrecondition(condition: .onQueue(.main))
-        guard canDismiss() else {
-            return
-        }
-        
-        if let viewController = customizable as? UIViewController {
-            viewController.beginAppearanceTransition(false, animated: true)
-        }
-        willDismiss()
-        callbacks.forEach { $0.willDismiss?() }
-        
-        alertViewController.view.isUserInteractionEnabled = false
-        tapTarget.tapGestureRecognizer.isEnabled = false
-        transitionAniamtor.dismiss(context: transitioningContext) { [weak self] in
-            self?.didDismiss()
-            self?.callbacks.forEach { $0.didDismiss?() }
-            if let viewController = self?.customizable as? UIViewController {
-                viewController.endAppearanceTransition()
-            }
-            completion?()
-            self?.windup()
-            self?.alertViewController.view.isUserInteractionEnabled = true
-            self?.tapTarget.tapGestureRecognizer.isEnabled = true
-        }
-    }
-    
-    @available(iOS 13.0, *)
-    public func dismiss() async {
-        await withUnsafeContinuation({ continuation in
-            dismiss { continuation.resume() }
-        })
-    }
 }
 
 extension Alert {
     
-    private var interfaceOrientation: UIInterfaceOrientation {
-        if #available(iOS 13.0, *) {
-            let scenes = UIApplication.shared.connectedScenes
-            let windowScene = scenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
-            guard let interfaceOrientation = windowScene?.interfaceOrientation else {
-                return UIApplication.shared.statusBarOrientation
-            }
-            return interfaceOrientation
-        } else {
-            return UIApplication.shared.statusBarOrientation
+    private func setupWindow() {
+        if window == nil {
+            // 也许应该考虑支持多 window 模式的 App？
+            window = AlertWindow(frame: UIScreen.main.bounds)
         }
-    }
-    
-    private var transitioningContext: TransitionContext {
-        TransitionContext(
-            container: alertViewController.view,
-            backdropView: backdropView,
-            dimmingView: dimmingView,
-            interfaceOrientation: interfaceOrientation
-        )
-    }
-    
-    private func findParentView(_ view: UIView?) -> UIView? {
-        if let view = view { return view } else {
-            if window == nil {
-                window = AlertWindow(frame: UIScreen.main.bounds)
-            }
-            window?.backgroundColor = .clear
-            window?.windowLevel = .alert
-            window?.makeKeyAndVisible()
-            return window!
-        }
+        window?.rootViewController = UIViewController()
+        window?.backgroundColor = .clear
+        window?.windowLevel = .alert
+        window?.makeKeyAndVisible()
     }
     
     private func canDismiss() -> Bool {
@@ -217,17 +163,17 @@ extension Alert {
     }
     
     private func configContainer() {
-        backdropView.addSubview(alertViewController.view)
+        backdropView.addSubview(alertContainerViewController.view)
         
         // Add view or viewController
         if let view = customizable as? UIView {
-            alertViewController.view.addSubview(view)
+            alertContainerViewController.view.addSubview(view)
             layoutFill(view)
         } else if let viewController = customizable as? UIViewController {
-            viewController.willMove(toParent: alertViewController)
-            alertViewController.addChild(viewController)
-            alertViewController.view.addSubview(viewController.view)
-            viewController.didMove(toParent: alertViewController)
+            viewController.willMove(toParent: alertContainerViewController)
+            alertContainerViewController.addChild(viewController)
+            alertContainerViewController.view.addSubview(viewController.view)
+            viewController.didMove(toParent: alertContainerViewController)
             layoutFill(viewController.view)
         }
     }
@@ -244,40 +190,24 @@ extension Alert {
     }
     
     private func layoutIfNeeded() {
-        if let window {
-            window.layoutIfNeeded()
-        }
-        backdropView.layoutIfNeeded()
         willLayoutContainer()
         transitionAniamtor.update(context: transitioningContext, layoutGuide: layoutGuide)
         didLayoutContainer()
-        alertViewController.view.layoutIfNeeded()
     }
     
-    private func showAlert(in parent: UIView) {
-        // Set associated object.
-        alertViewController.weakAlert = self
-        parent.attach(alert: self)
-        
-        //
-        backdropView.frame = parent.bounds
-        parent.addSubview(backdropView)
-        backdropView.layoutIfNeeded()
-        
-        layoutIfNeeded()
-
+    private func performShowWithAnimation() {
         if let viewController = customizable as? UIViewController {
             viewController.beginAppearanceTransition(true, animated: true)
         }
         willShow()
         callbacks.forEach { $0.willShow?() }
         
-        alertViewController.view.isUserInteractionEnabled = false
+        alertContainerViewController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
         transitionAniamtor.show(context: transitioningContext) { [weak self] in
             self?.didShow()
             self?.callbacks.forEach { $0.didShow?() }
-            self?.alertViewController.view.isUserInteractionEnabled = true
+            self?.alertContainerViewController.view.isUserInteractionEnabled = true
             self?.tapTarget.tapGestureRecognizer.isEnabled = true
             if let viewController = self?.customizable as? UIViewController {
                 viewController.endAppearanceTransition()
@@ -285,8 +215,66 @@ extension Alert {
         }
     }
     
+    private func _showAlert(in view: UIView) {
+        backdropView.frame = view.bounds
+        view.addSubview(backdropView)
+        layoutIfNeeded()
+        performShowWithAnimation()
+    }
+    
+    private func _showAlert(in viewController: UIViewController) {
+        backdropView.frame = viewController.view.bounds
+        viewController.view.addSubview(backdropView)
+        layoutIfNeeded()
+        performShowWithAnimation()
+    }
+    
+    private func showAlert(in parent: AlertContainerable?) {
+        // Set associated object.
+        alertContainerViewController.weakAlert = self
+        
+        if let view = parent as? UIView {
+            view.attach(alert: self)
+            _showAlert(in: view)
+        } else if let viewController = parent as? UIViewController {
+            viewController.attach(alert: self)
+            _showAlert(in: viewController)
+        } else {
+            setupWindow()
+            if let viewController = window?.rootViewController {
+                window?.attach(alert: self)
+                _showAlert(in: viewController)
+            }
+        }
+    }
+}
+
+extension Alert {
+    
+    private func dismissAlert(completion: (() -> Void)?) {
+        if let viewController = customizable as? UIViewController {
+            viewController.beginAppearanceTransition(false, animated: true)
+        }
+        willDismiss()
+        callbacks.forEach { $0.willDismiss?() }
+        
+        alertContainerViewController.view.isUserInteractionEnabled = false
+        tapTarget.tapGestureRecognizer.isEnabled = false
+        transitionAniamtor.dismiss(context: transitioningContext) { [weak self] in
+            self?.didDismiss()
+            self?.callbacks.forEach { $0.didDismiss?() }
+            if let viewController = self?.customizable as? UIViewController {
+                viewController.endAppearanceTransition()
+            }
+            completion?()
+            self?.windup()
+            self?.alertContainerViewController.view.isUserInteractionEnabled = true
+            self?.tapTarget.tapGestureRecognizer.isEnabled = true
+        }
+    }
+    
     private func windup() {
-        alertViewController.weakAlert = nil
+        alertContainerViewController.weakAlert = nil
         
         if let view = customizable as? UIView {
             view.removeFromSuperview()
@@ -297,11 +285,36 @@ extension Alert {
         }
         if let parent = backdropView.superview {
             parent.detach(alert: self)
-            alertViewController.view.removeFromSuperview()
+            alertContainerViewController.view.removeFromSuperview()
             backdropView.removeFromSuperview()
         }
         window?.resignKey()
         window?.isHidden = true
         window = nil
+    }
+}
+
+extension Alert {
+    
+    private var interfaceOrientation: UIInterfaceOrientation {
+        if #available(iOS 13.0, *) {
+            let scenes = UIApplication.shared.connectedScenes
+            let windowScene = scenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
+            guard let interfaceOrientation = windowScene?.interfaceOrientation else {
+                return UIApplication.shared.statusBarOrientation
+            }
+            return interfaceOrientation
+        } else {
+            return UIApplication.shared.statusBarOrientation
+        }
+    }
+    
+    private var transitioningContext: TransitionContext {
+        TransitionContext(
+            container: alertContainerViewController.view,
+            backdropView: backdropView,
+            dimmingView: dimmingView,
+            interfaceOrientation: interfaceOrientation
+        )
     }
 }

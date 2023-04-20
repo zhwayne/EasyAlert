@@ -45,7 +45,6 @@
 		9FE6E705E6A2FD9DDD88EEB0D7DEAB2A /* Alertble+Conveniences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A64C335DD68ABC85F4205C6AB3365B /* Alertble+Conveniences.swift */; };
 		A7B8E0261061F48688E4ADFE59198C14 /* ActionAlertble.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01DF34BE4C2875E48E61D27446FD13C /* ActionAlertble.swift */; };
 		A9133660AD7A2E24439BFE07176F7A61 /* Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1F5ED32848D093F51B345F1285E7AF /* Proxy.swift */; };
-		AEBE57715345682DC7B1C4A342CB1B87 /* UIView+EasyAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734240F1A5DF3B6C7D8B56CDE51ACF8 /* UIView+EasyAlert.swift */; };
 		BEFC41F50155FE197A66E22CAFE8E7F9 /* ActionVibrantSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD6FD261462D4FC9683A09E4C6F1D6B /* ActionVibrantSeparatorView.swift */; };
 		BF3FA8C3DF0FDA1D813100C090C7C0EB /* AlertCustomizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE961B23C68238685076200E3D049B6 /* AlertCustomizable.swift */; };
 		BFB2118E26F745472C358296FDAB2BC4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
@@ -65,7 +64,7 @@
 		F3E5F3D36C36736E62B889D196C82115 /* DimmingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D113986F5145EA6272670F16DDE3C9 /* DimmingView.swift */; };
 		F63B8E3D66D4DEC455D805982A425B31 /* Pods-EasyAlert_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F9549E8F364DA2A1D27727AD74B93B6A /* Pods-EasyAlert_Example-dummy.m */; };
 		FB22E4F47EE5302906BC25DA97761140 /* DimmingKnockoutBackdropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A99F6F238E967F99947C4A174FD787 /* DimmingKnockoutBackdropView.swift */; };
-		FE5D7348E6E351E376B1CD96B30EEBE2 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD82A4C56472FEC748798F4C72A898 /* AlertViewController.swift */; };
+		FE5D7348E6E351E376B1CD96B30EEBE2 /* AlertContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD82A4C56472FEC748798F4C72A898 /* AlertContainerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,12 +90,12 @@
 		1BC5738CC8EF52F58352F4C5AF234356 /* Alert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		1D1F5ED32848D093F51B345F1285E7AF /* Proxy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Proxy.swift; sourceTree = "<group>"; };
 		1D31829C986C7BAC437E144D3B0727AC /* ToastTransitionAnimator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ToastTransitionAnimator.swift; sourceTree = "<group>"; };
-		2BDD82A4C56472FEC748798F4C72A898 /* AlertViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		2BDD82A4C56472FEC748798F4C72A898 /* AlertContainerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertContainerViewController.swift; sourceTree = "<group>"; };
 		2E739101D6669E28DE91B29278C28D26 /* ActionAlertActionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionAlertActionView.swift; sourceTree = "<group>"; };
 		3593529F672EC1BE9ED41988E462DBAF /* TransitionAnimatorActionGroupDecorator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TransitionAnimatorActionGroupDecorator.swift; sourceTree = "<group>"; };
 		4060B573D39F202FB4FAF244CE24FA37 /* ActionCustomizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionCustomizable.swift; sourceTree = "<group>"; };
 		4323384DFE674CF838A49674E3AD0DA6 /* AlertDismissible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertDismissible.swift; sourceTree = "<group>"; };
-		449A136AA7FE727F6B7F3792AA781445 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		449A136AA7FE727F6B7F3792AA781445 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		45BD113F5A8257488D136AD1883840A2 /* MessageAlertConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageAlertConfiguration.swift; sourceTree = "<group>"; };
 		4729F586129ADA918F71378E380AE0E7 /* Action.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		49A884E9DCC68850940DF1D8B3C4E5E2 /* EasyAlert-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "EasyAlert-dummy.m"; sourceTree = "<group>"; };
@@ -119,7 +118,6 @@
 		70320655CED906B3883A1FDB54694736 /* SheetActionLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SheetActionLayout.swift; sourceTree = "<group>"; };
 		7140D9F532F1002798C4DCF6047F59CD /* ActionAlert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionAlert.swift; sourceTree = "<group>"; };
 		73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		7734240F1A5DF3B6C7D8B56CDE51ACF8 /* UIView+EasyAlert.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIView+EasyAlert.swift"; sourceTree = "<group>"; };
 		7A707E92249B3AB369DBA9E328DC494C /* Pods-EasyAlert_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-EasyAlert_Tests-dummy.m"; sourceTree = "<group>"; };
 		7A7395BBB0F7B060CDDB1326563C1A22 /* Alertble.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Alertble.swift; sourceTree = "<group>"; };
 		7BE961B23C68238685076200E3D049B6 /* AlertCustomizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertCustomizable.swift; sourceTree = "<group>"; };
@@ -130,7 +128,7 @@
 		9175D641C5975179B5D1A029AB7BFD14 /* Pods-EasyAlert_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EasyAlert_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		98D113986F5145EA6272670F16DDE3C9 /* DimmingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DimmingView.swift; sourceTree = "<group>"; };
 		9B275CCB46102E17EE6B337222A931E0 /* BackdropProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BackdropProvider.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A09DDC6BB9B574DBD357D4474271A2CA /* AlertWindow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertWindow.swift; sourceTree = "<group>"; };
 		A7F11C719F4CBE9D8520F778ECF59F0F /* EasyAlert-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EasyAlert-umbrella.h"; sourceTree = "<group>"; };
 		A925329B8D2E69FBFEF9BB98FE18CF8A /* Pods-EasyAlert_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-EasyAlert_Example-umbrella.h"; sourceTree = "<group>"; };
@@ -138,9 +136,9 @@
 		ADCC71D31785152DA9CC4FE19AE414DA /* EasyAlert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EasyAlert.debug.xcconfig; sourceTree = "<group>"; };
 		AFE1935E870782C139AD31F9173C1FC8 /* ActionCustomViewRepresentationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionCustomViewRepresentationView.swift; sourceTree = "<group>"; };
 		B01DF34BE4C2875E48E61D27446FD13C /* ActionAlertble.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionAlertble.swift; sourceTree = "<group>"; };
-		B069E93E38282C9A8FC21F3D3A058BBD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		B069E93E38282C9A8FC21F3D3A058BBD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B14FF61930D47EE18B537D26380EE097 /* AlertTapTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlertTapTarget.swift; sourceTree = "<group>"; };
-		B7136999EA20D4F3EC5BCB079BE63E88 /* EasyAlert.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = EasyAlert.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B7136999EA20D4F3EC5BCB079BE63E88 /* EasyAlert.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = EasyAlert.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B86B9365A35B9B241777A2294E998B0C /* EasyAlert-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EasyAlert-prefix.pch"; sourceTree = "<group>"; };
 		BAB02199B71D3BBD91F93B42B5092567 /* Pods-EasyAlert_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-EasyAlert_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		BC43471D33A3818F7B3F31494F278D7B /* ActionSheetContainerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActionSheetContainerView.swift; sourceTree = "<group>"; };
@@ -267,7 +265,6 @@
 				70320655CED906B3883A1FDB54694736 /* SheetActionLayout.swift */,
 				DBF3282FA0BEE9BFC45406B5579AD045 /* SheetTransitionAnimator.swift */,
 			);
-			name = Sheet;
 			path = Sheet;
 			sourceTree = "<group>";
 		};
@@ -284,7 +281,6 @@
 				615A6B1AD938BC064886F1CFB1E00DD8 /* MessageAlertTitleAndMessage.swift */,
 				3593529F672EC1BE9ED41988E462DBAF /* TransitionAnimatorActionGroupDecorator.swift */,
 			);
-			name = ActionAlert;
 			path = ActionAlert;
 			sourceTree = "<group>";
 		};
@@ -324,7 +320,7 @@
 				4323384DFE674CF838A49674E3AD0DA6 /* AlertDismissible.swift */,
 				B14FF61930D47EE18B537D26380EE097 /* AlertTapTarget.swift */,
 				CA236CC8F68CD41668E2465D0226E3C7 /* AlertTransitionAnimator.swift */,
-				2BDD82A4C56472FEC748798F4C72A898 /* AlertViewController.swift */,
+				2BDD82A4C56472FEC748798F4C72A898 /* AlertContainerViewController.swift */,
 				A09DDC6BB9B574DBD357D4474271A2CA /* AlertWindow.swift */,
 				9B275CCB46102E17EE6B337222A931E0 /* BackdropProvider.swift */,
 				C3E9C4118E7E9C336877B632A86E96D7 /* BlurEffectView.swift */,
@@ -333,9 +329,7 @@
 				E7673D9FFD9D3B39F6ADD579720D5ABB /* KeyboardResponsiveView.swift */,
 				DB0624AC772E35590D57DD6D7F137A76 /* RepresentationMarking.swift */,
 				F8F16F695FD653F57914D919B314002C /* TransitionAnimator.swift */,
-				7734240F1A5DF3B6C7D8B56CDE51ACF8 /* UIView+EasyAlert.swift */,
 			);
-			name = Alert;
 			path = Alert;
 			sourceTree = "<group>";
 		};
@@ -345,7 +339,6 @@
 				8A357B572125B315D450501117D23800 /* NotificationToken.swift */,
 				1D1F5ED32848D093F51B345F1285E7AF /* Proxy.swift */,
 			);
-			name = Utils;
 			path = Utils;
 			sourceTree = "<group>";
 		};
@@ -356,7 +349,6 @@
 				D84B874505C817DC52303BA5515FBDD6 /* ToastAlert.swift */,
 				1D31829C986C7BAC437E144D3B0727AC /* ToastTransitionAnimator.swift */,
 			);
-			name = Toast;
 			path = Toast;
 			sourceTree = "<group>";
 		};
@@ -438,7 +430,6 @@
 				ABD6FD261462D4FC9683A09E4C6F1D6B /* ActionVibrantSeparatorView.swift */,
 				104483B8477B1E78F2FA52F50FA61C2B /* TitleAndMessage.swift */,
 			);
-			name = Action;
 			path = Action;
 			sourceTree = "<group>";
 		};
@@ -613,7 +604,7 @@
 				9B1C111102BB84D803AF68D64256E3EB /* AlertDismissible.swift in Sources */,
 				33FCE1D628E498498492E41F8CBFC170 /* AlertTapTarget.swift in Sources */,
 				3FF3F9EED738D70D6B6B34C0B88A226C /* AlertTransitionAnimator.swift in Sources */,
-				FE5D7348E6E351E376B1CD96B30EEBE2 /* AlertViewController.swift in Sources */,
+				FE5D7348E6E351E376B1CD96B30EEBE2 /* AlertContainerViewController.swift in Sources */,
 				DD8A10ABCBD2758CE5F6A7AB8FC06F48 /* AlertWindow.swift in Sources */,
 				C1C5B902C9732351991BED8861A75ECF /* BackdropProvider.swift in Sources */,
 				1525F66482F9C832FD6387A33D086C6A /* BlurEffectView.swift in Sources */,
@@ -636,7 +627,6 @@
 				5D4A03CDC3A263B56CEED6BF7C521EC0 /* ToastTransitionAnimator.swift in Sources */,
 				8BCA0BC72940486C0ED7EDDB079DEC64 /* TransitionAnimator.swift in Sources */,
 				C46760847030437547B195E4B058F5BA /* TransitionAnimatorActionGroupDecorator.swift in Sources */,
-				AEBE57715345682DC7B1C4A342CB1B87 /* UIView+EasyAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -867,8 +857,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};

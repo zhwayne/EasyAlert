@@ -1,5 +1,5 @@
 //
-//  AlertViewController.swift
+//  AlertContainerViewController.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/12/7.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AlertViewController: UIViewController {
+final class AlertContainerViewController: UIViewController {
     
     weak var weakAlert: Alert?
     

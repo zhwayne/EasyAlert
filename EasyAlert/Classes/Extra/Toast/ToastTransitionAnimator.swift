@@ -16,7 +16,6 @@ struct ToastTransitionAnimator : TransitionAnimator {
     var position: Toast.Position = .bottom
     
     func show(context: TransitionContext, completion: @escaping () -> Void) {
-        context.container.layoutIfNeeded()
         
         let transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         context.container.transform = transform

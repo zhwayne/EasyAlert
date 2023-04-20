@@ -13,6 +13,9 @@ class MyAlertNavigationController: UINavigationController, AlertCustomizable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
     }
 }
 
@@ -29,10 +32,6 @@ class MyAlertViewController: UIViewController, AlertCustomizable {
         
         let item = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(handleClose))
         navigationItem.rightBarButtonItem = item
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-
-        view.heightAnchor.constraint(equalToConstant: 375).isActive = true
     }
     
     @objc

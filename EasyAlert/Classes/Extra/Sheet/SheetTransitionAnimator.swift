@@ -18,7 +18,6 @@ struct SheetTransitionAnimator : TransitionAnimator {
     }
     
     func show(context: TransitionContext, completion: @escaping () -> Void) {
-        context.container.layoutIfNeeded()
         let height = context.container.bounds.height + context.dimmingView.safeAreaInsets.bottom
         context.container.transform = CGAffineTransform(translationX: 0, y: height)
         context.dimmingView.alpha = 0
