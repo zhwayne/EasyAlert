@@ -52,9 +52,6 @@ import UIKit
         }
         let name = UIApplication.willChangeStatusBarOrientationNotification
         orientationChangeToken = NotificationCenter.default.observe(name: name, object: nil, queue: nil, using: { [weak self] note in
-            if let window = self?.window {
-                window.frame = UIScreen.main.bounds
-            }
             self?.layoutIfNeeded()
         })
     }
@@ -135,8 +132,20 @@ extension Alert {
     
     private func setupWindow() {
         if window == nil {
-            // 也许应该考虑支持多 window 模式的 App？
-            window = AlertWindow(frame: UIScreen.main.bounds)
+            if #available(iOS 13.0, *) {
+                for scene in UIApplication.shared.connectedScenes where scene is UIWindowScene {
+                    let windowScene = scene as! UIWindowScene
+                    window = AlertWindow(windowScene: windowScene)
+                    break
+                }
+                if window == nil {
+                    // Fallback
+                    window = AlertWindow(frame: UIScreen.main.bounds)
+                }
+            } else {
+                // Fallback on earlier versions
+                window = AlertWindow(frame: UIScreen.main.bounds)
+            }
         }
         window?.rootViewController = UIViewController()
         window?.backgroundColor = .clear

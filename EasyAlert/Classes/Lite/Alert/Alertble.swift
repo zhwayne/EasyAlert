@@ -33,7 +33,7 @@ extension AlertContainerable {
             if let alerts = objc_getAssociatedObject(self, &AssociatedKey.alerts) as? [Alertble] {
                 return alerts
             }
-            objc_setAssociatedObject(self, &AssociatedKey.alerts, [], .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKey.alerts, [] as [Alertble], .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             return []
         }
         set {
