@@ -50,7 +50,7 @@ import UIKit
         if !UIDevice.current.isGeneratingDeviceOrientationNotifications {
             UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         }
-        let name = UIApplication.willChangeStatusBarOrientationNotification
+        let name = UIDevice.orientationDidChangeNotification
         orientationChangeToken = NotificationCenter.default.observe(name: name, object: nil, queue: nil, using: { [weak self] note in
             self?.layoutIfNeeded()
         })
@@ -276,13 +276,13 @@ extension Alert {
                 viewController.endAppearanceTransition()
             }
             completion?()
-            self?.windup()
+            self?.clean()
             self?.alertContainerViewController.view.isUserInteractionEnabled = true
             self?.tapTarget.tapGestureRecognizer.isEnabled = true
         }
     }
     
-    private func windup() {
+    private func clean() {
         alertContainerViewController.weakAlert = nil
         
         if let view = customizable as? UIView {
