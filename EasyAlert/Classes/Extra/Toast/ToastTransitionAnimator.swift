@@ -59,8 +59,8 @@ struct ToastTransitionAnimator : TransitionAnimator {
         
         let edgeInsets = layoutGuide.edgeInsets
         let container = context.container
-        let superview = context.backdropView
-        
+        guard let superview = container.superview else { return }
+
         // layout guide width.
         switch layoutGuide.width {
         case let .fixed(value):

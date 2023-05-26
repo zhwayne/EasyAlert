@@ -73,4 +73,19 @@ extension Toast {
         alert?.backdropProvider.penetrationScope = penetrationScope
         dismissAfter(duration: duration)
     }
+    
+    @available(iOS 13.0, *)
+    public static func dismiss() async {
+        if let alert = alert {
+            await alert.dismiss()
+        }
+    }
+    
+    public static func dismiss(completion: (() -> Void)? = nil) {
+        if let alert = alert {
+            alert.dismiss(completion: completion)
+        } else {
+            completion?()
+        }
+    }
 }
