@@ -12,10 +12,11 @@ final class ToastAlert: Alert {
     class ContentView: UIView, AlertCustomizable {
         
         let label = UILabel()
+        let indicator = UIActivityIndicatorView(style: .white)
         
         override init(frame: CGRect) {
             super.init(frame: frame)
-
+            
             layer.shadowColor = UIColor.black.cgColor
             layer.shadowOffset = CGSize(width: 0, height: 2)
             layer.shadowOpacity = 0.1
@@ -39,13 +40,20 @@ final class ToastAlert: Alert {
             addSubview(effectView)
             
             label.numberOfLines = 0
-            label.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(label)
             
-            label.leftAnchor.constraint(equalTo: leftAnchor, constant: 12).isActive = true
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
-            label.rightAnchor.constraint(equalTo: rightAnchor, constant: -12).isActive = true
-            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12).isActive = true
+            indicator.isHidden = true
+            
+            let stackView = UIStackView(arrangedSubviews: [indicator, label])
+            stackView.axis = .vertical
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.spacing = 8
+            stackView.alignment = .center
+            addSubview(stackView)
+            
+            stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 12).isActive = true
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
+            stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -12).isActive = true
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12).isActive = true
         }
         
         required init?(coder: NSCoder) {
@@ -75,6 +83,14 @@ final class ToastAlert: Alert {
         if let window = rawCustomView.window {
             window.windowLevel = UIWindow.Level(.greatestFiniteMagnitude)
         }
+        if !rawCustomView.indicator.isHidden {
+            rawCustomView.indicator.startAnimating()
+        }
+    }
+    
+    override func didDismiss() {
+        super.didDismiss()
+        rawCustomView.indicator.stopAnimating()
     }
 }
 

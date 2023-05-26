@@ -8,7 +8,7 @@
 import Foundation
 
 @MainActor public struct Toast {
-        
+    
     private static var alert: ToastAlert?
     
     private static var dismissWork: DispatchWorkItem?
@@ -68,9 +68,17 @@ extension Toast {
             if var aniamtor = alert?.transitionAniamtor as? ToastTransitionAnimator {
                 aniamtor.position = position
             }
-            alert?.show()
         }
+        let parameters = UISpringTimingParameters()
+        let animator = UIViewPropertyAnimator(duration: 1.0, timingParameters: parameters)
+        animator.addAnimations {
+            alert?.rawCustomView.indicator.isHidden = duration != .infinity
+            alert?.rawCustomView.indicator.alpha = duration == .infinity ? 1 : 0
+        }
+        animator.startAnimation()
+        
         alert?.backdropProvider.penetrationScope = penetrationScope
+        alert?.show()
         dismissAfter(duration: duration)
     }
     
