@@ -24,11 +24,11 @@ import UIKit
     public var layoutGuide = LayoutGuide(width: .fixed(270))
     
     private let alertContainerViewController = AlertContainerViewController()
-                
+    
     private let backdropView = DimmingKnockoutBackdropView()
-
+    
     private let dimmingView = DimmingView()
-        
+    
     private let tapTarget = TapTarget()
     
     private var callbacks: [LiftcycleCallback] = []
@@ -52,7 +52,7 @@ import UIKit
         }
         let name = UIDevice.orientationDidChangeNotification
         orientationChangeToken = NotificationCenter.default.observe(name: name, object: nil, queue: nil, using: { [weak self] note in
-            self?.layoutIfNeeded()
+            self?.updateLayout()
         })
     }
     
@@ -198,9 +198,11 @@ extension Alert {
         view.rightAnchor.constraint(equalTo: superview.rightAnchor).isActive = true
     }
     
-    private func layoutIfNeeded() {
+    func updateLayout() {
         willLayoutContainer()
         transitionAniamtor.update(context: transitioningContext, layoutGuide: layoutGuide)
+        backdropView.setNeedsLayout()
+        backdropView.layoutIfNeeded()
         didLayoutContainer()
     }
     
@@ -227,14 +229,14 @@ extension Alert {
     private func _showAlert(in view: UIView) {
         backdropView.frame = view.bounds
         view.addSubview(backdropView)
-        layoutIfNeeded()
+        updateLayout()
         performShowWithAnimation()
     }
     
     private func _showAlert(in viewController: UIViewController) {
         backdropView.frame = viewController.view.bounds
         viewController.view.addSubview(backdropView)
-        layoutIfNeeded()
+        updateLayout()
         performShowWithAnimation()
     }
     

@@ -44,7 +44,6 @@ final class ToastAlert: Alert {
             indicator.isHidden = true
             
             let stackView = UIStackView(arrangedSubviews: [indicator, label])
-            stackView.axis = .vertical
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.spacing = 8
             stackView.alignment = .center

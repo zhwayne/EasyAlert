@@ -49,7 +49,7 @@ extension Toast {
     public static func show(
         _ message: Message,
         duration: TimeInterval = 0,
-        position: Position = .center,
+        position: Position = .bottom,
         penetrationScope: PenetrationScope = .all
     ) {
         guard let string = Toast.text(for: message)?.string else { return }
@@ -65,10 +65,13 @@ extension Toast {
             alert.rawCustomView.label.attributedText = Toast.text(for: message)
         } else {
             alert = ToastAlert(message: message)
-            if var aniamtor = alert?.transitionAniamtor as? ToastTransitionAnimator {
-                aniamtor.position = position
-            }
         }
+        
+        if var aniamtor = alert?.transitionAniamtor as? ToastTransitionAnimator {
+            aniamtor.position = position
+            alert?.transitionAniamtor = aniamtor
+        }
+        
         let parameters = UISpringTimingParameters()
         let animator = UIViewPropertyAnimator(duration: 1.0, timingParameters: parameters)
         animator.addAnimations {
@@ -78,7 +81,16 @@ extension Toast {
         animator.startAnimation()
         
         alert?.backdropProvider.penetrationScope = penetrationScope
-        alert?.show()
+        if !alert!.isShowing {
+            alert?.show()
+        } else {
+            let timing = UISpringTimingParameters()
+            let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
+            animator.addAnimations {
+                alert!.updateLayout()
+            }
+            animator.startAnimation()
+        }
         dismissAfter(duration: duration)
     }
     
