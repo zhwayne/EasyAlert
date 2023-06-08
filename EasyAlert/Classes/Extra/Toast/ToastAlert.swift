@@ -40,8 +40,10 @@ final class ToastAlert: Alert {
             addSubview(effectView)
             
             label.numberOfLines = 0
+            label.setContentCompressionResistancePriority(.required, for: .horizontal)
             
             indicator.isHidden = true
+            indicator.setContentHuggingPriority(.required, for: .horizontal)
             
             let stackView = UIStackView(arrangedSubviews: [indicator, label])
             stackView.translatesAutoresizingMaskIntoConstraints = false
