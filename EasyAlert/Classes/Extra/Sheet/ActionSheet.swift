@@ -20,7 +20,7 @@ open class ActionSheet: Sheet, _ActionAlertble {
     private let configuration: ActionAlertbleConfigurable
     
     public required init<T: AlertCustomizable>(
-        customizable: T,
+        customizable: T = EmptyView(),
         configuration: ActionAlertbleConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionSheet.Configuration.global
@@ -34,7 +34,8 @@ open class ActionSheet: Sheet, _ActionAlertble {
             actionGroupView = ActionGroupView(customView: viewController.view,
                                               actionLayout: actionLayout)
         } else {
-            fatalError()
+            actionGroupView = ActionGroupView(customView: nil,
+                                              actionLayout: actionLayout)
         }
 
         cancelActionGroupView = ActionGroupView(customView: nil, actionLayout: cancelActionLayout)
@@ -117,4 +118,9 @@ extension ActionSheet {
             action.view?.title = action.title
         }
     }
+}
+
+extension ActionSheet {
+    
+    public final class EmptyView: UIView, AlertCustomizable { }
 }
