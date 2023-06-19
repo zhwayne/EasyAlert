@@ -37,6 +37,12 @@ import UIKit
     
     private var window: AlertWindow?
     
+    #if DEBUG
+    deinit {
+        print("deinit \(self)")
+    }
+    #endif
+    
     public init<T: AlertCustomizable>(customizable: T) {
         guard customizable is UIView || customizable is UIViewController else {
             fatalError()
@@ -248,7 +254,7 @@ extension Alert {
             view.attach(alert: self)
             _showAlert(in: view)
         } else if let viewController = parent as? UIViewController {
-            viewController.attach(alert: self)
+            viewController.view.attach(alert: self)
             _showAlert(in: viewController)
         } else {
             setupWindow()
