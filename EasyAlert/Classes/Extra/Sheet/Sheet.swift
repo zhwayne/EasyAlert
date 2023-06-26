@@ -12,7 +12,7 @@ open class Sheet: Alert {
     /// The content will not extend beyond the bottom safe area if `ignoreBottomSafeArea` is set to `true`.
     public var ignoreBottomSafeArea: Bool = false
     
-    public override init<T>(customizable: T) where T : AlertCustomizable {
+    public override init(customizable: AlertCustomizable) {
         super.init(customizable: customizable)
         self.transitionAniamtor = SheetTransitionAnimator(sheet: self)
         backdropProvider.allowDismissWhenBackgroundTouch = true

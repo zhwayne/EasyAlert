@@ -255,7 +255,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             present(alertController, animated: true)
             
         case .customActionSheet:
-            let sheet = MyActionSheet()
+            let sheet = ActionSheet()
             let cancel = Action(title: "取消", style: .cancel)
             let confirm = Action(title: "确定", style: .default)
             let ignore = Action(title: "忽略", style: .destructive)

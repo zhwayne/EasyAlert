@@ -17,8 +17,8 @@ open class ActionAlert: Alert, _ActionAlertble {
     
     private let configuration: ActionAlertbleConfigurable
     
-    public required init<T: AlertCustomizable>(
-        customizable: T,
+    public required init(
+        customizable: AlertCustomizable,
         configuration: ActionAlertbleConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionAlert.Configuration.global

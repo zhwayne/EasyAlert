@@ -43,7 +43,7 @@ import UIKit
     }
     #endif
     
-    public init<T: AlertCustomizable>(customizable: T) {
+    public init(customizable: AlertCustomizable) {
         guard customizable is UIView || customizable is UIViewController else {
             fatalError()
         }

@@ -39,7 +39,7 @@ class MyActionSheet: ActionSheet {
     }
     
     @available(*, unavailable)
-    required init<T>(customizable: T, configuration: ActionAlertbleConfigurable? = nil) where T : AlertCustomizable {
+    override init(customizable: AlertCustomizable?, configuration: ActionAlertbleConfigurable? = nil) {
         fatalError("init(customizable:configuration:) has not been implemented")
     }
 }

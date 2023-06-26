@@ -130,7 +130,7 @@ class ActionGroupView: UIView, AlertCustomizable {
     func setCornerRadius(_ radius: CGFloat) {
         backgroundView.layer.cornerRadius = radius
         let view = representationSequenceView.separatableSequenceView
-        if actions.count == 1 && actions[0].style == .cancel {
+        if (actions.count == 1 && actions[0].style == .cancel) || customView == nil {
             view.setCornerRadius(radius)
         } else {
             view.setCornerRadius(radius, maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])

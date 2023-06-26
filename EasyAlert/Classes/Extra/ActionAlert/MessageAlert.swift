@@ -60,7 +60,7 @@ public final class MessageAlert: ActionAlert {
     }
 
     @available(*, unavailable)
-    public required init<T>(customizable: T, configuration: ActionAlertbleConfigurable? = nil) where T : AlertCustomizable {
+    public required init(customizable: AlertCustomizable, configuration: ActionAlertbleConfigurable? = nil) {
         fatalError("init(customizable:configuration:) has not been implemented")
     }
     

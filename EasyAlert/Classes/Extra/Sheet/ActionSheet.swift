@@ -18,9 +18,9 @@ open class ActionSheet: Sheet, _ActionAlertble {
     private var cancelActionGroupView: ActionGroupView
     
     private let configuration: ActionAlertbleConfigurable
-    
-    public required init<T: AlertCustomizable>(
-        customizable: T = EmptyView(),
+
+    public init(
+        customizable: AlertCustomizable? = nil,
         configuration: ActionAlertbleConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionSheet.Configuration.global
@@ -120,7 +120,4 @@ extension ActionSheet {
     }
 }
 
-extension ActionSheet {
-    
-    public final class EmptyView: UIView, AlertCustomizable { }
-}
+public final class EmptyContentView: UIView, AlertCustomizable { }
