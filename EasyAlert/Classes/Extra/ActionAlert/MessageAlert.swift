@@ -95,9 +95,10 @@ public final class MessageAlert: ActionAlert {
             if contentView != contentView.messageLabel {
                 contentView.addSubview(contentView.messageLabel)
                 contentView.messageLabel.translatesAutoresizingMaskIntoConstraints = false
-                contentView.messageLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 17).isActive = true
                 if title != nil {
                     contentView.messageLabel.topAnchor.constraint(equalTo: contentView.titleLabel.bottomAnchor, constant: 3).isActive = true
+                } else {
+                    contentView.messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17).isActive = true
                 }
                 contentView.messageLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
                 contentView.messageLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16).isActive = true
