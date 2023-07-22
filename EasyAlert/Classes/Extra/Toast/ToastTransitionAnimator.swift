@@ -53,7 +53,6 @@ struct ToastTransitionAnimator : TransitionAnimator {
         NSLayoutConstraint.deactivate(constraints)
         constraints.removeAll()
         defer {
-            constraints.forEach { $0.priority -= 100 }
             NSLayoutConstraint.activate(constraints)
         }
         
