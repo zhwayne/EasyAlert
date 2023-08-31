@@ -1,6 +1,0 @@
-framework module EasyAlert {
-  umbrella header "EasyAlert-umbrella.h"
-
-  export *
-  module * { export * }
-}
