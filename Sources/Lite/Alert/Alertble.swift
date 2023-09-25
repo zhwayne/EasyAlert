@@ -30,14 +30,14 @@ extension AlertContainerable {
     
     private var alerts: [Alertble] {
         get {
-            if let alerts = objc_getAssociatedObject(self, &AssociatedKey.alerts) as? [Alertble] {
+            if let alerts = objc_getAssociatedObject(self, AssociatedKey.alerts) as? [Alertble] {
                 return alerts
             }
-            objc_setAssociatedObject(self, &AssociatedKey.alerts, [] as [Alertble], .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, AssociatedKey.alerts, [] as [Alertble], .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             return []
         }
         set {
-            objc_setAssociatedObject(self, &AssociatedKey.alerts, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, AssociatedKey.alerts, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
@@ -62,5 +62,5 @@ extension AlertContainerable {
 }
 
 fileprivate struct AssociatedKey {
-    static var alerts = "alerts"
+    static var alerts = malloc(1)!
 }

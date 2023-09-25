@@ -80,30 +80,27 @@ public final class MessageAlert: ActionAlert {
         if title == nil {
             contentView.titleLabel.removeFromSuperview()
         } else {
-            if contentView != contentView.titleLabel {
-                contentView.addSubview(contentView.titleLabel)
-                contentView.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-                contentView.titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17).isActive = true
-                contentView.titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
-                contentView.titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16).isActive = true
-                contentView.titleLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -17).isActive = true
-            }
+            contentView.addSubview(contentView.titleLabel)
+            contentView.titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            contentView.titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17).isActive = true
+            contentView.titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
+            contentView.titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16).isActive = true
+            contentView.titleLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -17).isActive = true
         }
         if message == nil {
             contentView.messageLabel.removeFromSuperview()
+            contentView.titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -17).isActive = true
         } else {
-            if contentView != contentView.messageLabel {
-                contentView.addSubview(contentView.messageLabel)
-                contentView.messageLabel.translatesAutoresizingMaskIntoConstraints = false
-                if title != nil {
-                    contentView.messageLabel.topAnchor.constraint(equalTo: contentView.titleLabel.bottomAnchor, constant: 3).isActive = true
-                } else {
-                    contentView.messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17).isActive = true
-                }
-                contentView.messageLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
-                contentView.messageLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16).isActive = true
-                contentView.messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
+            contentView.addSubview(contentView.messageLabel)
+            contentView.messageLabel.translatesAutoresizingMaskIntoConstraints = false
+            if title != nil {
+                contentView.messageLabel.topAnchor.constraint(equalTo: contentView.titleLabel.bottomAnchor, constant: 3).isActive = true
+            } else {
+                contentView.messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17).isActive = true
             }
+            contentView.messageLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
+            contentView.messageLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16).isActive = true
+            contentView.messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
         }
     }
 }

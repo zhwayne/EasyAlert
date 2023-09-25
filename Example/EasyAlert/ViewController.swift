@@ -264,7 +264,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             sheet.show()
             
         case .messageToast:
-            Toast.show(message)
+//            Toast.show(message)
+            let sheet = Sheet(customizable: MyAlertViewController())
+            sheet.ignoreBottomSafeArea = true
+            sheet.show()
         }
     }
 }

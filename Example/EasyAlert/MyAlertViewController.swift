@@ -24,14 +24,33 @@ class MyAlertViewController: UIViewController, AlertCustomizable {
     deinit {
         print(#function)
     }
+    
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .orange
         // Do any additional setup after loading the view.
         
-        let item = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(handleClose))
-        navigationItem.rightBarButtonItem = item
+//        let item = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(handleClose))
+//        navigationItem.rightBarButtonItem = item
+        
+        let saveButton = UIButton(type: .system)
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.backgroundColor = UIColor.systemGreen
+        saveButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        saveButton.clipsToBounds = true
+        saveButton.layer.cornerRadius = 24
+        view.addSubview(saveButton)
+        
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        saveButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 300).isActive = true
+        saveButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        saveButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+        saveButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        saveButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
     }
     
     @objc

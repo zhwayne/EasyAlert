@@ -23,6 +23,18 @@ final class AlertContainerViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Fix for child controllers not receiving an update on safe area insets
+        // when they're partially not showing
+        for child in children {
+            let preInsets = child.additionalSafeAreaInsets
+            child.additionalSafeAreaInsets = view.safeAreaInsets
+            child.additionalSafeAreaInsets = preInsets
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         resetRepresentationView()
         if let touch = touches.first {
