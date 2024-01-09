@@ -21,9 +21,7 @@ import UIKit
     
     public var isShowing: Bool { backdropView.superview != nil }
     
-    public var layoutGuide = LayoutGuide() {
-        didSet { updateLayout() }
-    }
+    public var layoutGuide = LayoutGuide()
     
     private let alertContainerController = AlertContainerController()
     

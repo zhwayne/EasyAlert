@@ -30,7 +30,7 @@ open class ActionAlert: Alert, _ActionAlertble {
             actionGroupView = ActionGroupView(customView: viewController.view,
                                               actionLayout: actionLayout)
         } else {
-            fatalError()
+            fatalError("Unsupported type: \(type(of: customizable))")
         }
         super.init(customizable: actionGroupView)
         

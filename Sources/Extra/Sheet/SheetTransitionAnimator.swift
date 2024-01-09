@@ -22,32 +22,24 @@ struct SheetTransitionAnimator : TransitionAnimator {
         context.container.transform = CGAffineTransform(translationX: 0, y: height)
         context.dimmingView.alpha = 0
         
-        let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignore.*/, timingParameters: timing)
-        animator.addAnimations {
+        withSpringTimingAnimation {
             context.dimmingView.alpha = 1
             context.container.transform = .identity
-        }
-        animator.addCompletion { position in
+        } completion: { _ in
             completion()
         }
-        animator.startAnimation()
     }
     
     func dismiss(context: TransitionContext, completion: @escaping () -> Void) {
         context.container.layoutIfNeeded()
         let height = context.frame.height - context.container.frame.minY
         
-        let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
-        animator.addAnimations {
+        withSpringTimingAnimation {
             context.dimmingView.alpha = 0
             context.container.transform = CGAffineTransform(translationX: 0, y: height)
-        }
-        animator.addCompletion { position in
+        } completion: { _ in
             completion()
         }
-        animator.startAnimation()
     }
     
     mutating func update(context: TransitionContext, layoutGuide: LayoutGuide) {
@@ -93,6 +85,7 @@ struct SheetTransitionAnimator : TransitionAnimator {
         case .automatic:
             let height = superview.frame.height
             let constraint = container.heightAnchor.constraint(lessThanOrEqualToConstant: height)
+            constraint.priority = .defaultHigh
             constraints.append(constraint)
             
         case .fixed(let value):

@@ -16,30 +16,22 @@ struct AlertTransitionAnimator : TransitionAnimator {
         context.container.alpha = 0
         context.dimmingView.alpha = 0
 
-        let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
-        animator.addAnimations {
+        withSpringTimingAnimation {
             context.dimmingView.alpha = 1
             context.container.alpha = 1
             context.container.transform = .identity
-        }
-        animator.addCompletion { position in
+        } completion: { _ in
             completion()
         }
-        animator.startAnimation()
     }
     
     func dismiss(context: TransitionContext, completion: @escaping () -> Void) {
-        let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
-        animator.addAnimations {
+        withSpringTimingAnimation {
             context.container.alpha = 0
             context.dimmingView.alpha = 0
-        }
-        animator.addCompletion { position in
+        } completion: { _ in
             completion()
         }
-        animator.startAnimation()
     }
     
     mutating func update(context: TransitionContext, layoutGuide: LayoutGuide) {

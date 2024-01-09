@@ -57,7 +57,6 @@ open class ActionSheet: Sheet, _ActionAlertble {
         actionGroupView.setCornerRadius(configuration.cornerRadius)
         cancelActionGroupView.setCornerRadius(configuration.cornerRadius)
     }
-    
 }
 
 extension ActionSheet {

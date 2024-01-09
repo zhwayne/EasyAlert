@@ -14,37 +14,27 @@ struct ToastTransitionAnimator : TransitionAnimator {
     var position: Toast.Position = .bottom
     
     func show(context: TransitionContext, completion: @escaping () -> Void) {
-        
         let transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         context.container.transform = transform
         context.container.alpha = 0
         
-        let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
-        animator.addAnimations {
+        withSpringTimingAnimation {
             context.container.alpha = 1
             context.container.transform = .identity
-        }
-        animator.addCompletion { position in
+        } completion: { _ in
             completion()
         }
-        animator.startAnimation()
     }
     
     func dismiss(context: TransitionContext, completion: @escaping () -> Void) {
-        
         let transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         
-        let timing = UISpringTimingParameters()
-        let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
-        animator.addAnimations {
+        withSpringTimingAnimation {
             context.container.alpha = 0
             context.container.transform = transform
-        }
-        animator.addCompletion { position in
+        } completion: { _ in
             completion()
         }
-        animator.startAnimation()
     }
     
     mutating func update(context: TransitionContext, layoutGuide: LayoutGuide) {
