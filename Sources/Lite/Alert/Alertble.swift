@@ -7,24 +7,24 @@
 
 import UIKit
 
-@MainActor public protocol AlertContainerable: AnyObject { }
+@MainActor public protocol AlertContainer: AnyObject { }
 
-extension UIView: AlertContainerable { }
+extension UIView: AlertContainer { }
 
-extension UIViewController: AlertContainerable { }
+extension UIViewController: AlertContainer { }
 
-@MainActor public protocol Alertble : AlertDismissible {
+@MainActor public protocol Alertble : Dismissible {
     
     /// A value that marks whether an alert is being displayed.
     var isShowing: Bool { get }
     
     /// Show alert in the container.
     /// - Parameter container: An instance of a `UIView` or `UIViewController` that implements the
-    /// `AlertContainerable`.
-    func show(in container: AlertContainerable?)
+    /// `AlertContainer`.
+    func show(in container: AlertContainer?)
 }
 
-extension AlertContainerable {
+extension AlertContainer {
     
     // MARK: - Associated Objects
     

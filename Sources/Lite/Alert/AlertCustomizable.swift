@@ -41,4 +41,4 @@ import UIKit
 /// let alert = MyAlert(image: image)
 /// alert.show()
 ///
-public protocol AlertCustomizable: AlertDismissible { }
+public protocol AlertCustomizable: Dismissible { }

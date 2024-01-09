@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension UIView {
+extension UIView {
     
     // TODO: 也许应该放开查询 `UIView` 中全部 alert 的 API？
     // var visiableAlert: Alertble? { alerts.last }

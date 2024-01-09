@@ -41,7 +41,7 @@ public enum Height {
 /// A guide for describing the layout of an alert.
 public struct LayoutGuide {
     /// The width of the alert.
-    public var width: Width
+    public var width: Width = .fixed(270)
     
     /// The height of the alert.
     public var height: Height = .automatic
@@ -50,7 +50,7 @@ public struct LayoutGuide {
     public var edgeInsets: UIEdgeInsets = .zero
     
     /// Creates a new `LayoutGuide` with the specified width, height, and edge insets.
-    public init(width: Width, height: Height = .automatic, edgeInsets: UIEdgeInsets = .zero) {
+    public init(width: Width = .fixed(270), height: Height = .automatic, edgeInsets: UIEdgeInsets = .zero) {
         self.width = width
         self.height = height
         self.edgeInsets = edgeInsets
@@ -85,27 +85,4 @@ public struct TransitionContext {
     
     /// Updates the layout of the alert during the transition.
     mutating func update(context: TransitionContext, layoutGuide: LayoutGuide)
-}
-
-@available(iOS 13.0, *)
-extension TransitionAnimator {
-    /// An asynchronous version of `show(context:completion:)` that suspends until the animation is complete.
-    @MainActor
-    mutating func show(context: TransitionContext) async {
-        await withUnsafeContinuation({ continuation in
-            show(context: context) {
-                continuation.resume()
-            }
-        })
-    }
-    
-    /// An asynchronous version of `dismiss(context:completion:)` that suspends until the animation is complete.
-    @MainActor
-    mutating func dismiss(context: TransitionContext) async {
-        await withUnsafeContinuation({ continuation in
-            dismiss(context: context) {
-                continuation.resume()
-            }
-        })
-    }
 }

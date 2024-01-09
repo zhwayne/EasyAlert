@@ -21,9 +21,11 @@ import UIKit
     
     public var isShowing: Bool { backdropView.superview != nil }
     
-    public var layoutGuide = LayoutGuide(width: .fixed(270))
+    public var layoutGuide = LayoutGuide() {
+        didSet { updateLayout() }
+    }
     
-    private let alertContainerViewController = AlertContainerViewController()
+    private let alertContainerController = AlertContainerController()
     
     private let backdropView = DimmingKnockoutBackdropView()
     
@@ -45,7 +47,7 @@ import UIKit
     
     public init(customizable: AlertCustomizable) {
         guard customizable is UIView || customizable is UIViewController else {
-            fatalError()
+            fatalError("Unsupported type: \(type(of: customizable))")
         }
         self.customizable = customizable
         observeDeviceRotation()
@@ -63,15 +65,15 @@ import UIKit
     }
     
     private func configBackdrop() {
+        backdropView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backdropView.addGestureRecognizer(tapTarget.tapGestureRecognizer)
-        backdropView.frame = UIScreen.main.bounds
         backdropView.hitTest = { [unowned self] view, point in
             switch backdropProvider.penetrationScope {
             case .none: return false
             case .all: return true
             case .dimming:
-                let point = view.convert(point, to: alertContainerViewController.view)
-                return !alertContainerViewController.view.bounds.contains(point)
+                let point = view.convert(point, to: alertContainerController.view)
+                return !alertContainerController.view.bounds.contains(point)
             }
         }
         backdropView.willRemoveFromSuperviewObserver = { [weak self] in
@@ -83,7 +85,7 @@ import UIKit
         tapTarget.gestureRecognizerShouldBeginBlock = { [unowned self] gestureRecognizer in
             guard let backgroundView = gestureRecognizer.view else { return false }
             let point = gestureRecognizer.location(in: backgroundView)
-            return !alertContainerViewController.view.frame.contains(point)
+            return !alertContainerController.view.frame.contains(point)
         }
         tapTarget.tapHandler = { [unowned self] in
             backdropView.endEditing(false)
@@ -99,7 +101,7 @@ import UIKit
         callbacks.append(callback)
     }
     
-    public func show(in container: AlertContainerable? = nil) {
+    public func show(in container: AlertContainer? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard !isShowing else { return }
         
@@ -178,17 +180,17 @@ extension Alert {
     }
     
     private func configContainer() {
-        backdropView.addSubview(alertContainerViewController.view)
+        backdropView.addSubview(alertContainerController.view)
         
         // Add view or viewController
         if let view = customizable as? UIView {
-            alertContainerViewController.view.addSubview(view)
+            alertContainerController.view.addSubview(view)
             layoutFill(view)
         } else if let viewController = customizable as? UIViewController {
-            viewController.willMove(toParent: alertContainerViewController)
-            alertContainerViewController.addChild(viewController)
-            alertContainerViewController.view.addSubview(viewController.view)
-            viewController.didMove(toParent: alertContainerViewController)
+            viewController.willMove(toParent: alertContainerController)
+            alertContainerController.addChild(viewController)
+            alertContainerController.view.addSubview(viewController.view)
+            viewController.didMove(toParent: alertContainerController)
             layoutFill(viewController.view)
         }
     }
@@ -219,12 +221,12 @@ extension Alert {
         willShow()
         callbacks.forEach { $0.willShow?() }
         
-        alertContainerViewController.view.isUserInteractionEnabled = false
+        alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
         transitionAniamtor.show(context: transitioningContext) { [weak self] in
             self?.didShow()
             self?.callbacks.forEach { $0.didShow?() }
-            self?.alertContainerViewController.view.isUserInteractionEnabled = true
+            self?.alertContainerController.view.isUserInteractionEnabled = true
             self?.tapTarget.tapGestureRecognizer.isEnabled = true
             if let viewController = self?.customizable as? UIViewController {
                 viewController.endAppearanceTransition()
@@ -246,9 +248,9 @@ extension Alert {
         performShowWithAnimation()
     }
     
-    private func showAlert(in parent: AlertContainerable?) {
+    private func showAlert(in parent: AlertContainer?) {
         // Set associated object.
-        alertContainerViewController.weakAlert = self
+        alertContainerController.weakAlert = self
         
         if let view = parent as? UIView {
             view.attach(alert: self)
@@ -275,7 +277,7 @@ extension Alert {
         willDismiss()
         callbacks.forEach { $0.willDismiss?() }
         
-        alertContainerViewController.view.isUserInteractionEnabled = false
+        alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
         transitionAniamtor.dismiss(context: transitioningContext) { [weak self] in
             self?.didDismiss()
@@ -285,13 +287,13 @@ extension Alert {
             }
             completion?()
             self?.clean()
-            self?.alertContainerViewController.view.isUserInteractionEnabled = true
+            self?.alertContainerController.view.isUserInteractionEnabled = true
             self?.tapTarget.tapGestureRecognizer.isEnabled = true
         }
     }
     
     private func clean() {
-        alertContainerViewController.weakAlert = nil
+        alertContainerController.weakAlert = nil
         
         if let view = customizable as? UIView {
             view.removeFromSuperview()
@@ -302,7 +304,7 @@ extension Alert {
         }
         if let parent = backdropView.superview {
             parent.detach(alert: self)
-            alertContainerViewController.view.removeFromSuperview()
+            alertContainerController.view.removeFromSuperview()
             backdropView.removeFromSuperview()
         }
         window?.resignKey()
@@ -328,7 +330,7 @@ extension Alert {
     
     private var transitioningContext: TransitionContext {
         TransitionContext(
-            container: alertContainerViewController.view,
+            container: alertContainerController.view,
             backdropView: backdropView,
             dimmingView: dimmingView,
             interfaceOrientation: interfaceOrientation

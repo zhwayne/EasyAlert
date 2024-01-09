@@ -8,7 +8,7 @@
 import Foundation
 
 /// 自定义 action view 基础协议
-public protocol ActionCustomizable : AlertDismissible {
+public protocol ActionCustomizable : Dismissible {
     
     /// action 标题
     var title: String? { get set }

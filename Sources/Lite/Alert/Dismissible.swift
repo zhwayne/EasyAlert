@@ -1,5 +1,5 @@
 //
-//  AlertDismissible.swift
+//  Dismissible.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/5/13.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-@MainActor public protocol AlertFetchable: AnyObject { }
+@MainActor public protocol Fetchable: AnyObject { }
 
-@MainActor public protocol AlertDismissible : AlertFetchable {
+@MainActor public protocol Dismissible : Fetchable {
     
     /// Dismiss the alert.
     /// - Parameter completion: the `completion` callback will invoke after alert dismissed.
@@ -19,20 +19,20 @@ import UIKit
     func dismiss() async
 }
 
-extension AlertFetchable {
+extension Fetchable {
     
     // Gets the alert in the current UIView or UIViewController.
     var alert: Alert? {
         if let view = self as? UIView {
             for view in sequence(first: view.superview, next: { $0?.superview }) {
-                if let responder = view?.next as? AlertContainerViewController {
+                if let responder = view?.next as? AlertContainerController {
                     return responder.weakAlert
                 }
             }
             return nil
         }
         if let viewController = self as? UIViewController {
-            guard let parent = viewController.parent as? AlertContainerViewController else {
+            guard let parent = viewController.parent as? AlertContainerController else {
                 return nil
             }
             return parent.weakAlert
@@ -41,7 +41,7 @@ extension AlertFetchable {
     }
 }
 
-extension AlertDismissible {
+extension Dismissible {
     
     /// Dismiss the alert.
     /// - Parameter completion: the `completion` callback will invoke after alert dismissed.
