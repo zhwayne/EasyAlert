@@ -9,13 +9,13 @@ import UIKit
 
 class ActionGroupView: UIView, AlertCustomizable {
     
-    var actionLayout: ActionLayoutable
-    
     var actions: [Action] = []
     
-    let customView: UIView?
+    private var actionLayout: ActionLayoutable
     
-    private let backgroundView: UIVisualEffectView
+    private let customView: UIView?
+    
+    private let backgroundView: UIView
     
     private let representationSequenceView = ActionRepresentationSequenceView()
     
@@ -46,7 +46,7 @@ class ActionGroupView: UIView, AlertCustomizable {
         addSubview(containerView)
     }
     
-    override func didMoveToSuperview() {
+    public override func didMoveToSuperview() {
         super.didMoveToSuperview()
         guard superview != nil else { return }
         
