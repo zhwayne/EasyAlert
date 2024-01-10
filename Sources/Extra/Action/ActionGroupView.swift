@@ -114,7 +114,7 @@ class ActionGroupView: UIView, AlertCustomizable {
         }
         separatorView.isHidden = actionLayout.prefersSeparatorHidden
         let separatableSequenceView = representationSequenceView.separatableSequenceView
-        actionLayout.layout(actionViews: buttons, container: separatableSequenceView)
+        actionLayout.layout(views: buttons, container: separatableSequenceView)
     }
     
     @objc

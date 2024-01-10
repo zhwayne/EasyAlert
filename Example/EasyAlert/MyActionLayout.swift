@@ -19,10 +19,10 @@ struct MyActionLayout : ActionLayoutable {
         stackView.spacing = 16
     }
 
-    func layout(actionViews: [UIView], container: UIView) {
+    func layout(views: [UIView], container: UIView) {
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        actionViews.forEach { stackView.addArrangedSubview($0) }
-        stackView.axis = actionViews.count <= 3 ? .horizontal : .vertical
+        views.forEach { stackView.addArrangedSubview($0) }
+        stackView.axis = views.count <= 3 ? .horizontal : .vertical
         
         NSLayoutConstraint.deactivate(stackView.constraints)
         container.addSubview(stackView)

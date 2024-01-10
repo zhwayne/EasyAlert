@@ -22,7 +22,7 @@ struct AlertActionLayout: ActionLayoutable {
         stackView.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    mutating func layout(actionViews: [UIView], container: UIView) {
+    mutating func layout(views: [UIView], container: UIView) {
         
         guard let container = container as? ActionSeparatableSequenceView else {
             return
@@ -33,8 +33,8 @@ struct AlertActionLayout: ActionLayoutable {
         defer { NSLayoutConstraint.activate(constraints) }
         
         stackView.subviews.forEach { $0.removeFromSuperview() }
-        actionViews.forEach { stackView.addArrangedSubview($0) }
-        stackView.axis = actionViews.count <= 2 ? .horizontal : .vertical
+        views.forEach { stackView.addArrangedSubview($0) }
+        stackView.axis = views.count <= 2 ? .horizontal : .vertical
         container.addSubview(stackView)
         
         constraints.append(stackView.topAnchor.constraint(equalTo: container.topAnchor))
@@ -42,7 +42,7 @@ struct AlertActionLayout: ActionLayoutable {
         constraints.append(stackView.bottomAnchor.constraint(equalTo: container.bottomAnchor))
         constraints.append(stackView.rightAnchor.constraint(equalTo: container.rightAnchor))
         
-        if actionViews.count == 2 {
+        if views.count == 2 {
             let separator = container.verticalSeparator(at: 0)
             stackView.addSubview(separator)
             constraints.append(separator.topAnchor.constraint(equalTo: stackView.topAnchor))
@@ -50,7 +50,7 @@ struct AlertActionLayout: ActionLayoutable {
             constraints.append(separator.centerXAnchor.constraint(equalTo: stackView.centerXAnchor))
             constraints.append(separator.widthAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale))
         } else {
-            actionViews.enumerated().forEach { (idx, button) in
+            views.enumerated().forEach { (idx, button) in
                 if idx == 0 { return }
                 let separator = container.horizontalSeparator(at: idx - 1)
                 stackView.addSubview(separator)

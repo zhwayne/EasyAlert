@@ -23,7 +23,7 @@ struct SheetActionLayout: ActionLayoutable {
         stackView.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    mutating func layout(actionViews: [UIView], container: UIView) {
+    mutating func layout(views: [UIView], container: UIView) {
         
         guard let container = container as? ActionSeparatableSequenceView else {
             return
@@ -34,7 +34,7 @@ struct SheetActionLayout: ActionLayoutable {
         defer { NSLayoutConstraint.activate(constraints) }
         
         stackView.subviews.forEach { $0.removeFromSuperview() }
-        actionViews.forEach { stackView.addArrangedSubview($0) }
+        views.forEach { stackView.addArrangedSubview($0) }
         container.addSubview(stackView)
        
         constraints.append(stackView.topAnchor.constraint(equalTo: container.topAnchor))
@@ -42,7 +42,7 @@ struct SheetActionLayout: ActionLayoutable {
         constraints.append(stackView.bottomAnchor.constraint(equalTo: container.bottomAnchor))
         constraints.append(stackView.rightAnchor.constraint(equalTo: container.rightAnchor))
         
-        actionViews.enumerated().forEach { (idx, button) in
+        views.enumerated().forEach { (idx, button) in
             if idx == 0 { return }
             let separator = container.horizontalSeparator(at: idx - 1)
             stackView.addSubview(separator)
