@@ -1,5 +1,5 @@
 //
-//  MyActionLayout.swift
+//  MyAlertActionLayout.swift
 //  EasyAlert_Example
 //
 //  Created by iya on 2022/5/14.
@@ -9,7 +9,7 @@
 import UIKit
 import EasyAlert
 
-struct MyActionLayout : ActionLayoutable {
+struct MyAlertActionLayout : ActionLayoutable {
     
     private let stackView: UIStackView
     

@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B07712829501C7D0027221A /* MyAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B07712729501C7D0027221A /* MyAlertViewController.swift */; };
 		0B2BF3A52801D4040017F987 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B2BF3A32801D4040017F987 /* Main.storyboard */; };
-		0B3151C0282F789F00F0F9B8 /* MyActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3151BF282F789F00F0F9B8 /* MyActionView.swift */; };
-		0B3151C2282F7C4D00F0F9B8 /* MyActionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3151C1282F7C4D00F0F9B8 /* MyActionLayout.swift */; };
+		0B3151C2282F7C4D00F0F9B8 /* MyAlertActionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3151C1282F7C4D00F0F9B8 /* MyAlertActionLayout.swift */; };
 		0B61E8512841CC52006CFC2C /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B61E8502841CC52006CFC2C /* Section.swift */; };
 		0B7EF7312AA06037009E7C1C /* EasyAlert in Frameworks */ = {isa = PBXBuildFile; productRef = 0B7EF7302AA06037009E7C1C /* EasyAlert */; };
 		0BCC3FF5293F55AF004D83FB /* MyActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCC3FF4293F55AF004D83FB /* MyActionSheet.swift */; };
@@ -19,6 +18,9 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		A9EA658B2B4F8D070031589A /* MyAlertActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EA658A2B4F8D070031589A /* MyAlertActionView.swift */; };
+		A9EA658D2B4F8D3C0031589A /* MySheetActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EA658C2B4F8D3C0031589A /* MySheetActionView.swift */; };
+		A9EA658F2B4F8ED50031589A /* MySheetActionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EA658E2B4F8ED50031589A /* MySheetActionLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,8 +36,7 @@
 /* Begin PBXFileReference section */
 		0B07712729501C7D0027221A /* MyAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAlertViewController.swift; sourceTree = "<group>"; };
 		0B2BF3A42801D4040017F987 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0B3151BF282F789F00F0F9B8 /* MyActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActionView.swift; sourceTree = "<group>"; };
-		0B3151C1282F7C4D00F0F9B8 /* MyActionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActionLayout.swift; sourceTree = "<group>"; };
+		0B3151C1282F7C4D00F0F9B8 /* MyAlertActionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAlertActionLayout.swift; sourceTree = "<group>"; };
 		0B61E8502841CC52006CFC2C /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		0BCC3FF4293F55AF004D83FB /* MyActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActionSheet.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* EasyAlert_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyAlert_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,6 +49,9 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		A967D16C2AC15C8B007F9A5B /* EasyAlert */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = EasyAlert; path = ..; sourceTree = "<group>"; };
+		A9EA658A2B4F8D070031589A /* MyAlertActionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAlertActionView.swift; sourceTree = "<group>"; };
+		A9EA658C2B4F8D3C0031589A /* MySheetActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySheetActionView.swift; sourceTree = "<group>"; };
+		A9EA658E2B4F8ED50031589A /* MySheetActionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySheetActionLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,8 +99,10 @@
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				0B07712729501C7D0027221A /* MyAlertViewController.swift */,
 				0B61E8502841CC52006CFC2C /* Section.swift */,
-				0B3151BF282F789F00F0F9B8 /* MyActionView.swift */,
-				0B3151C1282F7C4D00F0F9B8 /* MyActionLayout.swift */,
+				0B3151C1282F7C4D00F0F9B8 /* MyAlertActionLayout.swift */,
+				A9EA658E2B4F8ED50031589A /* MySheetActionLayout.swift */,
+				A9EA658A2B4F8D070031589A /* MyAlertActionView.swift */,
+				A9EA658C2B4F8D3C0031589A /* MySheetActionView.swift */,
 				0B2BF3A32801D4040017F987 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -252,10 +258,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9EA658B2B4F8D070031589A /* MyAlertActionView.swift in Sources */,
 				0B61E8512841CC52006CFC2C /* Section.swift in Sources */,
+				A9EA658D2B4F8D3C0031589A /* MySheetActionView.swift in Sources */,
+				A9EA658F2B4F8ED50031589A /* MySheetActionLayout.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
-				0B3151C2282F7C4D00F0F9B8 /* MyActionLayout.swift in Sources */,
-				0B3151C0282F789F00F0F9B8 /* MyActionView.swift in Sources */,
+				0B3151C2282F7C4D00F0F9B8 /* MyAlertActionLayout.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				0BCC3FF5293F55AF004D83FB /* MyActionSheet.swift in Sources */,
 				0B07712829501C7D0027221A /* MyAlertViewController.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  MyActionView.swift
+//  MyAlertActionView.swift
 //  EasyAlert_Example
 //
 //  Created by iya on 2022/5/14.
@@ -9,7 +9,7 @@
 import UIKit
 import EasyAlert
 
-final class MyActionView: UIView, ActionCustomizable {
+final class MyAlertActionView: UIView, ActionCustomizable {
     
     var isHighlighted: Bool = false {
         didSet {

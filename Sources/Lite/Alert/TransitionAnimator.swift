@@ -47,13 +47,13 @@ public struct LayoutGuide {
     public var height: Height = .automatic
     
     /// The edge insets of the alert.
-    public var edgeInsets: UIEdgeInsets = .zero
+    public var contentInsets: UIEdgeInsets = .zero
     
     /// Creates a new `LayoutGuide` with the specified width, height, and edge insets.
-    public init(width: Width = .fixed(270), height: Height = .automatic, edgeInsets: UIEdgeInsets = .zero) {
+    public init(width: Width = .fixed(270), height: Height = .automatic, contentInsets: UIEdgeInsets = .zero) {
         self.width = width
         self.height = height
-        self.edgeInsets = edgeInsets
+        self.contentInsets = contentInsets
     }
 }
 

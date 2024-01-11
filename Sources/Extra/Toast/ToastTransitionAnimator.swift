@@ -46,7 +46,7 @@ struct ToastTransitionAnimator : TransitionAnimator {
             NSLayoutConstraint.activate(constraints)
         }
         
-        let edgeInsets = layoutGuide.edgeInsets
+        let edgeInsets = layoutGuide.contentInsets
         let container = context.container
         guard let superview = container.superview else { return }
 

@@ -24,11 +24,12 @@ final class ActionSeparatableSequenceView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setCornerRadius(_ radius: CGFloat, maskedCorners: CACornerMask? = nil) {
-        let maskedCorners = maskedCorners
-        ?? [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+    func setCornerRadius(_ radius: CGFloat, corners: UIRectCorner = .allCorners) {
         layer.cornerRadius = radius
-        layer.maskedCorners = maskedCorners
+        layer.maskedCorners = corners.layerMaskedCorners
+        if #available(iOS 13.0, *) {
+            layer.cornerCurve = .continuous
+        }
     }
     
     func horizontalSeparator(at index: Int) -> UIView {
@@ -45,5 +46,17 @@ final class ActionSeparatableSequenceView: UIView {
             return verticalSeparator(at: index)
         }
         return verticalSeparators[index]
+    }
+}
+
+extension UIRectCorner {
+    
+    var layerMaskedCorners: CACornerMask {
+        var mask = CACornerMask(rawValue: 0)
+        if contains(.topLeft) { mask.insert(.layerMinXMinYCorner) }
+        if contains(.topRight) { mask.insert(.layerMaxXMinYCorner) }
+        if contains(.bottomLeft) { mask.insert(.layerMinXMaxYCorner) }
+        if contains(.bottomRight) { mask.insert(.layerMaxXMaxYCorner) }
+        return mask
     }
 }

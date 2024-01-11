@@ -189,7 +189,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.show()
             
         case .leftAlignment:
-            var configuration = MessageAlert.Configuration()
+            var configuration = MessageAlert.Configuration.global
             configuration.titleConfiguration.alignment = .left
             configuration.messageConfiguration.alignment = .left
             
@@ -202,11 +202,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             
         case .cornerRadius:
             
-            var configuration = MessageAlert.Configuration()
+            var configuration = MessageAlert.Configuration.global
             configuration.titleConfiguration.alignment = .left
             configuration.messageConfiguration.alignment = .left
-            configuration.actionLayoutType = MyActionLayout.self
-            configuration.actionViewType = MyActionView.self
+            configuration.actionLayoutType = MyAlertActionLayout.self
+            configuration.actionViewType = MyAlertActionView.self
             
             let alert = MessageAlert(title: alertTitle, message: message, configuration: configuration)
             let cancel = Action(title: "取消", style: .cancel)
@@ -255,19 +255,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             present(alertController, animated: true)
             
         case .customActionSheet:
-            let sheet = ActionSheet()
+            var configuration = ActionSheet.Configuration.global
+            configuration.cancelSpacing = 0
+            configuration.actionViewType = MySheetActionView.self
+            configuration.actionLayoutType = MySheetActionLayout.self
+            configuration.contentInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+
+            let sheet = ActionSheet(configuration: configuration)
             let cancel = Action(title: "取消", style: .cancel)
             let confirm = Action(title: "确定", style: .default)
             let ignore = Action(title: "忽略", style: .destructive)
-            let other = Action(title: "其他", style: .default)
-            sheet.addActions([cancel, confirm, ignore, other])
+            sheet.addActions([cancel, confirm, ignore])
             sheet.show()
             
         case .messageToast:
-//            Toast.show(message)
-            let sheet = Sheet(customizable: MyAlertViewController())
-            sheet.ignoreBottomSafeArea = true
-            sheet.show()
+            Toast.show(message)
         }
     }
 }

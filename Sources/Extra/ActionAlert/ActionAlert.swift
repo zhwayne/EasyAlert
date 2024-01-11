@@ -10,8 +10,6 @@ import UIKit
 open class ActionAlert: Alert, _ActionAlertble {
     
     var actions: [Action] { actionGroupView.actions }
-
-    public static var globalConfiguration = Configuration()
     
     private let actionGroupView: ActionGroupView
     
@@ -34,6 +32,7 @@ open class ActionAlert: Alert, _ActionAlertble {
         }
         super.init(customizable: actionGroupView)
         
+        layoutGuide.contentInsets = self.configuration.contentInsets
         let decorator = TransitionAnimatorActionGroupDecorator(
             aniamtor: AlertTransitionAnimator(),
             actionGroupViews: [actionGroupView]
@@ -44,6 +43,19 @@ open class ActionAlert: Alert, _ActionAlertble {
     open override func willLayoutContainer() {
         super.willLayoutContainer()
         actionGroupView.setCornerRadius(configuration.cornerRadius)
+    }
+}
+
+extension ActionAlert {
+    
+    public func setPresentationBackground(view: UIView) {
+        actionGroupView.backgroundView = view
+    }
+    
+    public func setPresentationBackground(color: UIColor) {
+        let view = UIView()
+        view.backgroundColor = color
+        setPresentationBackground(view: view)
     }
 }
 

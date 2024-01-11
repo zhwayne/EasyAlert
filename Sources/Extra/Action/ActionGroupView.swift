@@ -7,6 +7,11 @@
 
 import UIKit
 
+public enum PresentationBackgroundDomain {
+    case normal
+    case cancel
+}
+
 class ActionGroupView: UIView, AlertCustomizable {
     
     var actions: [Action] = []
@@ -15,7 +20,15 @@ class ActionGroupView: UIView, AlertCustomizable {
     
     private let customView: UIView?
     
-    private let backgroundView: UIView
+    var backgroundView: UIView {
+        didSet {
+            oldValue.removeFromSuperview()
+            backgroundView.clipsToBounds = true
+            backgroundView.frame = bounds
+            backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            insertSubview(backgroundView, at: 0)
+        }
+    }
     
     private let representationSequenceView = ActionRepresentationSequenceView()
     
@@ -128,12 +141,15 @@ class ActionGroupView: UIView, AlertCustomizable {
     }
     
     func setCornerRadius(_ radius: CGFloat) {
+        if #available(iOS 13.0, *) {
+            backgroundView.layer.cornerCurve = .continuous
+        }
         backgroundView.layer.cornerRadius = radius
         let view = representationSequenceView.separatableSequenceView
         if (actions.count == 1 && actions[0].style == .cancel) || customView == nil {
             view.setCornerRadius(radius)
         } else {
-            view.setCornerRadius(radius, maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+            view.setCornerRadius(radius, corners: [.bottomLeft, .bottomRight])
         }
     }
 }

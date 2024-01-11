@@ -76,7 +76,7 @@ final class ToastAlert: Alert {
         let bounds = UIScreen.main.bounds
         let width = min(bounds.width, bounds.height)
         layoutGuide = LayoutGuide(width: .flexible(width),
-                                  edgeInsets: UIEdgeInsets(top: 0, left: 36, bottom: 0, right: 36))
+                                  contentInsets: UIEdgeInsets(top: 0, left: 36, bottom: 0, right: 36))
     }
     
     override func willShow() {

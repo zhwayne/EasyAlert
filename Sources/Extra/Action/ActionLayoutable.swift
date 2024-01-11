@@ -18,7 +18,7 @@ public protocol ActionLayoutable {
 
 public extension ActionLayoutable {
     
-    var prefersSeparatorHidden: Bool { true }
+    var prefersSeparatorHidden: Bool { false }
 }
 
 public extension ActionLayoutable {

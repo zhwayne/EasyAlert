@@ -11,6 +11,11 @@ extension MessageAlert {
     
     public struct Configuration: ActionAlertbleConfigurable {
         
+        public var contentInsets: UIEdgeInsets {
+            get { actionAlertConfiguration.contentInsets }
+            set { actionAlertConfiguration.contentInsets = newValue }
+        }
+        
         public var cornerRadius: CGFloat {
             get { actionAlertConfiguration.cornerRadius }
             set { actionAlertConfiguration.cornerRadius = newValue }
@@ -32,7 +37,7 @@ extension MessageAlert {
         
         public var messageConfiguration = MessageConfiguration()
         
-        public init(_ actionAlertConfiguration: ActionAlert.Configuration? = nil) {
+        init(_ actionAlertConfiguration: ActionAlert.Configuration? = nil) {
             self.actionAlertConfiguration = actionAlertConfiguration ?? ActionAlert.Configuration.global
         }
         

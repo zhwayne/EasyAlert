@@ -47,6 +47,7 @@ extension ActionSheet {
             label.font = font(for: style)
             label.textAlignment = .center
             label.textColor = color(for: style)
+            label.backgroundColor = backgroundColor(for: style)
             return label
         }()
         
@@ -55,8 +56,8 @@ extension ActionSheet {
             super.init(frame: .zero)
             
             clipsToBounds = true
-            addSubview(highlightedOverlay)
             addSubview(titleLabel)
+            addSubview(highlightedOverlay)
             
             highlightedOverlay.translatesAutoresizingMaskIntoConstraints = false
             highlightedOverlay.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
@@ -97,6 +98,18 @@ fileprivate extension ActionSheet.ActionView {
         case .cancel: return .systemBlue
         case .destructive: return .systemRed
         }
+    }
+    
+    func backgroundColor(for style: Action.Style) -> UIColor {
+        if case .cancel = style {
+            if #available(iOS 13.0, *) {
+                return .systemBackground
+            } else {
+                // Fallback on earlier versions
+                return .white
+            }
+        }
+        return .clear
     }
     
     func font(for style: Action.Style) -> UIFont {
