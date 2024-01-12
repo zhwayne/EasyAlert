@@ -206,9 +206,11 @@ extension Alert {
     
     func updateLayout() {
         willLayoutContainer()
-        transitionAniamtor.update(context: transitioningContext, layoutGuide: layoutGuide)
-        backdropView.setNeedsLayout()
-        backdropView.layoutIfNeeded()
+        UIView.performWithoutAnimation { [self] in
+            transitionAniamtor.update(context: transitioningContext, layoutGuide: layoutGuide)
+            backdropView.setNeedsLayout()
+            backdropView.layoutIfNeeded()
+        }
         didLayoutContainer()
     }
     
@@ -328,9 +330,9 @@ extension Alert {
     
     private var transitioningContext: TransitionContext {
         TransitionContext(
-            container: alertContainerController.view,
             backdropView: backdropView,
             dimmingView: dimmingView,
+            container: alertContainerController.view,
             interfaceOrientation: interfaceOrientation
         )
     }

@@ -115,6 +115,6 @@ struct AlertTransitionAnimator : TransitionAnimator {
         constraints.append(
             container.centerYAnchor.constraint(
                 equalTo: superview.centerYAnchor,
-                constant: (abs(edgeInsets.top) - abs(edgeInsets.bottom)) / 2))
+                constant: (abs(edgeInsets.top) - abs(edgeInsets.bottom)) / 2 + 10))
     }
 }

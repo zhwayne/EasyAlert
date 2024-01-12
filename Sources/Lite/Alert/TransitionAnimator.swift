@@ -59,14 +59,14 @@ public struct LayoutGuide {
 
 /// A context object for use during the transition animation of an alert.
 public struct TransitionContext {
-    /// The view that contains the custom alert view.
-    public let container: UIView
-    
     /// The backdrop view for the alert.
     public let backdropView: UIView
     
     /// The dimming view for the alert.
     public let dimmingView: UIView
+  
+    /// The view that contains the custom alert view.
+    public let container: UIView
     
     /// The current interface orientation.
     public let interfaceOrientation: UIInterfaceOrientation

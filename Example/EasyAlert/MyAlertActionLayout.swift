@@ -11,6 +11,8 @@ import EasyAlert
 
 struct MyAlertActionLayout : ActionLayoutable {
     
+    var prefersSeparatorHidden: Bool { true }
+    
     private let stackView: UIStackView
     
     init() {

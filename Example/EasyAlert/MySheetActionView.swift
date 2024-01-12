@@ -39,6 +39,7 @@ final class MySheetActionView: UIView, ActionCustomizable {
         }
         view.alpha = 0
         view.isUserInteractionEnabled = false
+        view.autoresizingMask = []
         return view
     }()
     
@@ -48,6 +49,7 @@ final class MySheetActionView: UIView, ActionCustomizable {
         label.textAlignment = .center
         label.textColor = color(for: style)
         label.backgroundColor = backgroundColor(for: style)
+        label.autoresizingMask = []
         return label
     }()
     

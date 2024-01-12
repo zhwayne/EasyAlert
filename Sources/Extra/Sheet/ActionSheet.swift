@@ -40,7 +40,6 @@ open class ActionSheet: Sheet, _ActionAlertble {
 
         cancelActionGroupView = ActionGroupView(customView: nil, actionLayout: cancelActionLayout)
         super.init(customizable: containerView)
-        ignoreBottomSafeArea = false
         
         layoutGuide.contentInsets = self.configuration.contentInsets
         let decorator = TransitionAnimatorActionGroupDecorator(
@@ -51,9 +50,9 @@ open class ActionSheet: Sheet, _ActionAlertble {
     }
     
     open override func willLayoutContainer() {
-        configActionGroupContainer()
         super.willLayoutContainer()
-        if let cancelSpacing = configuration.value(for: "cancelSpacing") as? CGFloat, 
+        configActionGroupContainer()
+        if let cancelSpacing = configuration.value(for: "cancelSpacing") as? CGFloat,
            cancelSpacing > 1 {
             actionGroupView.setCornerRadius(configuration.cornerRadius)
             cancelActionGroupView.setCornerRadius(configuration.cornerRadius)

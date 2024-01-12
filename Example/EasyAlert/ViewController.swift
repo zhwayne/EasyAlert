@@ -245,7 +245,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.show()
             
         case .systemActionSheet:
-            let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: .actionSheet)
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let cancel = UIAlertAction(title: "取消", style: .cancel)
             let confirm = UIAlertAction(title: "确定", style: .default)
             let ignore = UIAlertAction(title: "忽略", style: .destructive)

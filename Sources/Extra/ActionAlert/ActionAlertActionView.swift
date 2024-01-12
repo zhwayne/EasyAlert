@@ -58,17 +58,11 @@ extension ActionAlert {
             addSubview(highlightedOverlay)
             addSubview(titleLabel)
             
-            highlightedOverlay.translatesAutoresizingMaskIntoConstraints = false
-            highlightedOverlay.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-            highlightedOverlay.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-            highlightedOverlay.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-            highlightedOverlay.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+            highlightedOverlay.frame = bounds
+            highlightedOverlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
-            titleLabel.translatesAutoresizingMaskIntoConstraints = false
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-            titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-            titleLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+            titleLabel.frame = bounds
+            titleLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         }
         
         @available(*, unavailable)

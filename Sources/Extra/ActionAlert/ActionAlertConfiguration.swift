@@ -11,7 +11,7 @@ extension ActionAlert {
     
     public struct Configuration: ActionAlertbleConfigurable {
         
-        public var contentInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        public var contentInsets: UIEdgeInsets = .zero
         
         public var cornerRadius: CGFloat = 13
         
