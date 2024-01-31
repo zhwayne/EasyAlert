@@ -28,10 +28,10 @@ extension _ActionAlertble {
     
     func canAddAction(_ action: Action) -> Bool {
 #if DEBUG
-        assert(!isShowing, "\(self) can only add one action if is not display.`")
+        assert(!isActive, "\(self) can only add one action if is not display.`")
         assert(!isDuplicateCancelAction(action), "\(self) can only have one action with a style of `Action.Style.cancel`.")
 #endif
-        return !isShowing && !isDuplicateCancelAction(action)
+        return !isActive && !isDuplicateCancelAction(action)
     }
     
     func isDuplicateCancelAction(_ action: Action) -> Bool {

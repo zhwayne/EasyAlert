@@ -19,7 +19,7 @@ import UIKit
     
     public var transitionAniamtor: TransitionAnimator = AlertTransitionAnimator()
     
-    public var isShowing: Bool { backdropView.superview != nil }
+    public private(set) var isActive: Bool = false
     
     public var layoutGuide = LayoutGuide()
     
@@ -101,7 +101,7 @@ import UIKit
     
     public func show(in container: AlertContainer? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
-        guard !isShowing else { return }
+        guard !isActive else { return }
         
         configDimming()
         configContainer()
@@ -110,7 +110,7 @@ import UIKit
     
     public func dismiss(completion: (() -> Void)? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
-        guard canDismiss() else { return }
+        guard isActive else { return }
         dismissAlert(completion: completion)
     }
     
@@ -157,10 +157,6 @@ extension Alert {
         window?.backgroundColor = .clear
         window?.windowLevel = .alert
         window?.makeKeyAndVisible()
-    }
-    
-    private func canDismiss() -> Bool {
-        return isShowing || backdropView.superview != nil
     }
     
     private func configDimming() {
@@ -218,6 +214,7 @@ extension Alert {
         if let viewController = customizable as? UIViewController {
             viewController.beginAppearanceTransition(true, animated: true)
         }
+        isActive = true
         willShow()
         callbacks.forEach { $0.willShow?() }
         
@@ -274,6 +271,7 @@ extension Alert {
         if let viewController = customizable as? UIViewController {
             viewController.beginAppearanceTransition(false, animated: true)
         }
+        isActive = false
         willDismiss()
         callbacks.forEach { $0.willDismiss?() }
         

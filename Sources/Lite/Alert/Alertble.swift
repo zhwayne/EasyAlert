@@ -16,7 +16,7 @@ extension UIViewController: AlertContainer { }
 @MainActor public protocol Alertble : Dismissible {
     
     /// A value that marks whether an alert is being displayed.
-    var isShowing: Bool { get }
+    var isActive: Bool { get }
     
     /// Show alert in the container.
     /// - Parameter container: An instance of a `UIView` or `UIViewController` that implements the
