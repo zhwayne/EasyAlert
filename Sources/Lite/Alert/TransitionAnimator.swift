@@ -41,7 +41,7 @@ public enum Height {
 /// A guide for describing the layout of an alert.
 public struct LayoutGuide {
     /// The width of the alert.
-    public var width: Width = .fixed(270)
+    public var width: Width = .fixed(280)
     
     /// The height of the alert.
     public var height: Height = .automatic
@@ -50,7 +50,7 @@ public struct LayoutGuide {
     public var contentInsets: UIEdgeInsets = .zero
     
     /// Creates a new `LayoutGuide` with the specified width, height, and edge insets.
-    public init(width: Width = .fixed(270), height: Height = .automatic, contentInsets: UIEdgeInsets = .zero) {
+    public init(width: Width = .fixed(280), height: Height = .automatic, contentInsets: UIEdgeInsets = .zero) {
         self.width = width
         self.height = height
         self.contentInsets = contentInsets
