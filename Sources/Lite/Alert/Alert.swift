@@ -160,13 +160,7 @@ extension Alert {
     }
     
     private func configDimming() {
-        switch backdropProvider.dimming {
-        case let .color(color): dimmingView.backgroundColor = color
-        case let .view(view):   dimmingView.contentView = view
-        case let .blur(style, level):
-            let blurView = BlurEffectView(effect: UIBlurEffect(style: style), intensity: level)
-            dimmingView.contentView = blurView
-        }
+        dimmingView.contentView = backdropProvider.dimming.makeUIView()
         dimmingView.isUserInteractionEnabled = false
         dimmingView.frame = backdropView.bounds
         dimmingView.autoresizingMask = [.flexibleWidth, .flexibleHeight]

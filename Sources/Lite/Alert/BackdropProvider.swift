@@ -18,6 +18,20 @@ public enum Dimming {
     
     /// The backdrop can be blurred with a Gaussian blur effect, with a specified blur level in the range of 0 to 1.
     case blur(style: UIBlurEffect.Style, level: Float = 0.5)
+    
+    func makeUIView() -> UIView {
+        let uiView: UIView
+        switch self {
+        case let .color(color):
+            uiView = UIView()
+            uiView.backgroundColor = color
+        case let .view(view):
+            uiView = view
+        case let .blur(style, level):
+            uiView = BlurEffectView(effect: UIBlurEffect(style: style), intensity: level)
+        }
+        return uiView
+    }
 }
 
 /// This enum defines the different penetration scopes for the backdrop.

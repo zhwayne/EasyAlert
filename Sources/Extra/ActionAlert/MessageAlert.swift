@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class MessageAlert: ActionAlert {
+open class MessageAlert: ActionAlert {
     
     public var title: String? {
         contentView.titleLabel.attributedText?.string
@@ -74,7 +74,7 @@ public final class MessageAlert: ActionAlert {
         contentView.messageLabel.font = messageConfiguration.font
     }
 
-    public override func willLayoutContainer() {
+    open override func willLayoutContainer() {
         super.willLayoutContainer()
 
         let titleInset = titleConfiguration.contentInsets
