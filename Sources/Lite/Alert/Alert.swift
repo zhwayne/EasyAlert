@@ -21,7 +21,7 @@ import UIKit
     
     public private(set) var isActive: Bool = false
     
-    public var layoutGuide = LayoutGuide()
+    public var layoutGuide = Alert.layoutGuide
     
     private let alertContainerController = AlertContainerController()
     
@@ -333,5 +333,12 @@ extension Alert {
             container: alertContainerController.view,
             interfaceOrientation: interfaceOrientation
         )
+    }
+}
+
+extension Alert {
+    private static var layoutGuide = LayoutGuide()
+    public static func setDefaultLayoutGuide(_ layoutGuide: LayoutGuide) {
+        Alert.layoutGuide = layoutGuide
     }
 }

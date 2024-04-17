@@ -63,6 +63,8 @@ extension MessageAlert {
         
         public var color: UIColor = defaultTextColor
         
+        public var contentInsets: UIEdgeInsets = .zero
+        
         public init() {}
     }
 }
@@ -77,6 +79,8 @@ extension MessageAlert {
         public var font: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular)
         
         public var color: UIColor = defaultTextColor
+        
+        public var contentInsets: UIEdgeInsets = .zero
         
         public init() {}
     }

@@ -77,30 +77,33 @@ public final class MessageAlert: ActionAlert {
     public override func willLayoutContainer() {
         super.willLayoutContainer()
 
+        let titleInset = titleConfiguration.contentInsets
+        let messageInset = messageConfiguration.contentInsets
+        
         if title == nil {
             contentView.titleLabel.removeFromSuperview()
         } else {
             contentView.addSubview(contentView.titleLabel)
             contentView.titleLabel.translatesAutoresizingMaskIntoConstraints = false
-            contentView.titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17).isActive = true
-            contentView.titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
-            contentView.titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16).isActive = true
-            contentView.titleLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -17).isActive = true
+            contentView.titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17 + titleInset.top).isActive = true
+            contentView.titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16 + titleInset.left).isActive = true
+            contentView.titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16 - titleInset.right).isActive = true
+            contentView.titleLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -17 - titleInset.bottom).isActive = true
         }
         if message == nil {
             contentView.messageLabel.removeFromSuperview()
-            contentView.titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -17).isActive = true
+            contentView.titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -17 - titleInset.bottom).isActive = true
         } else {
             contentView.addSubview(contentView.messageLabel)
             contentView.messageLabel.translatesAutoresizingMaskIntoConstraints = false
             if title != nil {
-                contentView.messageLabel.topAnchor.constraint(equalTo: contentView.titleLabel.bottomAnchor, constant: 3).isActive = true
+                contentView.messageLabel.topAnchor.constraint(equalTo: contentView.titleLabel.bottomAnchor, constant: 3 + titleInset.bottom + messageInset.top).isActive = true
             } else {
-                contentView.messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17).isActive = true
+                contentView.messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17 + messageInset.top).isActive = true
             }
-            contentView.messageLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
-            contentView.messageLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16).isActive = true
-            contentView.messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
+            contentView.messageLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16 + messageInset.left).isActive = true
+            contentView.messageLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16 - messageInset.right).isActive = true
+            contentView.messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20 - messageInset.bottom).isActive = true
         }
     }
 }

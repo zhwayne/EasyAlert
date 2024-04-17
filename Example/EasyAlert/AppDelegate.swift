@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        configuration.titleConfiguration.alignment = .left
 //        configuration.messageConfiguration.alignment = .left
 //        MessageAlert.Configuration.globalConfiguration = configuration
+//        Alert.setDefaultLayoutGuide(LayoutGuide(width: .fixed(300)))
         return true
     }
 
