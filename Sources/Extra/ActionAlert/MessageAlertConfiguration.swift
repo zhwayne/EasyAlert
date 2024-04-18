@@ -9,7 +9,7 @@ import UIKit
 
 extension MessageAlert {
     
-    public struct Configuration: ActionAlertbleConfigurable {
+    public struct Configuration: ActionAlertConfigurable {
         
         public var contentInsets: UIEdgeInsets {
             get { actionAlertConfiguration.contentInsets }
@@ -31,9 +31,9 @@ extension MessageAlert {
             set { actionAlertConfiguration.actionLayoutType = newValue }
         }
         
-        public var backdropViewType: UIView.Type? {
-            get { actionAlertConfiguration.backdropViewType }
-            set { actionAlertConfiguration.backdropViewType = newValue }
+        public var backgroundViewType: UIView.Type? {
+            get { actionAlertConfiguration.backgroundViewType }
+            set { actionAlertConfiguration.backgroundViewType = newValue }
         }
                 
         private var actionAlertConfiguration: ActionAlert.Configuration

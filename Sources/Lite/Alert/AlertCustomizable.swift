@@ -42,7 +42,3 @@ import UIKit
 /// alert.show()
 ///
 public protocol AlertCustomizable: Dismissible { }
-
-extension UIView: AlertCustomizable { }
-
-extension UIViewController: AlertCustomizable { }

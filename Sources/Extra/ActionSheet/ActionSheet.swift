@@ -9,19 +9,21 @@ import UIKit
 
 open class ActionSheet: Sheet, _ActionAlertble {
     
+    class ContainerView: UIView, AlertCustomizable { }
+    
     var actions: [Action] { actionGroupView.actions + cancelActionGroupView.actions }
     
-    private let containerView = UIView()
+    private let containerView = ContainerView()
     
     private let actionGroupView: ActionGroupView
     
     private var cancelActionGroupView: ActionGroupView
     
-    private let configuration: ActionAlertbleConfigurable
+    private let configuration: ActionSheetConfigurable
     
     public init(
         customizable: AlertCustomizable? = nil,
-        configuration: ActionAlertbleConfigurable? = nil
+        configuration: ActionSheetConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionSheet.Configuration.global
         let actionLayout = self.configuration.actionLayoutType.init()
@@ -38,7 +40,7 @@ open class ActionSheet: Sheet, _ActionAlertble {
                                               actionLayout: actionLayout)
         }
         
-        if let type = self.configuration.backdropViewType {
+        if let type = self.configuration.backgroundViewType {
             actionGroupView.backgroundView = type.init()
         } else {
             if #available(iOS 13.0, *) {

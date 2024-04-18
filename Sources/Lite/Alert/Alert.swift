@@ -8,26 +8,36 @@
 import UIKit
 
 /// The base alert.
-@MainActor open class Alert: Alertble {
+@MainActor open class Alert: Alertable {
     
     public let customizable: AlertCustomizable
     
     /// A Provider that interacts with the backdrop
     public var backdropProvider: BackdropProvider = DefaultBackdropProvider() {
-        didSet { configDimming() }
+        didSet {
+            if let dimmingView {
+                dimmingView.contentView = backdropProvider.dimming.makeUIView()
+            }
+        }
+    }
+
+    public var layoutGuide = LayoutGuide() {
+        didSet {
+            if backdropView != nil {
+                updateLayout()
+            }
+        }
     }
     
     public var transitionAniamtor: TransitionAnimator = AlertTransitionAnimator()
     
     public private(set) var isActive: Bool = false
     
-    public var layoutGuide = Alert.layoutGuide
+    private lazy var alertContainerController = AlertContainerController(alert: self)
     
-    private let alertContainerController = AlertContainerController()
+    private var backdropView: DimmingKnockoutBackdropView!
     
-    private let backdropView = DimmingKnockoutBackdropView()
-    
-    private let dimmingView = DimmingView()
+    private var dimmingView: DimmingView!
     
     private let tapTarget = TapTarget()
     
@@ -39,7 +49,7 @@ import UIKit
     
     #if DEBUG
     deinit {
-        print("deinit \(self)")
+        NSLog("%@", "\(self) deinitialized.")
     }
     #endif
     
@@ -48,8 +58,6 @@ import UIKit
             fatalError("Unsupported type: \(type(of: customizable))")
         }
         self.customizable = customizable
-        observeDeviceRotation()
-        configBackdrop()
     }
     
     private func observeDeviceRotation() {
@@ -63,8 +71,11 @@ import UIKit
     }
     
     private func configBackdrop() {
-        backdropView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        guard backdropView == nil else { return }
+        
+        backdropView = DimmingKnockoutBackdropView()
         backdropView.addGestureRecognizer(tapTarget.tapGestureRecognizer)
+        backdropView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backdropView.hitTest = { [unowned self] view, point in
             switch backdropProvider.penetrationScope {
             case .none: return false
@@ -103,6 +114,8 @@ import UIKit
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard !isActive else { return }
         
+        observeDeviceRotation()
+        configBackdrop()
         configDimming()
         configContainer()
         showAlert(in: container)
@@ -160,11 +173,12 @@ extension Alert {
     }
     
     private func configDimming() {
+        guard dimmingView == nil else { return }
+        dimmingView = DimmingView()
         dimmingView.contentView = backdropProvider.dimming.makeUIView()
         dimmingView.isUserInteractionEnabled = false
-        dimmingView.frame = backdropView.bounds
-        dimmingView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backdropView.insertSubview(dimmingView, at: 0)
+        layoutFill(dimmingView)
     }
     
     private func configContainer() {
@@ -184,14 +198,9 @@ extension Alert {
     }
     
     private func layoutFill(_ view: UIView) {
-        guard let superview = view.superview else {
-            fatalError()
-        }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
-        view.leftAnchor.constraint(equalTo: superview.leftAnchor).isActive = true
-        view.bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
-        view.rightAnchor.constraint(equalTo: superview.rightAnchor).isActive = true
+        guard let superview = view.superview else { fatalError() }
+        view.frame = superview.bounds
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
     func updateLayout() {
@@ -239,10 +248,7 @@ extension Alert {
         performShowWithAnimation()
     }
     
-    private func showAlert(in parent: AlertContainer?) {
-        // Set associated object.
-        alertContainerController.weakAlert = self
-        
+    private func showAlert(in parent: AlertContainer?) {        
         if let view = parent as? UIView {
             view.attach(alert: self)
             _showAlert(in: view)
@@ -285,8 +291,6 @@ extension Alert {
     }
     
     private func clean() {
-        alertContainerController.weakAlert = nil
-        
         if let view = customizable as? UIView {
             view.removeFromSuperview()
         } else if let viewController = customizable as? UIViewController {
@@ -327,12 +331,5 @@ extension Alert {
             container: alertContainerController.view,
             interfaceOrientation: interfaceOrientation
         )
-    }
-}
-
-extension Alert {
-    private static var layoutGuide = LayoutGuide()
-    public static func setDefaultLayoutGuide(_ layoutGuide: LayoutGuide) {
-        Alert.layoutGuide = layoutGuide
     }
 }

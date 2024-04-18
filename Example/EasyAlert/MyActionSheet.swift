@@ -11,7 +11,7 @@ import EasyAlert
 
 class MyActionSheet: ActionSheet {
 
-    private class ContentView: UIView {
+    private class ContentView: UIView, AlertCustomizable {
         
         override init(frame: CGRect) {
             super.init(frame: frame)
@@ -39,7 +39,7 @@ class MyActionSheet: ActionSheet {
     }
     
     @available(*, unavailable)
-    override init(customizable: AlertCustomizable?, configuration: ActionAlertbleConfigurable? = nil) {
+    override init(customizable: AlertCustomizable?, configuration: ActionSheetConfigurable? = nil) {
         fatalError("init(customizable:configuration:) has not been implemented")
     }
 }

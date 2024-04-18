@@ -9,15 +9,17 @@ import UIKit
 
 open class ActionAlert: Alert, _ActionAlertble {
     
+    class ContainerView: UIView, AlertCustomizable { }
+    
     var actions: [Action] { actionGroupView.actions }
     
-    private let containerView = UIView()
+    private let containerView = ContainerView()
     private let actionGroupView: ActionGroupView
-    private let configuration: ActionAlertbleConfigurable
+    private let configuration: ActionAlertConfigurable
     
     public required init(
         customizable: AlertCustomizable,
-        configuration: ActionAlertbleConfigurable? = nil
+        configuration: ActionAlertConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionAlert.Configuration.global
         let actionLayout = self.configuration.actionLayoutType.init()
@@ -31,7 +33,7 @@ open class ActionAlert: Alert, _ActionAlertble {
             fatalError("Unsupported type: \(type(of: customizable))")
         }
         
-        if let type = self.configuration.backdropViewType {
+        if let type = self.configuration.backgroundViewType {
             actionGroupView.backgroundView = type.init()
         } else {
             if #available(iOS 13.0, *) {

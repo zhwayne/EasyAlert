@@ -1,5 +1,5 @@
 //
-//  ActionAlertble.swift
+//  ActionAlertable.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/12/4.
@@ -7,19 +7,19 @@
 
 import Foundation
 
-@MainActor public protocol ActionAlertble: Alertble {
+@MainActor public protocol ActionAlertable: Alertable {
     
     func addAction(_ action: Action)
 }
 
-public extension ActionAlertble {
+public extension ActionAlertable {
     
     func addActions(_ actions: [Action]) {
         actions.forEach { addAction($0) }
     }
 }
 
-@MainActor protocol _ActionAlertble: ActionAlertble {
+@MainActor protocol _ActionAlertble: ActionAlertable {
     
     var actions: [Action] { get }
 }

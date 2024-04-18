@@ -9,7 +9,7 @@ import UIKit
 
 extension ActionAlert {
     
-    public struct Configuration: ActionAlertbleConfigurable {
+    public struct Configuration: ActionAlertConfigurable {
         
         public var contentInsets: UIEdgeInsets = .zero
         
@@ -19,7 +19,7 @@ extension ActionAlert {
         
         public var actionLayoutType: ActionLayoutable.Type = AlertActionLayout.self
         
-        public var backdropViewType: UIView.Type?
+        public var backgroundViewType: UIView.Type?
                 
         init() { }
         

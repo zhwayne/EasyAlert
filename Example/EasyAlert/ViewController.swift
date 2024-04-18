@@ -260,7 +260,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             configuration.actionViewType = MySheetActionView.self
             configuration.actionLayoutType = MySheetActionLayout.self
             configuration.contentInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-
+            configuration.backgroundViewType = BGView.self
+            
             let sheet = ActionSheet(configuration: configuration)
             let cancel = Action(title: "取消", style: .cancel)
             let confirm = Action(title: "确定", style: .default)
@@ -271,5 +272,22 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case .messageToast:
             Toast.show(message)
         }
+    }
+}
+
+class BGView: UIView {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        if #available(iOS 13.0, *) {
+            backgroundColor = .systemIndigo
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

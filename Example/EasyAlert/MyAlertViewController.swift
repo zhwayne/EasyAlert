@@ -9,7 +9,7 @@
 import UIKit
 import EasyAlert
 
-class MyAlertNavigationController: UINavigationController {
+class MyAlertNavigationController: UINavigationController, AlertCustomizable {
     
     override func viewDidLoad() {
         super.viewDidLoad()

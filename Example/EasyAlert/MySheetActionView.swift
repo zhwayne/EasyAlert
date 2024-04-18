@@ -99,9 +99,9 @@ fileprivate extension MySheetActionView {
     
     func backgroundColor(for style: Action.Style) -> UIColor {
         if case .cancel = style {
-            return UIColor(red: 0.44, green: 0.30, blue: 0.63, alpha: 1.00)
+            return UIColor(red: 0.44, green: 0.30, blue: 0.63, alpha: 0.6)
         }
-        return UIColor(red: 0.29, green: 0.27, blue: 0.40, alpha: 1.00)
+        return UIColor(red: 0.29, green: 0.27, blue: 0.40, alpha: 0.6)
     }
     
     func font(for style: Action.Style) -> UIFont {

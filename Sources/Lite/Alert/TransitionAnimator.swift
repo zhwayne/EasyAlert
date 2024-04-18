@@ -8,7 +8,7 @@
 import UIKit
 
 /// An enumeration representing the width of an alert.
-public enum Width {
+public enum Width: Equatable {
     
     /// A fixed width equal to the specified value.
     case fixed(CGFloat)
@@ -21,7 +21,7 @@ public enum Width {
 }
 
 /// An enumeration representing the height of an alert.
-public enum Height {
+public enum Height: Equatable {
     /// The height is determined entirely by the content of the alert.
     case automatic
     
@@ -39,7 +39,7 @@ public enum Height {
 }
 
 /// A guide for describing the layout of an alert.
-public struct LayoutGuide {
+public struct LayoutGuide: Equatable {
     /// The width of the alert.
     public var width: Width = .fixed(280)
     

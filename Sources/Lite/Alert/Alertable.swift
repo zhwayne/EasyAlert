@@ -1,5 +1,5 @@
 //
-//  Alertble.swift
+//  Alertable.swift
 //  EasyAlert
 //
 //  Created by iya on 2021/7/27.
@@ -13,7 +13,7 @@ extension UIView: AlertContainer { }
 
 extension UIViewController: AlertContainer { }
 
-@MainActor public protocol Alertble : Dismissible {
+@MainActor public protocol Alertable : Dismissible {
     
     /// A value that marks whether an alert is being displayed.
     var isActive: Bool { get }
@@ -28,12 +28,12 @@ extension AlertContainer {
     
     // MARK: - Associated Objects
     
-    private var alerts: [Alertble] {
+    private var alerts: [Alertable] {
         get {
-            if let alerts = objc_getAssociatedObject(self, AssociatedKey.alerts) as? [Alertble] {
+            if let alerts = objc_getAssociatedObject(self, AssociatedKey.alerts) as? [Alertable] {
                 return alerts
             }
-            objc_setAssociatedObject(self, AssociatedKey.alerts, [] as [Alertble], .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, AssociatedKey.alerts, [] as [Alertable], .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             return []
         }
         set {
@@ -45,7 +45,7 @@ extension AlertContainer {
     
     /// Attach an alert to the view.
     /// - Parameter alert: The alert to be attached.
-    func attach(alert: Alertble) {
+    func attach(alert: Alertable) {
         if alerts.contains(where: { alert === $0 }) {
             return
         }
@@ -54,7 +54,7 @@ extension AlertContainer {
     
     /// Detach an alert from the view.
     /// - Parameter alert: The alert to be detached.
-    func detach(alert: Alertble) {
+    func detach(alert: Alertable) {
         if let index = alerts.lastIndex(where: { $0 === alert }) {
             alerts.remove(at: index)
         }

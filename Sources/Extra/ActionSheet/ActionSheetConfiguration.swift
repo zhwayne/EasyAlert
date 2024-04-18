@@ -9,7 +9,7 @@ import UIKit
 
 extension ActionSheet {
     
-    public struct Configuration: ActionAlertbleConfigurable {
+    public struct Configuration: ActionSheetConfigurable {
         
         public var contentInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8)
 
@@ -21,7 +21,7 @@ extension ActionSheet {
         
         public var actionLayoutType: ActionLayoutable.Type = SheetActionLayout.self
         
-        public var backdropViewType: UIView.Type?
+        public var backgroundViewType: UIView.Type?
                 
         init() { }
         

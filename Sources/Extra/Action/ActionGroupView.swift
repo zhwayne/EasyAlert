@@ -12,7 +12,7 @@ public enum PresentationBackgroundDomain {
     case cancel
 }
 
-class ActionGroupView: UIView {
+class ActionGroupView: UIView, AlertCustomizable {
     
     var actions: [Action] = [] {
         didSet { hasActions = !actions.isEmpty }

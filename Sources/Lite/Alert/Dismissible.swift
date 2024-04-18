@@ -7,9 +7,7 @@
 
 import UIKit
 
-@MainActor public protocol Fetchable: AnyObject { }
-
-@MainActor public protocol Dismissible : Fetchable {
+@MainActor public protocol Dismissible: AnyObject {
     
     /// Dismiss the alert.
     /// - Parameter completion: the `completion` callback will invoke after alert dismissed.
@@ -19,14 +17,14 @@ import UIKit
     func dismiss() async
 }
 
-extension Fetchable {
+extension Dismissible {
     
     // Gets the alert in the current UIView or UIViewController.
     var alert: Alert? {
         if let view = self as? UIView {
             for view in sequence(first: view.superview, next: { $0?.superview }) {
                 if let responder = view?.next as? AlertContainerController {
-                    return responder.weakAlert
+                    return responder.alert
                 }
             }
             return nil
@@ -35,7 +33,7 @@ extension Fetchable {
             guard let parent = viewController.parent as? AlertContainerController else {
                 return nil
             }
-            return parent.weakAlert
+            return parent.alert
         }
         return nil
     }
