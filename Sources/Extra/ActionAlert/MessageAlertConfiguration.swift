@@ -11,9 +11,9 @@ extension MessageAlert {
     
     public struct Configuration: ActionAlertConfigurable {
         
-        public var contentInsets: UIEdgeInsets {
-            get { actionAlertConfiguration.contentInsets }
-            set { actionAlertConfiguration.contentInsets = newValue }
+        public var layoutGuide: LayoutGuide {
+            get { actionAlertConfiguration.layoutGuide }
+            set { actionAlertConfiguration.layoutGuide = newValue }
         }
         
         public var cornerRadius: CGFloat {

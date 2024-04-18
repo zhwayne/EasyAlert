@@ -54,7 +54,7 @@ open class ActionSheet: Sheet, _ActionAlertble {
         cancelActionGroupView = ActionGroupView(customView: nil, actionLayout: cancelActionLayout)
         super.init(customizable: containerView)
         
-        layoutGuide.contentInsets = self.configuration.contentInsets
+        layoutGuide = self.configuration.layoutGuide
         let decorator = TransitionAnimatorActionGroupDecorator(
             aniamtor: transitionAniamtor,
             actionGroupViews: [actionGroupView, cancelActionGroupView]

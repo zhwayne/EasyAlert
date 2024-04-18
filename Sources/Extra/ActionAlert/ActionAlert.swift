@@ -49,7 +49,8 @@ open class ActionAlert: Alert, _ActionAlertble {
         actionGroupView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         super.init(customizable: containerView)
         
-        layoutGuide.contentInsets = self.configuration.contentInsets
+        layoutGuide = self.configuration.layoutGuide
+        
         let decorator = TransitionAnimatorActionGroupDecorator(
             aniamtor: AlertTransitionAnimator(),
             actionGroupViews: [actionGroupView]

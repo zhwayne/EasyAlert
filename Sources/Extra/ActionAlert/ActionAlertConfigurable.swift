@@ -11,7 +11,7 @@ public protocol ActionAlertConfigurable {
     
     var cornerRadius: CGFloat { get set }
     
-    var contentInsets: UIEdgeInsets { get set }
+    var layoutGuide: LayoutGuide { get set }
         
     var actionViewType: (UIView & ActionCustomizable).Type { get set }
     

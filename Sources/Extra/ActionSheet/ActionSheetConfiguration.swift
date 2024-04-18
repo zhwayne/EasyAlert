@@ -11,7 +11,10 @@ extension ActionSheet {
     
     public struct Configuration: ActionSheetConfigurable {
         
-        public var contentInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8)
+        public var layoutGuide: LayoutGuide = LayoutGuide(
+            width: .multiplied(by: 1, maximumWidth: 414),
+            contentInsets: UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8)
+        )
 
         public var cornerRadius: CGFloat = 13
         

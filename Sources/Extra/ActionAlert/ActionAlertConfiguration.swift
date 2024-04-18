@@ -11,8 +11,8 @@ extension ActionAlert {
     
     public struct Configuration: ActionAlertConfigurable {
         
-        public var contentInsets: UIEdgeInsets = .zero
-        
+        public var layoutGuide: LayoutGuide = LayoutGuide()
+                
         public var cornerRadius: CGFloat = 13
         
         public var actionViewType: (UIView & ActionCustomizable).Type = ActionView.self

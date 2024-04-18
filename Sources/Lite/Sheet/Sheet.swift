@@ -16,6 +16,6 @@ open class Sheet: Alert {
         super.init(customizable: customizable)
         self.transitionAniamtor = SheetTransitionAnimator(sheet: self)
         backdropProvider.allowDismissWhenBackgroundTouch = true
-        layoutGuide = LayoutGuide(width: .multiplied(by: 1, maximumWidth: 414))
+        layoutGuide = LayoutGuide(width: .multiplied(by: 1))
     }
 }

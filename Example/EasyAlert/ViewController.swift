@@ -259,7 +259,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             configuration.cancelSpacing = 0
             configuration.actionViewType = MySheetActionView.self
             configuration.actionLayoutType = MySheetActionLayout.self
-            configuration.contentInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+            configuration.layoutGuide.contentInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
             configuration.backgroundViewType = BGView.self
             
             let sheet = ActionSheet(configuration: configuration)
