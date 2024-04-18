@@ -20,6 +20,8 @@ extension ActionSheet {
         public var actionViewType: (UIView & ActionCustomizable).Type = ActionView.self
         
         public var actionLayoutType: ActionLayoutable.Type = SheetActionLayout.self
+        
+        public var backdropViewType: UIView.Type?
                 
         init() { }
         

@@ -2,7 +2,7 @@
 //  Toast.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2022/12/13.
+//  Created by iya on 2022/12/13.
 //
 
 import UIKit

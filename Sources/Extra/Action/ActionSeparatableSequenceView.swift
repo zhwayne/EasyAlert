@@ -2,7 +2,7 @@
 //  ActionSeparatableSequenceView.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2022/12/2.
+//  Created by iya on 2022/12/2.
 //
 
 import UIKit

@@ -2,14 +2,14 @@
 //  Action.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2021/7/27.
+//  Created by iya on 2021/7/27.
 //
 
 import UIKit
 
 public final class Action {
     
-    public typealias Handelr = (Action) -> Void
+    public typealias Handler = (Action) -> Void
     
     /// 当 allowAutoDismiss 为 true 时，点击 action view 后，alert 会立即消失。
     /// 否则开发者需要自己手动关闭 alert。
@@ -20,19 +20,19 @@ public final class Action {
     /// action view 的标题
     public let title: String?
     
-    let handler: Handelr?
+    let handler: Handler?
     
     var view: (UIView & ActionCustomizable)?
     
     weak var representationView: ActionCustomViewRepresentationView?
     
-    public init(title: String, style: Style, handler: Handelr? = nil) {
+    public init(title: String, style: Style, handler: Handler? = nil) {
         self.title = title
         self.style = style
         self.handler = handler
     }
     
-    public init(view: UIView & ActionCustomizable, handler: Handelr? = nil) {
+    public init(view: UIView & ActionCustomizable, handler: Handler? = nil) {
         self.view = view
         self.title = view.title
         self.style = view.style

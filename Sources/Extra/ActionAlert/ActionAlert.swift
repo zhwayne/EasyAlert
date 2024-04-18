@@ -2,7 +2,7 @@
 //  ActionAlert.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2021/7/28.
+//  Created by iya on 2021/7/28.
 //
 
 import UIKit
@@ -11,8 +11,8 @@ open class ActionAlert: Alert, _ActionAlertble {
     
     var actions: [Action] { actionGroupView.actions }
     
+    private let containerView = UIView()
     private let actionGroupView: ActionGroupView
-    
     private let configuration: ActionAlertbleConfigurable
     
     public required init(
@@ -30,7 +30,22 @@ open class ActionAlert: Alert, _ActionAlertble {
         } else {
             fatalError("Unsupported type: \(type(of: customizable))")
         }
-        super.init(customizable: actionGroupView)
+        
+        if let type = self.configuration.backdropViewType {
+            actionGroupView.backgroundView = type.init()
+        } else {
+            if #available(iOS 13.0, *) {
+                actionGroupView.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+            } else {
+                // Fallback on earlier versions
+                actionGroupView.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
+            }
+        }
+        
+        containerView.addSubview(actionGroupView)
+        actionGroupView.frame = containerView.bounds
+        actionGroupView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        super.init(customizable: containerView)
         
         layoutGuide.contentInsets = self.configuration.contentInsets
         let decorator = TransitionAnimatorActionGroupDecorator(

@@ -11,7 +11,7 @@ open class ActionSheet: Sheet, _ActionAlertble {
     
     var actions: [Action] { actionGroupView.actions + cancelActionGroupView.actions }
     
-    private let containerView = ActionSheet.ContainerView()
+    private let containerView = UIView()
     
     private let actionGroupView: ActionGroupView
     
@@ -36,6 +36,17 @@ open class ActionSheet: Sheet, _ActionAlertble {
         } else {
             actionGroupView = ActionGroupView(customView: nil,
                                               actionLayout: actionLayout)
+        }
+        
+        if let type = self.configuration.backdropViewType {
+            actionGroupView.backgroundView = type.init()
+        } else {
+            if #available(iOS 13.0, *) {
+                actionGroupView.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
+            } else {
+                // Fallback on earlier versions
+                actionGroupView.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
+            }
         }
 
         cancelActionGroupView = ActionGroupView(customView: nil, actionLayout: cancelActionLayout)
@@ -151,4 +162,4 @@ extension ActionSheet {
     }
 }
 
-public final class EmptyContentView: UIView, AlertCustomizable { }
+public final class EmptyContentView: UIView { }

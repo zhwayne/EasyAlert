@@ -30,6 +30,11 @@ extension MessageAlert {
             get { actionAlertConfiguration.actionLayoutType }
             set { actionAlertConfiguration.actionLayoutType = newValue }
         }
+        
+        public var backdropViewType: UIView.Type? {
+            get { actionAlertConfiguration.backdropViewType }
+            set { actionAlertConfiguration.backdropViewType = newValue }
+        }
                 
         private var actionAlertConfiguration: ActionAlert.Configuration
         

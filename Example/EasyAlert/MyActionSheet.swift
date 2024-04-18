@@ -11,7 +11,7 @@ import EasyAlert
 
 class MyActionSheet: ActionSheet {
 
-    private class ContentView: UIView, AlertCustomizable {
+    private class ContentView: UIView {
         
         override init(frame: CGRect) {
             super.init(frame: frame)

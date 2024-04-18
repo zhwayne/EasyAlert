@@ -2,7 +2,7 @@
 //  MessageAlert.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2021/8/2.
+//  Created by iya on 2021/8/2.
 //
 
 import UIKit
@@ -17,7 +17,7 @@ open class MessageAlert: ActionAlert {
         contentView.messageLabel.attributedText?.string
     }
 
-    private final class ContentView: UIView, AlertCustomizable {
+    private final class ContentView: UIView {
 
         fileprivate let titleLabel: UILabel = {
             let label = UILabel()

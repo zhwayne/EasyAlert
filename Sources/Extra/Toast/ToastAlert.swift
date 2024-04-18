@@ -9,7 +9,7 @@ import UIKit
 
 final class ToastAlert: Alert {
     
-    class ContentView: UIView, AlertCustomizable {
+    class ContentView: UIView {
         
         let label = UILabel()
         let indicator = UIActivityIndicatorView(style: .white)

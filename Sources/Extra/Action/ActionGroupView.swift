@@ -12,58 +12,56 @@ public enum PresentationBackgroundDomain {
     case cancel
 }
 
-class ActionGroupView: UIView, AlertCustomizable {
+class ActionGroupView: UIView {
     
-    var actions: [Action] = []
+    var actions: [Action] = [] {
+        didSet { hasActions = !actions.isEmpty }
+    }
+    
+    private var hasActions: Bool = false {
+        didSet {
+            if hasActions != oldValue {
+                relayoutRepresentationSequenceView()
+            }
+        }
+    }
     
     private var actionLayout: ActionLayoutable
     
     private let customView: UIView?
     
-    var backgroundView: UIView {
+    private var backgroundViewCornerRadius: CGFloat = 0
+    var backgroundView: UIView? {
         didSet {
-            oldValue.removeFromSuperview()
-            backgroundView.clipsToBounds = true
-            backgroundView.frame = bounds
-            backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            insertSubview(backgroundView, at: 0)
+            guard backgroundView !== oldValue else { return }
+            oldValue?.removeFromSuperview()
+            if let backgroundView {
+                backgroundView.clipsToBounds = true
+                backgroundView.frame = bounds
+                backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                insertSubview(backgroundView, at: 0)
+                backgroundView.layer.cornerRadius = backgroundViewCornerRadius
+                backgroundView.clipsToBounds = true
+                if #available(iOS 13.0, *) {
+                    backgroundView.layer.cornerCurve = .continuous
+                }
+            }
         }
     }
     
-    private let representationSequenceView = ActionRepresentationSequenceView()
-    
-    private lazy var separatorView = ActionVibrantSeparatorView()
-    
+    private var representationSequenceView: ActionRepresentationSequenceView?
+    private var separatorView: ActionVibrantSeparatorView?
     private let containerView = UIView()
     
     required init(customView: UIView?, actionLayout: ActionLayoutable) {
         self.customView = customView
         self.actionLayout = actionLayout
-        if #available(iOS 13.0, *) {
-            self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
-        } else {
-            // Fallback on earlier versions
-            self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
-        }
-        if #available(iOS 13.0, *) {
-            backgroundView.layer.cornerCurve = .continuous
-        }
+
         super.init(frame: .zero)
-        clipsToBounds = true
-        backgroundView.frame = bounds
-        backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        addSubview(backgroundView)
         
         containerView.frame = bounds
         containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(containerView)
-    }
-    
-    public override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        guard superview != nil else { return }
-        
-        containerView.subviews.forEach { $0.removeFromSuperview() }
         
         if let customView {
             containerView.addSubview(customView)
@@ -76,27 +74,38 @@ class ActionGroupView: UIView, AlertCustomizable {
             customBottomConstraint.priority = .defaultHigh - 1
             customBottomConstraint.isActive = true
         }
+    }
+    
+    private func relayoutRepresentationSequenceView() {
+        separatorView?.removeFromSuperview()
+        representationSequenceView?.removeFromSuperview()
         
-        if !actions.isEmpty {
-            separatorView.removeFromSuperview()
+        if hasActions {
+            separatorView = separatorView ?? ActionVibrantSeparatorView()
+            representationSequenceView = representationSequenceView ?? ActionRepresentationSequenceView()
+            separatorView!.removeFromSuperview()
             if let customView {
-                containerView.addSubview(separatorView)
-                separatorView.topAnchor.constraint(equalTo: customView.bottomAnchor).isActive = true
-                separatorView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-                separatorView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
-                separatorView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
+                containerView.addSubview(separatorView!)
+                separatorView!.topAnchor.constraint(equalTo: customView.bottomAnchor).isActive = true
+                separatorView!.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+                separatorView!.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale).isActive = true
+                separatorView!.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
             }
             
-            representationSequenceView.removeFromSuperview()
-            containerView.addSubview(representationSequenceView)
+            
+            containerView.addSubview(representationSequenceView!)
             if customView != nil {
-                representationSequenceView.topAnchor.constraint(equalTo: separatorView.bottomAnchor).isActive = true
+                representationSequenceView!.topAnchor.constraint(equalTo: separatorView!.bottomAnchor).isActive = true
             } else {
-                representationSequenceView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+                representationSequenceView!.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
             }
-            representationSequenceView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-            representationSequenceView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
-            representationSequenceView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
+            representationSequenceView!.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+            representationSequenceView!.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
+            representationSequenceView!.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
+            
+        } else {
+            separatorView = nil
+            representationSequenceView = nil
         }
     }
     
@@ -106,12 +115,17 @@ class ActionGroupView: UIView, AlertCustomizable {
     }
     
     func updateLayout(interfaceOrientation: UIInterfaceOrientation) {
-        representationSequenceView.separatableSequenceView.subviews.forEach {
-            $0.removeFromSuperview()
-        }
+        guard let representationSequenceView else { return }
+        representationSequenceView.separatableSequenceView.subviews.forEach { $0.removeFromSuperview() }
         guard !actions.isEmpty else { return }
-        
-        let buttons = actions.map { action -> UIView in
+        let buttons = getButtons(for: actions)
+        separatorView?.isHidden = actionLayout.prefersSeparatorHidden
+        let separatableSequenceView = representationSequenceView.separatableSequenceView
+        actionLayout.layout(views: buttons, container: separatableSequenceView)
+    }
+    
+    private func getButtons(for actions: [Action]) -> [UIView] {
+        actions.map { action -> UIView in
             if let representationView = action.representationView {
                 return representationView
             }
@@ -125,9 +139,6 @@ class ActionGroupView: UIView, AlertCustomizable {
             button.addTarget(self, action: selector, for: .touchUpInside)
             return button
         }
-        separatorView.isHidden = actionLayout.prefersSeparatorHidden
-        let separatableSequenceView = representationSequenceView.separatableSequenceView
-        actionLayout.layout(views: buttons, container: separatableSequenceView)
     }
     
     @objc
@@ -141,15 +152,18 @@ class ActionGroupView: UIView, AlertCustomizable {
     }
     
     func setCornerRadius(_ radius: CGFloat) {
+        backgroundViewCornerRadius = radius
+        backgroundView?.layer.cornerRadius = radius
+        backgroundView?.clipsToBounds = true
         if #available(iOS 13.0, *) {
-            layer.cornerCurve = .continuous
+            backgroundView?.layer.cornerCurve = .continuous
         }
-        layer.cornerRadius = radius
-        let view = representationSequenceView.separatableSequenceView
-        if (actions.count == 1 && actions[0].style == .cancel) || customView == nil {
-            view.setCornerRadius(radius)
-        } else {
-            view.setCornerRadius(radius, corners: [.bottomLeft, .bottomRight])
+        if let view = representationSequenceView?.separatableSequenceView {
+            if (actions.count == 1 && actions[0].style == .cancel) || customView == nil {
+                view.setCornerRadius(radius)
+            } else {
+                view.setCornerRadius(radius, corners: [.bottomLeft, .bottomRight])
+            }
         }
     }
 }
