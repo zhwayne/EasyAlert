@@ -32,7 +32,7 @@ import UIKit
 ///         }
 ///     }
 ///
-///     required init(image: UIImage) {
+///     init(image: UIImage) {
 ///         super.init(customizable: ContentView(image: image))
 ///     }
 /// }

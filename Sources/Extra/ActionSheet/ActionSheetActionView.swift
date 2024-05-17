@@ -51,7 +51,7 @@ extension ActionSheet {
             return label
         }()
         
-        required init(style: Action.Style) {
+        init(style: Action.Style) {
             self.style = style
             super.init(frame: .zero)
             

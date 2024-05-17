@@ -13,7 +13,7 @@ struct ToastTransitionAnimator : TransitionAnimator {
     
     var position: Toast.Position = .bottom
     
-    func show(context: TransitionContext, completion: @escaping () -> Void) {
+    func show(with context: TransitionContext, completion: @escaping () -> Void) {
         let transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         context.container.transform = transform
         context.container.alpha = 0
@@ -26,7 +26,7 @@ struct ToastTransitionAnimator : TransitionAnimator {
         }
     }
     
-    func dismiss(context: TransitionContext, completion: @escaping () -> Void) {
+    func dismiss(with context: TransitionContext, completion: @escaping () -> Void) {
         let transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         
         withSpringTimingAnimation {
@@ -37,15 +37,15 @@ struct ToastTransitionAnimator : TransitionAnimator {
         }
     }
     
-    mutating func update(context: TransitionContext, layoutGuide: LayoutGuide) {
+    mutating func update(with context: TransitionContext) {
         
-        context.backdropView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
         constraints.removeAll()
         defer {
             NSLayoutConstraint.activate(constraints)
         }
         
+        let layoutGuide = context.layoutGuide
         let edgeInsets = layoutGuide.contentInsets
         let container = context.container
         guard let superview = container.superview else { return }

@@ -39,7 +39,7 @@ open class MessageAlert: ActionAlert {
     let titleConfiguration: TitleConfiguration
     let messageConfiguration: MessageConfiguration
 
-    public required init(
+    public init(
         title: Title?,
         message: Message?,
         configuration: ActionAlertConfigurable? = nil
@@ -57,11 +57,6 @@ open class MessageAlert: ActionAlert {
         configAttributes()
         contentView.titleLabel.attributedText = text(for: title)
         contentView.messageLabel.attributedText = text(for: message)
-    }
-
-    @available(*, unavailable)
-    public required init(customizable: AlertCustomizable, configuration: ActionAlertConfigurable? = nil) {
-        fatalError("init(customizable:configuration:) has not been implemented")
     }
     
     private func configAttributes() {

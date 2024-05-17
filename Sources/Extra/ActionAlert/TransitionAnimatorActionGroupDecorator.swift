@@ -17,18 +17,18 @@ struct TransitionAnimatorActionGroupDecorator: TransitionAnimator {
         self.actionGroupViews = actionGroupViews
     }
     
-    mutating func update(context: TransitionContext, layoutGuide: LayoutGuide) {
-        aniamtor.update(context: context, layoutGuide: layoutGuide)
+    mutating func update(with context: TransitionContext) {
+        aniamtor.update(with: context)
         actionGroupViews.forEach { view in
             view.updateLayout(interfaceOrientation: context.interfaceOrientation)
         }
     }
     
-    mutating func show(context: TransitionContext, completion: @escaping () -> Void) {
-        aniamtor.show(context: context, completion: completion)
+    mutating func show(with context: TransitionContext, completion: @escaping () -> Void) {
+        aniamtor.show(with: context, completion: completion)
     }
     
-    mutating func dismiss(context: TransitionContext, completion: @escaping () -> Void) {
-        aniamtor.dismiss(context: context, completion: completion)
+    mutating func dismiss(with context: TransitionContext, completion: @escaping () -> Void) {
+        aniamtor.dismiss(with: context, completion: completion)
     }
 }

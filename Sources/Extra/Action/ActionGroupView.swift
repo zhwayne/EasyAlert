@@ -53,7 +53,7 @@ class ActionGroupView: UIView, AlertCustomizable {
     private var separatorView: ActionVibrantSeparatorView?
     private let containerView = UIView()
     
-    required init(customView: UIView?, actionLayout: ActionLayoutable) {
+    init(customView: UIView?, actionLayout: ActionLayoutable) {
         self.customView = customView
         self.actionLayout = actionLayout
 

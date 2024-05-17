@@ -17,7 +17,7 @@ struct SheetTransitionAnimator : TransitionAnimator {
         self.sheet = sheet
     }
     
-    func show(context: TransitionContext, completion: @escaping () -> Void) {
+    func show(with context: TransitionContext, completion: @escaping () -> Void) {
         let height = context.container.bounds.height + context.dimmingView.safeAreaInsets.bottom
         context.container.transform = CGAffineTransform(translationX: 0, y: height)
         context.dimmingView.alpha = 0
@@ -30,9 +30,9 @@ struct SheetTransitionAnimator : TransitionAnimator {
         }
     }
     
-    func dismiss(context: TransitionContext, completion: @escaping () -> Void) {
+    func dismiss(with context: TransitionContext, completion: @escaping () -> Void) {
         context.container.layoutIfNeeded()
-        let height = context.frame.height - context.container.frame.minY
+        let height = context.size.height - context.container.frame.minY
         
         withSpringTimingAnimation {
             context.dimmingView.alpha = 0
@@ -42,9 +42,8 @@ struct SheetTransitionAnimator : TransitionAnimator {
         }
     }
     
-    mutating func update(context: TransitionContext, layoutGuide: LayoutGuide) {
+    mutating func update(with context: TransitionContext) {
 
-        context.backdropView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
         constraints.removeAll()
         defer {
@@ -52,6 +51,7 @@ struct SheetTransitionAnimator : TransitionAnimator {
             NSLayoutConstraint.activate(constraints)
         }
         
+        let layoutGuide = context.layoutGuide
         let edgeInsets = layoutGuide.contentInsets
         let container = context.container
         guard let superview = container.superview else { return }

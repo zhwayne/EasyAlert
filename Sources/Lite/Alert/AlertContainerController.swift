@@ -17,7 +17,7 @@ final class AlertContainerController: UIViewController {
     
     private let feedback = UISelectionFeedbackGenerator()
     
-    required init(alert: Alert) {
+    init(alert: Alert) {
         super.init(nibName: nil, bundle: nil)
         self.alert = alert
     }

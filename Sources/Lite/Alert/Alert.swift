@@ -47,6 +47,8 @@ import UIKit
     
     private var window: AlertWindow?
     
+    private let keyboardHandler = KeyboardHandler()
+    
     #if DEBUG
     deinit {
         NSLog("%@", "\(self) deinitialized.")
@@ -115,6 +117,7 @@ import UIKit
         guard !isActive else { return }
         
         observeDeviceRotation()
+        listenKeybordFrame()
         configBackdrop()
         configDimming()
         configContainer()
@@ -172,6 +175,12 @@ extension Alert {
         window?.makeKeyAndVisible()
     }
     
+    private func listenKeybordFrame() {
+        keyboardHandler.keyboardFrameWillChange = { context in
+            print(context.keyboardFrame)
+        }
+    }
+    
     private func configDimming() {
         guard dimmingView == nil else { return }
         dimmingView = DimmingView()
@@ -206,7 +215,7 @@ extension Alert {
     func updateLayout() {
         willLayoutContainer()
         UIView.performWithoutAnimation { [self] in
-            transitionAniamtor.update(context: transitioningContext, layoutGuide: layoutGuide)
+            transitionAniamtor.update(with: transitioningContext)
             backdropView.setNeedsLayout()
             backdropView.layoutIfNeeded()
         }
@@ -223,7 +232,7 @@ extension Alert {
         
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
-        transitionAniamtor.show(context: transitioningContext) { [weak self] in
+        transitionAniamtor.show(with: transitioningContext) { [weak self] in
             self?.didShow()
             self?.callbacks.forEach { $0.didShow?() }
             self?.alertContainerController.view.isUserInteractionEnabled = true
@@ -277,7 +286,7 @@ extension Alert {
         
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
-        transitionAniamtor.dismiss(context: transitioningContext) { [weak self] in
+        transitionAniamtor.dismiss(with: transitioningContext) { [weak self] in
             self?.didDismiss()
             self?.callbacks.forEach { $0.didDismiss?() }
             if let viewController = self?.customizable as? UIViewController {
@@ -326,10 +335,16 @@ extension Alert {
     
     private var transitioningContext: TransitionContext {
         TransitionContext(
-            backdropView: backdropView,
+            size: backdropView.frame.size,
             dimmingView: dimmingView,
             container: alertContainerController.view,
-            interfaceOrientation: interfaceOrientation
+            interfaceOrientation: interfaceOrientation,
+            layoutGuide: layoutGuide
         )
     }
 }
+
+// backdropView ---> DimmingView
+//              |
+//              |
+//              ---> AlertContainerController.View ---> UIView(AlertCustomizable)

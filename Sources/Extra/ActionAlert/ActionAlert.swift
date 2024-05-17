@@ -17,7 +17,7 @@ open class ActionAlert: Alert, _ActionAlertble {
     private let actionGroupView: ActionGroupView
     private let configuration: ActionAlertConfigurable
     
-    public required init(
+    public init(
         customizable: AlertCustomizable,
         configuration: ActionAlertConfigurable? = nil
     ) {
