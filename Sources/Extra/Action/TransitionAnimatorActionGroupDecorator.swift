@@ -7,28 +7,30 @@
 
 import Foundation
 
-struct TransitionAnimatorActionGroupDecorator: TransitionAnimator {
+final class ActionGroupAnimatorAndLayoutDecorator: TransitionAnimator, LayoutModifier {
     
     private var aniamtor: TransitionAnimator
+    private var layoutModifier: LayoutModifier
     private var actionGroupViews: [ActionGroupView] = []
     
-    init(aniamtor: TransitionAnimator, actionGroupViews: [ActionGroupView]) {
+    init(aniamtor: TransitionAnimator, layoutModifier: LayoutModifier, actionGroupViews: [ActionGroupView]) {
         self.aniamtor = aniamtor
+        self.layoutModifier = layoutModifier
         self.actionGroupViews = actionGroupViews
     }
     
-    mutating func update(context: TransitionContext, layoutGuide: LayoutGuide) {
-        aniamtor.update(context: context, layoutGuide: layoutGuide)
+    func update(context: LayoutContext, layoutGuide: LayoutGuide) {
+        layoutModifier.update(context: context, layoutGuide: layoutGuide)
         actionGroupViews.forEach { view in
             view.updateLayout(interfaceOrientation: context.interfaceOrientation)
         }
     }
     
-    mutating func show(context: TransitionContext, completion: @escaping () -> Void) {
+    func show(context: LayoutContext, completion: @escaping () -> Void) {
         aniamtor.show(context: context, completion: completion)
     }
     
-    mutating func dismiss(context: TransitionContext, completion: @escaping () -> Void) {
+    func dismiss(context: LayoutContext, completion: @escaping () -> Void) {
         aniamtor.dismiss(context: context, completion: completion)
     }
 }

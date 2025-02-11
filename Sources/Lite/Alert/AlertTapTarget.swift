@@ -2,7 +2,7 @@
 //  AlertTapTarget.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2021/7/28.
+//  Created by iya on 2021/7/28.
 //
 
 import UIKit

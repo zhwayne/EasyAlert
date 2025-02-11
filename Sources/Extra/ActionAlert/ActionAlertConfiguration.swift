@@ -2,7 +2,7 @@
 //  ActionAlertConfiguration.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2022/5/26.
+//  Created by iya on 2022/5/26.
 //
 
 import UIKit

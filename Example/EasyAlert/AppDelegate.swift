@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 04/09/2022.
-//  Copyright (c) 2022 张尉. All rights reserved.
+//  Created by iya on 04/09/2022.
+//  Copyright (c) 2022 iya. All rights reserved.
 //
 
 import UIKit

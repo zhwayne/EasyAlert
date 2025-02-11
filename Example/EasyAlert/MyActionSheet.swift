@@ -35,11 +35,6 @@ class MyActionSheet: ActionSheet {
     }
     
     required init() {
-        super.init(customizable:  ContentView())
-    }
-    
-    @available(*, unavailable)
-    override init(customizable: AlertCustomizable?, configuration: ActionAlertbleConfigurable? = nil) {
-        fatalError("init(customizable:configuration:) has not been implemented")
+        super.init(content:  ContentView())
     }
 }

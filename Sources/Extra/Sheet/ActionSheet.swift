@@ -20,17 +20,17 @@ open class ActionSheet: Sheet, _ActionAlertble {
     private let configuration: ActionAlertbleConfigurable
     
     public init(
-        customizable: AlertCustomizable? = nil,
+        content: AlertCustomizable? = nil,
         configuration: ActionAlertbleConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionSheet.Configuration.global
         let actionLayout = self.configuration.actionLayoutType.init()
         let cancelActionLayout = self.configuration.actionLayoutType.init()
         
-        if let view = customizable as? UIView {
+        if let view = content as? UIView {
             actionGroupView = ActionGroupView(customView: view,
                                               actionLayout: actionLayout)
-        } else if let viewController = customizable as? UIViewController {
+        } else if let viewController = content as? UIViewController {
             actionGroupView = ActionGroupView(customView: viewController.view,
                                               actionLayout: actionLayout)
         } else {
@@ -39,14 +39,16 @@ open class ActionSheet: Sheet, _ActionAlertble {
         }
 
         cancelActionGroupView = ActionGroupView(customView: nil, actionLayout: cancelActionLayout)
-        super.init(customizable: containerView)
+        super.init(content: containerView)
         
         layoutGuide.contentInsets = self.configuration.contentInsets
-        let decorator = TransitionAnimatorActionGroupDecorator(
+        let decorator = ActionGroupAnimatorAndLayoutDecorator(
             aniamtor: transitionAniamtor,
+            layoutModifier: layoutModifier,
             actionGroupViews: [actionGroupView, cancelActionGroupView]
         )
         transitionAniamtor = decorator
+        layoutModifier = decorator
     }
     
     open override func willLayoutContainer() {

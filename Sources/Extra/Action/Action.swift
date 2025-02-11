@@ -2,12 +2,12 @@
 //  Action.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2021/7/27.
+//  Created by iya on 2021/7/27.
 //
 
 import UIKit
 
-public final class Action {
+@MainActor public final class Action {
     
     public typealias Handelr = (Action) -> Void
     

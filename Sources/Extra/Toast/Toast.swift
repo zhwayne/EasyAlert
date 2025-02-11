@@ -2,7 +2,7 @@
 //  Toast.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2022/12/13.
+//  Created by iya on 2022/12/13.
 //
 
 import UIKit
@@ -67,9 +67,9 @@ extension Toast {
             alert = ToastAlert(message: message)
         }
         
-        if var aniamtor = alert?.transitionAniamtor as? ToastTransitionAnimator {
-            aniamtor.position = position
-            alert?.transitionAniamtor = aniamtor
+        if var layoutModifier = alert?.layoutModifier as? ToastLayoutModifier {
+            layoutModifier.position = position
+            alert?.layoutModifier = layoutModifier
         }
         
         let parameters = UISpringTimingParameters()

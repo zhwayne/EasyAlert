@@ -2,7 +2,7 @@
 //  ActionAlert.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2021/7/28.
+//  Created by iya on 2021/7/28.
 //
 
 import UIKit
@@ -16,28 +16,30 @@ open class ActionAlert: Alert, _ActionAlertble {
     private let configuration: ActionAlertbleConfigurable
     
     public required init(
-        customizable: AlertCustomizable,
+        content: AlertCustomizable,
         configuration: ActionAlertbleConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionAlert.Configuration.global
         let actionLayout = self.configuration.actionLayoutType.init()
-        if let view = customizable as? UIView {
+        if let view = content as? UIView {
             actionGroupView = ActionGroupView(customView: view,
                                               actionLayout: actionLayout)
-        } else if let viewController = customizable as? UIViewController {
+        } else if let viewController = content as? UIViewController {
             actionGroupView = ActionGroupView(customView: viewController.view,
                                               actionLayout: actionLayout)
         } else {
-            fatalError("Unsupported type: \(type(of: customizable))")
+            fatalError("Unsupported type: \(type(of: content))")
         }
-        super.init(customizable: actionGroupView)
+        super.init(content: actionGroupView)
         
         layoutGuide.contentInsets = self.configuration.contentInsets
-        let decorator = TransitionAnimatorActionGroupDecorator(
+        let decorator = ActionGroupAnimatorAndLayoutDecorator(
             aniamtor: AlertTransitionAnimator(),
+            layoutModifier: AlertLayoutModifier(),
             actionGroupViews: [actionGroupView]
         )
         self.transitionAniamtor = decorator
+        self.layoutModifier = decorator
     }
     
     open override func willLayoutContainer() {

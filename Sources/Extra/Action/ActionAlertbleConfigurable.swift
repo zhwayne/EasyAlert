@@ -2,7 +2,7 @@
 //  ActionAlertbleConfigurable.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2022/12/5.
+//  Created by iya on 2022/12/5.
 //
 
 import UIKit

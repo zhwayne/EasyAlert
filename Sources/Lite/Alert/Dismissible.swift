@@ -7,9 +7,7 @@
 
 import UIKit
 
-@MainActor public protocol Fetchable: AnyObject { }
-
-@MainActor public protocol Dismissible : Fetchable {
+@MainActor public protocol Dismissible: AnyObject {
     
     /// Dismiss the alert.
     /// - Parameter completion: the `completion` callback will invoke after alert dismissed.
@@ -19,7 +17,7 @@ import UIKit
     func dismiss() async
 }
 
-extension Fetchable {
+extension Dismissible {
     
     // Gets the alert in the current UIView or UIViewController.
     var alert: Alert? {

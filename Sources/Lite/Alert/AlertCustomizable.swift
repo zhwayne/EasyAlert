@@ -2,7 +2,7 @@
 //  AlertCustomizable.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2021/7/27.
+//  Created by iya on 2021/7/27.
 //
 
 import UIKit
@@ -33,7 +33,7 @@ import UIKit
 ///     }
 ///
 ///     required init(image: UIImage) {
-///         super.init(customizable: ContentView(image: image))
+///         super.init(content: ContentView(image: image))
 ///     }
 /// }
 ///

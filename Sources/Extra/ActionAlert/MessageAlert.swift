@@ -2,7 +2,7 @@
 //  MessageAlert.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2021/8/2.
+//  Created by iya on 2021/8/2.
 //
 
 import UIKit
@@ -53,14 +53,14 @@ public final class MessageAlert: ActionAlert {
         }
         
         contentView = ContentView()
-        super.init(customizable: contentView, configuration: configuration)
+        super.init(content: contentView, configuration: configuration)
         configAttributes()
         contentView.titleLabel.attributedText = text(for: title)
         contentView.messageLabel.attributedText = text(for: message)
     }
 
     @available(*, unavailable)
-    public required init(customizable: AlertCustomizable, configuration: ActionAlertbleConfigurable? = nil) {
+    public required init(content: AlertCustomizable, configuration: ActionAlertbleConfigurable? = nil) {
         fatalError("init(customizable:configuration:) has not been implemented")
     }
     

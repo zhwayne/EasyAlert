@@ -62,14 +62,15 @@ final class ToastAlert: Alert {
         }
     }
     
-    var rawCustomView: ContentView { customizable as! ContentView }
+    var rawCustomView: ContentView { alertContent as! ContentView }
     
     public required init(message: Message) {
         let contentView = ContentView()
-        super.init(customizable: contentView)
+        super.init(content: contentView)
         contentView.label.attributedText = Toast.text(for: message)
         
         transitionAniamtor = ToastTransitionAnimator()
+        layoutModifier = ToastLayoutModifier()
         backdropProvider.dimming = .color(.clear)
         backdropProvider.penetrationScope = .all
         

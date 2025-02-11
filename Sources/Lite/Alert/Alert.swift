@@ -2,7 +2,7 @@
 //  Alert.swift
 //  EasyAlert
 //
-//  Created by 张尉 on 2021/7/27.
+//  Created by iya on 2021/7/27.
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import UIKit
 /// The base alert.
 @MainActor open class Alert: Alertble {
     
-    public let customizable: AlertCustomizable
+    public let alertContent: AlertCustomizable
     
     /// A Provider that interacts with the backdrop
     public var backdropProvider: BackdropProvider = DefaultBackdropProvider() {
@@ -18,6 +18,8 @@ import UIKit
     }
     
     public var transitionAniamtor: TransitionAnimator = AlertTransitionAnimator()
+    
+    var layoutModifier: LayoutModifier = AlertLayoutModifier()
     
     public var isShowing: Bool { backdropView.superview != nil }
     
@@ -43,11 +45,11 @@ import UIKit
     }
     #endif
     
-    public init(customizable: AlertCustomizable) {
-        guard customizable is UIView || customizable is UIViewController else {
-            fatalError("Unsupported type: \(type(of: customizable))")
+    public init(content: AlertCustomizable) {
+        guard content is UIView || content is UIViewController else {
+            fatalError("Unsupported type: \(type(of: content))")
         }
-        self.customizable = customizable
+        self.alertContent = content
         observeDeviceRotation()
         configBackdrop()
     }
@@ -155,7 +157,7 @@ extension Alert {
         }
         window?.rootViewController = UIViewController()
         window?.backgroundColor = .clear
-        window?.windowLevel = .alert
+        window?.windowLevel = .alert - 1
         window?.makeKeyAndVisible()
     }
     
@@ -181,10 +183,10 @@ extension Alert {
         backdropView.addSubview(alertContainerController.view)
         
         // Add view or viewController
-        if let view = customizable as? UIView {
+        if let view = alertContent as? UIView {
             alertContainerController.view.addSubview(view)
             layoutFill(view)
-        } else if let viewController = customizable as? UIViewController {
+        } else if let viewController = alertContent as? UIViewController {
             viewController.willMove(toParent: alertContainerController)
             alertContainerController.addChild(viewController)
             alertContainerController.view.addSubview(viewController.view)
@@ -207,7 +209,7 @@ extension Alert {
     func updateLayout() {
         willLayoutContainer()
         UIView.performWithoutAnimation { [self] in
-            transitionAniamtor.update(context: transitioningContext, layoutGuide: layoutGuide)
+            layoutModifier.update(context: layoutContext, layoutGuide: layoutGuide)
             backdropView.setNeedsLayout()
             backdropView.layoutIfNeeded()
         }
@@ -215,7 +217,7 @@ extension Alert {
     }
     
     private func performShowWithAnimation() {
-        if let viewController = customizable as? UIViewController {
+        if let viewController = alertContent as? UIViewController {
             viewController.beginAppearanceTransition(true, animated: true)
         }
         willShow()
@@ -223,12 +225,12 @@ extension Alert {
         
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
-        transitionAniamtor.show(context: transitioningContext) { [weak self] in
+        transitionAniamtor.show(context: layoutContext) { [weak self] in
             self?.didShow()
             self?.callbacks.forEach { $0.didShow?() }
             self?.alertContainerController.view.isUserInteractionEnabled = true
             self?.tapTarget.tapGestureRecognizer.isEnabled = true
-            if let viewController = self?.customizable as? UIViewController {
+            if let viewController = self?.alertContent as? UIViewController {
                 viewController.endAppearanceTransition()
             }
         }
@@ -271,7 +273,7 @@ extension Alert {
 extension Alert {
     
     private func dismissAlert(completion: (() -> Void)?) {
-        if let viewController = customizable as? UIViewController {
+        if let viewController = alertContent as? UIViewController {
             viewController.beginAppearanceTransition(false, animated: true)
         }
         willDismiss()
@@ -279,10 +281,10 @@ extension Alert {
         
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
-        transitionAniamtor.dismiss(context: transitioningContext) { [weak self] in
+        transitionAniamtor.dismiss(context: layoutContext) { [weak self] in
             self?.didDismiss()
             self?.callbacks.forEach { $0.didDismiss?() }
-            if let viewController = self?.customizable as? UIViewController {
+            if let viewController = self?.alertContent as? UIViewController {
                 viewController.endAppearanceTransition()
             }
             completion?()
@@ -295,9 +297,9 @@ extension Alert {
     private func clean() {
         alertContainerController.weakAlert = nil
         
-        if let view = customizable as? UIView {
+        if let view = alertContent as? UIView {
             view.removeFromSuperview()
-        } else if let viewController = customizable as? UIViewController {
+        } else if let viewController = alertContent as? UIViewController {
             viewController.removeFromParent()
             viewController.view.removeFromSuperview()
             viewController.didMove(toParent: nil)
@@ -328,11 +330,11 @@ extension Alert {
         }
     }
     
-    private var transitioningContext: TransitionContext {
-        TransitionContext(
-            backdropView: backdropView,
+    private var layoutContext: LayoutContext {
+        LayoutContext(
+            containerView: backdropView,
             dimmingView: dimmingView,
-            container: alertContainerController.view,
+            presentedView: alertContainerController.view,
             interfaceOrientation: interfaceOrientation
         )
     }
