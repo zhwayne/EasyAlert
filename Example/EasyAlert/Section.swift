@@ -18,6 +18,8 @@ enum Section {
     
     case toast(title: String?, items: [Item])
     
+    case swiftui(title: String?, items: [Item])
+    
     enum Item {
         
         case systemAlert(String)
@@ -34,6 +36,9 @@ enum Section {
         case customActionSheet(String)
         
         case messageToast(String)
+        
+        case showSwiftUIView(String)
+        case showSwiftUIViewWithActions(String)
     }
 }
 
@@ -45,6 +50,7 @@ extension Section {
         case let .customMessage(_, items):  return items
         case let .sheet(_, items): return items
         case let .toast(_, items): return items
+        case let .swiftui(_, items): return items
         }
     }
 }

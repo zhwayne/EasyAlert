@@ -14,11 +14,19 @@ let package = Package(
             name: "EasyAlert",
             targets: ["EasyAlert"])
     ],
+//    dependencies: [
+//        .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.0.1"))
+//    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "EasyAlert", path: "Sources")
+            name: "EasyAlert",
+//            dependencies: [
+//                .product(name: "SnapKit", package: "SnapKit")
+//            ],
+            path: "Sources"
+        )
     ]
 )
 

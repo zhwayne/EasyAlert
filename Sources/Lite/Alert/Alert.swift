@@ -23,7 +23,7 @@ import UIKit
     
     public var isShowing: Bool { backdropView.superview != nil }
     
-    public var layoutGuide = LayoutGuide()
+    public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible)
     
     private let alertContainerController = AlertContainerController()
     
@@ -181,6 +181,10 @@ extension Alert {
     
     private func configContainer() {
         backdropView.addSubview(alertContainerController.view)
+        NSLayoutConstraint.activate([
+            alertContainerController.view.widthAnchor.constraint(lessThanOrEqualTo: backdropView.widthAnchor),
+            alertContainerController.view.heightAnchor.constraint(lessThanOrEqualTo: backdropView.heightAnchor)
+        ])
         
         // Add view or viewController
         if let view = alertContent as? UIView {

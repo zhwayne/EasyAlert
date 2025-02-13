@@ -74,10 +74,11 @@ final class ToastAlert: Alert {
         backdropProvider.dimming = .color(.clear)
         backdropProvider.penetrationScope = .all
         
-        let bounds = UIScreen.main.bounds
-        let width = min(bounds.width, bounds.height)
-        layoutGuide = LayoutGuide(width: .flexible(width),
-                                  contentInsets: UIEdgeInsets(top: 0, left: 36, bottom: 0, right: 36))
+        layoutGuide = LayoutGuide(
+            width: .flexible,
+            height: .flexible,
+            contentInsets: UIEdgeInsets(top: 0, left: 36, bottom: 0, right: 36)
+        )
     }
     
     override func willShow() {

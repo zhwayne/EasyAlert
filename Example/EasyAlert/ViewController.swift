@@ -27,6 +27,10 @@ class ViewController: UIViewController {
             .cornerRadius("自定义按钮UI和布局"),
             .attributedTitleAndMessage("支持富文本"),
         ]),
+        .swiftui(title: "支持 SwiftUI", items: [
+            .showSwiftUIView("显示 SwiftUI View"),
+            .showSwiftUIViewWithActions("显示带按钮的 SwiftUI View")
+        ]),
         .sheet(title: "ActionSheets", items: [
             .systemActionSheet("系统 ActionSheet"),
             .customActionSheet("仿系统 ActionSheet")
@@ -83,6 +87,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case let .customMessage(title, _):  return title
         case let .sheet(title, _): return title
         case let .toast(title, _): return title
+        case let .swiftui(title, _): return title
         }
     }
     
@@ -101,6 +106,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case let .leftAlignment(title): cell.textLabel?.text = title
         case let .cornerRadius(title): cell.textLabel?.text = title
         case let .attributedTitleAndMessage(title): cell.textLabel?.text = title
+            
+        case let .showSwiftUIView(title): cell.textLabel?.text = title
+        case let .showSwiftUIViewWithActions(title): cell.textLabel?.text = title
             
         case let .systemActionSheet(title): cell.textLabel?.text = title
         case let .customActionSheet(title): cell.textLabel?.text = title
@@ -122,7 +130,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let item = sections[indexPath.section].items[indexPath.row]
-                
+        
         switch item {
         case .systemAlert:
             let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
@@ -173,7 +181,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.addAction(cancel)
             alert.addAction(ignore)
             alert.show()
-
+            
         case .effectBackground:
             let alert = MessageAlert(title: alertTitle, message: message)
             if #available(iOS 13.0, *) {
@@ -260,7 +268,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             configuration.actionViewType = MySheetActionView.self
             configuration.actionLayoutType = MySheetActionLayout.self
             configuration.contentInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-
+            
             let sheet = ActionSheet(configuration: configuration)
             let cancel = Action(title: "取消", style: .cancel)
             let confirm = Action(title: "确定", style: .default)
@@ -270,6 +278,46 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             
         case .messageToast:
             Toast.show(message)
+            
+        case .showSwiftUIView:
+            
+            let alert = Alert {
+                VStack(spacing: 8) {
+                    Text(alertTitle)
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundColor(Color.orange)
+                    Text(message)
+                        .font(.system(size: 13))
+                        .lineSpacing(4)
+                }
+                .multilineTextAlignment(.center)
+                .padding()
+                .background(Color.white)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+            }
+            alert.backdropProvider.allowDismissWhenBackgroundTouch = true
+            alert.show()
+            
+        case .showSwiftUIViewWithActions:
+            
+            let alert = ActionAlert(content: EasyAlertHostingController(rootView: HStack {
+                VStack(spacing: 8) {
+                    Text(alertTitle)
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundColor(Color.orange)
+                    Text(message)
+                        .font(.system(size: 13))
+                        .lineSpacing(4)
+                }
+                .multilineTextAlignment(.center)
+                .padding()
+                .frame(width: 340)
+            }))
+            let cancel = Action(title: "取消", style: .cancel)
+            let ignore = Action(title: "忽略", style: .destructive)
+            alert.addAction(cancel)
+            alert.addAction(ignore)
+            alert.show()
         }
     }
 }

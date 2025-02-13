@@ -32,7 +32,11 @@ open class ActionAlert: Alert, _ActionAlertble {
         }
         super.init(content: actionGroupView)
         
-        layoutGuide.contentInsets = self.configuration.contentInsets
+        layoutGuide = LayoutGuide(
+            width: .flexible,
+            height: .flexible,
+            contentInsets:  self.configuration.contentInsets
+        )
         let decorator = ActionGroupAnimatorAndLayoutDecorator(
             aniamtor: AlertTransitionAnimator(),
             layoutModifier: AlertLayoutModifier(),

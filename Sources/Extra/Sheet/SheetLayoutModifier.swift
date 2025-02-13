@@ -7,21 +7,15 @@
 
 import UIKit
 
-struct SheetLayoutModifier: LayoutModifier {
+final class SheetLayoutModifier: LayoutModifier {
     
-    private weak var sheet: Sheet?
-    
-    init(sheet: Sheet) {
-        self.sheet = sheet
-    }
+    private var constraints: [NSLayoutConstraint] = []
     
     func update(context: LayoutContext, layoutGuide: LayoutGuide) {
-        var constraints: [NSLayoutConstraint] = []
         
         context.containerView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
         defer {
-            constraints.forEach { $0.priority -= 100 }
             NSLayoutConstraint.activate(constraints)
         }
         
@@ -35,11 +29,11 @@ struct SheetLayoutModifier: LayoutModifier {
             let width = value - (edgeInsets.left + edgeInsets.right)
             constraints.append(presentedView.widthAnchor.constraint(equalToConstant: width))
             
-        case let .flexible(value):
-            let width = value - (edgeInsets.left + edgeInsets.right)
+        case .flexible:
+            let width = containerView.bounds.width - (edgeInsets.left + edgeInsets.right)
             constraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: width))
             
-        case let .multiplied(value, maximumWidth):
+        case let .multiplied(value, maxWidth):
             let constant = -(edgeInsets.left + edgeInsets.right)
             let multiplierConstraint = presentedView.widthAnchor.constraint(
                 equalTo: containerView.widthAnchor,
@@ -47,27 +41,21 @@ struct SheetLayoutModifier: LayoutModifier {
                 constant: constant)
             multiplierConstraint.priority = .required - 1
             constraints.append(multiplierConstraint)
-            if let maximumWidth, maximumWidth > 0 {
-                let maximumWidthConstraint = presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: maximumWidth)
-                constraints.append(maximumWidthConstraint)
+            if let maxWidth, maxWidth > 0 {
+                let maxWidthConstraint = presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth)
+                constraints.append(maxWidthConstraint)
             }
         }
         
         // layout guide height.
         switch layoutGuide.height {
-        case .automatic:
-            let height = containerView.frame.height
-            let constraint = presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: height)
-            constraint.priority = .defaultHigh
-            constraints.append(constraint)
-            
         case .fixed(let value):
             let height = value - (edgeInsets.top + edgeInsets.bottom)
             let constraint = presentedView.heightAnchor.constraint(equalToConstant: height)
             constraints.append(constraint)
             
-        case .flexible(let value):
-            let height = value - (edgeInsets.top + edgeInsets.bottom)
+        case .flexible:
+            let height = containerView.bounds.height - (edgeInsets.top + edgeInsets.bottom)
             let constraint = presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: height)
             constraints.append(constraint)
             
@@ -75,22 +63,9 @@ struct SheetLayoutModifier: LayoutModifier {
             let height = value - (edgeInsets.top + edgeInsets.bottom)
             let constraint = presentedView.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
             constraints.append(constraint)
-            
-        case let .multiplied(value, maximumHeight):
-            let constant = -(edgeInsets.top + edgeInsets.bottom)
-            let multiplierConstraint = presentedView.heightAnchor.constraint(
-                equalTo: containerView.heightAnchor,
-                multiplier: value,
-                constant: constant)
-            multiplierConstraint.priority = .required - 1
-            constraints.append(multiplierConstraint)
-            if let maximumHeight, maximumHeight > 0 {
-                let maximumHeightConstraint = presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight)
-                constraints.append(maximumHeightConstraint)
-            }
         }
         
-        if let sheet, sheet.ignoreBottomSafeArea {
+        if layoutGuide.ignoresSafeAreaBottom {
             let constraint = presentedView.bottomAnchor.constraint(
                 equalTo: containerView.bottomAnchor,
                 constant: -edgeInsets.bottom)
@@ -105,6 +80,7 @@ struct SheetLayoutModifier: LayoutModifier {
         constraints.append(
             presentedView.centerXAnchor.constraint(
                 equalTo: containerView.centerXAnchor,
-                constant: (abs(edgeInsets.left) - abs(edgeInsets.right)) / 2))
+                constant: (abs(edgeInsets.left) - abs(edgeInsets.right)) / 2)
+        )
     }
 }

@@ -30,11 +30,12 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '12.0'
 
-  s.swift_version = '5.7'
+  s.swift_version = '5.8'
   s.source_files = 'Sources/**/*'
   
   s.subspec 'Lite' do |a|
     a.source_files = 'Sources/Lite/**/*'
+    # a.dependency 'SnapKit'
   end
   
   # s.resource_bundles = {

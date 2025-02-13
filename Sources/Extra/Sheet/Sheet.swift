@@ -9,14 +9,11 @@ import UIKit
 
 open class Sheet: Alert {
     
-    /// The content will not extend beyond the bottom safe area if `ignoreBottomSafeArea` is set to `true`.
-    public var ignoreBottomSafeArea: Bool = false
-    
     public override init(content: AlertCustomizable) {
         super.init(content: content)
         self.transitionAniamtor = SheetTransitionAnimator()
-        self.layoutModifier = SheetLayoutModifier(sheet: self)
+        self.layoutModifier = SheetLayoutModifier()
         backdropProvider.allowDismissWhenBackgroundTouch = true
-        layoutGuide = LayoutGuide(width: .multiplied(by: 1, maximumWidth: 414))
+        layoutGuide = LayoutGuide(width: .multiplied(by: 1, maxWidth: 414), height: .flexible)
     }
 }

@@ -67,9 +67,8 @@ extension Toast {
             alert = ToastAlert(message: message)
         }
         
-        if var layoutModifier = alert?.layoutModifier as? ToastLayoutModifier {
+        if let layoutModifier = alert?.layoutModifier as? ToastLayoutModifier {
             layoutModifier.position = position
-            alert?.layoutModifier = layoutModifier
         }
         
         let parameters = UISpringTimingParameters()
