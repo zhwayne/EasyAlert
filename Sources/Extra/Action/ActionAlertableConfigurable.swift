@@ -1,5 +1,5 @@
 //
-//  ActionAlertbleConfigurable.swift
+//  ActionAlertableConfigurable.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/12/5.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public protocol ActionAlertbleConfigurable {
+public protocol ActionAlertableConfigurable {
     
     var cornerRadius: CGFloat { get set }
     
@@ -18,7 +18,7 @@ public protocol ActionAlertbleConfigurable {
     var actionLayoutType: ActionLayoutable.Type { get set }
 }
 
-extension ActionAlertbleConfigurable {
+extension ActionAlertableConfigurable {
     
     func value(for label: String) -> Any? {
         let mirror = Mirror(reflecting: self)

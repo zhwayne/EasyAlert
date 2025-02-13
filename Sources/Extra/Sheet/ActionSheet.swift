@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class ActionSheet: Sheet, _ActionAlertble {
+open class ActionSheet: Sheet, _ActionAlertable {
     
     var actions: [Action] { actionGroupView.actions + cancelActionGroupView.actions }
     
@@ -17,11 +17,11 @@ open class ActionSheet: Sheet, _ActionAlertble {
     
     private var cancelActionGroupView: ActionGroupView
     
-    private let configuration: ActionAlertbleConfigurable
+    private let configuration: ActionAlertableConfigurable
     
     public init(
         content: AlertCustomizable? = nil,
-        configuration: ActionAlertbleConfigurable? = nil
+        configuration: ActionAlertableConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionSheet.Configuration.global
         let actionLayout = self.configuration.actionLayoutType.init()

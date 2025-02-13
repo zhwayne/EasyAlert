@@ -1,5 +1,5 @@
 //
-//  ActionAlertble.swift
+//  ActionAlertable.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/12/4.
@@ -7,31 +7,31 @@
 
 import Foundation
 
-@MainActor public protocol ActionAlertble: Alertble {
+@MainActor public protocol ActionAlertable: Alertable {
     
     func addAction(_ action: Action)
 }
 
-public extension ActionAlertble {
+public extension ActionAlertable {
     
     func addActions(_ actions: [Action]) {
         actions.forEach { addAction($0) }
     }
 }
 
-@MainActor protocol _ActionAlertble: ActionAlertble {
+@MainActor protocol _ActionAlertable: ActionAlertable {
     
     var actions: [Action] { get }
 }
 
-extension _ActionAlertble {
+extension _ActionAlertable {
     
     func canAddAction(_ action: Action) -> Bool {
 #if DEBUG
-        assert(!isShowing, "\(self) can only add one action if is not display.`")
+        assert(!isActive, "\(self) can only add one action if is not display.`")
         assert(!isDuplicateCancelAction(action), "\(self) can only have one action with a style of `Action.Style.cancel`.")
 #endif
-        return !isShowing && !isDuplicateCancelAction(action)
+        return !isActive && !isDuplicateCancelAction(action)
     }
     
     func isDuplicateCancelAction(_ action: Action) -> Bool {

@@ -7,17 +7,17 @@
 
 import UIKit
 
-open class ActionAlert: Alert, _ActionAlertble {
+open class ActionAlert: Alert, _ActionAlertable {
     
     var actions: [Action] { actionGroupView.actions }
     
     private let actionGroupView: ActionGroupView
     
-    private let configuration: ActionAlertbleConfigurable
+    private let configuration: ActionAlertableConfigurable
     
     public required init(
         content: AlertCustomizable,
-        configuration: ActionAlertbleConfigurable? = nil
+        configuration: ActionAlertableConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionAlert.Configuration.global
         let actionLayout = self.configuration.actionLayoutType.init()

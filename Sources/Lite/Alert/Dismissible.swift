@@ -24,7 +24,7 @@ extension Dismissible {
         if let view = self as? UIView {
             for view in sequence(first: view.superview, next: { $0?.superview }) {
                 if let responder = view?.next as? AlertContainerController {
-                    return responder.weakAlert
+                    return responder.alert
                 }
             }
             return nil
@@ -33,7 +33,7 @@ extension Dismissible {
             guard let parent = viewController.parent as? AlertContainerController else {
                 return nil
             }
-            return parent.weakAlert
+            return parent.alert
         }
         return nil
     }

@@ -9,7 +9,7 @@ import UIKit
 
 extension ActionSheet {
     
-    public struct Configuration: ActionAlertbleConfigurable {
+    public struct Configuration: ActionAlertableConfigurable {
         
         public var contentInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8)
 

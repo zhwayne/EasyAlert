@@ -8,7 +8,7 @@
 import UIKit
 
 /// The base alert.
-@MainActor open class Alert: Alertble {
+@MainActor open class Alert: Alertable {
     
     public let alertContent: AlertCustomizable
     
@@ -20,12 +20,12 @@ import UIKit
     public var transitionAniamtor: TransitionAnimator = AlertTransitionAnimator()
     
     var layoutModifier: LayoutModifier = AlertLayoutModifier()
-    
-    public var isShowing: Bool { backdropView.superview != nil }
-    
+        
     public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible)
     
-    private let alertContainerController = AlertContainerController()
+    public private(set) var isActive: Bool = false
+        
+    private lazy var alertContainerController = AlertContainerController(alert: self)
     
     private let backdropView = DimmingKnockoutBackdropView()
     
@@ -50,8 +50,6 @@ import UIKit
             fatalError("Unsupported type: \(type(of: content))")
         }
         self.alertContent = content
-        observeDeviceRotation()
-        configBackdrop()
     }
     
     private func observeDeviceRotation() {
@@ -103,16 +101,19 @@ import UIKit
     
     public func show(in container: AlertContainer? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
-        guard !isShowing else { return }
-        
+        guard !isActive else { return }
+                
+        observeDeviceRotation()
+        configBackdrop()
         configDimming()
         configContainer()
+        // TODO: 处理键盘
         showAlert(in: container)
     }
     
     public func dismiss(completion: (() -> Void)? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
-        guard canDismiss() else { return }
+        guard isActive else { return }
         dismissAlert(completion: completion)
     }
     
@@ -159,10 +160,6 @@ extension Alert {
         window?.backgroundColor = .clear
         window?.windowLevel = .alert - 1
         window?.makeKeyAndVisible()
-    }
-    
-    private func canDismiss() -> Bool {
-        return isShowing || backdropView.superview != nil
     }
     
     private func configDimming() {
@@ -224,6 +221,7 @@ extension Alert {
         if let viewController = alertContent as? UIViewController {
             viewController.beginAppearanceTransition(true, animated: true)
         }
+        isActive = true
         willShow()
         callbacks.forEach { $0.willShow?() }
         
@@ -255,9 +253,6 @@ extension Alert {
     }
     
     private func showAlert(in parent: AlertContainer?) {
-        // Set associated object.
-        alertContainerController.weakAlert = self
-        
         if let view = parent as? UIView {
             view.attach(alert: self)
             _showAlert(in: view)
@@ -280,6 +275,7 @@ extension Alert {
         if let viewController = alertContent as? UIViewController {
             viewController.beginAppearanceTransition(false, animated: true)
         }
+        isActive = false
         willDismiss()
         callbacks.forEach { $0.willDismiss?() }
         
@@ -299,8 +295,6 @@ extension Alert {
     }
     
     private func clean() {
-        alertContainerController.weakAlert = nil
-        
         if let view = alertContent as? UIView {
             view.removeFromSuperview()
         } else if let viewController = alertContent as? UIViewController {

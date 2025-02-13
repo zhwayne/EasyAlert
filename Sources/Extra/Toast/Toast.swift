@@ -80,7 +80,7 @@ extension Toast {
         animator.startAnimation()
         
         alert?.backdropProvider.penetrationScope = penetrationScope
-        if !alert!.isShowing {
+        if !alert!.isActive {
             alert?.show()
         } else {
             let timing = UISpringTimingParameters()

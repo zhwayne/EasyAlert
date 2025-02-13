@@ -9,13 +9,22 @@ import UIKit
 
 final class AlertContainerController: UIViewController {
     
-    weak var weakAlert: Alert?
+    private(set) weak var alert: Alert?
     
     override var shouldAutomaticallyForwardAppearanceMethods: Bool { false }
     
     private var activeRepresentationView: (any UIControl & RepresentationMarking)?
     
     private let feedback = UISelectionFeedbackGenerator()
+    
+    init(alert: Alert) {
+        super.init(nibName: nil, bundle: nil)
+        self.alert = alert
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -9,7 +9,7 @@ import UIKit
 
 extension MessageAlert {
     
-    public struct Configuration: ActionAlertbleConfigurable {
+    public struct Configuration: ActionAlertableConfigurable {
         
         public var contentInsets: UIEdgeInsets {
             get { actionAlertConfiguration.contentInsets }

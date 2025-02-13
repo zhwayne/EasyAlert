@@ -42,7 +42,7 @@ public final class MessageAlert: ActionAlert {
     public required init(
         title: Title?,
         message: Message?,
-        configuration: ActionAlertbleConfigurable? = nil
+        configuration: ActionAlertableConfigurable? = nil
     ) {
         if let configuration = configuration as? MessageAlert.Configuration {
             self.titleConfiguration =  configuration.titleConfiguration
@@ -60,7 +60,7 @@ public final class MessageAlert: ActionAlert {
     }
 
     @available(*, unavailable)
-    public required init(content: AlertCustomizable, configuration: ActionAlertbleConfigurable? = nil) {
+    public required init(content: AlertCustomizable, configuration: ActionAlertableConfigurable? = nil) {
         fatalError("init(customizable:configuration:) has not been implemented")
     }
     
