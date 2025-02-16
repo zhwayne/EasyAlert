@@ -1,5 +1,5 @@
 //
-//  ActionLayoutable.swift
+//  ActionLayout.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/5/13.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public protocol ActionLayoutable {
+public protocol ActionLayout {
     
     var prefersSeparatorHidden: Bool { get }
     
@@ -16,12 +16,12 @@ public protocol ActionLayoutable {
     init() 
 }
 
-public extension ActionLayoutable {
+public extension ActionLayout {
     
     var prefersSeparatorHidden: Bool { false }
 }
 
-public extension ActionLayoutable {
+public extension ActionLayout {
     
     func generateSeparatorView() -> UIView {
         ActionVibrantSeparatorView()

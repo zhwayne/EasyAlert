@@ -24,8 +24,8 @@ open class ActionSheet: Sheet, _ActionAlertable {
         configuration: ActionAlertableConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionSheet.Configuration.global
-        let actionLayout = self.configuration.actionLayoutType.init()
-        let cancelActionLayout = self.configuration.actionLayoutType.init()
+        let actionLayout = self.configuration.makeActionLayout()
+        let cancelActionLayout = self.configuration.makeActionLayout()
         
         if content is UIView || content is UIViewController {
             actionGroupView = ActionGroupView(content: content, actionLayout: actionLayout)
@@ -144,7 +144,7 @@ extension ActionSheet {
     
     private func setViewForAction(_ action: Action) {
         if action.view == nil {
-            action.view = configuration.actionViewType.init(style: action.style)
+            action.view = configuration.makeActionView(action.style)
             action.view?.title = action.title
         }
     }

@@ -9,7 +9,7 @@ import UIKit
 
 extension MessageAlert {
     
-    public struct Configuration: ActionAlertableConfigurable {
+    @MainActor public struct Configuration: @preconcurrency ActionAlertableConfigurable, Sendable  {
         
         public var layoutGuide: LayoutGuide {
             get { actionAlertConfiguration.layoutGuide }
@@ -21,16 +21,16 @@ extension MessageAlert {
             set { actionAlertConfiguration.cornerRadius = newValue }
         }
         
-        public var actionViewType: (UIView & ActionCustomizable).Type {
-            get { actionAlertConfiguration.actionViewType }
-            set { actionAlertConfiguration.actionViewType = newValue }
+        public var makeActionView: (Action.Style) -> (UIView & ActionCustomizable) {
+            get { actionAlertConfiguration.makeActionView }
+            set { actionAlertConfiguration.makeActionView = newValue }
         }
-        
-        public var actionLayoutType: ActionLayoutable.Type {
-            get { actionAlertConfiguration.actionLayoutType }
-            set { actionAlertConfiguration.actionLayoutType = newValue }
+
+        public var makeActionLayout: () -> any ActionLayout {
+            get { actionAlertConfiguration.makeActionLayout }
+            set { actionAlertConfiguration.makeActionLayout = newValue }
         }
-                
+
         private var actionAlertConfiguration: ActionAlert.Configuration
         
         public var titleConfiguration = TitleConfiguration()

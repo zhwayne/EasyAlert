@@ -1,5 +1,5 @@
 //
-//  SheetLayoutModifier.swift
+//  AlertLayout.swift
 //  EasyAlert
 //
 //  Created by W on 2025/2/11.
@@ -7,10 +7,10 @@
 
 import UIKit
 
-final class SheetLayoutModifier: LayoutModifier {
+final class AlertLayout: AlertableLayout {
     
     private var constraints: [NSLayoutConstraint] = []
-    
+        
     func update(context: LayoutContext, layoutGuide: LayoutGuide) {
         
         context.containerView.layoutIfNeeded()
@@ -49,7 +49,7 @@ final class SheetLayoutModifier: LayoutModifier {
         
         // layout guide height.
         switch layoutGuide.height {
-        case .fixed(let value):
+        case let .fixed(value):
             let height = value - (edgeInsets.top + edgeInsets.bottom)
             let constraint = presentedView.heightAnchor.constraint(equalToConstant: height)
             constraints.append(constraint)
@@ -59,21 +59,9 @@ final class SheetLayoutModifier: LayoutModifier {
             let constraint = presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: height)
             constraints.append(constraint)
             
-        case .greaterThanOrEqualTo(let value):
+        case let .greaterThanOrEqualTo(value):
             let height = value - (edgeInsets.top + edgeInsets.bottom)
             let constraint = presentedView.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
-            constraints.append(constraint)
-        }
-        
-        if layoutGuide.ignoresSafeAreaBottom {
-            let constraint = presentedView.bottomAnchor.constraint(
-                equalTo: containerView.bottomAnchor,
-                constant: -edgeInsets.bottom)
-            constraints.append(constraint)
-        } else {
-            let constraint =  presentedView.bottomAnchor.constraint(
-                equalTo: containerView.safeAreaLayoutGuide.bottomAnchor,
-                constant: -edgeInsets.bottom)
             constraints.append(constraint)
         }
         
@@ -81,6 +69,11 @@ final class SheetLayoutModifier: LayoutModifier {
             presentedView.centerXAnchor.constraint(
                 equalTo: containerView.centerXAnchor,
                 constant: (abs(edgeInsets.left) - abs(edgeInsets.right)) / 2)
+        )
+        constraints.append(
+            presentedView.centerYAnchor.constraint(
+                equalTo: containerView.centerYAnchor,
+                constant: (abs(edgeInsets.top) - abs(edgeInsets.bottom)) / 2)
         )
     }
 }

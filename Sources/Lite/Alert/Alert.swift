@@ -19,7 +19,7 @@ import UIKit
     
     public var transitionAniamtor: TransitionAnimator = AlertTransitionAnimator()
     
-    var layoutModifier: LayoutModifier = AlertLayoutModifier()
+    var layoutModifier: AlertableLayout = AlertLayout()
         
     public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible)
     

@@ -8,17 +8,21 @@
 import UIKit
 
 extension ActionAlert {
-    
-    public struct Configuration: ActionAlertableConfigurable {
-        
-        public var layoutGuide: LayoutGuide = .init(width: .flexible, height: .flexible)
+
+    @MainActor public struct Configuration: @preconcurrency ActionAlertableConfigurable, Sendable {
+
+        public var layoutGuide: LayoutGuide = LayoutGuide(width: .flexible, height: .flexible)
         
         public var cornerRadius: CGFloat = 13
-        
-        public var actionViewType: (UIView & ActionCustomizable).Type = ActionView.self
-        
-        public var actionLayoutType: ActionLayoutable.Type = AlertActionLayout.self
                 
+        public var makeActionView: (Action.Style) -> (UIView & ActionCustomizable) = { style in
+            ActionView(style: style)
+        }
+        
+        public var makeActionLayout: () -> any ActionLayout = {
+            AlertActionLayout()
+        }
+                        
         init() { }
         
         public static var global = Configuration()

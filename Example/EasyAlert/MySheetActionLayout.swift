@@ -9,7 +9,7 @@
 import UIKit
 import EasyAlert
 
-struct MySheetActionLayout: ActionLayoutable {
+struct MySheetActionLayout: ActionLayout {
     
     var prefersSeparatorHidden: Bool { true }
     

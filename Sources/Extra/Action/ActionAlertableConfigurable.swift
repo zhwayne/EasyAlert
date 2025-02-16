@@ -7,15 +7,15 @@
 
 import UIKit
 
-public protocol ActionAlertableConfigurable {
+public protocol ActionAlertableConfigurable: Sendable {
     
-    var cornerRadius: CGFloat { get set }
+    var cornerRadius: CGFloat { get }
     
-    var layoutGuide: LayoutGuide { get set }
+    var layoutGuide: LayoutGuide { get }
+    
+    var makeActionView: (Action.Style) -> (UIView & ActionCustomizable) { get }
         
-    var actionViewType: (UIView & ActionCustomizable).Type { get set }
-    
-    var actionLayoutType: ActionLayoutable.Type { get set }
+    var makeActionLayout: () -> ActionLayout { get }
 }
 
 extension ActionAlertableConfigurable {

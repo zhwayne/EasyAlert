@@ -20,7 +20,7 @@ open class ActionAlert: Alert, _ActionAlertable {
         configuration: ActionAlertableConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionAlert.Configuration.global
-        let actionLayout = self.configuration.actionLayoutType.init()
+        let actionLayout = self.configuration.makeActionLayout()
         actionGroupView = ActionGroupView(content: content, actionLayout: actionLayout)
         super.init(content: actionGroupView)
         addListener(actionGroupView)
@@ -29,7 +29,7 @@ open class ActionAlert: Alert, _ActionAlertable {
         
         let decorator = ActionGroupAnimatorAndLayoutDecorator(
             aniamtor: AlertTransitionAnimator(),
-            layoutModifier: AlertLayoutModifier(),
+            layoutModifier: AlertLayout(),
             actionGroupViews: [actionGroupView]
         )
         self.transitionAniamtor = decorator
@@ -76,7 +76,7 @@ extension ActionAlert {
     
     private func setViewForAction(_ action: Action) {
         if action.view == nil {
-            action.view = configuration.actionViewType.init(style: action.style)
+            action.view = configuration.makeActionView(action.style)
             action.view?.title = action.title
         }
     }

@@ -16,7 +16,7 @@ class ActionGroupView: UIView, AlertCustomizable {
     
     var actions: [Action] = []
     
-    private var actionLayout: ActionLayoutable
+    private var actionLayout: ActionLayout
     
     private let customView: UIView?
     
@@ -38,7 +38,7 @@ class ActionGroupView: UIView, AlertCustomizable {
     
     private let containerView = UIView()
     
-    required init(content: AlertCustomizable?, actionLayout: ActionLayoutable) {
+    required init(content: AlertCustomizable?, actionLayout: ActionLayout) {
         self.actionLayout = actionLayout
         if #available(iOS 13.0, *) {
             self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))

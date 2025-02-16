@@ -9,7 +9,7 @@ import UIKit
 
 extension ActionSheet {
     
-    public struct Configuration: ActionAlertableConfigurable {
+    @MainActor public struct Configuration: @preconcurrency ActionAlertableConfigurable, Sendable {
 
         public var layoutGuide: LayoutGuide = .init(
             width: .multiplied(by: 1, maxWidth: 414),
@@ -21,10 +21,14 @@ extension ActionSheet {
         
         public var cancelSpacing: CGFloat = 8
         
-        public var actionViewType: (UIView & ActionCustomizable).Type = ActionView.self
+        public var makeActionView: (Action.Style) -> (UIView & ActionCustomizable) = { style in
+            ActionView(style: style)
+        }
         
-        public var actionLayoutType: ActionLayoutable.Type = SheetActionLayout.self
-                
+        public var makeActionLayout: () -> any ActionLayout = {
+            SheetActionLayout()
+        }
+                        
         init() { }
         
         public static var global = Configuration()

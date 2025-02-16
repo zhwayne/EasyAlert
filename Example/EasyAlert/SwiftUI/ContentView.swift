@@ -22,7 +22,7 @@ struct ContentView: View {
     
     var body: some View {
         List {
-            Section {
+            Section("消息弹窗") {
                 Button {
                     let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
                     let cancel = UIAlertAction(title: "取消", style: .cancel)
@@ -72,7 +72,7 @@ struct ContentView: View {
                 }
             }
             
-            Section {
+            Section("自定义弹窗") {
                 Button {
                     let alert = MessageAlert(title: alertTitle, message: message)
                     alert.backdropProvider.allowDismissWhenBackgroundTouch = true
@@ -119,8 +119,12 @@ struct ContentView: View {
                     var configuration = MessageAlert.Configuration.global
                     configuration.titleConfiguration.alignment = .left
                     configuration.messageConfiguration.alignment = .left
-                    configuration.actionLayoutType = MyAlertActionLayout.self
-                    configuration.actionViewType = MyAlertActionView.self
+                    configuration.makeActionLayout = {
+                        MyAlertActionLayout()
+                    }
+                    configuration.makeActionView = { style in
+                        MyAlertActionView(style: style)
+                    }
                     
                     let alert = MessageAlert(title: alertTitle, message: message, configuration: configuration)
                     let cancel = Action(title: "取消", style: .cancel)
@@ -164,7 +168,7 @@ struct ContentView: View {
                 }
             }
             
-            Section {
+            Section("支持 SwiftUI") {
                 Button {
                     let alert = Alert {
                         VStack(spacing: 8) {
@@ -178,7 +182,7 @@ struct ContentView: View {
                         .multilineTextAlignment(.center)
                         .frame(width: 270)
                         .padding()
-                        .background(Color.white)
+                        .background(.bar)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
                     alert.backdropProvider.allowDismissWhenBackgroundTouch = true
@@ -187,7 +191,7 @@ struct ContentView: View {
                     Text("显示 SwiftUI View")
                 }
                 Button {
-                    let alert = ActionAlert(content: EasyAlertHostingController(rootView: HStack {
+                    let content = EasyAlertHostingController(rootView: HStack {
                         VStack(spacing: 8) {
                             Text(alertTitle)
                                 .font(.system(size: 17, weight: .semibold))
@@ -199,7 +203,8 @@ struct ContentView: View {
                         .multilineTextAlignment(.center)
                         .padding()
                         .frame(width: 270)
-                    }))
+                    })
+                    let alert = ActionAlert(content: content)
                     let cancel = Action(title: "取消", style: .cancel)
                     let ignore = Action(title: "忽略", style: .destructive)
                     alert.addAction(cancel)
@@ -210,7 +215,7 @@ struct ContentView: View {
                 }
             }
             
-            Section {
+            Section("底部弹窗") {
                 Button {
                     let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                     let cancel = UIAlertAction(title: "取消", style: .cancel)
@@ -226,8 +231,12 @@ struct ContentView: View {
                 Button {
                     var configuration = ActionSheet.Configuration.global
                     configuration.cancelSpacing = 0
-                    configuration.actionViewType = MySheetActionView.self
-                    configuration.actionLayoutType = MySheetActionLayout.self
+                    configuration.makeActionView = { style in
+                        MySheetActionView(style: style)
+                    }
+                    configuration.makeActionLayout = {
+                        MySheetActionLayout()
+                    }
                     configuration.layoutGuide.contentInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
                     
                     let sheet = ActionSheet(configuration: configuration)
@@ -242,7 +251,7 @@ struct ContentView: View {
                 }
             }
             
-            Section {
+            Section("Toast") {
                 Button {
                     Toast.show(message)
                 } label: {

@@ -5,7 +5,7 @@
 //  Created by iya on 2022/5/13.
 //
 
-import Foundation
+import UIKit
 
 /// 自定义 action view 基础协议
 @MainActor public protocol ActionCustomizable : Dismissible {
@@ -26,5 +26,10 @@ import Foundation
     /// action 的风格
     var style: Action.Style { get }
     
-    init(style: Action.Style)
+    var view: UIView { get }
+}
+
+extension ActionCustomizable where Self: UIView {
+    
+    public var view: UIView { self }
 }

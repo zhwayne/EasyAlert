@@ -70,7 +70,7 @@ final class ToastAlert: Alert {
         contentView.label.attributedText = Toast.text(for: message)
         
         transitionAniamtor = ToastTransitionAnimator()
-        layoutModifier = ToastLayoutModifier()
+        layoutModifier = ToastLayout()
         backdropProvider.dimming = .color(.clear)
         backdropProvider.penetrationScope = .all
         

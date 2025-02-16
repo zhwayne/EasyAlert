@@ -7,13 +7,13 @@
 
 import Foundation
 
-final class ActionGroupAnimatorAndLayoutDecorator: TransitionAnimator, LayoutModifier {
+final class ActionGroupAnimatorAndLayoutDecorator: TransitionAnimator, AlertableLayout {
     
     private var aniamtor: TransitionAnimator
-    private var layoutModifier: LayoutModifier
+    private var layoutModifier: AlertableLayout
     private var actionGroupViews: [ActionGroupView] = []
     
-    init(aniamtor: TransitionAnimator, layoutModifier: LayoutModifier, actionGroupViews: [ActionGroupView]) {
+    init(aniamtor: TransitionAnimator, layoutModifier: AlertableLayout, actionGroupViews: [ActionGroupView]) {
         self.aniamtor = aniamtor
         self.layoutModifier = layoutModifier
         self.actionGroupViews = actionGroupViews

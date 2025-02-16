@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct AlertActionLayout: ActionLayoutable {
+struct AlertActionLayout: ActionLayout {
     
     var prefersSeparatorHidden: Bool { false }
     

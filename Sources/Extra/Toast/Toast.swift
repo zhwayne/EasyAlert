@@ -67,7 +67,7 @@ extension Toast {
             alert = ToastAlert(message: message)
         }
         
-        if let layoutModifier = alert?.layoutModifier as? ToastLayoutModifier {
+        if let layoutModifier = alert?.layoutModifier as? ToastLayout {
             layoutModifier.position = position
         }
         
