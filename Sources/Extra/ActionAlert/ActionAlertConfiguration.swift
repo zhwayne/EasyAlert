@@ -11,7 +11,7 @@ extension ActionAlert {
     
     public struct Configuration: ActionAlertableConfigurable {
         
-        public var contentInsets: UIEdgeInsets = .zero
+        public var layoutGuide: LayoutGuide = .init(width: .flexible, height: .flexible)
         
         public var cornerRadius: CGFloat = 13
         

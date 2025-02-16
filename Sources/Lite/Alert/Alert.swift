@@ -33,7 +33,7 @@ import UIKit
     
     private let tapTarget = TapTarget()
     
-    private var callbacks: [LiftcycleCallback] = []
+    private var liftcycleListeners: [LiftcycleListener] = []
     
     private var orientationChangeToken: NotificationToken?
     
@@ -95,8 +95,8 @@ import UIKit
         }
     }
     
-    public func addCallback(_ callback: LiftcycleCallback) {
-        callbacks.append(callback)
+    public func addListener(_ listener: LiftcycleListener) {
+        liftcycleListeners.append(listener)
     }
     
     public func show(in container: AlertContainer? = nil) {
@@ -223,13 +223,13 @@ extension Alert {
         }
         isActive = true
         willShow()
-        callbacks.forEach { $0.willShow?() }
+        liftcycleListeners.forEach { $0.willShow() }
         
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
         transitionAniamtor.show(context: layoutContext) { [weak self] in
             self?.didShow()
-            self?.callbacks.forEach { $0.didShow?() }
+            self?.liftcycleListeners.forEach { $0.didShow() }
             self?.alertContainerController.view.isUserInteractionEnabled = true
             self?.tapTarget.tapGestureRecognizer.isEnabled = true
             if let viewController = self?.alertContent as? UIViewController {
@@ -277,13 +277,13 @@ extension Alert {
         }
         isActive = false
         willDismiss()
-        callbacks.forEach { $0.willDismiss?() }
+        liftcycleListeners.forEach { $0.willDismiss() }
         
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
         transitionAniamtor.dismiss(context: layoutContext) { [weak self] in
             self?.didDismiss()
-            self?.callbacks.forEach { $0.didDismiss?() }
+            self?.liftcycleListeners.forEach { $0.didDismiss() }
             if let viewController = self?.alertContent as? UIViewController {
                 viewController.endAppearanceTransition()
             }

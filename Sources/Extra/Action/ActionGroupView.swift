@@ -20,6 +20,8 @@ class ActionGroupView: UIView, AlertCustomizable {
     
     private let customView: UIView?
     
+    private let customController: UIViewController?
+    
     var backgroundView: UIView {
         didSet {
             oldValue.removeFromSuperview()
@@ -36,7 +38,7 @@ class ActionGroupView: UIView, AlertCustomizable {
     
     private let containerView = UIView()
     
-    required init(customView: UIView?, actionLayout: ActionLayoutable) {
+    required init(content: AlertCustomizable?, actionLayout: ActionLayoutable) {
         self.actionLayout = actionLayout
         if #available(iOS 13.0, *) {
             self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
@@ -44,7 +46,17 @@ class ActionGroupView: UIView, AlertCustomizable {
             // Fallback on earlier versions
             self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
         }
-        self.customView = customView
+        if let view = content as? UIView {
+            self.customView = view
+            self.customController = nil
+        } else if let viewController = content as? UIViewController {
+            self.customView = viewController.view
+            self.customController = viewController
+        } else {
+            self.customView = nil
+            self.customController = nil
+        }
+
         backgroundView.clipsToBounds = true
         if #available(iOS 13.0, *) {
             backgroundView.layer.cornerCurve = .continuous
@@ -66,7 +78,15 @@ class ActionGroupView: UIView, AlertCustomizable {
         containerView.subviews.forEach { $0.removeFromSuperview() }
         
         if let customView {
-            containerView.addSubview(customView)
+            if let customController, let alertContainerController {
+                customController.willMove(toParent: alertContainerController)
+                alertContainerController.addChild(customController)
+                containerView.addSubview(customView)
+                customController.didMove(toParent: alertContainerController)
+            } else {
+                containerView.addSubview(customView)
+            }
+            
             customView.translatesAutoresizingMaskIntoConstraints = false
             
             customView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
@@ -150,6 +170,42 @@ class ActionGroupView: UIView, AlertCustomizable {
             view.setCornerRadius(radius)
         } else {
             view.setCornerRadius(radius, corners: [.bottomLeft, .bottomRight])
+        }
+    }
+    
+    private var alertContainerController: AlertContainerController? {
+        for view in sequence(first: superview, next: { $0?.superview }) {
+            if let responder = view?.next as? AlertContainerController {
+                return responder
+            }
+        }
+        return nil
+    }
+}
+
+extension ActionGroupView: LiftcycleListener {
+    
+    func willShow() {
+        if let customController {
+            customController.beginAppearanceTransition(true, animated: true)
+        }
+    }
+    
+    func didShow() {
+        if let customController {
+            customController.endAppearanceTransition()
+        }
+    }
+    
+    func willDismiss() {
+        if let customController {
+            customController.beginAppearanceTransition(false, animated: true)
+        }
+    }
+    
+    func didDismiss() {
+        if let customController {
+            customController.endAppearanceTransition()
         }
     }
 }

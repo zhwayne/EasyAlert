@@ -14,11 +14,7 @@ final public class EasyAlertHostingController<Content: View>: UIHostingControlle
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
-        if #available(iOS 16.0, *) {
-            sizingOptions = [.preferredContentSize]
-        } else {
-            // Fallback on earlier versions
-        }
+        
         DispatchQueue.main.async {
             self.view.setNeedsUpdateConstraints()
         }
@@ -30,6 +26,11 @@ extension Alert {
     
     public convenience init<Content: View>(@ViewBuilder swiftUIContent: () -> Content) {
         let hostingController = EasyAlertHostingController(rootView: swiftUIContent())
+        if #available(iOS 16.0, *) {
+            hostingController.sizingOptions = [.intrinsicContentSize]
+        } else {
+            // Fallback on earlier versions
+        }
         self.init(content: hostingController)
     }
 }

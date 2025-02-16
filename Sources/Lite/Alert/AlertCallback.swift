@@ -7,25 +7,63 @@
 
 import Foundation
 
-public struct LiftcycleCallback {
+public protocol LiftcycleListener {
+    
+    func willShow()
+    
+    func didShow()
+    
+    func willDismiss()
+    
+    func didDismiss()
+}
+
+extension LiftcycleListener {
+    
+    public func willShow() { }
+    
+    public func didShow() { }
+    
+    public func willDismiss() { }
+    
+    public func didDismiss() { }
+}
+
+public struct LiftcycleCallback: LiftcycleListener {
     
     public typealias Handler = () -> Void
     
-    let willShow: Handler?
+    let willShowHandler: Handler?
     
-    let didShow: Handler?
+    let didShowHandler: Handler?
     
-    let willDismiss: Handler?
+    let willDismissHandler: Handler?
     
-    let didDismiss: Handler?
+    let didDismissHandler: Handler?
     
     public init(willShow: Handler? = nil,
                 didShow: Handler? = nil,
                 willDismiss: Handler? = nil,
                 didDismiss: Handler? = nil) {
-        self.willShow = willShow
-        self.didShow = didShow
-        self.willDismiss = willDismiss
-        self.didDismiss = didDismiss
+        self.willShowHandler = willShow
+        self.didShowHandler = didShow
+        self.willDismissHandler = willDismiss
+        self.didDismissHandler = didDismiss
+    }
+    
+    public func willShow() {
+        willShowHandler?()
+    }
+    
+    public func didShow() {
+        didShowHandler?()
+    }
+    
+    public func willDismiss() {
+        willDismissHandler?()
+    }
+    
+    public func didDismiss() {
+        didDismissHandler?()
     }
 }

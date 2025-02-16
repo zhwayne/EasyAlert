@@ -8,13 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0B07712829501C7D0027221A /* MyAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B07712729501C7D0027221A /* MyAlertViewController.swift */; };
-		0B2BF3A52801D4040017F987 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B2BF3A32801D4040017F987 /* Main.storyboard */; };
 		0B3151C2282F7C4D00F0F9B8 /* MyAlertActionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3151C1282F7C4D00F0F9B8 /* MyAlertActionLayout.swift */; };
-		0B61E8512841CC52006CFC2C /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B61E8502841CC52006CFC2C /* Section.swift */; };
 		0B7EF7312AA06037009E7C1C /* EasyAlert in Frameworks */ = {isa = PBXBuildFile; productRef = 0B7EF7302AA06037009E7C1C /* EasyAlert */; };
+		0B876F622D61B694004D0F55 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B876F612D61B694004D0F55 /* ContentView.swift */; };
 		0BCC3FF5293F55AF004D83FB /* MyActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCC3FF4293F55AF004D83FB /* MyActionSheet.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
@@ -35,14 +33,12 @@
 
 /* Begin PBXFileReference section */
 		0B07712729501C7D0027221A /* MyAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAlertViewController.swift; sourceTree = "<group>"; };
-		0B2BF3A42801D4040017F987 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0B3151C1282F7C4D00F0F9B8 /* MyAlertActionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAlertActionLayout.swift; sourceTree = "<group>"; };
-		0B61E8502841CC52006CFC2C /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		0B876F612D61B694004D0F55 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0BCC3FF4293F55AF004D83FB /* MyActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActionSheet.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* EasyAlert_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyAlert_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* EasyAlert_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EasyAlert_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +69,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B876F632D61B733004D0F55 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				0B876F612D61B694004D0F55 /* ContentView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -95,16 +99,14 @@
 		607FACD21AFB9204008FA782 /* Example for EasyAlert */ = {
 			isa = PBXGroup;
 			children = (
+				0B876F632D61B733004D0F55 /* SwiftUI */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				0B07712729501C7D0027221A /* MyAlertViewController.swift */,
-				0B61E8502841CC52006CFC2C /* Section.swift */,
 				0B3151C1282F7C4D00F0F9B8 /* MyAlertActionLayout.swift */,
 				A9EA658E2B4F8ED50031589A /* MySheetActionLayout.swift */,
 				A9EA658A2B4F8D070031589A /* MyAlertActionView.swift */,
 				A9EA658C2B4F8D3C0031589A /* MySheetActionView.swift */,
 				0BCC3FF4293F55AF004D83FB /* MyActionSheet.swift */,
-				0B2BF3A32801D4040017F987 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -238,7 +240,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B2BF3A52801D4040017F987 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
@@ -259,11 +260,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9EA658B2B4F8D070031589A /* MyAlertActionView.swift in Sources */,
-				0B61E8512841CC52006CFC2C /* Section.swift in Sources */,
 				A9EA658D2B4F8D3C0031589A /* MySheetActionView.swift in Sources */,
 				A9EA658F2B4F8ED50031589A /* MySheetActionLayout.swift in Sources */,
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				0B3151C2282F7C4D00F0F9B8 /* MyAlertActionLayout.swift in Sources */,
+				0B876F622D61B694004D0F55 /* ContentView.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				0BCC3FF5293F55AF004D83FB /* MyActionSheet.swift in Sources */,
 				0B07712829501C7D0027221A /* MyAlertViewController.swift in Sources */,
@@ -289,14 +289,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		0B2BF3A32801D4040017F987 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0B2BF3A42801D4040017F987 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

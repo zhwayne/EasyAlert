@@ -10,8 +10,12 @@ import UIKit
 extension ActionSheet {
     
     public struct Configuration: ActionAlertableConfigurable {
-        
-        public var contentInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8)
+
+        public var layoutGuide: LayoutGuide = .init(
+            width: .multiplied(by: 1, maxWidth: 414),
+            height: .flexible,
+            contentInsets: UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8)
+        )
 
         public var cornerRadius: CGFloat = 13
         

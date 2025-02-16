@@ -44,16 +44,14 @@ public final class MessageAlert: ActionAlert {
         message: Message?,
         configuration: ActionAlertableConfigurable? = nil
     ) {
-        if let configuration = configuration as? MessageAlert.Configuration {
-            self.titleConfiguration =  configuration.titleConfiguration
-            self.messageConfiguration = configuration.messageConfiguration
-        } else {
-            self.titleConfiguration =  MessageAlert.Configuration.global.titleConfiguration
-            self.messageConfiguration =  MessageAlert.Configuration.global.messageConfiguration
-        }
+        let configuration = (configuration as? MessageAlert.Configuration) ?? MessageAlert.Configuration.global
+        self.titleConfiguration =  configuration.titleConfiguration
+        self.messageConfiguration = configuration.messageConfiguration
         
         contentView = ContentView()
         super.init(content: contentView, configuration: configuration)
+        layoutGuide = configuration.layoutGuide
+        
         configAttributes()
         contentView.titleLabel.attributedText = text(for: title)
         contentView.messageLabel.attributedText = text(for: message)

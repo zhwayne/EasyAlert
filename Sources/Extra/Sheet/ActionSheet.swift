@@ -27,21 +27,18 @@ open class ActionSheet: Sheet, _ActionAlertable {
         let actionLayout = self.configuration.actionLayoutType.init()
         let cancelActionLayout = self.configuration.actionLayoutType.init()
         
-        if let view = content as? UIView {
-            actionGroupView = ActionGroupView(customView: view,
-                                              actionLayout: actionLayout)
-        } else if let viewController = content as? UIViewController {
-            actionGroupView = ActionGroupView(customView: viewController.view,
-                                              actionLayout: actionLayout)
+        if content is UIView || content is UIViewController {
+            actionGroupView = ActionGroupView(content: content, actionLayout: actionLayout)
         } else {
-            actionGroupView = ActionGroupView(customView: nil,
-                                              actionLayout: actionLayout)
+            actionGroupView = ActionGroupView(content: nil, actionLayout: actionLayout)
         }
 
-        cancelActionGroupView = ActionGroupView(customView: nil, actionLayout: cancelActionLayout)
+        cancelActionGroupView = ActionGroupView(content: nil, actionLayout: cancelActionLayout)
         super.init(content: containerView)
+        addListener(actionGroupView)
         
-        layoutGuide.contentInsets = self.configuration.contentInsets
+        layoutGuide = self.configuration.layoutGuide
+        
         let decorator = ActionGroupAnimatorAndLayoutDecorator(
             aniamtor: transitionAniamtor,
             layoutModifier: layoutModifier,

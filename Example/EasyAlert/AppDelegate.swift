@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 import EasyAlert
 
 @UIApplicationMain
@@ -22,6 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        configuration.titleConfiguration.alignment = .left
 //        configuration.messageConfiguration.alignment = .left
 //        MessageAlert.Configuration.globalConfiguration = configuration
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.backgroundColor = .black
+        window.rootViewController = UIHostingController(rootView: ContentView())
+        window.makeKeyAndVisible()
+        self.window = window
         return true
     }
 

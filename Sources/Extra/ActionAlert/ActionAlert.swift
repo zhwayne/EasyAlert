@@ -21,22 +21,12 @@ open class ActionAlert: Alert, _ActionAlertable {
     ) {
         self.configuration = configuration ?? ActionAlert.Configuration.global
         let actionLayout = self.configuration.actionLayoutType.init()
-        if let view = content as? UIView {
-            actionGroupView = ActionGroupView(customView: view,
-                                              actionLayout: actionLayout)
-        } else if let viewController = content as? UIViewController {
-            actionGroupView = ActionGroupView(customView: viewController.view,
-                                              actionLayout: actionLayout)
-        } else {
-            fatalError("Unsupported type: \(type(of: content))")
-        }
+        actionGroupView = ActionGroupView(content: content, actionLayout: actionLayout)
         super.init(content: actionGroupView)
+        addListener(actionGroupView)
         
-        layoutGuide = LayoutGuide(
-            width: .flexible,
-            height: .flexible,
-            contentInsets:  self.configuration.contentInsets
-        )
+        layoutGuide = self.configuration.layoutGuide
+        
         let decorator = ActionGroupAnimatorAndLayoutDecorator(
             aniamtor: AlertTransitionAnimator(),
             layoutModifier: AlertLayoutModifier(),
