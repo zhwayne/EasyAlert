@@ -58,7 +58,10 @@ import UIKit
         }
         let name = UIDevice.orientationDidChangeNotification
         orientationChangeToken = NotificationCenter.default.observe(name: name, object: nil, queue: nil, using: { [weak self] note in
-            self?.updateLayout()
+            guard let self else { return }
+            if isActive {
+                updateLayout()
+            }
         })
     }
     

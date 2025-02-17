@@ -11,6 +11,8 @@ import EasyAlert
 
 struct ContentView: View {
     
+    @State private var showAlert = false
+    
     var alertTitle: String {
         "要移除无线局域网“Meizu-0D23-5G”吗？"
     }
@@ -170,7 +172,7 @@ struct ContentView: View {
             
             Section("支持 SwiftUI") {
                 Button {
-                    let alert = Alert {
+                    let content = AlertHostingController {
                         VStack(spacing: 8) {
                             Text(alertTitle)
                                 .font(.system(size: 17, weight: .semibold))
@@ -178,32 +180,60 @@ struct ContentView: View {
                             Text(message)
                                 .font(.system(size: 13))
                                 .lineSpacing(4)
+                            HStack(spacing: 16) {
+                                Button {
+                                    
+                                } label: {
+                                    Text("取消")
+                                        .font(.system(size: 17, weight: .medium))
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 44)
+                                        .background(Color(UIColor.systemFill))
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                }
+                                
+                                Button {
+                                    
+                                } label: {
+                                    Text("忽略")
+                                        .font(.system(size: 17, weight: .medium))
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 40)
+                                        .background(Color(UIColor.systemRed))
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                }
+                            }
+                            .foregroundStyle(Color.white)
+                            .padding(.top, 8)
                         }
                         .multilineTextAlignment(.center)
-                        .frame(width: 270)
                         .padding()
+                        .frame(width: 300)
                         .background(.bar)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
+                    let alert = Alert(content: content)
                     alert.backdropProvider.allowDismissWhenBackgroundTouch = true
                     alert.show()
                 } label: {
                     Text("显示 SwiftUI View")
                 }
                 Button {
-                    let content = EasyAlertHostingController(rootView: HStack {
-                        VStack(spacing: 8) {
-                            Text(alertTitle)
-                                .font(.system(size: 17, weight: .semibold))
-                                .foregroundColor(Color.orange)
-                            Text(message)
-                                .font(.system(size: 13))
-                                .lineSpacing(4)
+                    let content = AlertHostingController {
+                        HStack {
+                            VStack(spacing: 8) {
+                                Text(alertTitle)
+                                    .font(.system(size: 17, weight: .semibold))
+                                    .foregroundColor(Color.orange)
+                                Text(message)
+                                    .font(.system(size: 13))
+                                    .lineSpacing(4)
+                            }
+                            .multilineTextAlignment(.center)
+                            .padding()
+                            .frame(width: 270)
                         }
-                        .multilineTextAlignment(.center)
-                        .padding()
-                        .frame(width: 270)
-                    })
+                    }
                     let alert = ActionAlert(content: content)
                     let cancel = Action(title: "取消", style: .cancel)
                     let ignore = Action(title: "忽略", style: .destructive)
@@ -213,7 +243,14 @@ struct ContentView: View {
                 } label: {
                     Text("显示带按钮的 SwiftUI View")
                 }
+                
+                Button {
+                    showAlert = true
+                } label: {
+                    Text("通过 .easyAlert 修饰符显示 alert")
+                }
             }
+            
             
             Section("底部弹窗") {
                 Button {
@@ -258,6 +295,15 @@ struct ContentView: View {
                     Text("显示 Toast")
                 }
             }
+        }
+        .easyAlert(isPresented: $showAlert, allowDismissWhenBackgroundTouch: true) {
+            VStack {
+                Text("SwiftUI Alert")
+                    .padding()
+            }
+            .frame(width: 300)
+            .background(.bar)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
         }
     }
 }
