@@ -9,7 +9,7 @@ import UIKit
 
 final class ToastAlert: Alert {
     
-    class ContentView: UIView, AlertCustomizable {
+    class ContentView: UIView, AlertContent {
         
         let label = UILabel()
         let indicator = UIActivityIndicatorView(style: .white)
@@ -21,14 +21,22 @@ final class ToastAlert: Alert {
             layer.shadowOffset = CGSize(width: 0, height: 2)
             layer.shadowOpacity = 0.1
             layer.shadowRadius = 5
-            
-            let blurEffect: UIBlurEffect
+
+            let effectView = BlurEffectView(frame: .zero)
+            effectView.blurRadius = 50
             if #available(iOS 13.0, *) {
-                blurEffect = UIBlurEffect(style: .systemMaterialDark)
+                effectView.colorTint = UIColor.init(dynamicProvider: { tc in
+                    if tc.userInterfaceStyle == .dark {
+                        return .systemGray
+                    } else {
+                        return .black
+                    }
+                })
             } else {
-                blurEffect = UIBlurEffect(style: .dark)
+                // Fallback on earlier versions
+                effectView.colorTint = UIColor.black
             }
-            let effectView = BlurEffectView(effect: blurEffect, intensity: 0.75)
+            effectView.colorTintAlpha = 0.4
             effectView.clipsToBounds = true
             effectView.frame = bounds
             effectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -70,11 +78,11 @@ final class ToastAlert: Alert {
         contentView.label.attributedText = Toast.text(for: message)
         
         transitionAniamtor = ToastTransitionAnimator()
-        layoutModifier = ToastLayout()
+        layoutUpdator = ToastLayout()
         backdropProvider.dimming = .color(.clear)
-        backdropProvider.penetrationScope = .all
+        backdropProvider.interactionScope = .all
         
-        layoutGuide = LayoutGuide(
+        layoutGuide = AlertLayoutGuide(
             width: .flexible,
             height: .flexible,
             contentInsets: UIEdgeInsets(top: 0, left: 36, bottom: 0, right: 36)

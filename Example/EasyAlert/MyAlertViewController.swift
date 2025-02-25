@@ -9,7 +9,7 @@
 import UIKit
 import EasyAlert
 
-class MyAlertNavigationController: UINavigationController, AlertCustomizable {
+class MyAlertNavigationController: UINavigationController, AlertContent {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +19,7 @@ class MyAlertNavigationController: UINavigationController, AlertCustomizable {
     }
 }
 
-class MyAlertViewController: UIViewController, AlertCustomizable {
+class MyAlertViewController: UIViewController, AlertContent {
     
     deinit {
         print(#function)
@@ -55,7 +55,7 @@ class MyAlertViewController: UIViewController, AlertCustomizable {
     
     @objc
     private func handleClose() {
-        if let customizable = navigationController as? AlertCustomizable {
+        if let customizable = navigationController as? AlertContent {
             customizable.dismiss(completion: nil);
         }
     }

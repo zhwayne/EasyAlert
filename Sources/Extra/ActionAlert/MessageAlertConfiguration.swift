@@ -11,7 +11,7 @@ extension MessageAlert {
     
     @MainActor public struct Configuration: @preconcurrency ActionAlertableConfigurable, Sendable  {
         
-        public var layoutGuide: LayoutGuide {
+        public var layoutGuide: AlertLayoutGuide {
             get { actionAlertConfiguration.layoutGuide }
             set { actionAlertConfiguration.layoutGuide = newValue }
         }
@@ -21,7 +21,7 @@ extension MessageAlert {
             set { actionAlertConfiguration.cornerRadius = newValue }
         }
         
-        public var makeActionView: (Action.Style) -> (UIView & ActionCustomizable) {
+        public var makeActionView: (Action.Style) -> (UIView & ActionContent) {
             get { actionAlertConfiguration.makeActionView }
             set { actionAlertConfiguration.makeActionView = newValue }
         }

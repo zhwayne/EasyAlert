@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct SheetTransitionAnimator : TransitionAnimator {
+struct SheetTransitionAnimator : AlertTransitionAnimatable {
     
     func show(context: LayoutContext, completion: @escaping () -> Void) {
         let height = context.presentedView.bounds.height + context.dimmingView.safeAreaInsets.bottom

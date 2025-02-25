@@ -9,11 +9,11 @@ import UIKit
 
 open class Sheet: Alert {
     
-    public override init(content: AlertCustomizable) {
+    public override init(content: AlertContent) {
         super.init(content: content)
         self.transitionAniamtor = SheetTransitionAnimator()
-        self.layoutModifier = SheetLayout()
+        self.layoutUpdator = SheetLayout()
         backdropProvider.allowDismissWhenBackgroundTouch = true
-        layoutGuide = LayoutGuide(width: .multiplied(by: 1, maxWidth: 414), height: .flexible)
+        layoutGuide = AlertLayoutGuide(width: .multiplied(by: 1, maxWidth: 414), height: .flexible)
     }
 }

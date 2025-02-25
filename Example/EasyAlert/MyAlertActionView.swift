@@ -9,7 +9,7 @@
 import UIKit
 import EasyAlert
 
-final class MyAlertActionView: UIView, ActionCustomizable {
+final class MyAlertActionView: UIView, ActionContent {
     
     var isHighlighted: Bool = false {
         didSet {

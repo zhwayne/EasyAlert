@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ActionCustomViewRepresentationView: UIControl, RepresentationMarking {
+final class ActionCustomViewRepresentationView: UIControl, RepresentationMark {
         
     var action: Action? {
         didSet {

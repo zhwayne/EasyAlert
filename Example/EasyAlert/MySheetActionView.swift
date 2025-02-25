@@ -9,7 +9,7 @@
 import UIKit
 import EasyAlert
 
-final class MySheetActionView: UIView, ActionCustomizable {
+final class MySheetActionView: UIView, ActionContent {
     
     var title: String? {
         get { titleLabel.text }

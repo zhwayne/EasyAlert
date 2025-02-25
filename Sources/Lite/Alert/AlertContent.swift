@@ -1,5 +1,5 @@
 //
-//  AlertCustomizable.swift
+//  AlertContent.swift
 //  EasyAlert
 //
 //  Created by iya on 2021/7/27.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// An `UIView` instance that implements the `AlertCustomizable` protocol can be displayed by Alert
+/// An `UIView` instance that implements the `AlertContent` protocol can be displayed by Alert
 /// and has the ability to turn off alerts for free.
 ///
 /// Here is a simple example of how to implement a custom alert:
@@ -15,7 +15,7 @@ import UIKit
 /// ```
 /// final class MyAlert: Alert {
 ///
-///     private final class ContentView: UIImageView, AlertCustomizable {
+///     private final class ContentView: UIImageView, AlertContent {
 ///
 ///         override init(image: UIImage?) {
 ///             super.init(image: image)
@@ -41,4 +41,4 @@ import UIKit
 /// let alert = MyAlert(image: image)
 /// alert.show()
 ///
-public protocol AlertCustomizable: Dismissible { }
+public protocol AlertContent: Dismissible { }

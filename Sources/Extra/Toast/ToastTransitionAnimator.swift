@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct ToastTransitionAnimator : TransitionAnimator {
+struct ToastTransitionAnimator : AlertTransitionAnimatable {
     
     func show(context: LayoutContext, completion: @escaping () -> Void) {
         let transform = CGAffineTransform(scaleX: 0.9, y: 0.9)

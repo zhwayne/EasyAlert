@@ -43,9 +43,15 @@ extension Dismissible {
     
     /// Dismiss the alert.
     /// - Parameter completion: the `completion` callback will invoke after alert dismissed.
-    @MainActor public func dismiss(completion: (() -> Void)? = nil) {
+    @MainActor public func dismiss(completion: (() -> Void)?) {
         guard let alert = alert else { return }
         alert.dismiss(completion: completion)
+    }
+    
+    @MainActor public func dismiss() {
+        // 注意: 不能使用 dismiss(completion: nil)，需要加上 self 修饰，否则会
+        // 直接调用扩展中的 dismiss(completion:) 默认实现，而非子类重写的方法。
+        self.dismiss(completion: nil)
     }
     
     @available(iOS 13.0, *)

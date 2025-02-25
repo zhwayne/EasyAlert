@@ -22,7 +22,7 @@ import UIKit
     
     let handler: Handelr?
     
-    var view: (UIView & ActionCustomizable)?
+    var view: (UIView & ActionContent)?
     
     weak var representationView: ActionCustomViewRepresentationView?
     
@@ -32,7 +32,7 @@ import UIKit
         self.handler = handler
     }
     
-    public init(view: UIView & ActionCustomizable, handler: Handelr? = nil) {
+    public init(view: UIView & ActionContent, handler: Handelr? = nil) {
         self.view = view
         self.title = view.title
         self.style = view.style

@@ -11,7 +11,7 @@ extension ActionSheet {
     
     @MainActor public struct Configuration: @preconcurrency ActionAlertableConfigurable, Sendable {
 
-        public var layoutGuide: LayoutGuide = .init(
+        public var layoutGuide: AlertLayoutGuide = .init(
             width: .multiplied(by: 1, maxWidth: 414),
             height: .flexible,
             contentInsets: UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8)
@@ -21,7 +21,7 @@ extension ActionSheet {
         
         public var cancelSpacing: CGFloat = 8
         
-        public var makeActionView: (Action.Style) -> (UIView & ActionCustomizable) = { style in
+        public var makeActionView: (Action.Style) -> (UIView & ActionContent) = { style in
             ActionView(style: style)
         }
         

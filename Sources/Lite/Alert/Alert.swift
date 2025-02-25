@@ -10,18 +10,18 @@ import UIKit
 /// The base alert.
 @MainActor open class Alert: Alertable {
     
-    public let alertContent: AlertCustomizable
+    public let alertContent: AlertContent
     
     /// A Provider that interacts with the backdrop
-    public var backdropProvider: BackdropProvider = DefaultBackdropProvider() {
+    public var backdropProvider: AlertBackdropProvider = DefaultAlertBackdropProvider() {
         didSet { configDimming() }
     }
     
-    public var transitionAniamtor: TransitionAnimator = AlertTransitionAnimator()
+    public var transitionAniamtor: AlertTransitionAnimatable = AlertTransitionAnimator()
     
-    var layoutModifier: AlertableLayout = AlertLayout()
+    var layoutUpdator: AlertLayoutUpdatable = AlertLayout()
         
-    public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible)
+    public var layoutGuide = AlertLayoutGuide(width: .flexible, height: .flexible)
     
     public private(set) var isActive: Bool = false
         
@@ -45,7 +45,7 @@ import UIKit
     }
     #endif
     
-    public init(content: AlertCustomizable) {
+    public init(content: AlertContent) {
         guard content is UIView || content is UIViewController else {
             fatalError("Unsupported type: \(type(of: content))")
         }
@@ -69,7 +69,7 @@ import UIKit
         backdropView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backdropView.addGestureRecognizer(tapTarget.tapGestureRecognizer)
         backdropView.hitTest = { [unowned self] view, point in
-            switch backdropProvider.penetrationScope {
+            switch backdropProvider.interactionScope {
             case .none: return false
             case .all: return true
             case .dimming:
@@ -102,7 +102,7 @@ import UIKit
         liftcycleListeners.append(listener)
     }
     
-    public func show(in container: AlertContainer? = nil) {
+    public func show(in hosting: AlertHosting? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard !isActive else { return }
                 
@@ -111,7 +111,7 @@ import UIKit
         configDimming()
         configContainer()
         // TODO: 处理键盘
-        showAlert(in: container)
+        showAlert(in: hosting)
     }
     
     public func dismiss(completion: (() -> Void)? = nil) {
@@ -169,8 +169,10 @@ extension Alert {
         switch backdropProvider.dimming {
         case let .color(color): dimmingView.backgroundColor = color
         case let .view(view):   dimmingView.contentView = view
-        case let .blur(style, level):
-            let blurView = BlurEffectView(effect: UIBlurEffect(style: style), intensity: level)
+        case let .blur(style, radius):
+            let blurView = BlurEffectView(frame: .zero)
+            blurView.blurRadius = radius
+            blurView.colorTint = style.color
             dimmingView.contentView = blurView
         }
         dimmingView.isUserInteractionEnabled = false
@@ -213,7 +215,7 @@ extension Alert {
     func updateLayout() {
         willLayoutContainer()
         UIView.performWithoutAnimation { [self] in
-            layoutModifier.update(context: layoutContext, layoutGuide: layoutGuide)
+            layoutUpdator.updateLayout(context: layoutContext, layoutGuide: layoutGuide)
             backdropView.setNeedsLayout()
             backdropView.layoutIfNeeded()
         }
@@ -255,7 +257,7 @@ extension Alert {
         performShowWithAnimation()
     }
     
-    private func showAlert(in parent: AlertContainer?) {
+    private func showAlert(in parent: AlertHosting?) {
         if let view = parent as? UIView {
             view.attach(alert: self)
             _showAlert(in: view)

@@ -7,20 +7,20 @@
 
 import Foundation
 
-final class ActionGroupAnimatorAndLayoutDecorator: TransitionAnimator, AlertableLayout {
+final class ActionGroupAnimatorAndLayoutDecorator: AlertTransitionAnimatable, AlertLayoutUpdatable {
     
-    private var aniamtor: TransitionAnimator
-    private var layoutModifier: AlertableLayout
+    private var aniamtor: AlertTransitionAnimatable
+    private var layoutModifier: AlertLayoutUpdatable
     private var actionGroupViews: [ActionGroupView] = []
     
-    init(aniamtor: TransitionAnimator, layoutModifier: AlertableLayout, actionGroupViews: [ActionGroupView]) {
+    init(aniamtor: AlertTransitionAnimatable, layoutModifier: AlertLayoutUpdatable, actionGroupViews: [ActionGroupView]) {
         self.aniamtor = aniamtor
         self.layoutModifier = layoutModifier
         self.actionGroupViews = actionGroupViews
     }
     
-    func update(context: LayoutContext, layoutGuide: LayoutGuide) {
-        layoutModifier.update(context: context, layoutGuide: layoutGuide)
+    func updateLayout(context: LayoutContext, layoutGuide: AlertLayoutGuide) {
+        layoutModifier.updateLayout(context: context, layoutGuide: layoutGuide)
         actionGroupViews.forEach { view in
             view.updateLayout(interfaceOrientation: context.interfaceOrientation)
         }

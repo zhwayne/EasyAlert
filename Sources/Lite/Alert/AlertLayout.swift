@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class AlertLayout: AlertableLayout {
+final class AlertLayout: AlertLayoutUpdatable {
     
     private var constraints: [NSLayoutConstraint] = []
         
-    func update(context: LayoutContext, layoutGuide: LayoutGuide) {
+    func updateLayout(context: LayoutContext, layoutGuide: AlertLayoutGuide) {
         
         context.containerView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)

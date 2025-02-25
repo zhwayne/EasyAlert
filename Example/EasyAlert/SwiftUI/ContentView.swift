@@ -11,7 +11,9 @@ import EasyAlert
 
 struct ContentView: View {
     
-    @State private var showAlert = false
+    @State private var showCustomAlert = false
+    @State private var showSelfAsAlert = false
+    @Environment(\.alert) private var alert
     
     var alertTitle: String {
         "要移除无线局域网“Meizu-0D23-5G”吗？"
@@ -24,6 +26,16 @@ struct ContentView: View {
     
     var body: some View {
         List {
+            if let alert {
+                Section {
+                    Button {
+                        alert.dismiss()
+                    } label: {
+                        Text("关闭弹出页面")
+                    }
+                }
+            }
+            
             Section("消息弹窗") {
                 Button {
                     let alertController = UIAlertController(title: alertTitle, message: message, preferredStyle: .alert)
@@ -88,12 +100,7 @@ struct ContentView: View {
                 }
                 Button {
                     let alert = MessageAlert(title: alertTitle, message: message)
-                    if #available(iOS 13.0, *) {
-                        alert.backdropProvider.dimming = .blur(style: .systemThinMaterialDark, level: 0.6)
-                    } else {
-                        // Fallback on earlier versions
-                        alert.backdropProvider.dimming = .blur(style: .dark, level: 0.6)
-                    }
+                    alert.backdropProvider.dimming = .blur(style: .dark, radius: 5)
                     let cancel = Action(title: "取消", style: .cancel)
                     let ignore = Action(title: "忽略", style: .destructive)
                     alert.addAction(ignore)
@@ -172,7 +179,7 @@ struct ContentView: View {
             
             Section("支持 SwiftUI") {
                 Button {
-                    let content = AlertHostingController {
+                    let content = AlertHostingController { alert in
                         VStack(spacing: 8) {
                             Text(alertTitle)
                                 .font(.system(size: 17, weight: .semibold))
@@ -182,7 +189,7 @@ struct ContentView: View {
                                 .lineSpacing(4)
                             HStack(spacing: 16) {
                                 Button {
-                                    
+                                    alert?.dismiss()
                                 } label: {
                                     Text("取消")
                                         .font(.system(size: 17, weight: .medium))
@@ -193,7 +200,7 @@ struct ContentView: View {
                                 }
                                 
                                 Button {
-                                    
+                                    alert?.dismiss()
                                 } label: {
                                     Text("忽略")
                                         .font(.system(size: 17, weight: .medium))
@@ -218,8 +225,9 @@ struct ContentView: View {
                 } label: {
                     Text("显示 SwiftUI View")
                 }
+                
                 Button {
-                    let content = AlertHostingController {
+                    let content = AlertHostingController { _ in
                         HStack {
                             VStack(spacing: 8) {
                                 Text(alertTitle)
@@ -245,9 +253,15 @@ struct ContentView: View {
                 }
                 
                 Button {
-                    showAlert = true
+                    showCustomAlert = true
                 } label: {
                     Text("通过 .easyAlert 修饰符显示 alert")
+                }
+                
+                Button {
+                    showSelfAsAlert = true
+                } label: {
+                    Text("把本页面作为 Alert 弹出")
                 }
             }
             
@@ -265,6 +279,20 @@ struct ContentView: View {
                 } label: {
                     Text("系统 ActionSheet")
                 }
+                
+                Button {
+
+                    let sheet = ActionSheet()
+                    let cancel = Action(title: "取消", style: .cancel)
+                    let confirm = Action(title: "确定", style: .default)
+                    let ignore = Action(title: "忽略", style: .destructive)
+                    sheet.addActions([cancel, confirm, ignore])
+                    sheet.show()
+                    
+                } label: {
+                    Text("仿系统 ActionSheet")
+                }
+                
                 Button {
                     var configuration = ActionSheet.Configuration.global
                     configuration.cancelSpacing = 0
@@ -284,7 +312,7 @@ struct ContentView: View {
                     sheet.show()
                     
                 } label: {
-                    Text("仿系统 ActionSheet")
+                    Text("自定义 ActionSheet")
                 }
             }
             
@@ -296,14 +324,34 @@ struct ContentView: View {
                 }
             }
         }
-        .easyAlert(isPresented: $showAlert, allowDismissWhenBackgroundTouch: true) {
-            VStack {
+        .easyAlert(isPresented: $showCustomAlert) { alert in
+            VStack(spacing: 16) {
                 Text("SwiftUI Alert")
-                    .padding()
+                    
+                Button {
+                    Task {
+                        await alert?.dismiss()
+                    }
+                } label: {
+                    Text("取消")
+                        .font(.system(size: 17, weight: .medium))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 44)
+                        .background(Color(UIColor.systemFill))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
             }
+            .padding()
             .frame(width: 300)
             .background(.bar)
             .clipShape(RoundedRectangle(cornerRadius: 16))
+        }
+        .easyAlert(isPresented: $showSelfAsAlert) { _ in
+            ContentView()
+                .padding()
+                .frame(width: 300, height: 480)
+                .background(.bar)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
         }
     }
 }

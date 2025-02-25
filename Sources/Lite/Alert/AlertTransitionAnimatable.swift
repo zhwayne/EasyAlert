@@ -1,5 +1,5 @@
 //
-//  TransitionAnimator.swift
+//  AlertTransitionAnimatable.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/5/31.
@@ -8,7 +8,7 @@
 import UIKit
 
 /// A protocol for objects that can perform transition animations for an alert.
-@MainActor public protocol TransitionAnimator {
+@MainActor public protocol AlertTransitionAnimatable {
     
     /// Performs the animation for showing the alert.
     func show(context: LayoutContext, completion: @escaping () -> Void)

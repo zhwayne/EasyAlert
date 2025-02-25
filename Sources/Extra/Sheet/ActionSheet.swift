@@ -20,7 +20,7 @@ open class ActionSheet: Sheet, _ActionAlertable {
     private let configuration: ActionAlertableConfigurable
     
     public init(
-        content: AlertCustomizable? = nil,
+        content: AlertContent? = nil,
         configuration: ActionAlertableConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionSheet.Configuration.global
@@ -41,11 +41,11 @@ open class ActionSheet: Sheet, _ActionAlertable {
         
         let decorator = ActionGroupAnimatorAndLayoutDecorator(
             aniamtor: transitionAniamtor,
-            layoutModifier: layoutModifier,
+            layoutModifier: layoutUpdator,
             actionGroupViews: [actionGroupView, cancelActionGroupView]
         )
         transitionAniamtor = decorator
-        layoutModifier = decorator
+        layoutUpdator = decorator
     }
     
     open override func willLayoutContainer() {
@@ -150,4 +150,4 @@ extension ActionSheet {
     }
 }
 
-public final class EmptyContentView: UIView, AlertCustomizable { }
+public final class EmptyContentView: UIView, AlertContent { }

@@ -12,7 +12,7 @@ public enum PresentationBackgroundDomain {
     case cancel
 }
 
-class ActionGroupView: UIView, AlertCustomizable {
+class ActionGroupView: UIView, AlertContent {
     
     var actions: [Action] = []
     
@@ -38,7 +38,7 @@ class ActionGroupView: UIView, AlertCustomizable {
     
     private let containerView = UIView()
     
-    required init(content: AlertCustomizable?, actionLayout: ActionLayout) {
+    required init(content: AlertContent?, actionLayout: ActionLayout) {
         self.actionLayout = actionLayout
         if #available(iOS 13.0, *) {
             self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))

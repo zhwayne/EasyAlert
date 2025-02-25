@@ -16,7 +16,7 @@ open class ActionAlert: Alert, _ActionAlertable {
     private let configuration: ActionAlertableConfigurable
     
     public required init(
-        content: AlertCustomizable,
+        content: AlertContent,
         configuration: ActionAlertableConfigurable? = nil
     ) {
         self.configuration = configuration ?? ActionAlert.Configuration.global
@@ -33,7 +33,7 @@ open class ActionAlert: Alert, _ActionAlertable {
             actionGroupViews: [actionGroupView]
         )
         self.transitionAniamtor = decorator
-        self.layoutModifier = decorator
+        self.layoutUpdator = decorator
     }
     
     open override func willLayoutContainer() {

@@ -11,9 +11,9 @@ public protocol ActionAlertableConfigurable: Sendable {
     
     var cornerRadius: CGFloat { get }
     
-    var layoutGuide: LayoutGuide { get }
+    var layoutGuide: AlertLayoutGuide { get }
     
-    var makeActionView: (Action.Style) -> (UIView & ActionCustomizable) { get }
+    var makeActionView: (Action.Style) -> (UIView & ActionContent) { get }
         
     var makeActionLayout: () -> ActionLayout { get }
 }

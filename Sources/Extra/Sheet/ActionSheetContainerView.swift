@@ -9,5 +9,5 @@ import UIKit
 
 extension ActionSheet {
     
-    class ContainerView: UIView & AlertCustomizable { }
+    class ContainerView: UIView & AlertContent { }
 }

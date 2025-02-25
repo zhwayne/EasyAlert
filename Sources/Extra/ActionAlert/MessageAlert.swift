@@ -17,7 +17,7 @@ public final class MessageAlert: ActionAlert {
         contentView.messageLabel.attributedText?.string
     }
 
-    private final class ContentView: UIView, AlertCustomizable {
+    private final class ContentView: UIView, AlertContent {
 
         fileprivate let titleLabel: UILabel = {
             let label = UILabel()
@@ -58,7 +58,7 @@ public final class MessageAlert: ActionAlert {
     }
 
     @available(*, unavailable)
-    public required init(content: AlertCustomizable, configuration: ActionAlertableConfigurable? = nil) {
+    public required init(content: AlertContent, configuration: ActionAlertableConfigurable? = nil) {
         fatalError("init(customizable:configuration:) has not been implemented")
     }
     

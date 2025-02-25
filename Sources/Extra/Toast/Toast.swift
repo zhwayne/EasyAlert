@@ -48,13 +48,11 @@ extension Toast {
     
     public static func show(
         _ message: Message,
-        duration: TimeInterval = 0,
+        duration: TimeInterval? = nil,
         position: Position = .bottom,
-        penetrationScope: PenetrationScope = .all
+        interactionScope: BackdropInteractionScope = .all
     ) {
         guard let string = Toast.text(for: message)?.string else { return }
-        var duration = duration
-        if duration == 0 { duration = Toast.duration(of: string)}
         
         if dismissWork != nil {
             dismissWork?.cancel()
@@ -67,7 +65,7 @@ extension Toast {
             alert = ToastAlert(message: message)
         }
         
-        if let layoutModifier = alert?.layoutModifier as? ToastLayout {
+        if let layoutModifier = alert?.layoutUpdator as? ToastLayout {
             layoutModifier.position = position
         }
         
@@ -79,7 +77,7 @@ extension Toast {
         }
         animator.startAnimation()
         
-        alert?.backdropProvider.penetrationScope = penetrationScope
+        alert?.backdropProvider.interactionScope = interactionScope
         if !alert!.isActive {
             alert?.show()
         } else {
@@ -90,7 +88,12 @@ extension Toast {
             }
             animator.startAnimation()
         }
-        dismissAfter(duration: duration)
+        
+        if let duration, duration >= 0.5 {
+            dismissAfter(duration: duration)
+        } else {
+            dismissAfter(duration: Toast.duration(of: string))
+        }
     }
     
     @available(iOS 13.0, *)

@@ -9,7 +9,7 @@ import UIKit
 
 extension ActionSheet {
     
-    final class ActionView: UIView, ActionCustomizable {
+    final class ActionView: UIView, ActionContent {
         
         var title: String? {
             get { titleLabel.text }

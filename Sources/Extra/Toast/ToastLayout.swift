@@ -7,12 +7,12 @@
 
 import UIKit
 
-final class ToastLayout: AlertableLayout {
+final class ToastLayout: AlertLayoutUpdatable {
     
     var position: Toast.Position = .bottom
     private var constraints: [NSLayoutConstraint] = []
     
-    func update(context: LayoutContext, layoutGuide: LayoutGuide) {
+    func updateLayout(context: LayoutContext, layoutGuide: AlertLayoutGuide) {
         
         context.containerView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)

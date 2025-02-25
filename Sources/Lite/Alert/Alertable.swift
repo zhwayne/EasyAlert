@@ -7,11 +7,11 @@
 
 import UIKit
 
-@MainActor public protocol AlertContainer: AnyObject { }
+@MainActor public protocol AlertHosting: AnyObject { }
 
-extension UIView: AlertContainer { }
+extension UIView: AlertHosting { }
 
-extension UIViewController: AlertContainer { }
+extension UIViewController: AlertHosting { }
 
 @MainActor public protocol Alertable : Dismissible {
     
@@ -20,11 +20,11 @@ extension UIViewController: AlertContainer { }
     
     /// Show alert in the container.
     /// - Parameter container: An instance of a `UIView` or `UIViewController` that implements the
-    /// `AlertContainer`.
-    func show(in container: AlertContainer?)
+    /// `AlertHosting`.
+    func show(in container: AlertHosting?)
 }
 
-extension AlertContainer {
+extension AlertHosting {
     
     // MARK: - Associated Objects
     

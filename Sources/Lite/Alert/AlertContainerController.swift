@@ -13,7 +13,7 @@ final class AlertContainerController: UIViewController {
     
     override var shouldAutomaticallyForwardAppearanceMethods: Bool { false }
     
-    private var activeRepresentationView: (any UIControl & RepresentationMarking)?
+    private var activeRepresentationView: (any UIControl & RepresentationMark)?
     
     private let feedback = UISelectionFeedbackGenerator()
     
@@ -107,8 +107,8 @@ final class AlertContainerController: UIViewController {
 
 extension UIView {
     
-    fileprivate func findActionRepresentationViews() -> [any UIControl & RepresentationMarking]? {
-        findSubviews(ofType: (any UIControl & RepresentationMarking).self)
+    fileprivate func findActionRepresentationViews() -> [any UIControl & RepresentationMark]? {
+        findSubviews(ofType: (any UIControl & RepresentationMark).self)
     }
     
     func findSubviews<T>(ofType: T.Type) -> [T]? {

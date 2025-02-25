@@ -1,5 +1,5 @@
 //
-//  ActionCustomizable.swift
+//  ActionContent.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/5/13.
@@ -8,7 +8,7 @@
 import UIKit
 
 /// 自定义 action view 基础协议
-@MainActor public protocol ActionCustomizable : Dismissible {
+@MainActor public protocol ActionContent : Dismissible {
     
     /// action 标题
     var title: String? { get set }
@@ -29,7 +29,7 @@ import UIKit
     var view: UIView { get }
 }
 
-extension ActionCustomizable where Self: UIView {
+extension ActionContent where Self: UIView {
     
     public var view: UIView { self }
 }

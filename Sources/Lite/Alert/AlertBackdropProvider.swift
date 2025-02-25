@@ -1,5 +1,5 @@
 //
-//  BackdropProvider.swift
+//  AlertBackdropProvider.swift
 //  EasyAlert
 //
 //  Created by iya on 2021/8/8.
@@ -8,7 +8,12 @@
 import UIKit
 
 /// This enum defines the different types of backdrops that can be used with an alert.
-public enum Dimming {
+public enum Dimming: Sendable {
+    
+    public enum BlurEffectStyle: Sendable {
+        case regular
+        case dark
+    }
     
     /// A solid color can be used as the backdrop, with an optional alpha channel.
     case color(UIColor)
@@ -17,12 +22,22 @@ public enum Dimming {
     case view(UIView)
     
     /// The backdrop can be blurred with a Gaussian blur effect, with a specified blur level in the range of 0 to 1.
-    case blur(style: UIBlurEffect.Style, level: Float = 0.5)
+    case blur(style: BlurEffectStyle, radius: CGFloat = 30)
+}
+
+extension Dimming.BlurEffectStyle {
+    
+    var color: UIColor? {
+        switch self {
+        case .regular: return nil
+        case .dark: return UIColor.black.withAlphaComponent(0.5)
+        }
+    }
 }
 
 /// This enum defines the different penetration scopes for the backdrop.
 /// It specifies if clicking on the backdrop should allow click events to penetrate to the view below.
-public enum PenetrationScope {
+public enum BackdropInteractionScope: Sendable {
     
     /// No penetration is allowed.
     case none
@@ -35,7 +50,7 @@ public enum PenetrationScope {
 }
 
 /// This protocol defines the properties and methods that interact with the alert backdrop.
-public protocol BackdropProvider {
+public protocol AlertBackdropProvider: Sendable {
     
     /// This property defines the type of backdrop used by the alert.
     var dimming: Dimming { get set }
@@ -44,11 +59,11 @@ public protocol BackdropProvider {
     var allowDismissWhenBackgroundTouch: Bool { get set }
     
     /// This property specifies the penetration scope for the backdrop.
-    var penetrationScope: PenetrationScope { get set }
+    var interactionScope: BackdropInteractionScope { get set }
 }
 
-/// This struct implements the `BackdropProvider` protocol with default values.
-struct DefaultBackdropProvider: BackdropProvider {
+/// This struct implements the `AlertBackdropProvider` protocol with default values.
+@MainActor struct DefaultAlertBackdropProvider: AlertBackdropProvider {
     
     /// This property sets the default type of backdrop to be a semi-transparent black color.
     var dimming: Dimming = .color(Self.alertDimmingViewColor)
@@ -57,10 +72,10 @@ struct DefaultBackdropProvider: BackdropProvider {
     var allowDismissWhenBackgroundTouch: Bool = false
     
     /// This property is set to `none` by default, which means clicking on the backdrop does not allow any events to penetrate.
-    var penetrationScope: PenetrationScope = .none
+    var interactionScope: BackdropInteractionScope = .none
 }
 
-extension DefaultBackdropProvider {
+extension DefaultAlertBackdropProvider {
     
     /// This method returns the color for the semi-transparent black backdrop view used in alerts.
     static var alertDimmingViewColor: UIColor {

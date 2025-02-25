@@ -11,11 +11,11 @@ extension ActionAlert {
 
     @MainActor public struct Configuration: @preconcurrency ActionAlertableConfigurable, Sendable {
 
-        public var layoutGuide: LayoutGuide = LayoutGuide(width: .flexible, height: .flexible)
+        public var layoutGuide: AlertLayoutGuide = AlertLayoutGuide(width: .flexible, height: .flexible)
         
         public var cornerRadius: CGFloat = 13
                 
-        public var makeActionView: (Action.Style) -> (UIView & ActionCustomizable) = { style in
+        public var makeActionView: (Action.Style) -> (UIView & ActionContent) = { style in
             ActionView(style: style)
         }
         

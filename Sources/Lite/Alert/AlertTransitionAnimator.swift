@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct AlertTransitionAnimator : TransitionAnimator {
+struct AlertTransitionAnimator : AlertTransitionAnimatable {
     
     func show(context: LayoutContext, completion: @escaping () -> Void) {
         context.presentedView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
