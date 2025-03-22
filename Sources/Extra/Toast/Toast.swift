@@ -77,7 +77,7 @@ extension Toast {
         }
         animator.startAnimation()
         
-        alert?.backdropProvider.interactionScope = interactionScope
+        alert?.backdrop.interactionScope = interactionScope
         if !alert!.isActive {
             alert?.show()
         } else {

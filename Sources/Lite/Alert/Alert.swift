@@ -13,15 +13,15 @@ import UIKit
     public let alertContent: AlertContent
     
     /// A Provider that interacts with the backdrop
-    public var backdropProvider: AlertBackdropProvider = DefaultAlertBackdropProvider() {
+    public var backdrop: AlertBackdrop = DefaultAlertBackdropProvider() {
         didSet { configDimming() }
     }
     
-    public var transitionAniamtor: AlertTransitionAnimatable = AlertTransitionAnimator()
+    public var aniamtor: AlertTransitionAnimatable = AlertTransitionAnimator()
+    
+    public var layoutGuide = AlertLayoutGuide(width: .flexible, height: .flexible)
     
     var layoutUpdator: AlertLayoutUpdatable = AlertLayout()
-        
-    public var layoutGuide = AlertLayoutGuide(width: .flexible, height: .flexible)
     
     public private(set) var isActive: Bool = false
         
@@ -69,7 +69,7 @@ import UIKit
         backdropView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backdropView.addGestureRecognizer(tapTarget.tapGestureRecognizer)
         backdropView.hitTest = { [unowned self] view, point in
-            switch backdropProvider.interactionScope {
+            switch backdrop.interactionScope {
             case .none: return false
             case .all: return true
             case .dimming:
@@ -90,7 +90,7 @@ import UIKit
         }
         tapTarget.tapHandler = { [unowned self] in
             backdropView.endEditing(false)
-            if backdropProvider.allowDismissWhenBackgroundTouch {
+            if backdrop.allowDismissWhenBackgroundTouch {
                 DispatchQueue.main.async {
                     self.dismiss()
                 }
@@ -166,7 +166,7 @@ extension Alert {
     }
     
     private func configDimming() {
-        switch backdropProvider.dimming {
+        switch backdrop.dimming {
         case let .color(color): dimmingView.backgroundColor = color
         case let .view(view):   dimmingView.contentView = view
         case let .blur(style, radius):
@@ -232,7 +232,7 @@ extension Alert {
         
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
-        transitionAniamtor.show(context: layoutContext) { [weak self] in
+        aniamtor.show(context: layoutContext) { [weak self] in
             self?.didShow()
             self?.liftcycleListeners.forEach { $0.didShow() }
             self?.alertContainerController.view.isUserInteractionEnabled = true
@@ -286,7 +286,7 @@ extension Alert {
         
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
-        transitionAniamtor.dismiss(context: layoutContext) { [weak self] in
+        aniamtor.dismiss(context: layoutContext) { [weak self] in
             self?.didDismiss()
             self?.liftcycleListeners.forEach { $0.didDismiss() }
             if let viewController = self?.alertContent as? UIViewController {

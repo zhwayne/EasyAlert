@@ -1,5 +1,5 @@
 //
-//  LiftcycleCallback.swift
+//  LiftcycleListener.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/5/28.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol LiftcycleListener {
+@MainActor public protocol LiftcycleListener {
     
     func willShow()
     

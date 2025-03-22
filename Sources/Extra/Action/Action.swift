@@ -40,7 +40,9 @@ import UIKit
     }
     
     deinit {
-        view?.removeFromSuperview()
+        MainActor.assumeIsolated {
+            view?.removeFromSuperview()            
+        }
     }
     
     /// 是否可用

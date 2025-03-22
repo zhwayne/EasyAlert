@@ -77,10 +77,10 @@ final class ToastAlert: Alert {
         super.init(content: contentView)
         contentView.label.attributedText = Toast.text(for: message)
         
-        transitionAniamtor = ToastTransitionAnimator()
+        aniamtor = ToastTransitionAnimator()
         layoutUpdator = ToastLayout()
-        backdropProvider.dimming = .color(.clear)
-        backdropProvider.interactionScope = .all
+        backdrop.dimming = .color(.clear)
+        backdrop.interactionScope = .all
         
         layoutGuide = AlertLayoutGuide(
             width: .flexible,

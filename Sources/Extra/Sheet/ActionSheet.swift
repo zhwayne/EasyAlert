@@ -7,9 +7,9 @@
 
 import UIKit
 
-open class ActionSheet: Sheet, _ActionAlertable {
+open class ActionSheet: Sheet, ActionAlertable {
     
-    var actions: [Action] { actionGroupView.actions + cancelActionGroupView.actions }
+    public var actions: [Action] { actionGroupView.actions + cancelActionGroupView.actions }
     
     private let containerView = ActionSheet.ContainerView()
     
@@ -40,11 +40,11 @@ open class ActionSheet: Sheet, _ActionAlertable {
         layoutGuide = self.configuration.layoutGuide
         
         let decorator = ActionGroupAnimatorAndLayoutDecorator(
-            aniamtor: transitionAniamtor,
+            aniamtor: aniamtor,
             layoutModifier: layoutUpdator,
             actionGroupViews: [actionGroupView, cancelActionGroupView]
         )
-        transitionAniamtor = decorator
+        aniamtor = decorator
         layoutUpdator = decorator
     }
     

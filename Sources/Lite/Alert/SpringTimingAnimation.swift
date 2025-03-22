@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 func withSpringTimingAnimation(animations: @escaping () -> Void, completion: ((Bool) -> Void)? = nil) {
     let animator = UIViewPropertyAnimator(duration: 1, timingParameters: UISpringTimingParameters())
     animator.addAnimations(animations)

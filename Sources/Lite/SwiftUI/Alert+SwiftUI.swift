@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-private struct DismissibleEnvironmentKey: EnvironmentKey {
+@MainActor
+private struct DismissibleEnvironmentKey: @preconcurrency EnvironmentKey {
     static var defaultValue: Dismissible?
 }
 
@@ -99,7 +100,7 @@ private struct AlertController<Content: View>: UIViewControllerRepresentable {
                 let alert = Alert(content: AlertHostingController { alert in
                     content(alert)
                 })
-                alert.backdropProvider.allowDismissWhenBackgroundTouch = allowDismissWhenBackgroundTouch
+                alert.backdrop.allowDismissWhenBackgroundTouch = allowDismissWhenBackgroundTouch
                 alert.addListener(LiftcycleCallback(willShow: {
                     alreadyPresented = true
                 }, willDismiss: {

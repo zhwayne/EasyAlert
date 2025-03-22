@@ -7,9 +7,9 @@
 
 import UIKit
 
-open class ActionAlert: Alert, _ActionAlertable {
+open class ActionAlert: Alert, ActionAlertable {
     
-    var actions: [Action] { actionGroupView.actions }
+    public var actions: [Action] { actionGroupView.actions }
     
     private let actionGroupView: ActionGroupView
     
@@ -32,7 +32,7 @@ open class ActionAlert: Alert, _ActionAlertable {
             layoutModifier: AlertLayout(),
             actionGroupViews: [actionGroupView]
         )
-        self.transitionAniamtor = decorator
+        self.aniamtor = decorator
         self.layoutUpdator = decorator
     }
     

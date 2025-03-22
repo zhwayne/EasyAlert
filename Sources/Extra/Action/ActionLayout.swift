@@ -7,7 +7,7 @@
 
 import UIKit
 
-public protocol ActionLayout {
+@MainActor public protocol ActionLayout {
     
     var prefersSeparatorHidden: Bool { get }
     

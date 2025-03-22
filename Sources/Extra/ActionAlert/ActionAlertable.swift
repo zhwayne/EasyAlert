@@ -9,6 +9,8 @@ import Foundation
 
 @MainActor public protocol ActionAlertable: Alertable {
     
+    var actions: [Action] { get }
+    
     func addAction(_ action: Action)
 }
 
@@ -19,12 +21,7 @@ public extension ActionAlertable {
     }
 }
 
-@MainActor protocol _ActionAlertable: ActionAlertable {
-    
-    var actions: [Action] { get }
-}
-
-extension _ActionAlertable {
+extension ActionAlertable {
     
     func canAddAction(_ action: Action) -> Bool {
 #if DEBUG

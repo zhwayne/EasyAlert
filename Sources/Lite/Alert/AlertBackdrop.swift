@@ -1,5 +1,5 @@
 //
-//  AlertBackdropProvider.swift
+//  AlertBackdrop.swift
 //  EasyAlert
 //
 //  Created by iya on 2021/8/8.
@@ -50,7 +50,7 @@ public enum BackdropInteractionScope: Sendable {
 }
 
 /// This protocol defines the properties and methods that interact with the alert backdrop.
-public protocol AlertBackdropProvider: Sendable {
+public protocol AlertBackdrop: Sendable {
     
     /// This property defines the type of backdrop used by the alert.
     var dimming: Dimming { get set }
@@ -63,7 +63,7 @@ public protocol AlertBackdropProvider: Sendable {
 }
 
 /// This struct implements the `AlertBackdropProvider` protocol with default values.
-@MainActor struct DefaultAlertBackdropProvider: AlertBackdropProvider {
+@MainActor struct DefaultAlertBackdropProvider: AlertBackdrop {
     
     /// This property sets the default type of backdrop to be a semi-transparent black color.
     var dimming: Dimming = .color(Self.alertDimmingViewColor)

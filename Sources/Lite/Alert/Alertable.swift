@@ -61,6 +61,7 @@ extension AlertHosting {
     }
 }
 
+@MainActor
 fileprivate struct AssociatedKey {
     static var alerts = malloc(1)!
 }
