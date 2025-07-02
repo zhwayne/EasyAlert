@@ -21,7 +21,7 @@ import UIKit
     
     public var layoutGuide = AlertLayoutGuide(width: .flexible, height: .flexible)
     
-    var layoutUpdator: AlertLayoutUpdatable = AlertLayout()
+    public var layoutUpdator: AlertLayoutUpdatable = AlertLayout()
     
     public private(set) var isActive: Bool = false
         
