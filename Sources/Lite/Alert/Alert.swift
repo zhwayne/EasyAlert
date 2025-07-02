@@ -212,7 +212,7 @@ extension Alert {
         view.rightAnchor.constraint(equalTo: superview.rightAnchor).isActive = true
     }
     
-    func updateLayout() {
+    public func updateLayout() {
         willLayoutContainer()
         UIView.performWithoutAnimation { [self] in
             layoutUpdator.updateLayout(context: layoutContext, layoutGuide: layoutGuide)
