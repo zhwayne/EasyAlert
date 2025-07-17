@@ -162,7 +162,7 @@ extension Alert {
         window?.rootViewController = UIViewController()
         window?.backgroundColor = .clear
         window?.windowLevel = .alert - 1
-        window?.makeKeyAndVisible()
+        window?.isHidden = false
     }
     
     private func configDimming() {
@@ -312,7 +312,6 @@ extension Alert {
             alertContainerController.view.removeFromSuperview()
             backdropView.removeFromSuperview()
         }
-        window?.resignKey()
         window?.isHidden = true
         window = nil
     }

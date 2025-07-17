@@ -49,7 +49,7 @@ struct ContentView: View {
                 }
                 Button {
                     let alert = MessageAlert(title: alertTitle, message: message)
-                    alert.backdropProvider.allowDismissWhenBackgroundTouch = true
+                    alert.backdrop.allowDismissWhenBackgroundTouch = true
                     let cancel = Action(title: "取消", style: .cancel)
                     let ignore = Action(title: "忽略", style: .destructive)
                     alert.addAction(cancel)
@@ -89,7 +89,7 @@ struct ContentView: View {
             Section("自定义弹窗") {
                 Button {
                     let alert = MessageAlert(title: alertTitle, message: message)
-                    alert.backdropProvider.allowDismissWhenBackgroundTouch = true
+                    alert.backdrop.allowDismissWhenBackgroundTouch = true
                     let cancel = Action(title: "取消", style: .cancel)
                     let ignore = Action(title: "忽略", style: .destructive)
                     alert.addAction(cancel)
@@ -100,7 +100,7 @@ struct ContentView: View {
                 }
                 Button {
                     let alert = MessageAlert(title: alertTitle, message: message)
-                    alert.backdropProvider.dimming = .blur(style: .dark, radius: 5)
+                    alert.backdrop.dimming = .blur(style: .dark, radius: 5)
                     let cancel = Action(title: "取消", style: .cancel)
                     let ignore = Action(title: "忽略", style: .destructive)
                     alert.addAction(ignore)
@@ -220,7 +220,7 @@ struct ContentView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                     }
                     let alert = Alert(content: content)
-                    alert.backdropProvider.allowDismissWhenBackgroundTouch = true
+                    alert.backdrop.allowDismissWhenBackgroundTouch = true
                     alert.show()
                 } label: {
                     Text("显示 SwiftUI View")
