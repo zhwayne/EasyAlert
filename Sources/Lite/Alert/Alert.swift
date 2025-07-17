@@ -33,6 +33,8 @@ import UIKit
     
     private let tapTarget = TapTarget()
     
+    private let keyboardResponsive = KeyboardResponsive()
+    
     private var liftcycleListeners: [LiftcycleListener] = []
     
     private var orientationChangeToken: NotificationToken?
@@ -63,6 +65,10 @@ import UIKit
                 updateLayout()
             }
         })
+        keyboardResponsive.keyboardWillShow = { [weak self] adaption in
+            guard let self, isActive else { return }
+            print(adaption)
+        }
     }
     
     private func configBackdrop() {
@@ -223,12 +229,12 @@ extension Alert {
     }
     
     private func performShowWithAnimation() {
-        if let viewController = alertContent as? UIViewController {
-            viewController.beginAppearanceTransition(true, animated: true)
-        }
         isActive = true
         willShow()
         liftcycleListeners.forEach { $0.willShow() }
+        if let viewController = alertContent as? UIViewController {
+            viewController.beginAppearanceTransition(true, animated: true)
+        }
         
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
@@ -277,12 +283,12 @@ extension Alert {
 extension Alert {
     
     private func dismissAlert(completion: (() -> Void)?) {
-        if let viewController = alertContent as? UIViewController {
-            viewController.beginAppearanceTransition(false, animated: true)
-        }
         isActive = false
         willDismiss()
         liftcycleListeners.forEach { $0.willDismiss() }
+        if let viewController = alertContent as? UIViewController {
+            viewController.beginAppearanceTransition(false, animated: true)
+        }
         
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false

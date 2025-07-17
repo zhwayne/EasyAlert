@@ -1,5 +1,5 @@
 //
-//  KeyboardResponsiveView.swift
+//  KeyboardResponsive.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/5/31.
@@ -14,7 +14,7 @@ struct KeyboardAdaptation {
     let curve: UIView.AnimationCurve
 }
 
-class KeyboardResponsiveView: UIView {
+final class KeyboardResponsive {
 
     typealias Handler = (KeyboardAdaptation) -> Void
     
@@ -36,8 +36,7 @@ class KeyboardResponsiveView: UIView {
     
     private(set) var keyboardFrame: CGRect?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init() {
         
         let center = NotificationCenter.default
         
@@ -87,7 +86,7 @@ class KeyboardResponsiveView: UIView {
     }
 }
 
-extension KeyboardResponsiveView {
+extension KeyboardResponsive {
     
     func adaptation(from userInfo: [AnyHashable: Any], isHiddenKeyboard: Bool /* unused now */) -> KeyboardAdaptation? {
         guard let frame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
