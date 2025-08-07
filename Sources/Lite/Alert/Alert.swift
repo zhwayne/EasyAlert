@@ -161,6 +161,10 @@ extension Alert {
                 for scene in UIApplication.shared.connectedScenes where scene is UIWindowScene {
                     let windowScene = scene as! UIWindowScene
                     window = AlertWindow(windowScene: windowScene)
+                    if let keyWindow = windowScene.windows.last(where: { $0.isKeyWindow }) {
+                        let userInterfaceStyle = keyWindow.traitCollection.userInterfaceStyle
+                        window?.overrideUserInterfaceStyle = userInterfaceStyle
+                    }
                     break
                 }
                 if window == nil {
@@ -170,6 +174,10 @@ extension Alert {
             } else {
                 // Fallback on earlier versions
                 window = AlertWindow(frame: UIScreen.main.bounds)
+                if let keyWindow = UIApplication.shared.keyWindow {
+                    let userInterfaceStyle = keyWindow.traitCollection.userInterfaceStyle
+                    window?.overrideUserInterfaceStyle = userInterfaceStyle
+                }
             }
         }
         window?.rootViewController = UIViewController()
