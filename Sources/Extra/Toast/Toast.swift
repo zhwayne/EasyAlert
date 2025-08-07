@@ -65,7 +65,7 @@ extension Toast {
             alert = ToastAlert(message: message)
         }
         
-        if let layoutModifier = alert?.layoutUpdator as? ToastLayout {
+        if let layoutModifier = alert?.layout as? ToastLayout {
             layoutModifier.position = position
         }
         
@@ -84,7 +84,7 @@ extension Toast {
             let timing = UISpringTimingParameters()
             let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
             animator.addAnimations {
-                alert!.updateLayout()
+                alert!.updateLayout(animated: false)
             }
             animator.startAnimation()
         }

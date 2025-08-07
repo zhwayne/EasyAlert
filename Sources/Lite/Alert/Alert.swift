@@ -21,7 +21,7 @@ import UIKit
     
     public var layoutGuide = AlertLayoutGuide(width: .flexible, height: .flexible)
     
-    public var layoutUpdator: AlertLayoutUpdatable = AlertLayout()
+    public var layout: AlertableLayout = AlertLayout()
     
     public private(set) var isActive: Bool = false
         
@@ -33,7 +33,7 @@ import UIKit
     
     private let tapTarget = TapTarget()
     
-    private let keyboardResponsive = KeyboardResponsive()
+    private let keyboardEventMonitor = KeyboardEventMonitor()
     
     private var liftcycleListeners: [LiftcycleListener] = []
     
@@ -58,16 +58,24 @@ import UIKit
         if !UIDevice.current.isGeneratingDeviceOrientationNotifications {
             UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         }
-        let name = UIDevice.orientationDidChangeNotification
-        orientationChangeToken = NotificationCenter.default.observe(name: name, object: nil, queue: nil, using: { [weak self] note in
-            guard let self else { return }
-            if isActive {
+        orientationChangeToken = NotificationCenter.default.observe(
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil,
+            queue: nil,
+            using: { [weak self] note in
+                guard let self, isActive else { return }
                 updateLayout()
-            }
-        })
-        keyboardResponsive.keyboardWillShow = { [weak self] adaption in
+            })
+    }
+    
+    private func observeKeyboardEvent() {
+        keyboardEventMonitor.keyboardWillShow = { [weak self] info in
             guard let self, isActive else { return }
-            print(adaption)
+            
+        }
+        keyboardEventMonitor.keyboardWillHidden = { [weak self] info in
+            guard let self, isActive else { return }
+            
         }
     }
     
@@ -111,12 +119,11 @@ import UIKit
     public func show(in hosting: AlertHosting? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard !isActive else { return }
-                
+        observeKeyboardEvent()
         observeDeviceRotation()
         configBackdrop()
         configDimming()
         configContainer()
-        // TODO: 处理键盘
         showAlert(in: hosting)
     }
     
@@ -221,7 +228,7 @@ extension Alert {
     public func updateLayout() {
         willLayoutContainer()
         UIView.performWithoutAnimation { [self] in
-            layoutUpdator.updateLayout(context: layoutContext, layoutGuide: layoutGuide)
+            layout.updateLayout(context: layoutContext, layoutGuide: layoutGuide)
             backdropView.setNeedsLayout()
             backdropView.layoutIfNeeded()
         }

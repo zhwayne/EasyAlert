@@ -1,5 +1,5 @@
 //
-//  AlertLayoutUpdatable.swift
+//  AlertableLayout.swift
 //  EasyAlert
 //
 //  Created by W on 2025/2/11.
@@ -25,7 +25,6 @@ public enum Height: Sendable {
     case greaterThanOrEqualTo(CGFloat)
 }
 
-/// A guide for describing the layout of an alert.
 public struct AlertLayoutGuide: Sendable {
 
     public var width: Width
@@ -50,7 +49,7 @@ public struct AlertLayoutGuide: Sendable {
 }
 
 
-@MainActor public protocol AlertLayoutUpdatable {
+@MainActor public protocol AlertableLayout {
     
     /// Updates the layout of the alert during the transition.
     func updateLayout(context: LayoutContext, layoutGuide: AlertLayoutGuide)

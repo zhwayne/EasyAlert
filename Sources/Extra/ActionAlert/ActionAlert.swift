@@ -33,7 +33,7 @@ open class ActionAlert: Alert, ActionAlertable {
             actionGroupViews: [actionGroupView]
         )
         self.aniamtor = decorator
-        self.layoutUpdator = decorator
+        self.layout = decorator
     }
     
     open override func willLayoutContainer() {

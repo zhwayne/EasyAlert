@@ -100,7 +100,6 @@ struct MessageAlertSectionView: View {
       }
       Button {
         let alert = MessageAlert(title: alertTitle, message: message)
-        alert.backdrop.allowDismissWhenBackgroundTouch = true
         let cancel = Action(title: "取消", style: .cancel)
         let ignore = Action(title: "忽略", style: .destructive)
         alert.addAction(cancel)
@@ -282,7 +281,6 @@ struct SwiftUIAlertSectionView: View {
           .clipShape(RoundedRectangle(cornerRadius: 16))
         }
         let alert = Alert(content: content)
-        alert.backdrop.allowDismissWhenBackgroundTouch = true
         alert.show()
       } label: {
         Text("显示 SwiftUI View")

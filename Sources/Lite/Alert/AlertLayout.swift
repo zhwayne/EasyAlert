@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AlertLayout: AlertLayoutUpdatable {
+final class AlertLayout: AlertableLayout {
     
     private var constraints: [NSLayoutConstraint] = []
         
@@ -68,12 +68,14 @@ final class AlertLayout: AlertLayoutUpdatable {
         constraints.append(
             presentedView.centerXAnchor.constraint(
                 equalTo: containerView.centerXAnchor,
-                constant: (abs(edgeInsets.left) - abs(edgeInsets.right)) / 2)
+                constant: (abs(edgeInsets.left) - abs(edgeInsets.right)) / 2
+            )
         )
         constraints.append(
             presentedView.centerYAnchor.constraint(
                 equalTo: containerView.centerYAnchor,
-                constant: (abs(edgeInsets.top) - abs(edgeInsets.bottom)) / 2)
+                constant: (abs(edgeInsets.top) - abs(edgeInsets.bottom))
+            )
         )
     }
 }

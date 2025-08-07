@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SheetLayout: AlertLayoutUpdatable {
+final class SheetLayout: AlertableLayout {
     
     private var constraints: [NSLayoutConstraint] = []
     

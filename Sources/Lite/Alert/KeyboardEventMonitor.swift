@@ -7,16 +7,17 @@
 
 import UIKit
 
-struct KeyboardAdaptation {
+public struct KeyboardInfo {
     
-    let keyboardFrame: CGRect
-    let animationDuration: TimeInterval
-    let curve: UIView.AnimationCurve
+    public let keyboardFrame: CGRect
+    public let animationDuration: TimeInterval
+    public let curve: UIView.AnimationCurve
+    public var isHidden: Bool
 }
 
-final class KeyboardResponsive {
+final class KeyboardEventMonitor {
 
-    typealias Handler = (KeyboardAdaptation) -> Void
+    typealias Handler = (KeyboardInfo) -> Void
     
     var keyboardWillShow: Handler?
     
@@ -34,7 +35,7 @@ final class KeyboardResponsive {
     private var didHiddenToken: NotificationToken?
     private var willChangeToken: NotificationToken?
     
-    private(set) var keyboardFrame: CGRect?
+    private(set) var keyboardInfo: KeyboardInfo?
     
     init() {
         
@@ -42,41 +43,41 @@ final class KeyboardResponsive {
         
         willShowToken = center.observe(name: UIApplication.keyboardWillShowNotification, using: { [weak self] note in
             if let userInfo = note.userInfo,
-               let adaptation = self?.adaptation(from: userInfo, isHiddenKeyboard: false) {
-                self?.keyboardFrame = adaptation.keyboardFrame
-                self?.keyboardWillShow?(adaptation)
+               let info = self?.keyboardInfo(from: userInfo, isHiddenKeyboard: false) {
+                self?.keyboardInfo = info
+                self?.keyboardWillShow?(info)
             }
         })
         
         didShowToken = center.observe(name: UIApplication.keyboardDidShowNotification, using: { [weak self] note in
             if let userInfo = note.userInfo,
-               let adaptation = self?.adaptation(from: userInfo, isHiddenKeyboard: false) {
-                self?.keyboardFrame = adaptation.keyboardFrame
-                self?.keyboardDidShow?(adaptation)
+               let info = self?.keyboardInfo(from: userInfo, isHiddenKeyboard: false) {
+                self?.keyboardInfo = info
+                self?.keyboardDidShow?(info)
             }
         })
         
         willHiddenToken = center.observe(name: UIApplication.keyboardWillHideNotification, using: { [weak self] note in
             if let userInfo = note.userInfo,
-               let adaptation = self?.adaptation(from: userInfo, isHiddenKeyboard: true) {
-                self?.keyboardFrame = adaptation.keyboardFrame
-                self?.keyboardWillHidden?(adaptation)
+               let info = self?.keyboardInfo(from: userInfo, isHiddenKeyboard: true) {
+                self?.keyboardInfo = info
+                self?.keyboardWillHidden?(info)
             }
         })
         
         didHiddenToken = center.observe(name: UIApplication.keyboardDidHideNotification, using: { [weak self] note in
             if let userInfo = note.userInfo,
-               let adaptation = self?.adaptation(from: userInfo, isHiddenKeyboard: true) {
-                self?.keyboardFrame = adaptation.keyboardFrame
-                self?.keyboardDidHidden?(adaptation)
+               let info = self?.keyboardInfo(from: userInfo, isHiddenKeyboard: true) {
+                self?.keyboardInfo = info
+                self?.keyboardDidHidden?(info)
             }
         })
         
         willChangeToken = center.observe(name: UIApplication.keyboardWillChangeFrameNotification, using: { [weak self] note in
             if let userInfo = note.userInfo,
-               let adaptation = self?.adaptation(from: userInfo, isHiddenKeyboard: false) {
-                self?.keyboardFrame = adaptation.keyboardFrame
-                self?.keyboardFrameWillChange?(adaptation)
+               let info = self?.keyboardInfo(from: userInfo, isHiddenKeyboard: false) {
+                self?.keyboardInfo = info
+                self?.keyboardFrameWillChange?(info)
             }
         })
     }
@@ -86,19 +87,20 @@ final class KeyboardResponsive {
     }
 }
 
-extension KeyboardResponsive {
+extension KeyboardEventMonitor {
     
-    func adaptation(from userInfo: [AnyHashable: Any], isHiddenKeyboard: Bool /* unused now */) -> KeyboardAdaptation? {
+    func keyboardInfo(from userInfo: [AnyHashable: Any], isHiddenKeyboard: Bool /* unused now */) -> KeyboardInfo? {
         guard let frame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
               let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else {
             return nil
         }
         
-        let adaptation = KeyboardAdaptation(
+        let info = KeyboardInfo(
             keyboardFrame: frame,
             animationDuration: duration,
-            curve: .easeInOut
+            curve: .easeInOut,
+            isHidden: isHiddenKeyboard
         )
-        return adaptation
+        return info
     }
 }

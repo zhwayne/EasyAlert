@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ToastLayout: AlertLayoutUpdatable {
+final class ToastLayout: AlertableLayout {
     
     var position: Toast.Position = .bottom
     private var constraints: [NSLayoutConstraint] = []

@@ -41,11 +41,12 @@ open class ActionSheet: Sheet, ActionAlertable {
         
         let decorator = ActionGroupAnimatorAndLayoutDecorator(
             aniamtor: aniamtor,
-            layoutModifier: layoutUpdator,
+            layoutModifier: layout,
             actionGroupViews: [actionGroupView, cancelActionGroupView]
         )
         aniamtor = decorator
-        layoutUpdator = decorator
+        layout = decorator
+        backdrop.allowDismissWhenBackgroundTouch = true
     }
     
     open override func willLayoutContainer() {
