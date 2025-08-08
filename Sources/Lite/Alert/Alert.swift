@@ -17,7 +17,7 @@ import UIKit
         didSet { configDimming() }
     }
     
-    public var aniamtor: AlertTransitionAnimatable = AlertTransitionAnimator()
+    public var aniamtor: AlertbleAnimator = AlertAnimator()
     
     public var layoutGuide = AlertLayoutGuide(width: .flexible, height: .flexible)
     
@@ -61,7 +61,6 @@ import UIKit
         orientationChangeToken = NotificationCenter.default.observe(
             name: UIDevice.orientationDidChangeNotification,
             object: nil,
-            queue: nil,
             using: { [weak self] note in
                 guard let self, isActive else { return }
                 updateLayout()
@@ -71,11 +70,11 @@ import UIKit
     private func observeKeyboardEvent() {
         keyboardEventMonitor.keyboardWillShow = { [weak self] info in
             guard let self, isActive else { return }
-            
+            // TODO: 处理键盘事件
         }
         keyboardEventMonitor.keyboardWillHidden = { [weak self] info in
             guard let self, isActive else { return }
-            
+            // TODO: 处理键盘事件
         }
     }
     
@@ -237,8 +236,6 @@ extension Alert {
         willLayoutContainer()
         UIView.performWithoutAnimation { [self] in
             layout.updateLayout(context: layoutContext, layoutGuide: layoutGuide)
-            backdropView.setNeedsLayout()
-            backdropView.layoutIfNeeded()
         }
         didLayoutContainer()
     }

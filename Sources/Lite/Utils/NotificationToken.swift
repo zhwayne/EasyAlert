@@ -28,7 +28,7 @@ extension NotificationCenter {
     func observe(
         name: NSNotification.Name?,
         object obj: Any? = nil,
-        queue: OperationQueue? = .main,
+        queue: OperationQueue = .main,
         using block: @escaping (Notification) -> ())
     -> NotificationToken
     {

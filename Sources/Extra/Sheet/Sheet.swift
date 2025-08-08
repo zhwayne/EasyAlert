@@ -11,7 +11,7 @@ open class Sheet: Alert {
     
     public override init(content: AlertContent) {
         super.init(content: content)
-        self.aniamtor = SheetTransitionAnimator()
+        self.aniamtor = SheetAnimator()
         self.layout = SheetLayout()
         layoutGuide = AlertLayoutGuide(width: .multiplied(by: 1, maxWidth: 414), height: .flexible)
     }

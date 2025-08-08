@@ -12,7 +12,7 @@ final class ToastAlert: Alert {
     class ContentView: UIView, AlertContent {
         
         let label = UILabel()
-        let indicator = UIActivityIndicatorView(style: .white)
+        let indicator = UIActivityIndicatorView(style: .medium)
         
         override init(frame: CGRect) {
             super.init(frame: frame)
@@ -77,7 +77,7 @@ final class ToastAlert: Alert {
         super.init(content: contentView)
         contentView.label.attributedText = Toast.text(for: message)
         
-        aniamtor = ToastTransitionAnimator()
+        aniamtor = ToastAnimator()
         layout = ToastLayout()
         backdrop.dimming = .color(.clear)
         backdrop.interactionScope = .all

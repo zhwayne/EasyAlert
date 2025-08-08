@@ -84,7 +84,7 @@ extension Toast {
             let timing = UISpringTimingParameters()
             let animator = UIViewPropertyAnimator(duration: 1/* This value will be ignored.*/, timingParameters: timing)
             animator.addAnimations {
-                alert!.updateLayout(animated: false)
+                alert!.updateLayout()
             }
             animator.startAnimation()
         }

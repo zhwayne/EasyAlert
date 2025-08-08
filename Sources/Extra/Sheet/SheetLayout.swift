@@ -13,7 +13,6 @@ final class SheetLayout: AlertableLayout {
     
     func updateLayout(context: LayoutContext, layoutGuide: AlertLayoutGuide) {
         
-        context.containerView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
         defer {
             NSLayoutConstraint.activate(constraints)

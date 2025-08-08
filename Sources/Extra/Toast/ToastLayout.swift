@@ -14,7 +14,6 @@ final class ToastLayout: AlertableLayout {
     
     func updateLayout(context: LayoutContext, layoutGuide: AlertLayoutGuide) {
         
-        context.containerView.layoutIfNeeded()
         NSLayoutConstraint.deactivate(constraints)
 
         defer {

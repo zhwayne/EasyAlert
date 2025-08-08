@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 public struct KeyboardInfo {
     
     public let keyboardFrame: CGRect
@@ -15,6 +16,7 @@ public struct KeyboardInfo {
     public var isHidden: Bool
 }
 
+@MainActor
 final class KeyboardEventMonitor {
 
     typealias Handler = (KeyboardInfo) -> Void
@@ -89,7 +91,10 @@ final class KeyboardEventMonitor {
 
 extension KeyboardEventMonitor {
     
-    func keyboardInfo(from userInfo: [AnyHashable: Any], isHiddenKeyboard: Bool /* unused now */) -> KeyboardInfo? {
+    private func keyboardInfo(
+        from userInfo: [AnyHashable: Any],
+        isHiddenKeyboard: Bool /* unused now */
+    ) -> KeyboardInfo? {
         guard let frame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
               let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else {
             return nil

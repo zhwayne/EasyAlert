@@ -1,5 +1,5 @@
 //
-//  ToastTransitionAnimator.swift
+//  ToastAnimator.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/12/13.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct ToastTransitionAnimator : AlertTransitionAnimatable {
+struct ToastAnimator : AlertbleAnimator {
     
     func show(context: LayoutContext, completion: @escaping () -> Void) {
         let transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
