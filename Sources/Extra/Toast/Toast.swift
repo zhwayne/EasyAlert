@@ -96,7 +96,6 @@ extension Toast {
         }
     }
     
-    @available(iOS 13.0, *)
     public static func dismiss() async {
         if let alert = alert {
             await alert.dismiss()

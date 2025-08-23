@@ -15,9 +15,7 @@ final class ActionSeparatableSequenceView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
-        if #available(iOS 13.0, *) {
-            layer.cornerCurve = .continuous
-        }
+        layer.cornerCurve = .continuous
     }
     
     required init(coder: NSCoder) {
@@ -27,9 +25,7 @@ final class ActionSeparatableSequenceView: UIView {
     func setCornerRadius(_ radius: CGFloat, corners: UIRectCorner = .allCorners) {
         layer.cornerRadius = radius
         layer.maskedCorners = corners.layerMaskedCorners
-        if #available(iOS 13.0, *) {
-            layer.cornerCurve = .continuous
-        }
+        layer.cornerCurve = .continuous
     }
     
     func horizontalSeparator(at index: Int) -> UIView {

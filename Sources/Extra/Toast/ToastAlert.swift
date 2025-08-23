@@ -24,27 +24,20 @@ final class ToastAlert: Alert {
 
             let effectView = BlurEffectView(frame: .zero)
             effectView.blurRadius = 50
-            if #available(iOS 13.0, *) {
-                effectView.colorTint = UIColor.init(dynamicProvider: { tc in
-                    if tc.userInterfaceStyle == .dark {
-                        return .systemGray
-                    } else {
-                        return .black
-                    }
-                })
-            } else {
-                // Fallback on earlier versions
-                effectView.colorTint = UIColor.black
-            }
+            effectView.colorTint = UIColor.init(dynamicProvider: { tc in
+                if tc.userInterfaceStyle == .dark {
+                    return .systemGray
+                } else {
+                    return .black
+                }
+            })
             effectView.colorTintAlpha = 0.4
             effectView.clipsToBounds = true
             effectView.frame = bounds
             effectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             effectView.layer.cornerRadius = 13
             effectView.contentView.backgroundColor = UIColor(white: 0, alpha: 0.2)
-            if #available(iOS 13.0, *) {
-                effectView.layer.cornerCurve = .continuous
-            }
+            effectView.layer.cornerCurve = .continuous
             addSubview(effectView)
             
             label.numberOfLines = 0

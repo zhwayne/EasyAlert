@@ -38,9 +38,7 @@ final class MyAlertActionView: UIView, ActionContent {
         label.backgroundColor = style.color
         label.clipsToBounds = true
         label.layer.cornerRadius = 10
-        if #available(iOS 13.0, *) {
-            label.layer.cornerCurve = .continuous
-        }
+        label.layer.cornerCurve = .continuous
         return label
     }()
     

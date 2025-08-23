@@ -47,11 +47,7 @@ extension MessageAlert {
 }
 
 private var defaultTextColor: UIColor {
-    if #available(iOS 13.0, *) {
-        return UIColor.label
-    } else {
-        return UIColor(white: 0.33, alpha: 0.6)
-    }
+    return UIColor.label
 }
 
 extension MessageAlert {

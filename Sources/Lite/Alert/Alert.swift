@@ -132,7 +132,6 @@ import UIKit
         dismissAlert(completion: completion)
     }
     
-    @available(iOS 13.0, *)
     public func dismiss() async {
         await withUnsafeContinuation({ continuation in
             dismiss { continuation.resume() }
@@ -156,28 +155,19 @@ extension Alert {
     
     private func setupWindow() {
         if window == nil {
-            if #available(iOS 13.0, *) {
-                for scene in UIApplication.shared.connectedScenes where scene is UIWindowScene {
-                    let windowScene = scene as! UIWindowScene
-                    window = AlertWindow(windowScene: windowScene)
-                    if let keyWindow = windowScene.windows.last(where: { $0.isKeyWindow }) {
-                        let userInterfaceStyle = keyWindow.traitCollection.userInterfaceStyle
-                        window?.overrideUserInterfaceStyle = userInterfaceStyle
-                    }
-                    break
-                }
-                if window == nil {
-                    // Fallback
-                    window = AlertWindow(frame: UIScreen.main.bounds)
-                }
-            } else {
-                // Fallback on earlier versions
-                window = AlertWindow(frame: UIScreen.main.bounds)
-                if let keyWindow = UIApplication.shared.keyWindow {
+            for scene in UIApplication.shared.connectedScenes where scene is UIWindowScene {
+                let windowScene = scene as! UIWindowScene
+                window = AlertWindow(windowScene: windowScene)
+                if let keyWindow = windowScene.windows.last(where: { $0.isKeyWindow }) {
                     let userInterfaceStyle = keyWindow.traitCollection.userInterfaceStyle
                     window?.overrideUserInterfaceStyle = userInterfaceStyle
                 }
+                break
             }
+        }
+        if window == nil {
+            // Fallback
+            window = AlertWindow(frame: UIScreen.main.bounds)
         }
         window?.rootViewController = UIViewController()
         window?.backgroundColor = .clear
@@ -338,16 +328,12 @@ extension Alert {
 extension Alert {
     
     private var interfaceOrientation: UIInterfaceOrientation {
-        if #available(iOS 13.0, *) {
-            let scenes = UIApplication.shared.connectedScenes
-            let windowScene = scenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
-            guard let interfaceOrientation = windowScene?.interfaceOrientation else {
-                return UIApplication.shared.statusBarOrientation
-            }
-            return interfaceOrientation
-        } else {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
+        guard let interfaceOrientation = windowScene?.interfaceOrientation else {
             return UIApplication.shared.statusBarOrientation
         }
+        return interfaceOrientation
     }
     
     private var layoutContext: LayoutContext {

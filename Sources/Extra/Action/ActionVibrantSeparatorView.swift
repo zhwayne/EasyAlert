@@ -15,13 +15,8 @@ class ActionVibrantSeparatorView: UIView {
         
         let blureEffect: UIBlurEffect
         let vibrancyEffect: UIVisualEffect
-        if #available(iOS 13.0, *) {
-            blureEffect = UIBlurEffect(style: .systemMaterial)
-            vibrancyEffect = UIVibrancyEffect(blurEffect: blureEffect, style: .separator)
-        } else {
-            blureEffect = UIBlurEffect(style: .dark)
-            vibrancyEffect = UIVibrancyEffect(blurEffect: blureEffect)
-        }
+        blureEffect = UIBlurEffect(style: .systemMaterial)
+        vibrancyEffect = UIVibrancyEffect(blurEffect: blureEffect, style: .separator)
         let effectView = UIVisualEffectView(effect: vibrancyEffect)
         effectView.contentView.backgroundColor = .white
         addSubview(effectView)

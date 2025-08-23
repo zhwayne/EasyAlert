@@ -79,16 +79,12 @@ extension DefaultAlertBackdropProvider {
     
     /// This method returns the color for the semi-transparent black backdrop view used in alerts.
     static var alertDimmingViewColor: UIColor {
-        if #available(iOS 13.0, *) {
-            return UIColor { traitCollection in
-                if traitCollection.userInterfaceStyle == .dark {
-                    return UIColor(white: 0, alpha: 0.48)
-                } else {
-                    return UIColor(white: 0, alpha: 0.2)
-                }
+        return UIColor { traitCollection in
+            if traitCollection.userInterfaceStyle == .dark {
+                return UIColor(white: 0, alpha: 0.48)
+            } else {
+                return UIColor(white: 0, alpha: 0.2)
             }
-        } else {
-            return UIColor(white: 0, alpha: 0.2)
         }
     }
 }

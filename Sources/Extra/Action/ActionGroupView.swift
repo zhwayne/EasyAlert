@@ -40,12 +40,7 @@ class ActionGroupView: UIView, AlertContent {
     
     required init(content: AlertContent?, actionLayout: ActionLayout) {
         self.actionLayout = actionLayout
-        if #available(iOS 13.0, *) {
-            self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
-        } else {
-            // Fallback on earlier versions
-            self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .prominent))
-        }
+        self.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
         if let view = content as? UIView {
             self.customView = view
             self.customController = nil
@@ -58,9 +53,7 @@ class ActionGroupView: UIView, AlertContent {
         }
 
         backgroundView.clipsToBounds = true
-        if #available(iOS 13.0, *) {
-            backgroundView.layer.cornerCurve = .continuous
-        }
+        backgroundView.layer.cornerCurve = .continuous
         super.init(frame: .zero)
         backgroundView.frame = bounds
         backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -161,9 +154,7 @@ class ActionGroupView: UIView, AlertContent {
     }
     
     func setCornerRadius(_ radius: CGFloat) {
-        if #available(iOS 13.0, *) {
-            backgroundView.layer.cornerCurve = .continuous
-        }
+        backgroundView.layer.cornerCurve = .continuous
         backgroundView.layer.cornerRadius = radius
         let view = representationSequenceView.separatableSequenceView
         if (actions.count == 1 && actions[0].style == .cancel) || customView == nil {

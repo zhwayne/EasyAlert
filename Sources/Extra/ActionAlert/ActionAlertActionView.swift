@@ -32,11 +32,7 @@ extension ActionAlert {
         
         private let highlightedOverlay: UIView = {
             let view = UIView()
-            if #available(iOS 13.0, *) {
-                view.backgroundColor = .systemFill
-            } else {
-                view.backgroundColor = UIColor(white: 0.472, alpha: 0.36)
-            }
+            view.backgroundColor = .systemFill
             view.alpha = 0
             view.isUserInteractionEnabled = false
             return view

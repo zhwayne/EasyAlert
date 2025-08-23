@@ -13,7 +13,6 @@ private struct DismissibleEnvironmentKey: @preconcurrency EnvironmentKey {
     static var defaultValue: Dismissible?
 }
 
-@available(iOS 13.0, *)
 extension EnvironmentValues {
     public var alert: Dismissible? {
         get { self[DismissibleEnvironmentKey.self] }
@@ -21,7 +20,6 @@ extension EnvironmentValues {
     }
 }
 
-@available(iOS 13.0, *)
 @MainActor final public class AlertHostingController: UIHostingController<AnyView>, AlertContent {
     
     private class WeakRef: Dismissible {
@@ -64,7 +62,6 @@ extension EnvironmentValues {
     }
 }
 
-@available(iOS 13.0, *)
 @MainActor
 private struct AlertController<Content: View>: UIViewControllerRepresentable {
     
@@ -125,7 +122,6 @@ private struct AlertController<Content: View>: UIViewControllerRepresentable {
     }
 }
 
-@available(iOS 13.0, *)
 extension View {
     
     public func easyAlert<Content: View>(

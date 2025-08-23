@@ -57,9 +57,7 @@ open class ActionSheet: Sheet, ActionAlertable {
             actionGroupView.setCornerRadius(configuration.cornerRadius)
             cancelActionGroupView.setCornerRadius(configuration.cornerRadius)
         }
-        if #available(iOS 13.0, *) {
-            containerView.layer.cornerCurve = .continuous
-        }
+        containerView.layer.cornerCurve = .continuous
         containerView.layer.cornerRadius = configuration.cornerRadius
         containerView.layer.masksToBounds = true
     }

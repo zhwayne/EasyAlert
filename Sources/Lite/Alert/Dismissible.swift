@@ -13,7 +13,6 @@ import UIKit
     /// - Parameter completion: the `completion` callback will invoke after alert dismissed.
     func dismiss(completion: (() -> Void)?)
     
-    @available(iOS 13.0, *)
     func dismiss() async
 }
 
@@ -54,7 +53,6 @@ extension Dismissible {
         self.dismiss(completion: nil)
     }
     
-    @available(iOS 13.0, *)
     @MainActor public func dismiss() async {
         guard let alert = alert else { return }
         await withUnsafeContinuation({ continuation in

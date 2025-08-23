@@ -32,11 +32,7 @@ extension ActionSheet {
         
         private let highlightedOverlay: UIView = {
             let view = UIView()
-            if #available(iOS 13.0, *) {
-                view.backgroundColor = .systemFill
-            } else {
-                view.backgroundColor = UIColor(white: 0.472, alpha: 0.36)
-            }
+            view.backgroundColor = .systemFill
             view.alpha = 0
             view.isUserInteractionEnabled = false
             return view
@@ -96,12 +92,7 @@ fileprivate extension ActionSheet.ActionView {
     
     func backgroundColor(for style: Action.Style) -> UIColor {
         if case .cancel = style {
-            if #available(iOS 13.0, *) {
-                return .systemBackground
-            } else {
-                // Fallback on earlier versions
-                return .white
-            }
+            return .systemBackground
         }
         return .clear
     }
