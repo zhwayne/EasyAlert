@@ -9,9 +9,9 @@ import UIKit
 
 extension ActionSheet {
     
-    @MainActor public struct Configuration: @preconcurrency ActionAlertableConfigurable, Sendable {
+    @MainActor public struct Configuration: ActionAlertableConfigurable {
 
-        public var layoutGuide: AlertLayoutGuide = .init(
+        public var layoutGuide: LayoutGuide = .init(
             width: .multiplied(by: 1, maxWidth: 414),
             height: .flexible,
             contentInsets: UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8)

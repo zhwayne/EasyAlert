@@ -65,7 +65,7 @@ public extension Action {
     /// - `default`: 默认
     /// - cancel:  取消
     /// - destructive: 破坏性操作
-    enum Style : Hashable, Sendable {
+    enum Style : Hashable {
         case `default`, cancel, destructive
     }
 }

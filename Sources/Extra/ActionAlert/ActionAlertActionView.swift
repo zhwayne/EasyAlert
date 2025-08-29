@@ -9,7 +9,7 @@ import UIKit
 
 extension ActionAlert {
     
-    @MainActor final class ActionView: UIView, ActionContent, @unchecked Sendable {
+    @MainActor final class ActionView: UIView, ActionContent {
         
         var title: String? {
             get { titleLabel.text }

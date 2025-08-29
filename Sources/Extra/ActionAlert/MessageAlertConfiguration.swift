@@ -9,9 +9,9 @@ import UIKit
 
 extension MessageAlert {
     
-    @MainActor public struct Configuration: @preconcurrency ActionAlertableConfigurable, Sendable  {
+    @MainActor public struct Configuration: ActionAlertableConfigurable  {
         
-        public var layoutGuide: AlertLayoutGuide {
+        public var layoutGuide: LayoutGuide {
             get { actionAlertConfiguration.layoutGuide }
             set { actionAlertConfiguration.layoutGuide = newValue }
         }

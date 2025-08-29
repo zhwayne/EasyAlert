@@ -11,7 +11,7 @@ final class AlertLayout: AlertableLayout {
     
     private var constraints: [NSLayoutConstraint] = []
         
-    func updateLayout(context: LayoutContext, layoutGuide: AlertLayoutGuide) {
+    func updateLayout(context: LayoutContext, layoutGuide: LayoutGuide) {
         
         NSLayoutConstraint.deactivate(constraints)
         defer {

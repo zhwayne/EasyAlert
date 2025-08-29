@@ -19,7 +19,7 @@ final class ActionGroupAnimatorAndLayoutDecorator: AlertbleAnimator, AlertableLa
         self.actionGroupViews = actionGroupViews
     }
     
-    func updateLayout(context: LayoutContext, layoutGuide: AlertLayoutGuide) {
+    func updateLayout(context: LayoutContext, layoutGuide: LayoutGuide) {
         layoutModifier.updateLayout(context: context, layoutGuide: layoutGuide)
         actionGroupViews.forEach { view in
             view.updateLayout(interfaceOrientation: context.interfaceOrientation)

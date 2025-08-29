@@ -13,6 +13,6 @@ open class Sheet: Alert {
         super.init(content: content)
         self.aniamtor = SheetAnimator()
         self.layout = SheetLayout()
-        layoutGuide = AlertLayoutGuide(width: .multiplied(by: 1, maxWidth: 414), height: .flexible)
+        layoutGuide = .init(width: .multiplied(by: 1, maxWidth: 414), height: .flexible)
     }
 }

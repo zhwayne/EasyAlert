@@ -75,7 +75,7 @@ final class ToastAlert: Alert {
         backdrop.dimming = .color(.clear)
         backdrop.interactionScope = .all
         
-        layoutGuide = AlertLayoutGuide(
+        layoutGuide = LayoutGuide(
             width: .flexible,
             height: .flexible,
             contentInsets: UIEdgeInsets(top: 0, left: 36, bottom: 0, right: 36)

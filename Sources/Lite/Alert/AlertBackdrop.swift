@@ -8,9 +8,9 @@
 import UIKit
 
 /// This enum defines the different types of backdrops that can be used with an alert.
-public enum Dimming: Sendable {
+@MainActor public enum Dimming {
     
-    public enum BlurEffectStyle: Sendable {
+    public enum BlurEffectStyle {
         case regular
         case dark
     }
@@ -37,7 +37,7 @@ extension Dimming.BlurEffectStyle {
 
 /// This enum defines the different penetration scopes for the backdrop.
 /// It specifies if clicking on the backdrop should allow click events to penetrate to the view below.
-public enum BackdropInteractionScope: Sendable {
+@MainActor public enum BackdropInteractionScope {
     
     /// No penetration is allowed.
     case none
@@ -50,7 +50,7 @@ public enum BackdropInteractionScope: Sendable {
 }
 
 /// This protocol defines the properties and methods that interact with the alert backdrop.
-public protocol AlertBackdrop: Sendable {
+@MainActor public protocol AlertBackdrop {
     
     /// This property defines the type of backdrop used by the alert.
     var dimming: Dimming { get set }

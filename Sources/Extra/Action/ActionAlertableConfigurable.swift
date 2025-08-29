@@ -7,11 +7,11 @@
 
 import UIKit
 
-public protocol ActionAlertableConfigurable: Sendable {
+@MainActor public protocol ActionAlertableConfigurable {
     
     var cornerRadius: CGFloat { get }
     
-    var layoutGuide: AlertLayoutGuide { get }
+    var layoutGuide: LayoutGuide { get }
     
     var makeActionView: (Action.Style) -> (UIView & ActionContent) { get }
         

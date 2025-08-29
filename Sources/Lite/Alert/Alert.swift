@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 /// The base alert.
 @MainActor open class Alert: Alertable {
     
@@ -19,7 +20,7 @@ import UIKit
     
     public var aniamtor: AlertbleAnimator = AlertAnimator()
     
-    public var layoutGuide = AlertLayoutGuide(width: .flexible, height: .flexible)
+    public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible)
     
     public var layout: AlertableLayout = AlertLayout()
     
@@ -154,15 +155,11 @@ import UIKit
 extension Alert {
     
     private func setupWindow() {
-        if window == nil {
-            for scene in UIApplication.shared.connectedScenes where scene is UIWindowScene {
-                let windowScene = scene as! UIWindowScene
-                window = AlertWindow(windowScene: windowScene)
-                if let keyWindow = windowScene.windows.last(where: { $0.isKeyWindow }) {
-                    let userInterfaceStyle = keyWindow.traitCollection.userInterfaceStyle
-                    window?.overrideUserInterfaceStyle = userInterfaceStyle
-                }
-                break
+        if window == nil, let windowScene = UIApplication.shared.activeWindowScene {
+            window = AlertWindow(windowScene: windowScene)
+            if let keyWindow = windowScene.keyWindowBacked {
+                let userInterfaceStyle = keyWindow.traitCollection.userInterfaceStyle
+                window?.overrideUserInterfaceStyle = userInterfaceStyle
             }
         }
         if window == nil {
@@ -328,8 +325,7 @@ extension Alert {
 extension Alert {
     
     private var interfaceOrientation: UIInterfaceOrientation {
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
+        let windowScene = UIApplication.shared.activeWindowScene
         guard let interfaceOrientation = windowScene?.interfaceOrientation else {
             return UIApplication.shared.statusBarOrientation
         }
@@ -343,5 +339,24 @@ extension Alert {
             presentedView: alertContainerController.view,
             interfaceOrientation: interfaceOrientation
         )
+    }
+}
+
+extension UIApplication {
+    
+    var activeWindowScene: UIWindowScene? {
+        let windowScenes = connectedScenes.compactMap { $0 as? UIWindowScene }
+        return windowScenes.first { $0.activationState == .foregroundActive }
+    }
+}
+
+extension UIWindowScene {
+    
+    var keyWindowBacked: UIWindow? {
+        if #available(iOS 15.0, *) {
+            return self.keyWindow
+        } else {
+            return self.windows.first { $0.isKeyWindow }
+        }
     }
 }

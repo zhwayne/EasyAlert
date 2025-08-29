@@ -9,9 +9,9 @@ import UIKit
 
 extension ActionAlert {
 
-    @MainActor public struct Configuration: @preconcurrency ActionAlertableConfigurable, Sendable {
+    @MainActor public struct Configuration: ActionAlertableConfigurable {
 
-        public var layoutGuide: AlertLayoutGuide = AlertLayoutGuide(width: .flexible, height: .flexible)
+        public var layoutGuide: LayoutGuide = .init(width: .flexible, height: .flexible)
         
         public var cornerRadius: CGFloat = 13
                 

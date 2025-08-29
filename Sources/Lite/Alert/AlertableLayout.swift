@@ -7,7 +7,7 @@
 
 import UIKit
 
-public enum Width: Sendable {
+@MainActor public enum Width {
     
     case fixed(CGFloat)
     
@@ -16,7 +16,7 @@ public enum Width: Sendable {
     case multiplied(by: CGFloat, maxWidth: CGFloat? = nil)
 }
 
-public enum Height: Sendable {
+@MainActor public enum Height {
     
     case fixed(CGFloat)
     
@@ -25,7 +25,7 @@ public enum Height: Sendable {
     case greaterThanOrEqualTo(CGFloat)
 }
 
-public struct AlertLayoutGuide: Sendable {
+@MainActor public struct LayoutGuide {
 
     public var width: Width
     
@@ -52,5 +52,23 @@ public struct AlertLayoutGuide: Sendable {
 @MainActor public protocol AlertableLayout {
     
     /// Updates the layout of the alert during the transition.
-    func updateLayout(context: LayoutContext, layoutGuide: AlertLayoutGuide)
+    func updateLayout(context: LayoutContext, layoutGuide: LayoutGuide)
+}
+
+/// A context object for use during the transition animation of an alert.
+@MainActor public struct LayoutContext {
+    /// The backdrop view for the alert.
+    public let containerView: UIView
+    
+    /// The dimming view for the alert.
+    public let dimmingView: UIView
+  
+    /// The view that contains the custom alert view.
+    public let presentedView: UIView
+    
+    /// The current interface orientation.
+    public let interfaceOrientation: UIInterfaceOrientation
+    
+    /// The frame of the backdrop view.
+    public var frame: CGRect { containerView.bounds }
 }
