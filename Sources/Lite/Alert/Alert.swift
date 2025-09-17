@@ -18,7 +18,7 @@ import UIKit
         didSet { configDimming() }
     }
     
-    public var aniamtor: AlertbleAnimator = AlertAnimator()
+    public var animator: AlertbleAnimator = AlertAnimator()
     
     public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible)
     
@@ -237,7 +237,7 @@ extension Alert {
         
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
-        aniamtor.show(context: layoutContext) { [weak self] in
+        animator.show(context: layoutContext) { [weak self] in
             self?.didShow()
             self?.lifecycleListeners.forEach { $0.didShow() }
             self?.alertContainerController.view.isUserInteractionEnabled = true
@@ -291,7 +291,7 @@ extension Alert {
         
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
-        aniamtor.dismiss(context: layoutContext) { [weak self] in
+        animator.dismiss(context: layoutContext) { [weak self] in
             self?.didDismiss()
             self?.lifecycleListeners.forEach { $0.didDismiss() }
             if let viewController = self?.alertContent as? UIViewController {

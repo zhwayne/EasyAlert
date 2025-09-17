@@ -40,11 +40,11 @@ open class ActionSheet: Sheet, ActionAlertable {
         layoutGuide = self.configuration.layoutGuide
         
         let decorator = ActionGroupAnimatorAndLayoutDecorator(
-            aniamtor: aniamtor,
+            aniamtor: animator,
             layoutModifier: layout,
             actionGroupViews: [actionGroupView, cancelActionGroupView]
         )
-        aniamtor = decorator
+        animator = decorator
         layout = decorator
         backdrop.allowDismissWhenBackgroundTouch = true
     }

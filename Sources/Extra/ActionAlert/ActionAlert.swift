@@ -32,7 +32,7 @@ open class ActionAlert: Alert, ActionAlertable {
             layoutModifier: AlertLayout(),
             actionGroupViews: [actionGroupView]
         )
-        self.aniamtor = decorator
+        self.animator = decorator
         self.layout = decorator
     }
     

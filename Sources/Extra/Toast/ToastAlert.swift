@@ -70,7 +70,7 @@ final class ToastAlert: Alert {
         super.init(content: contentView)
         contentView.label.attributedText = Toast.text(for: message)
         
-        aniamtor = ToastAnimator()
+        animator = ToastAnimator()
         layout = ToastLayout()
         backdrop.dimming = .color(.clear)
         backdrop.interactionScope = .all
