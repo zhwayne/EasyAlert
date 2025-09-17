@@ -1,5 +1,5 @@
 //
-//  LiftcycleListener.swift
+//  LifecycleListener.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/5/28.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-@MainActor public protocol LiftcycleListener {
+@MainActor public protocol LifecycleListener {
     
     func willShow()
     
@@ -18,7 +18,7 @@ import Foundation
     func didDismiss()
 }
 
-extension LiftcycleListener {
+extension LifecycleListener {
     
     public func willShow() { }
     
@@ -29,7 +29,7 @@ extension LiftcycleListener {
     public func didDismiss() { }
 }
 
-public struct LiftcycleCallback: LiftcycleListener {
+public struct LifecycleCallback: LifecycleListener {
     
     public typealias Handler = () -> Void
     

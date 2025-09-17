@@ -36,7 +36,7 @@ import UIKit
     
     private let keyboardEventMonitor = KeyboardEventMonitor()
     
-    private var liftcycleListeners: [LiftcycleListener] = []
+    private var lifecycleListeners: [LifecycleListener] = []
     
     private var orientationChangeToken: NotificationToken?
     
@@ -112,8 +112,8 @@ import UIKit
         }
     }
     
-    public func addListener(_ listener: LiftcycleListener) {
-        liftcycleListeners.append(listener)
+    public func addListener(_ listener: LifecycleListener) {
+        lifecycleListeners.append(listener)
     }
     
     public func show(in hosting: AlertHosting? = nil) {
@@ -230,7 +230,7 @@ extension Alert {
     private func performShowWithAnimation() {
         isActive = true
         willShow()
-        liftcycleListeners.forEach { $0.willShow() }
+        lifecycleListeners.forEach { $0.willShow() }
         if let viewController = alertContent as? UIViewController {
             viewController.beginAppearanceTransition(true, animated: true)
         }
@@ -239,7 +239,7 @@ extension Alert {
         tapTarget.tapGestureRecognizer.isEnabled = false
         aniamtor.show(context: layoutContext) { [weak self] in
             self?.didShow()
-            self?.liftcycleListeners.forEach { $0.didShow() }
+            self?.lifecycleListeners.forEach { $0.didShow() }
             self?.alertContainerController.view.isUserInteractionEnabled = true
             self?.tapTarget.tapGestureRecognizer.isEnabled = true
             if let viewController = self?.alertContent as? UIViewController {
@@ -284,7 +284,7 @@ extension Alert {
     private func dismissAlert(completion: (() -> Void)?) {
         isActive = false
         willDismiss()
-        liftcycleListeners.forEach { $0.willDismiss() }
+        lifecycleListeners.forEach { $0.willDismiss() }
         if let viewController = alertContent as? UIViewController {
             viewController.beginAppearanceTransition(false, animated: true)
         }
@@ -293,7 +293,7 @@ extension Alert {
         tapTarget.tapGestureRecognizer.isEnabled = false
         aniamtor.dismiss(context: layoutContext) { [weak self] in
             self?.didDismiss()
-            self?.liftcycleListeners.forEach { $0.didDismiss() }
+            self?.lifecycleListeners.forEach { $0.didDismiss() }
             if let viewController = self?.alertContent as? UIViewController {
                 viewController.endAppearanceTransition()
             }

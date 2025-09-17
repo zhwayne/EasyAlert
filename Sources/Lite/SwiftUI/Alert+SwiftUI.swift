@@ -98,7 +98,7 @@ private struct AlertController<Content: View>: UIViewControllerRepresentable {
                     content(alert)
                 })
                 alert.backdrop.allowDismissWhenBackgroundTouch = allowDismissWhenBackgroundTouch
-                alert.addListener(LiftcycleCallback(willShow: {
+                alert.addListener(LifecycleCallback(willShow: {
                     alreadyPresented = true
                 }, willDismiss: {
                     isPresented = false

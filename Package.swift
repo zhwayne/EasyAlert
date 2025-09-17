@@ -26,6 +26,11 @@ let package = Package(
 //                .product(name: "SnapKit", package: "SnapKit")
 //            ],
             path: "Sources"
+        ),
+        .testTarget(
+            name: "EasyAlertTests",
+            dependencies: ["EasyAlert"],
+            path: "Tests"
         )
     ]
 )
