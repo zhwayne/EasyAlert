@@ -41,7 +41,7 @@ class Proxy: NSObject /* & NSProxy */ {
     }
     
     override func isMember(of aClass: AnyClass) -> Bool {
-        return isMember(of: aClass)
+        return target.isMember(of: aClass)
     }
     
     override func conforms(to aProtocol: Protocol) -> Bool {

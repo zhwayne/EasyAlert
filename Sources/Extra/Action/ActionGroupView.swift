@@ -174,7 +174,7 @@ class ActionGroupView: UIView, AlertContent {
     }
 }
 
-extension ActionGroupView: LiftcycleListener {
+extension ActionGroupView: LifecycleListener {
     
     func willShow() {
         if let customController {

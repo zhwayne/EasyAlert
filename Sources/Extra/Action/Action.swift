@@ -47,7 +47,7 @@ import UIKit
     
     /// 是否可用
     ///
-    /// isEnabled 为 true 时，action view 将无法点击。
+    /// isEnabled 为 false 时，action view 将无法点击。
     public var isEnabled: Bool = true {
         didSet {
             guard let representationView = view?.superview as? ActionCustomViewRepresentationView else {

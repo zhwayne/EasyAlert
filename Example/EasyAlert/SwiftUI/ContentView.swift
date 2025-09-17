@@ -115,7 +115,7 @@ struct MessageAlertSectionView: View {
         let confirm = Action(title: "确定", style: .default)
         let ignore = Action(title: "忽略", style: .destructive)
         alert.addActions([cancel, confirm, ignore])
-        alert.addListener(LiftcycleCallback(willShow: {
+        alert.addListener(LifecycleCallback(willShow: {
           print("Alert will show.")
         }, didShow: {
           print("Alert did show.")
