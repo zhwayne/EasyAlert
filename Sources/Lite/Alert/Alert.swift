@@ -7,38 +7,68 @@
 
 import UIKit
 
-
-/// The base alert.
+/// The base alert class that provides core alert functionality.
+///
+/// `Alert` is the fundamental class for displaying modal dialogs and overlays in your app.
+/// It manages the presentation, animation, and dismissal of alert content with customizable
+/// backdrop, layout, and animation behaviors.
 @MainActor open class Alert: Alertable {
 
+    /// The content to be displayed in the alert.
+    ///
+    /// This can be either a `UIView` or `UIViewController` that provides the alert's content.
     public let alertContent: AlertContent
 
-    /// A Provider that interacts with the backdrop
+    /// The backdrop provider that manages the alert's background appearance and interaction.
+    ///
+    /// The backdrop controls the visual appearance behind the alert and handles user interactions
+    /// with the background area.
     public var backdrop: AlertBackdrop = DefaultAlertBackdropProvider() {
         didSet { configureDimming() }
     }
 
+    /// The animator responsible for showing and dismissing the alert.
+    ///
+    /// This animator controls the transition animations when the alert appears and disappears.
     public var animator: AlertbleAnimator = AlertAnimator()
 
+    /// The layout guide that defines the alert's size constraints.
+    ///
+    /// This guide determines how the alert is sized and positioned within its container.
     public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible)
 
+    /// The layout manager that handles the alert's positioning and sizing.
+    ///
+    /// This layout manager is responsible for calculating and applying the alert's final position.
     public var layout: AlertableLayout = AlertLayout()
 
+    /// A Boolean value indicating whether the alert is currently active and visible.
+    ///
+    /// This property is `true` when the alert is being displayed and `false` when it's dismissed.
     public private(set) var isActive: Bool = false
+    
+    /// The container controller that manages the alert's view hierarchy.
     private lazy var alertContainerController = AlertContainerController(alert: self)
 
+    /// The backdrop view that provides the visual background for the alert.
     private let backdropView = DimmingKnockoutBackdropView()
 
+    /// The dimming view that creates the darkened background effect.
     private let dimmingView = DimmingView()
 
+    /// The tap target that handles background tap gestures.
     private let tapTarget = TapTarget()
 
+    /// The keyboard event monitor that tracks keyboard show/hide events.
     private let keyboardEventMonitor = KeyboardEventMonitor()
 
+    /// The collection of lifecycle listeners that receive alert lifecycle notifications.
     private var lifecycleListeners: [LifecycleListener] = []
 
+    /// The notification token for device orientation changes.
     private var orientationChangeToken: NotificationToken?
 
+    /// The window used to display the alert when no specific hosting view is provided.
     private var window: AlertWindow?
 
     #if DEBUG
@@ -47,6 +77,10 @@ import UIKit
     }
     #endif
 
+    /// Creates an alert with the specified content.
+    ///
+    /// - Parameter content: The content to display in the alert. Must be either a `UIView` or `UIViewController`.
+    /// - Throws: A fatal error if the content type is not supported.
     public init(content: AlertContent) {
         guard content is UIView || content is UIViewController else {
             fatalError("Unsupported type: \(type(of: content))")
@@ -111,10 +145,16 @@ import UIKit
         }
     }
 
+    /// Adds a lifecycle listener to receive alert lifecycle notifications.
+    ///
+    /// - Parameter listener: The listener to add to the alert's lifecycle events.
     public func addListener(_ listener: LifecycleListener) {
         lifecycleListeners.append(listener)
     }
 
+    /// Presents the alert with optional hosting view.
+    ///
+    /// - Parameter hosting: An optional view or view controller to host the alert. If `nil`, the alert will be displayed in a new window.
     public func show(in hosting: AlertHosting? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard !isActive else { return }
@@ -126,28 +166,52 @@ import UIKit
         presentAlert(in: hosting)
     }
 
+    /// Dismisses the alert with an optional completion handler.
+    ///
+    /// - Parameter completion: An optional closure to execute when the dismissal animation completes.
     public func dismiss(completion: (() -> Void)? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard isActive else { return }
         hideAlert(completion: completion)
     }
 
+    /// Dismisses the alert asynchronously.
+    ///
+    /// - Returns: An async operation that completes when the alert is fully dismissed.
     public func dismiss() async {
         await withUnsafeContinuation({ continuation in
             dismiss { continuation.resume() }
         })
     }
 
+    /// Called before the alert is shown.
+    ///
+    /// Override this method to perform any setup before the alert appears.
     open func willShow() { }
 
+    /// Called after the alert is shown.
+    ///
+    /// Override this method to perform any actions after the alert appears.
     open func didShow() { }
 
+    /// Called before the alert is dismissed.
+    ///
+    /// Override this method to perform any cleanup before the alert disappears.
     open func willDismiss() { }
 
+    /// Called after the alert is dismissed.
+    ///
+    /// Override this method to perform any final actions after the alert disappears.
     open func didDismiss() { }
 
+    /// Called before the alert container is laid out.
+    ///
+    /// Override this method to perform any setup before the alert's layout is calculated.
     open func willLayoutContainer() { }
 
+    /// Called after the alert container is laid out.
+    ///
+    /// Override this method to perform any actions after the alert's layout is calculated.
     open func didLayoutContainer() { }
 }
 

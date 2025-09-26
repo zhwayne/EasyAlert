@@ -7,18 +7,34 @@
 
 import UIKit
 
+/// An action sheet that displays a list of actions from which the user can choose.
+///
+/// `ActionSheet` extends the base `Sheet` class to provide action button functionality.
+/// It typically appears as a modal sheet from the bottom of the screen with a list of actions.
 open class ActionSheet: Sheet, ActionAlertable {
 
+    /// The array of all actions available in this action sheet.
+    ///
+    /// This includes both regular actions and cancel actions.
     public var actions: [Action] { actionGroupView.actions + cancelActionGroupView.actions }
 
+    /// The container view that holds all action group views.
     private let containerView = ActionSheet.ContainerView()
 
+    /// The view that manages the group of regular action buttons.
     private let actionGroupView: ActionGroupView
 
+    /// The view that manages the group of cancel action buttons.
     private var cancelActionGroupView: ActionGroupView
 
+    /// The configuration object that defines the action sheet's appearance and behavior.
     private let configuration: ActionAlertableConfigurable
 
+    /// Creates an action sheet with the specified content and configuration.
+    ///
+    /// - Parameters:
+    ///   - content: An optional content to display in the action sheet.
+    ///   - configuration: An optional configuration object. If `nil`, the global configuration is used.
     public init(
         content: AlertContent? = nil,
         configuration: ActionAlertableConfigurable? = nil
@@ -49,6 +65,9 @@ open class ActionSheet: Sheet, ActionAlertable {
         backdrop.allowDismissWhenBackgroundTouch = true
     }
 
+    /// Called before the action sheet container is laid out.
+    ///
+    /// This method configures the action group container and applies corner radius styling.
     open override func willLayoutContainer() {
         super.willLayoutContainer()
         configureActionGroupContainer()
@@ -65,6 +84,11 @@ open class ActionSheet: Sheet, ActionAlertable {
 
 extension ActionSheet {
 
+    /// Sets a custom background view for the specified domain in the action sheet.
+    ///
+    /// - Parameters:
+    ///   - view: The custom view to use as the background.
+    ///   - domain: The domain (normal or cancel) to apply the background to.
     public func setPresentationBackground(view: UIView, for domain: PresentationBackgroundDomain) {
         switch domain {
         case .normal:
@@ -74,6 +98,11 @@ extension ActionSheet {
         }
     }
 
+    /// Sets a solid color background for the specified domain in the action sheet.
+    ///
+    /// - Parameters:
+    ///   - color: The color to use for the background.
+    ///   - domain: The domain (normal or cancel) to apply the background to.
     public func setPresentationBackground(color: UIColor, for domain: PresentationBackgroundDomain) {
         let view = UIView()
         view.backgroundColor = color

@@ -7,29 +7,37 @@
 
 import UIKit
 
-/// 自定义 action view 基础协议
+/// A protocol that defines the interface for custom action views.
+///
+/// `ActionContent` provides the basic interface that custom action views must implement
+/// to work with the EasyAlert framework. It defines properties for title, highlighting,
+/// enabling, and styling of action buttons.
 @MainActor public protocol ActionContent: Dismissible {
 
-    /// action 标题
+    /// The title text displayed on the action button.
     var title: String? { get set }
 
-    /// action 是否为高亮，即按压状态。
+    /// A Boolean value indicating whether the action is currently highlighted.
     ///
-    /// 开发者可以自行根据此状态更新 UI 风格。
+    /// This property is typically set to `true` when the user is pressing the action button.
+    /// Developers can use this state to update the UI appearance accordingly.
     var isHighlighted: Bool { get set }
 
-    /// action 是否为可用。
+    /// A Boolean value indicating whether the action is enabled.
     ///
-    /// 开发者可以自行根据此状态更新 UI 风格。
+    /// When `false`, the action button should appear disabled and not respond to user interaction.
+    /// Developers can use this state to update the UI appearance accordingly.
     var isEnabled: Bool { get set }
 
-    /// action 的风格
+    /// The visual style of the action.
     var style: Action.Style { get }
 
+    /// The view that represents this action in the user interface.
     var view: UIView { get }
 }
 
 extension ActionContent where Self: UIView {
 
+    /// Returns the view itself when the conforming type is a `UIView`.
     public var view: UIView { self }
 }

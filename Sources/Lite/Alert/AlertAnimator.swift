@@ -7,8 +7,17 @@
 
 import UIKit
 
+/// An animator that provides standard show and dismiss animations for alerts.
+///
+/// `AlertAnimator` implements the `AlertbleAnimator` protocol to provide
+/// smooth, spring-based animations for alert presentation and dismissal.
 internal struct AlertAnimator: AlertbleAnimator {
 
+    /// Animates the presentation of the alert.
+    ///
+    /// - Parameters:
+    ///   - context: The layout context containing the views to animate.
+    ///   - completion: A closure to execute when the animation completes.
     func show(context: LayoutContext, completion: @escaping () -> Void) {
         context.presentedView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         context.presentedView.alpha = 0
@@ -23,6 +32,11 @@ internal struct AlertAnimator: AlertbleAnimator {
         }
     }
 
+    /// Animates the dismissal of the alert.
+    ///
+    /// - Parameters:
+    ///   - context: The layout context containing the views to animate.
+    ///   - completion: A closure to execute when the animation completes.
     func dismiss(context: LayoutContext, completion: @escaping () -> Void) {
         withSpringTimingAnimation {
             context.presentedView.alpha = 0

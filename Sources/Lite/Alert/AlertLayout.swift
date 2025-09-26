@@ -7,10 +7,20 @@
 
 import UIKit
 
+/// A layout manager that handles the positioning and sizing of alert views.
+///
+/// `AlertLayout` implements the `AlertableLayout` protocol to provide standard
+/// layout behavior for alerts, including width, height, and positioning constraints.
 final class AlertLayout: AlertableLayout {
 
+    /// The array of active layout constraints.
     private var constraints: [NSLayoutConstraint] = []
 
+    /// Updates the layout of the alert based on the provided context and layout guide.
+    ///
+    /// - Parameters:
+    ///   - context: The layout context containing views and layout information.
+    ///   - layoutGuide: The layout guide that defines size and positioning constraints.
     func updateLayout(context: LayoutContext, layoutGuide: LayoutGuide) {
 
         NSLayoutConstraint.deactivate(constraints)
