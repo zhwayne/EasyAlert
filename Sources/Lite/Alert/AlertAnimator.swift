@@ -7,8 +7,8 @@
 
 import UIKit
 
-struct AlertAnimator : AlertbleAnimator {
-    
+internal struct AlertAnimator: AlertbleAnimator {
+
     func show(context: LayoutContext, completion: @escaping () -> Void) {
         context.presentedView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         context.presentedView.alpha = 0
@@ -22,7 +22,7 @@ struct AlertAnimator : AlertbleAnimator {
             completion()
         }
     }
-    
+
     func dismiss(context: LayoutContext, completion: @escaping () -> Void) {
         withSpringTimingAnimation {
             context.presentedView.alpha = 0

@@ -8,15 +8,15 @@
 import UIKit
 
 final class ToastAlert: Alert {
-    
+
     class ContentView: UIView, AlertContent {
-        
+
         let label = UILabel()
         let indicator = UIActivityIndicatorView(style: .medium)
-        
+
         override init(frame: CGRect) {
             super.init(frame: frame)
-            
+
             layer.shadowColor = UIColor.black.cgColor
             layer.shadowOffset = CGSize(width: 0, height: 2)
             layer.shadowOpacity = 0.1
@@ -39,49 +39,49 @@ final class ToastAlert: Alert {
             effectView.contentView.backgroundColor = UIColor(white: 0, alpha: 0.2)
             effectView.layer.cornerCurve = .continuous
             addSubview(effectView)
-            
+
             label.numberOfLines = 0
             label.setContentCompressionResistancePriority(.required, for: .horizontal)
-            
+
             indicator.isHidden = true
             indicator.setContentHuggingPriority(.required, for: .horizontal)
-            
+
             let stackView = UIStackView(arrangedSubviews: [indicator, label])
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.spacing = 8
             stackView.alignment = .center
             addSubview(stackView)
-            
+
             stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 12).isActive = true
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 12).isActive = true
             stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -12).isActive = true
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12).isActive = true
         }
-        
+
         required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
     }
-    
+
     var rawCustomView: ContentView { alertContent as! ContentView }
-    
+
     public required init(message: Message) {
         let contentView = ContentView()
         super.init(content: contentView)
         contentView.label.attributedText = Toast.text(for: message)
-        
+
         animator = ToastAnimator()
         layout = ToastLayout()
         backdrop.dimming = .color(.clear)
         backdrop.interactionScope = .all
-        
+
         layoutGuide = LayoutGuide(
             width: .flexible,
             height: .flexible,
             contentInsets: UIEdgeInsets(top: 0, left: 36, bottom: 0, right: 36)
         )
     }
-    
+
     override func willShow() {
         super.willShow()
         if let window = rawCustomView.window {
@@ -91,7 +91,7 @@ final class ToastAlert: Alert {
             rawCustomView.indicator.startAnimating()
         }
     }
-    
+
     override func didDismiss() {
         super.didDismiss()
         rawCustomView.indicator.stopAnimating()
@@ -99,7 +99,7 @@ final class ToastAlert: Alert {
 }
 
 extension Toast {
-    
+
     static func text(for message: Message?) -> NSAttributedString? {
         if let text = message as? String {
             return attributedMessage(text)
@@ -112,10 +112,10 @@ extension Toast {
 }
 
 extension Toast {
-    
+
     static private var messageAttributes: [NSAttributedString.Key: Any] {
         var attributes: [NSAttributedString.Key: Any] = [:]
-        
+
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 4
         paragraphStyle.alignment = .center
@@ -125,7 +125,7 @@ extension Toast {
         attributes[.paragraphStyle] = paragraphStyle.copy()
         return attributes
     }
-    
+
     static func attributedMessage(_ message: String) -> NSAttributedString {
         let range = NSMakeRange(0, message.count)
         let attributedMessage = NSMutableAttributedString(string: message)

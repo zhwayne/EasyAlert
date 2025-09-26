@@ -8,11 +8,11 @@
 import UIKit
 
 @MainActor public struct Toast {
-    
+
     private static var alert: ToastAlert?
-    
+
     private static var dismissWork: DispatchWorkItem?
-    
+
     private static func dismissAfter(duration: TimeInterval) {
         dismissWork = DispatchWorkItem(qos: .userInteractive, block: {
             Self.alert?.dismiss()
@@ -24,12 +24,12 @@ import UIKit
 }
 
 extension Toast {
-    
+
     private static func duration(of text: String) -> TimeInterval {
         // 5 个字以内显示时长固定位 1.5 秒
         let threshold = 5
         let minimumDuratuon: TimeInterval = 1.5
-        
+
         if text.count <= threshold { return minimumDuratuon }
         let leftTextLen = text.count - threshold
         let extDuration = Double(leftTextLen) * 0.14
@@ -38,14 +38,14 @@ extension Toast {
 }
 
 extension Toast {
-    
+
     public enum Position {
         case center, bottom
     }
 }
 
 extension Toast {
-    
+
     public static func show(
         _ message: Message,
         duration: TimeInterval? = nil,
@@ -53,22 +53,22 @@ extension Toast {
         interactionScope: BackdropInteractionScope = .all
     ) {
         guard let string = Toast.text(for: message)?.string else { return }
-        
+
         if dismissWork != nil {
             dismissWork?.cancel()
             dismissWork = nil
         }
-        
+
         if let alert = alert {
             alert.rawCustomView.label.attributedText = Toast.text(for: message)
         } else {
             alert = ToastAlert(message: message)
         }
-        
+
         if let layoutModifier = alert?.layout as? ToastLayout {
             layoutModifier.position = position
         }
-        
+
         let parameters = UISpringTimingParameters()
         let animator = UIViewPropertyAnimator(duration: 1.0, timingParameters: parameters)
         animator.addAnimations {
@@ -76,7 +76,7 @@ extension Toast {
             alert?.rawCustomView.indicator.alpha = duration == .infinity ? 1 : 0
         }
         animator.startAnimation()
-        
+
         alert?.backdrop.interactionScope = interactionScope
         if !alert!.isActive {
             alert?.show()
@@ -88,20 +88,20 @@ extension Toast {
             }
             animator.startAnimation()
         }
-        
+
         if let duration, duration >= 0.5 {
             dismissAfter(duration: duration)
         } else {
             dismissAfter(duration: Toast.duration(of: string))
         }
     }
-    
+
     public static func dismiss() async {
         if let alert = alert {
             await alert.dismiss()
         }
     }
-    
+
     public static func dismiss(completion: (() -> Void)? = nil) {
         if let alert = alert {
             alert.dismiss(completion: completion)

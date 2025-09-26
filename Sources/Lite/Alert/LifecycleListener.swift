@@ -8,61 +8,61 @@
 import Foundation
 
 @MainActor public protocol LifecycleListener {
-    
+
     func willShow()
-    
+
     func didShow()
-    
+
     func willDismiss()
-    
+
     func didDismiss()
 }
 
 extension LifecycleListener {
-    
+
     public func willShow() { }
-    
+
     public func didShow() { }
-    
+
     public func willDismiss() { }
-    
+
     public func didDismiss() { }
 }
 
 public struct LifecycleCallback: LifecycleListener {
-    
-    public typealias Handler = () -> Void
-    
-    let willShowHandler: Handler?
-    
-    let didShowHandler: Handler?
-    
-    let willDismissHandler: Handler?
-    
-    let didDismissHandler: Handler?
-    
-    public init(willShow: Handler? = nil,
-                didShow: Handler? = nil,
-                willDismiss: Handler? = nil,
-                didDismiss: Handler? = nil) {
+
+    public typealias LifecycleHandler = () -> Void
+
+    let willShowHandler: LifecycleHandler?
+
+    let didShowHandler: LifecycleHandler?
+
+    let willDismissHandler: LifecycleHandler?
+
+    let didDismissHandler: LifecycleHandler?
+
+    public init(willShow: LifecycleHandler? = nil,
+                didShow: LifecycleHandler? = nil,
+                willDismiss: LifecycleHandler? = nil,
+                didDismiss: LifecycleHandler? = nil) {
         self.willShowHandler = willShow
         self.didShowHandler = didShow
         self.willDismissHandler = willDismiss
         self.didDismissHandler = didDismiss
     }
-    
+
     public func willShow() {
         willShowHandler?()
     }
-    
+
     public func didShow() {
         didShowHandler?()
     }
-    
+
     public func willDismiss() {
         willDismissHandler?()
     }
-    
+
     public func didDismiss() {
         didDismissHandler?()
     }

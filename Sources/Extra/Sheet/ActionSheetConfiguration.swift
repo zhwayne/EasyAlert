@@ -8,7 +8,7 @@
 import UIKit
 
 extension ActionSheet {
-    
+
     @MainActor public struct Configuration: ActionAlertableConfigurable {
 
         public var layoutGuide: LayoutGuide = .init(
@@ -18,19 +18,19 @@ extension ActionSheet {
         )
 
         public var cornerRadius: CGFloat = 13
-        
+
         public var cancelSpacing: CGFloat = 8
-        
+
         public var makeActionView: (Action.Style) -> (UIView & ActionContent) = { style in
             ActionView(style: style)
         }
-        
+
         public var makeActionLayout: () -> any ActionLayout = {
             SheetActionLayout()
         }
-                        
+
         init() { }
-        
+
         public static var global = Configuration()
     }
 }

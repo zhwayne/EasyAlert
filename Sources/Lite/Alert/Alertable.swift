@@ -13,11 +13,11 @@ extension UIView: AlertHosting { }
 
 extension UIViewController: AlertHosting { }
 
-@MainActor public protocol Alertable : Dismissible {
-    
+@MainActor public protocol Alertable: Dismissible {
+
     /// A value that marks whether an alert is being displayed.
     var isActive: Bool { get }
-    
+
     /// Show alert in the container.
     /// - Parameter container: An instance of a `UIView` or `UIViewController` that implements the
     /// `AlertHosting`.
@@ -25,9 +25,9 @@ extension UIViewController: AlertHosting { }
 }
 
 extension AlertHosting {
-    
+
     // MARK: - Associated Objects
-    
+
     private var alerts: [Alertable] {
         get {
             if let alerts = objc_getAssociatedObject(self, AssociatedKey.alerts) as? [Alertable] {
@@ -40,9 +40,9 @@ extension AlertHosting {
             objc_setAssociatedObject(self, AssociatedKey.alerts, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
-    
+
     // MARK: - Public Methods
-    
+
     /// Attach an alert to the view.
     /// - Parameter alert: The alert to be attached.
     func attach(alert: Alertable) {
@@ -51,7 +51,7 @@ extension AlertHosting {
         }
         alerts.append(alert)
     }
-    
+
     /// Detach an alert from the view.
     /// - Parameter alert: The alert to be detached.
     func detach(alert: Alertable) {
@@ -63,5 +63,5 @@ extension AlertHosting {
 
 @MainActor
 fileprivate struct AssociatedKey {
-    static var alerts = malloc(1)!
+    static var alerts = "EasyAlert.alerts"
 }

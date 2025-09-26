@@ -8,7 +8,7 @@
 import UIKit
 
 public final class MessageAlert: ActionAlert {
-    
+
     public var title: String? {
         contentView.titleLabel.attributedText?.string
     }
@@ -47,12 +47,12 @@ public final class MessageAlert: ActionAlert {
         let configuration = (configuration as? MessageAlert.Configuration) ?? MessageAlert.Configuration.global
         self.titleConfiguration =  configuration.titleConfiguration
         self.messageConfiguration = configuration.messageConfiguration
-        
+
         contentView = ContentView()
         super.init(content: contentView, configuration: configuration)
         layoutGuide = configuration.layoutGuide
-        
-        configAttributes()
+
+        configureAttributes()
         contentView.titleLabel.attributedText = text(for: title)
         contentView.messageLabel.attributedText = text(for: message)
     }
@@ -61,8 +61,8 @@ public final class MessageAlert: ActionAlert {
     public required init(content: AlertContent, configuration: ActionAlertableConfigurable? = nil) {
         fatalError("init(customizable:configuration:) has not been implemented")
     }
-    
-    private func configAttributes() {
+
+    private func configureAttributes() {
         contentView.titleLabel.textAlignment = titleConfiguration.alignment
         contentView.titleLabel.textColor = titleConfiguration.color
         contentView.titleLabel.font = titleConfiguration.font

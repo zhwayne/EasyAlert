@@ -8,7 +8,7 @@
 import UIKit
 
 open class Sheet: Alert {
-    
+
     public override init(content: AlertContent) {
         super.init(content: content)
         self.animator = SheetAnimator()

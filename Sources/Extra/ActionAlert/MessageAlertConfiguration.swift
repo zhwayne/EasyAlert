@@ -8,19 +8,19 @@
 import UIKit
 
 extension MessageAlert {
-    
-    @MainActor public struct Configuration: ActionAlertableConfigurable  {
-        
+
+    @MainActor public struct Configuration: ActionAlertableConfigurable {
+
         public var layoutGuide: LayoutGuide {
             get { actionAlertConfiguration.layoutGuide }
             set { actionAlertConfiguration.layoutGuide = newValue }
         }
-        
+
         public var cornerRadius: CGFloat {
             get { actionAlertConfiguration.cornerRadius }
             set { actionAlertConfiguration.cornerRadius = newValue }
         }
-        
+
         public var makeActionView: (Action.Style) -> (UIView & ActionContent) {
             get { actionAlertConfiguration.makeActionView }
             set { actionAlertConfiguration.makeActionView = newValue }
@@ -32,16 +32,16 @@ extension MessageAlert {
         }
 
         private var actionAlertConfiguration: ActionAlert.Configuration
-        
+
         public var titleConfiguration = TitleConfiguration()
-        
+
         public var messageConfiguration = MessageConfiguration()
-        
+
         init(_ actionAlertConfiguration: ActionAlert.Configuration? = nil) {
             self.actionAlertConfiguration = actionAlertConfiguration ?? ActionAlert.Configuration.global
             self.actionAlertConfiguration.layoutGuide.width = .fixed(270)
         }
-        
+
         public static var global = Configuration()
     }
 }
@@ -51,30 +51,30 @@ private var defaultTextColor: UIColor {
 }
 
 extension MessageAlert {
-    
+
     public struct TitleConfiguration {
-        
+
         public var alignment: NSTextAlignment = .center
-        
+
         public var font: UIFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        
+
         public var color: UIColor = defaultTextColor
-        
+
         public init() {}
     }
 }
 
 
 extension MessageAlert {
-    
+
     public struct MessageConfiguration {
-        
+
         public var alignment: NSTextAlignment = .center
-        
+
         public var font: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular)
-        
+
         public var color: UIColor = defaultTextColor
-        
+
         public init() {}
     }
 }

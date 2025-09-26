@@ -8,13 +8,13 @@
 import UIKit
 
 open class ActionAlert: Alert, ActionAlertable {
-    
+
     public var actions: [Action] { actionGroupView.actions }
-    
+
     private let actionGroupView: ActionGroupView
-    
+
     private let configuration: ActionAlertableConfigurable
-    
+
     public required init(
         content: AlertContent,
         configuration: ActionAlertableConfigurable? = nil
@@ -24,9 +24,9 @@ open class ActionAlert: Alert, ActionAlertable {
         actionGroupView = ActionGroupView(content: content, actionLayout: actionLayout)
         super.init(content: actionGroupView)
         addListener(actionGroupView)
-        
+
         layoutGuide = self.configuration.layoutGuide
-        
+
         let decorator = ActionGroupAnimatorAndLayoutDecorator(
             aniamtor: AlertAnimator(),
             layoutModifier: AlertLayout(),
@@ -35,7 +35,7 @@ open class ActionAlert: Alert, ActionAlertable {
         self.animator = decorator
         self.layout = decorator
     }
-    
+
     open override func willLayoutContainer() {
         super.willLayoutContainer()
         actionGroupView.setCornerRadius(configuration.cornerRadius)
@@ -43,11 +43,11 @@ open class ActionAlert: Alert, ActionAlertable {
 }
 
 extension ActionAlert {
-    
+
     public func setPresentationBackground(view: UIView) {
         actionGroupView.backgroundView = view
     }
-    
+
     public func setPresentationBackground(color: UIColor) {
         let view = UIView()
         view.backgroundColor = color
@@ -56,13 +56,13 @@ extension ActionAlert {
 }
 
 extension ActionAlert {
-    
+
     public func addAction(_ action: Action) {
         guard canAddAction(action) else { return }
-        
+
         actionGroupView.actions.append(action)
         setViewForAction(action)
-        
+
         if let index = cancelActionIndex {
             let cancelAction = actionGroupView.actions.remove(at: index)
             // action 数量为 1 时，将 cancelAction 放置在第一个，否则放在最后一个。
@@ -73,7 +73,7 @@ extension ActionAlert {
             }
         }
     }
-    
+
     private func setViewForAction(_ action: Action) {
         if action.view == nil {
             action.view = configuration.makeActionView(action.style)

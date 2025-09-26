@@ -7,14 +7,14 @@
 
 import UIKit
 
-struct SheetActionLayout: ActionLayout {
-    
+internal struct SheetActionLayout: ActionLayout {
+
     var prefersSeparatorHidden: Bool { false }
-    
+
     private let stackView: UIStackView
-    
+
     private var constraints: [NSLayoutConstraint] = []
-        
+
     init() {
         stackView = UIStackView()
         stackView.axis = .vertical
@@ -24,24 +24,24 @@ struct SheetActionLayout: ActionLayout {
     }
 
     mutating func layout(views: [UIView], container: UIView) {
-        
+
         guard let container = container as? ActionSeparatableSequenceView else {
             return
         }
-        
+
         NSLayoutConstraint.deactivate(constraints)
         constraints.removeAll()
         defer { NSLayoutConstraint.activate(constraints) }
-        
+
         stackView.subviews.forEach { $0.removeFromSuperview() }
         views.forEach { stackView.addArrangedSubview($0) }
         container.addSubview(stackView)
-       
+
         constraints.append(stackView.topAnchor.constraint(equalTo: container.topAnchor))
         constraints.append(stackView.leftAnchor.constraint(equalTo: container.leftAnchor))
         constraints.append(stackView.bottomAnchor.constraint(equalTo: container.bottomAnchor))
         constraints.append(stackView.rightAnchor.constraint(equalTo: container.rightAnchor))
-        
+
         views.enumerated().forEach { (idx, button) in
             if idx == 0 { return }
             let separator = container.horizontalSeparator(at: idx - 1)

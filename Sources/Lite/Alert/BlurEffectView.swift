@@ -9,9 +9,9 @@ import UIKit
 
 @objcMembers
 open class BlurEffectView: UIVisualEffectView {
-    
+
     private let blurEffect = (NSClassFromString("_UICustomBlurEffect") as! UIBlurEffect.Type).init()
-    
+
     open var colorTint: UIColor? {
         get {
             return sourceOver?.value(forKeyPath: "color") as? UIColor
@@ -29,7 +29,7 @@ open class BlurEffectView: UIVisualEffectView {
         get { return _value(forKey: .colorTintAlpha) ?? 0.0 }
         set { colorTint = colorTint?.withAlphaComponent(newValue) }
     }
-    
+
     open var blurRadius: CGFloat {
         get {
             return gaussianBlur?.requestedValues?["inputRadius"] as? CGFloat ?? 0
@@ -40,42 +40,42 @@ open class BlurEffectView: UIVisualEffectView {
             applyChanges()
         }
     }
-    
+
     open var scale: CGFloat {
         get { return _value(forKey: .scale) ?? 1.0 }
         set { _setValue(newValue, forKey: .scale) }
     }
-    
+
     public override init(effect: UIVisualEffect?) {
         super.init(effect: effect)
-        
+
         scale = 1
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+
         scale = 1
     }
-    
+
 }
 
 private extension BlurEffectView {
-    
+
     /// Returns the value for the key on the blurEffect.
     func _value<T>(forKey key: Key) -> T? {
         return blurEffect.value(forKeyPath: key.rawValue) as? T
     }
-    
+
     /// Sets the value for the key on the blurEffect.
     func _setValue<T>(_ value: T?, forKey key: Key) {
         blurEffect.setValue(value, forKeyPath: key.rawValue)
     }
-    
+
     enum Key: String {
         case colorTint, colorTintAlpha, blurRadius, scale
     }
-    
+
 }
 
 extension UIVisualEffectView {

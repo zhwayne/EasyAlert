@@ -8,18 +8,18 @@
 import UIKit
 
 final class ToastLayout: AlertableLayout {
-    
+
     var position: Toast.Position = .bottom
     private var constraints: [NSLayoutConstraint] = []
-    
+
     func updateLayout(context: LayoutContext, layoutGuide: LayoutGuide) {
-        
+
         NSLayoutConstraint.deactivate(constraints)
 
         defer {
             NSLayoutConstraint.activate(constraints)
         }
-        
+
         let edgeInsets = layoutGuide.contentInsets
         let presentedView = context.presentedView
         let containerView = context.containerView
@@ -29,11 +29,11 @@ final class ToastLayout: AlertableLayout {
         case let .fixed(value):
             let width = value - (edgeInsets.left + edgeInsets.right)
             constraints.append(presentedView.widthAnchor.constraint(equalToConstant: width))
-            
+
         case .flexible:
             let width = min(containerView.bounds.width, containerView.bounds.height) - (edgeInsets.left + edgeInsets.right)
             constraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: width))
-            
+
         case let .multiplied(value, maxWidth):
             let constant = -(edgeInsets.left + edgeInsets.right)
             let multiplierConstraint = presentedView.widthAnchor.constraint(
@@ -47,25 +47,25 @@ final class ToastLayout: AlertableLayout {
                 constraints.append(maxWidthConstraint)
             }
         }
-        
+
         // layout guide height.
         switch layoutGuide.height {
         case let .fixed(value):
             let height = value - (edgeInsets.top + edgeInsets.bottom)
             let constraint = presentedView.heightAnchor.constraint(equalToConstant: height)
             constraints.append(constraint)
-            
+
         case .flexible:
             let height = containerView.bounds.height - (edgeInsets.top + edgeInsets.bottom)
             let constraint = presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: height)
             constraints.append(constraint)
-            
+
         case let .greaterThanOrEqualTo(value):
             let height = value - (edgeInsets.top + edgeInsets.bottom)
             let constraint = presentedView.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
             constraints.append(constraint)
         }
-        
+
         switch position {
         case .center:
             let constraint = presentedView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
@@ -81,7 +81,7 @@ final class ToastLayout: AlertableLayout {
                 equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom - bottomOffset)
             constraints.append(constraint)
         }
-        
+
         constraints.append(presentedView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor))
     }
 }

@@ -10,51 +10,50 @@ import UIKit
 
 /// The base alert.
 @MainActor open class Alert: Alertable {
-    
+
     public let alertContent: AlertContent
-    
+
     /// A Provider that interacts with the backdrop
     public var backdrop: AlertBackdrop = DefaultAlertBackdropProvider() {
-        didSet { configDimming() }
+        didSet { configureDimming() }
     }
-    
+
     public var animator: AlertbleAnimator = AlertAnimator()
-    
+
     public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible)
-    
+
     public var layout: AlertableLayout = AlertLayout()
-    
+
     public private(set) var isActive: Bool = false
-        
     private lazy var alertContainerController = AlertContainerController(alert: self)
-    
+
     private let backdropView = DimmingKnockoutBackdropView()
-    
+
     private let dimmingView = DimmingView()
-    
+
     private let tapTarget = TapTarget()
-    
+
     private let keyboardEventMonitor = KeyboardEventMonitor()
-    
+
     private var lifecycleListeners: [LifecycleListener] = []
-    
+
     private var orientationChangeToken: NotificationToken?
-    
+
     private var window: AlertWindow?
-    
+
     #if DEBUG
     deinit {
         print("deinit \(self)")
     }
     #endif
-    
+
     public init(content: AlertContent) {
         guard content is UIView || content is UIViewController else {
             fatalError("Unsupported type: \(type(of: content))")
         }
         self.alertContent = content
     }
-    
+
     private func observeDeviceRotation() {
         if !UIDevice.current.isGeneratingDeviceOrientationNotifications {
             UIDevice.current.beginGeneratingDeviceOrientationNotifications()
@@ -67,19 +66,19 @@ import UIKit
                 updateLayout()
             })
     }
-    
+
     private func observeKeyboardEvent() {
         keyboardEventMonitor.keyboardWillShow = { [weak self] info in
             guard let self, isActive else { return }
             // TODO: 处理键盘事件
         }
-        keyboardEventMonitor.keyboardWillHidden = { [weak self] info in
+        keyboardEventMonitor.keyboardWillHide = { [weak self] info in
             guard let self, isActive else { return }
             // TODO: 处理键盘事件
         }
     }
-    
-    private func configBackdrop() {
+
+    private func configureBackdrop() {
         backdropView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backdropView.addGestureRecognizer(tapTarget.tapGestureRecognizer)
         backdropView.hitTest = { [unowned self] view, point in
@@ -96,7 +95,7 @@ import UIKit
                 self?.dismiss()
             }
         }
-        
+
         tapTarget.gestureRecognizerShouldBeginBlock = { [unowned self] gestureRecognizer in
             guard let backgroundView = gestureRecognizer.view else { return false }
             let point = gestureRecognizer.location(in: backgroundView)
@@ -111,49 +110,49 @@ import UIKit
             }
         }
     }
-    
+
     public func addListener(_ listener: LifecycleListener) {
         lifecycleListeners.append(listener)
     }
-    
+
     public func show(in hosting: AlertHosting? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard !isActive else { return }
         observeKeyboardEvent()
         observeDeviceRotation()
-        configBackdrop()
-        configDimming()
-        configContainer()
-        showAlert(in: hosting)
+        configureBackdrop()
+        configureDimming()
+        configureContainer()
+        presentAlert(in: hosting)
     }
-    
+
     public func dismiss(completion: (() -> Void)? = nil) {
         Dispatch.dispatchPrecondition(condition: .onQueue(.main))
         guard isActive else { return }
-        dismissAlert(completion: completion)
+        hideAlert(completion: completion)
     }
-    
+
     public func dismiss() async {
         await withUnsafeContinuation({ continuation in
             dismiss { continuation.resume() }
         })
     }
-    
+
     open func willShow() { }
-    
+
     open func didShow() { }
-    
+
     open func willDismiss() { }
-    
+
     open func didDismiss() { }
-    
+
     open func willLayoutContainer() { }
-    
+
     open func didLayoutContainer() { }
 }
 
 extension Alert {
-    
+
     private func setupWindow() {
         if window == nil, let windowScene = UIApplication.shared.activeWindowScene {
             window = AlertWindow(windowScene: windowScene)
@@ -171,8 +170,8 @@ extension Alert {
         window?.windowLevel = .alert - 1
         window?.isHidden = false
     }
-    
-    private func configDimming() {
+
+    private func configureDimming() {
         switch backdrop.dimming {
         case let .color(color): dimmingView.backgroundColor = color
         case let .view(view):   dimmingView.contentView = view
@@ -187,14 +186,14 @@ extension Alert {
         dimmingView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backdropView.insertSubview(dimmingView, at: 0)
     }
-    
-    private func configContainer() {
+
+    private func configureContainer() {
         backdropView.addSubview(alertContainerController.view)
         NSLayoutConstraint.activate([
             alertContainerController.view.widthAnchor.constraint(lessThanOrEqualTo: backdropView.widthAnchor),
             alertContainerController.view.heightAnchor.constraint(lessThanOrEqualTo: backdropView.heightAnchor)
         ])
-        
+
         // Add view or viewController
         if let view = alertContent as? UIView {
             alertContainerController.view.addSubview(view)
@@ -207,7 +206,7 @@ extension Alert {
             layoutFill(viewController.view)
         }
     }
-    
+
     private func layoutFill(_ view: UIView) {
         guard let superview = view.superview else {
             fatalError()
@@ -218,7 +217,7 @@ extension Alert {
         view.bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
         view.rightAnchor.constraint(equalTo: superview.rightAnchor).isActive = true
     }
-    
+
     public func updateLayout() {
         willLayoutContainer()
         UIView.performWithoutAnimation { [self] in
@@ -226,7 +225,7 @@ extension Alert {
         }
         didLayoutContainer()
     }
-    
+
     private func performShowWithAnimation() {
         isActive = true
         willShow()
@@ -234,7 +233,7 @@ extension Alert {
         if let viewController = alertContent as? UIViewController {
             viewController.beginAppearanceTransition(true, animated: true)
         }
-        
+
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
         animator.show(context: layoutContext) { [weak self] in
@@ -247,48 +246,48 @@ extension Alert {
             }
         }
     }
-    
-    private func _showAlert(in view: UIView) {
+
+    private func _presentAlert(in view: UIView) {
         backdropView.frame = view.bounds
         view.addSubview(backdropView)
         updateLayout()
         performShowWithAnimation()
     }
-    
-    private func _showAlert(in viewController: UIViewController) {
+
+    private func _presentAlert(in viewController: UIViewController) {
         backdropView.frame = viewController.view.bounds
         viewController.view.addSubview(backdropView)
         updateLayout()
         performShowWithAnimation()
     }
-    
-    private func showAlert(in parent: AlertHosting?) {
+
+    private func presentAlert(in parent: AlertHosting?) {
         if let view = parent as? UIView {
             view.attach(alert: self)
-            _showAlert(in: view)
+            _presentAlert(in: view)
         } else if let viewController = parent as? UIViewController {
             viewController.view.attach(alert: self)
-            _showAlert(in: viewController)
+            _presentAlert(in: viewController)
         } else {
             setupWindow()
             if let viewController = window?.rootViewController {
                 window?.attach(alert: self)
-                _showAlert(in: viewController)
+                _presentAlert(in: viewController)
             }
         }
     }
 }
 
 extension Alert {
-    
-    private func dismissAlert(completion: (() -> Void)?) {
+
+    private func hideAlert(completion: (() -> Void)?) {
         isActive = false
         willDismiss()
         lifecycleListeners.forEach { $0.willDismiss() }
         if let viewController = alertContent as? UIViewController {
             viewController.beginAppearanceTransition(false, animated: true)
         }
-        
+
         alertContainerController.view.isUserInteractionEnabled = false
         tapTarget.tapGestureRecognizer.isEnabled = false
         animator.dismiss(context: layoutContext) { [weak self] in
@@ -303,7 +302,7 @@ extension Alert {
             self?.tapTarget.tapGestureRecognizer.isEnabled = true
         }
     }
-    
+
     private func clean() {
         if let view = alertContent as? UIView {
             view.removeFromSuperview()
@@ -323,7 +322,7 @@ extension Alert {
 }
 
 extension Alert {
-    
+
     private var interfaceOrientation: UIInterfaceOrientation {
         let windowScene = UIApplication.shared.activeWindowScene
         guard let interfaceOrientation = windowScene?.interfaceOrientation else {
@@ -331,7 +330,7 @@ extension Alert {
         }
         return interfaceOrientation
     }
-    
+
     private var layoutContext: LayoutContext {
         LayoutContext(
             containerView: backdropView,
@@ -343,7 +342,7 @@ extension Alert {
 }
 
 extension UIApplication {
-    
+
     var activeWindowScene: UIWindowScene? {
         let windowScenes = connectedScenes.compactMap { $0 as? UIWindowScene }
         return windowScenes.first { $0.activationState == .foregroundActive }
@@ -351,7 +350,7 @@ extension UIApplication {
 }
 
 extension UIWindowScene {
-    
+
     var keyWindowBacked: UIWindow? {
         if #available(iOS 15.0, *) {
             return self.keyWindow

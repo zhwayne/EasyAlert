@@ -7,41 +7,41 @@
 
 import UIKit
 
-struct AlertActionLayout: ActionLayout {
-    
+internal struct AlertActionLayout: ActionLayout {
+
     var prefersSeparatorHidden: Bool { false }
-    
+
     private let stackView: UIStackView
-    
+
     private var constraints: [NSLayoutConstraint] = []
-    
+
     init() {
         stackView = UIStackView()
         stackView.distribution = .fillEqually
         stackView.spacing = 1 / UIScreen.main.scale
         stackView.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     mutating func layout(views: [UIView], container: UIView) {
-        
+
         guard let container = container as? ActionSeparatableSequenceView else {
             return
         }
-        
+
         NSLayoutConstraint.deactivate(constraints)
         constraints.removeAll()
         defer { NSLayoutConstraint.activate(constraints) }
-        
+
         stackView.subviews.forEach { $0.removeFromSuperview() }
         views.forEach { stackView.addArrangedSubview($0) }
         stackView.axis = views.count <= 2 ? .horizontal : .vertical
         container.addSubview(stackView)
-        
+
         constraints.append(stackView.topAnchor.constraint(equalTo: container.topAnchor))
         constraints.append(stackView.leftAnchor.constraint(equalTo: container.leftAnchor))
         constraints.append(stackView.bottomAnchor.constraint(equalTo: container.bottomAnchor))
         constraints.append(stackView.rightAnchor.constraint(equalTo: container.rightAnchor))
-        
+
         if views.count == 2 {
             let separator = container.verticalSeparator(at: 0)
             stackView.addSubview(separator)
