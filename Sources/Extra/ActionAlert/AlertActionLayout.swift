@@ -7,14 +7,28 @@
 
 import UIKit
 
+/// A layout implementation that arranges action buttons in a stack view.
+///
+/// `AlertActionLayout` provides a standard layout for action buttons using a `UIStackView`.
+/// It supports both horizontal and vertical arrangements based on the number of actions,
+/// with proper separators between buttons.
 internal struct AlertActionLayout: ActionLayout {
 
+    /// A Boolean value that determines whether separators between actions should be hidden.
+    ///
+    /// This layout always shows separators between action buttons for visual clarity.
     var prefersSeparatorHidden: Bool { false }
 
+    /// The stack view that manages the arrangement of action buttons.
     private let stackView: UIStackView
 
+    /// An array of active layout constraints for the stack view and separators.
     private var constraints: [NSLayoutConstraint] = []
 
+    /// Creates a new alert action layout with default configuration.
+    ///
+    /// This initializer sets up the stack view with equal distribution and
+    /// appropriate spacing for action buttons.
     init() {
         stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -22,6 +36,16 @@ internal struct AlertActionLayout: ActionLayout {
         stackView.translatesAutoresizingMaskIntoConstraints = false
     }
 
+    /// Lays out the specified views within the given container.
+    ///
+    /// This method arranges the action button views in a stack view with appropriate
+    /// separators. For 2 or fewer actions, buttons are arranged horizontally with
+    /// a vertical separator. For more than 2 actions, buttons are arranged vertically
+    /// with horizontal separators between them.
+    ///
+    /// - Parameters:
+    ///   - views: An array of views representing the action buttons to be laid out.
+    ///   - container: The container view that will hold the action button views.
     mutating func layout(views: [UIView], container: UIView) {
 
         guard let container = container as? ActionSeparatableSequenceView else {

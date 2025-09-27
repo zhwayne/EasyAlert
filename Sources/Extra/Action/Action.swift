@@ -10,6 +10,9 @@ import UIKit
 /// A closure that handles action execution.
 ///
 /// This closure is called when the user taps on an action button.
+/// The closure receives the action instance that was triggered, allowing
+/// the handler to access the action's properties and perform custom logic.
+///
 /// - Parameter action: The action that was triggered.
 public typealias ActionHandler = (Action) -> Void
 
@@ -74,6 +77,10 @@ public typealias ActionHandler = (Action) -> Void
         self.handler = handler
     }
 
+    /// Cleans up the action when it is deallocated.
+    ///
+    /// This method ensures that any associated views are properly removed
+    /// from their superview to prevent memory leaks and visual artifacts.
     deinit {
         MainActor.assumeIsolated {
             view?.removeFromSuperview()
@@ -84,6 +91,7 @@ public typealias ActionHandler = (Action) -> Void
     ///
     /// When `false`, the action button becomes non-interactive and typically appears dimmed.
     /// When `true`, the action button is interactive and responds to user interaction.
+    /// Setting this property automatically updates the associated representation view.
     public var isEnabled: Bool = true {
         didSet {
             guard let representationView = view?.superview as? ActionCustomViewRepresentationView else {

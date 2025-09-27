@@ -7,11 +7,35 @@
 
 import UIKit
 
+/// A layout manager that handles the positioning and sizing of toast notifications.
+///
+/// `ToastLayout` implements the `AlertableLayout` protocol to provide flexible
+/// layout management for toast notifications. It supports both center and bottom
+/// positioning with responsive sizing based on content and screen dimensions.
 final class ToastLayout: AlertableLayout {
 
+    /// The position where the toast should be displayed on the screen.
+    ///
+    /// This property determines whether the toast appears in the center or at the
+    /// bottom of the screen, affecting the layout calculations and constraints.
     var position: Toast.Position = .bottom
+    
+    /// An array of active layout constraints for the toast view.
+    ///
+    /// This property stores the constraints that position and size the toast view,
+    /// allowing for proper constraint management and updates.
     private var constraints: [NSLayoutConstraint] = []
 
+    /// Updates the layout of the toast view based on the provided context and layout guide.
+    ///
+    /// This method calculates and applies the appropriate constraints for the toast view,
+    /// taking into account the position, content insets, and layout guide specifications.
+    /// It handles both width and height constraints with support for fixed, flexible,
+    /// and multiplied sizing options.
+    ///
+    /// - Parameters:
+    ///   - context: The layout context containing the views to be laid out.
+    ///   - layoutGuide: The layout guide that defines sizing and positioning constraints.
     func updateLayout(context: LayoutContext, layoutGuide: LayoutGuide) {
 
         NSLayoutConstraint.deactivate(constraints)

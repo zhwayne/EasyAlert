@@ -36,8 +36,16 @@ import UIKit
     var view: UIView { get }
 }
 
+/// A default implementation of the `view` property for `UIView` conforming types.
+///
+/// This extension provides a default implementation that returns the view itself
+/// when the conforming type is a `UIView`. This eliminates the need for custom
+/// implementations in most cases.
 extension ActionContent where Self: UIView {
 
     /// Returns the view itself when the conforming type is a `UIView`.
+    ///
+    /// This default implementation allows any `UIView` that conforms to `ActionContent`
+    /// to automatically satisfy the `view` property requirement.
     public var view: UIView { self }
 }

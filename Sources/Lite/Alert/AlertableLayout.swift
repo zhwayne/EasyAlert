@@ -7,34 +7,58 @@
 
 import UIKit
 
+/// An enum that defines different width sizing options for alerts.
 @MainActor public enum Width {
 
+    /// Fixed width: the alert has a specific width regardless of container size.
     case fixed(CGFloat)
 
+    /// Flexible width: the alert adapts to the container width with insets.
     case flexible
 
+    /// Proportional width: the alert width is a percentage of container width with optional maximum.
     case multiplied(by: CGFloat, maxWidth: CGFloat? = nil)
 }
 
+/// An enum that defines different height sizing options for alerts.
 @MainActor public enum Height {
 
+    /// Fixed height: the alert has a specific height regardless of content.
     case fixed(CGFloat)
 
+    /// Flexible height: the alert adapts to the container height with insets.
     case flexible
 
+    /// Minimum height: the alert has a minimum height but can grow larger.
     case greaterThanOrEqualTo(CGFloat)
 }
 
+/// A guide that defines the layout constraints and insets for an alert.
+///
+/// `LayoutGuide` provides a comprehensive way to specify how an alert should be
+/// sized and positioned within its container. It supports different sizing modes
+/// for both width and height, along with content insets and safe area handling.
 @MainActor public struct LayoutGuide {
 
+    /// The width sizing mode for the alert.
     public var width: Width
 
+    /// The height sizing mode for the alert.
     public var height: Height
 
+    /// The insets to apply around the alert content.
     public var contentInsets: UIEdgeInsets
 
+    /// Whether the alert should ignore the bottom safe area.
     public var ignoresSafeAreaBottom: Bool
 
+    /// Creates a new layout guide with the specified parameters.
+    ///
+    /// - Parameters:
+    ///   - width: The width sizing mode for the alert.
+    ///   - height: The height sizing mode for the alert.
+    ///   - contentInsets: The insets to apply around the alert content. Defaults to `.zero`.
+    ///   - ignoresSafeAreaBottom: Whether the alert should ignore the bottom safe area. Defaults to `false`.
     public init(
         width: Width,
         height: Height,
@@ -48,27 +72,42 @@ import UIKit
     }
 }
 
-
+/// A protocol that defines objects capable of managing alert layout.
+///
+/// `AlertableLayout` provides the interface for customizing how alerts are positioned
+/// and sized within their containers. Implementations can provide different layout
+/// behaviors, such as centering, edge alignment, or custom positioning logic.
 @MainActor public protocol AlertableLayout {
 
     /// Updates the layout of the alert during the transition.
+    ///
+    /// This method is called whenever the alert's layout needs to be updated,
+    /// such as during presentation, dismissal, or orientation changes.
+    ///
+    /// - Parameters:
+    ///   - context: The layout context containing views and layout information.
+    ///   - layoutGuide: The layout guide that defines size and positioning constraints.
     func updateLayout(context: LayoutContext, layoutGuide: LayoutGuide)
 }
 
 /// A context object for use during the transition animation of an alert.
+///
+/// `LayoutContext` provides all the necessary information for layout calculations,
+/// including the container view, dimming view, presented view, and interface orientation.
 @MainActor public struct LayoutContext {
-    /// The backdrop view for the alert.
+    
+    /// The backdrop view that contains the alert.
     public let containerView: UIView
 
-    /// The dimming view for the alert.
+    /// The dimming view that provides the background effect.
     public let dimmingView: UIView
 
-    /// The view that contains the custom alert view.
+    /// The view that contains the custom alert content.
     public let presentedView: UIView
 
-    /// The current interface orientation.
+    /// The current interface orientation of the device.
     public let interfaceOrientation: UIInterfaceOrientation
 
-    /// The frame of the backdrop view.
+    /// The frame of the backdrop view, which is the same as the container view's bounds.
     public var frame: CGRect { containerView.bounds }
 }

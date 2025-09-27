@@ -7,8 +7,12 @@
 
 import UIKit
 
-/// An `UIView` instance that implements the `AlertContent` protocol can be displayed by Alert
-/// and has the ability to turn off alerts for free.
+/// A protocol that defines content that can be displayed in an alert.
+///
+/// `AlertContent` provides a way to create custom alert content that can be displayed
+/// by the `Alert` class. Views that conform to this protocol automatically gain the
+/// ability to dismiss their containing alert, making it easy to create interactive
+/// alert content that can be dismissed by user interaction.
 ///
 /// Here is a simple example of how to implement a custom alert:
 ///
@@ -40,5 +44,5 @@ import UIKit
 /// // Usage:
 /// let alert = MyAlert(image: image)
 /// alert.show()
-///
+/// ```
 public protocol AlertContent: Dismissible { }

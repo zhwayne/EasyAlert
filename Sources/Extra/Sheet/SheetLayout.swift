@@ -7,10 +7,29 @@
 
 import UIKit
 
+/// A layout manager that handles the positioning and sizing of sheet presentations.
+///
+/// `SheetLayout` implements the `AlertableLayout` protocol to provide flexible
+/// layout management for sheet presentations. It supports various sizing options
+/// and positions sheets at the bottom of the screen with proper safe area handling.
 final class SheetLayout: AlertableLayout {
 
+    /// An array of active layout constraints for the sheet view.
+    ///
+    /// This property stores the constraints that position and size the sheet view,
+    /// allowing for proper constraint management and updates.
     private var constraints: [NSLayoutConstraint] = []
 
+    /// Updates the layout of the sheet view based on the provided context and layout guide.
+    ///
+    /// This method calculates and applies the appropriate constraints for the sheet view,
+    /// taking into account the layout guide specifications, content insets, and safe area
+    /// requirements. It handles both width and height constraints with support for
+    /// fixed, flexible, and multiplied sizing options.
+    ///
+    /// - Parameters:
+    ///   - context: The layout context containing the views to be laid out.
+    ///   - layoutGuide: The layout guide that defines sizing and positioning constraints.
     func updateLayout(context: LayoutContext, layoutGuide: LayoutGuide) {
 
         NSLayoutConstraint.deactivate(constraints)
