@@ -78,19 +78,20 @@ open class InteractiveSheet: Sheet {
     }
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
-        guard !isDragging else { return }
-        
         let translation = gesture.translation(in: presentedView)
         let velocity = gesture.velocity(in: presentedView)
         
         switch gesture.state {
         case .began:
+            guard !isDragging else { return }
             startDragging()
             
         case .changed:
+            guard isDragging else { return }
             updateDragProgress(translation: translation, velocity: velocity)
             
         case .ended, .cancelled:
+            guard isDragging else { return }
             endDragging(translation: translation, velocity: velocity)
             
         default:
@@ -122,9 +123,14 @@ open class InteractiveSheet: Sheet {
         
         presentedView.transform = originalTransform.concatenating(dragTransform).concatenating(scaleTransform)
         
-        // Update dimming view alpha
+        // Update dimming view alpha - find the dimming view in the container
         let dimmingAlpha = max(0.1, 1.0 - dragProgress * 0.8)
-        containerView.subviews.first?.alpha = dimmingAlpha
+        for subview in containerView.subviews {
+            if subview is DimmingView {
+                subview.alpha = dimmingAlpha
+                break
+            }
+        }
         
         // Update animator progress for smooth transition
         if let interactiveAnimator = animator as? InteractiveAnimator {
@@ -157,7 +163,12 @@ open class InteractiveSheet: Sheet {
                 self.presentedView.transform = self.originalTransform
                 
                 // Restore dimming view alpha
-                self.containerView.subviews.first?.alpha = 1.0
+                for subview in self.containerView.subviews {
+                    if subview is DimmingView {
+                        subview.alpha = 1.0
+                        break
+                    }
+                }
             },
             completion: { _ in
                 self.dragProgress = 0.0
