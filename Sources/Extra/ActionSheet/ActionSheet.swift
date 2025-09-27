@@ -21,11 +21,11 @@ open class ActionSheet: Sheet, ActionAlertable {
     /// providing a unified interface for accessing all actions in the sheet.
     public var actions: [Action] { actionGroupView.actions + cancelActionGroupView.actions }
 
-    /// The container view that holds all action group views.
+    /// The action container view that holds all action group views.
     ///
     /// This view serves as the main container for both regular and cancel action groups,
     /// managing their layout and visual separation within the action sheet.
-    private let containerView = ActionSheet.ContainerView()
+    private let actionContainerView = ActionSheet.ContainerView()
 
     /// The view that manages the group of regular action buttons.
     ///
@@ -70,13 +70,13 @@ open class ActionSheet: Sheet, ActionAlertable {
         }
 
         cancelActionGroupView = ActionGroupView(content: nil, actionLayout: cancelActionLayout)
-        super.init(content: containerView)
+        super.init(content: actionContainerView)
         addListener(actionGroupView)
 
         layoutGuide = self.configuration.layoutGuide
 
         let decorator = ActionGroupAnimatorAndLayoutDecorator(
-            aniamtor: animator,
+            animator: animator,
             layoutModifier: layout,
             actionGroupViews: [actionGroupView, cancelActionGroupView]
         )
@@ -98,9 +98,9 @@ open class ActionSheet: Sheet, ActionAlertable {
             actionGroupView.setCornerRadius(configuration.cornerRadius)
             cancelActionGroupView.setCornerRadius(configuration.cornerRadius)
         }
-        containerView.layer.cornerCurve = .continuous
-        containerView.layer.cornerRadius = configuration.cornerRadius
-        containerView.layer.masksToBounds = true
+        actionContainerView.layer.cornerCurve = .continuous
+        actionContainerView.layer.cornerRadius = configuration.cornerRadius
+        actionContainerView.layer.masksToBounds = true
     }
 }
 
@@ -154,26 +154,26 @@ extension ActionSheet {
     /// ensuring proper positioning and spacing between them. It handles the visual
     /// separation between action types based on the configuration settings.
     private func configureActionGroupContainer() {
-        if actionGroupView.superview != containerView {
-            containerView.addSubview(actionGroupView)
+        if actionGroupView.superview != actionContainerView {
+            actionContainerView.addSubview(actionGroupView)
             actionGroupView.translatesAutoresizingMaskIntoConstraints = false
 
-            actionGroupView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
-            actionGroupView.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
-            actionGroupView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-            let constraint = actionGroupView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            actionGroupView.leftAnchor.constraint(equalTo: actionContainerView.leftAnchor).isActive = true
+            actionGroupView.rightAnchor.constraint(equalTo: actionContainerView.rightAnchor).isActive = true
+            actionGroupView.topAnchor.constraint(equalTo: actionContainerView.topAnchor).isActive = true
+            let constraint = actionGroupView.bottomAnchor.constraint(equalTo: actionContainerView.bottomAnchor)
             constraint.priority = .defaultHigh - 1
             constraint.isActive = true
         }
 
         if let cancelSpacing = configuration.value(for: "cancelSpacing") as? CGFloat,
-           cancelSpacing > 1, cancelActionGroupView.superview != containerView {
-            containerView.addSubview(cancelActionGroupView)
+           cancelSpacing > 1, cancelActionGroupView.superview != actionContainerView {
+            actionContainerView.addSubview(cancelActionGroupView)
             cancelActionGroupView.translatesAutoresizingMaskIntoConstraints = false
 
-            cancelActionGroupView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
-            cancelActionGroupView.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
-            cancelActionGroupView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
+            cancelActionGroupView.leftAnchor.constraint(equalTo: actionContainerView.leftAnchor).isActive = true
+            cancelActionGroupView.rightAnchor.constraint(equalTo: actionContainerView.rightAnchor).isActive = true
+            cancelActionGroupView.bottomAnchor.constraint(equalTo: actionContainerView.bottomAnchor).isActive = true
             let constraint = cancelActionGroupView.topAnchor.constraint(equalTo: actionGroupView.bottomAnchor, constant: cancelSpacing)
             constraint.isActive = true
         }

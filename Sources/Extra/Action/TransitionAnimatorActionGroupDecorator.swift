@@ -16,7 +16,7 @@ import Foundation
 final class ActionGroupAnimatorAndLayoutDecorator: AlertbleAnimator, AlertableLayout {
 
     /// The underlying animator that handles the actual animation logic.
-    private var aniamtor: AlertbleAnimator
+    private var animator: AlertbleAnimator
     
     /// The layout modifier that handles the positioning and sizing of views.
     private var layoutModifier: AlertableLayout
@@ -27,11 +27,11 @@ final class ActionGroupAnimatorAndLayoutDecorator: AlertbleAnimator, AlertableLa
     /// Creates a new decorator with the specified animator, layout modifier, and action group views.
     ///
     /// - Parameters:
-    ///   - aniamtor: The animator that will handle the animation logic.
+    ///   - animator: The animator that will handle the animation logic.
     ///   - layoutModifier: The layout modifier that will handle positioning and sizing.
     ///   - actionGroupViews: The action group views to be managed by this decorator.
-    init(aniamtor: AlertbleAnimator, layoutModifier: AlertableLayout, actionGroupViews: [ActionGroupView]) {
-        self.aniamtor = aniamtor
+    init(animator: AlertbleAnimator, layoutModifier: AlertableLayout, actionGroupViews: [ActionGroupView]) {
+        self.animator = animator
         self.layoutModifier = layoutModifier
         self.actionGroupViews = actionGroupViews
     }
@@ -59,7 +59,7 @@ final class ActionGroupAnimatorAndLayoutDecorator: AlertbleAnimator, AlertableLa
     ///   - context: The layout context containing information about the current state.
     ///   - completion: A closure to execute when the animation completes.
     func show(context: LayoutContext, completion: @escaping () -> Void) {
-        aniamtor.show(context: context, completion: completion)
+        animator.show(context: context, completion: completion)
     }
 
     /// Performs the animation for dismissing the action group views.
@@ -70,6 +70,6 @@ final class ActionGroupAnimatorAndLayoutDecorator: AlertbleAnimator, AlertableLa
     ///   - context: The layout context containing information about the current state.
     ///   - completion: A closure to execute when the animation completes.
     func dismiss(context: LayoutContext, completion: @escaping () -> Void) {
-        aniamtor.dismiss(context: context, completion: completion)
+        animator.dismiss(context: context, completion: completion)
     }
 }

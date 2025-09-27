@@ -107,7 +107,4 @@ import UIKit
 
     /// The current interface orientation of the device.
     public let interfaceOrientation: UIInterfaceOrientation
-
-    /// The frame of the backdrop view, which is the same as the container view's bounds.
-    public var frame: CGRect { containerView.bounds }
 }

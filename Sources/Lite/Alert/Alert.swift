@@ -47,6 +47,32 @@ import UIKit
     /// This property is `true` when the alert is being displayed and `false` when it's dismissed.
     public private(set) var isActive: Bool = false
     
+    /// The backdrop view that provides the visual background for the alert.
+    ///
+    /// This view serves as the main container for the entire alert presentation,
+    /// including the dimming background and the alert content. It provides the
+    /// coordinate system for layout calculations and is accessible for custom
+    /// animations, gesture recognizers, and layout modifications.
+    public var containerView: UIView {
+        return backdropView
+    }
+    
+    /// The presented view that contains the actual alert content.
+    ///
+    /// This view represents the actual content area of the alert. If the alert
+    /// content is a `UIView`, this returns the view directly. If the alert content
+    /// is a `UIViewController`, this returns the view controller's view. This view
+    /// is the one that gets animated during show and dismiss transitions.
+    public var presentedView: UIView {
+        if let view = alertContent as? UIView {
+            return view
+        } else if let viewController = alertContent as? UIViewController {
+            return viewController.view
+        } else {
+            fatalError("Unsupported content type: \(type(of: alertContent))")
+        }
+    }
+    
     /// The container controller that manages the alert's view hierarchy.
     private lazy var alertContainerController = AlertContainerController(alert: self)
 

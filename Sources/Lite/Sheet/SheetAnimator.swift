@@ -12,7 +12,7 @@ import UIKit
 /// `SheetAnimator` implements the `AlertbleAnimator` protocol to provide smooth,
 /// spring-based slide-up animations for sheet presentations. It animates the sheet
 /// from below the screen to its final position, creating a natural modal presentation.
-internal struct SheetAnimator: AlertbleAnimator {
+internal class SheetAnimator: AlertbleAnimator {
 
     /// Animates the sheet into view with a slide-up animation.
     ///
@@ -47,7 +47,7 @@ internal struct SheetAnimator: AlertbleAnimator {
     ///   - completion: A closure to execute when the animation completes.
     func dismiss(context: LayoutContext, completion: @escaping () -> Void) {
         context.presentedView.layoutIfNeeded()
-        let height = context.frame.height - context.presentedView.frame.minY
+        let height = context.containerView.frame.height - context.presentedView.frame.minY
 
         withSpringTimingAnimation {
             context.dimmingView.alpha = 0
@@ -57,4 +57,5 @@ internal struct SheetAnimator: AlertbleAnimator {
             completion()
         }
     }
+    
 }

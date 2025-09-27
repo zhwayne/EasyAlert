@@ -53,7 +53,7 @@ open class ActionAlert: Alert, ActionAlertable {
         layoutGuide = self.configuration.layoutGuide
 
         let decorator = ActionGroupAnimatorAndLayoutDecorator(
-            aniamtor: AlertAnimator(),
+            animator: AlertAnimator(),
             layoutModifier: AlertLayout(),
             actionGroupViews: [actionGroupView]
         )

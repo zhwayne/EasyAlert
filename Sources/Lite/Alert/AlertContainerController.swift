@@ -180,7 +180,7 @@ extension UIView {
     /// protocols, which are used for interactive elements within alerts.
     ///
     /// - Returns: An array of views that conform to the required protocols, or `nil` if none are found.
-    fileprivate func findActionRepresentationViews() -> [any UIControl & RepresentationMark]? {
+    func findActionRepresentationViews() -> [any UIControl & RepresentationMark]? {
         findSubviews(ofType: (any UIControl & RepresentationMark).self)
     }
 
