@@ -53,19 +53,15 @@ final class AlertLayout: AlertableLayout {
             let width = containerView.bounds.width - (edgeInsets.left + edgeInsets.right)
             constraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: width))
 
-        case let .multiplied(value, maxWidth):
-            // Proportional width: alert width is a percentage of container width
+        case let .fractional(value):
+            // Fractional width: alert width is a percentage of container width
             let constant = -(edgeInsets.left + edgeInsets.right)
-            let multiplierConstraint = presentedView.widthAnchor.constraint(
+            let constraint = presentedView.widthAnchor.constraint(
                 equalTo: containerView.widthAnchor,
                 multiplier: value,
                 constant: constant)
-            multiplierConstraint.priority = .required - 1
-            constraints.append(multiplierConstraint)
-            if let maxWidth, maxWidth > 0 {
-                let maxWidthConstraint = presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth)
-                constraints.append(maxWidthConstraint)
-            }
+            constraint.priority = .required - 1
+            constraints.append(constraint)
         }
 
         // Apply height constraints based on layout guide
@@ -82,10 +78,14 @@ final class AlertLayout: AlertableLayout {
             let constraint = presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: height)
             constraints.append(constraint)
 
-        case let .greaterThanOrEqualTo(value):
-            // Minimum height: alert has a minimum height but can grow larger
-            let height = value - (edgeInsets.top + edgeInsets.bottom)
-            let constraint = presentedView.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
+        case let .fractional(value):
+            // Fractional height: alert height is a percentage of container height
+            let constant = -(edgeInsets.top + edgeInsets.bottom)
+            let constraint = presentedView.heightAnchor.constraint(
+                equalTo: containerView.heightAnchor,
+                multiplier: value,
+                constant: constant)
+            constraint.priority = .required - 1
             constraints.append(constraint)
         }
 

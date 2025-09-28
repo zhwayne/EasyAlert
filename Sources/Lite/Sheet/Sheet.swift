@@ -19,7 +19,7 @@ open class Sheet: Alert {
     ///
     /// This initializer sets up the sheet with the provided content and configures
     /// the appropriate animator and layout for sheet presentation. The sheet is
-    /// configured with a multiplied width (up to 414 points) and flexible height
+    /// configured with a fractional width and flexible height
     /// to accommodate various content sizes.
     ///
     /// - Parameter content: The content to display in the sheet.
@@ -28,7 +28,7 @@ open class Sheet: Alert {
         self.animator = SheetAnimator()
         self.layout = SheetLayout()
         layoutGuide = .init(
-            width: .multiplied(by: 1, maxWidth: 414),
+            width: .fractional(1),
             height: .flexible,
             ignoredSafeAreaEdges: [.bottom]
         )

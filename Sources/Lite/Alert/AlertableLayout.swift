@@ -16,8 +16,11 @@ import UIKit
     /// Flexible width: the alert adapts to the container width with insets.
     case flexible
 
-    /// Proportional width: the alert width is a percentage of container width with optional maximum.
-    case multiplied(by: CGFloat, maxWidth: CGFloat? = nil)
+    /// Fractional width: the alert width is a fraction of the container width.
+    ///
+    /// For example, `.fractional(0.8)` sets the width to 80% of the container's width
+    /// adjusted by content insets.
+    case fractional(CGFloat)
 }
 
 /// An enum that defines different height sizing options for alerts.
@@ -29,8 +32,11 @@ import UIKit
     /// Flexible height: the alert adapts to the container height with insets.
     case flexible
 
-    /// Minimum height: the alert has a minimum height but can grow larger.
-    case greaterThanOrEqualTo(CGFloat)
+    /// Fractional height: the alert height is a fraction of the container height.
+    ///
+    /// For example, `.fractional(0.5)` sets the height to 50% of the container's height
+    /// adjusted by content insets.
+    case fractional(CGFloat)
 }
 
 /// A guide that defines the layout constraints and insets for an alert.

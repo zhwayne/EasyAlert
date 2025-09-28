@@ -58,18 +58,14 @@ final class ToastLayout: AlertableLayout {
             let width = min(containerView.bounds.width, containerView.bounds.height) - (edgeInsets.left + edgeInsets.right)
             constraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: width))
 
-        case let .multiplied(value, maxWidth):
+        case let .fractional(value):
             let constant = -(edgeInsets.left + edgeInsets.right)
-            let multiplierConstraint = presentedView.widthAnchor.constraint(
+            let constraint = presentedView.widthAnchor.constraint(
                 equalTo: containerView.widthAnchor,
                 multiplier: value,
                 constant: constant)
-            multiplierConstraint.priority = .required - 1
-            constraints.append(multiplierConstraint)
-            if let maxWidth, maxWidth > 0 {
-                let maxWidthConstraint = presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth)
-                constraints.append(maxWidthConstraint)
-            }
+            constraint.priority = .required - 1
+            constraints.append(constraint)
         }
 
         // layout guide height.
@@ -84,9 +80,13 @@ final class ToastLayout: AlertableLayout {
             let constraint = presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: height)
             constraints.append(constraint)
 
-        case let .greaterThanOrEqualTo(value):
-            let height = value - (edgeInsets.top + edgeInsets.bottom)
-            let constraint = presentedView.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
+        case let .fractional(value):
+            let constant = -(edgeInsets.top + edgeInsets.bottom)
+            let constraint = presentedView.heightAnchor.constraint(
+                equalTo: containerView.heightAnchor,
+                multiplier: value,
+                constant: constant)
+            constraint.priority = .required - 1
             constraints.append(constraint)
         }
 

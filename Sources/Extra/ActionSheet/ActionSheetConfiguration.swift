@@ -23,9 +23,9 @@ extension ActionSheet {
         /// The layout guide that defines the positioning and sizing constraints for the action sheet.
         ///
         /// This property determines how the action sheet is positioned and sized within its container,
-        /// with multiplied width (up to 414 points) and flexible height by default.
+        /// with fractional width and flexible height by default.
         public var layoutGuide: LayoutGuide = .init(
-            width: .multiplied(by: 1, maxWidth: 414),
+            width: .fractional(1),
             height: .flexible,
             contentInsets: UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8)
         )

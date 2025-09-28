@@ -44,24 +44,29 @@ final class SheetLayout: AlertableLayout {
         // layout guide width.
         switch layoutGuide.width {
         case let .fixed(value):
-            let width = value - (edgeInsets.left + edgeInsets.right)
+            var width = value - (edgeInsets.left + edgeInsets.right)
+            if context.interfaceOrientation.isLandscape {
+                width = min(width, 414)
+            }
             constraints.append(presentedView.widthAnchor.constraint(equalToConstant: width))
 
         case .flexible:
             let width = containerView.bounds.width - (edgeInsets.left + edgeInsets.right)
             constraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: width))
+            if context.interfaceOrientation.isLandscape {
+                constraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: 414))
+            }
 
-        case let .multiplied(value, maxWidth):
+        case let .fractional(value):
             let constant = -(edgeInsets.left + edgeInsets.right)
-            let multiplierConstraint = presentedView.widthAnchor.constraint(
+            let constraint = presentedView.widthAnchor.constraint(
                 equalTo: containerView.widthAnchor,
                 multiplier: value,
                 constant: constant)
-            multiplierConstraint.priority = .required - 1
-            constraints.append(multiplierConstraint)
-            if let maxWidth, maxWidth > 0 {
-                let maxWidthConstraint = presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth)
-                constraints.append(maxWidthConstraint)
+            constraint.priority = .required - 1
+            constraints.append(constraint)
+            if context.interfaceOrientation.isLandscape {
+                constraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: 414))
             }
         }
 
@@ -77,9 +82,13 @@ final class SheetLayout: AlertableLayout {
             let constraint = presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: height)
             constraints.append(constraint)
 
-        case .greaterThanOrEqualTo(let value):
-            let height = value - (edgeInsets.top + edgeInsets.bottom)
-            let constraint = presentedView.heightAnchor.constraint(greaterThanOrEqualToConstant: height)
+        case .fractional(let value):
+            let constant = -(edgeInsets.top + edgeInsets.bottom)
+            let constraint = presentedView.heightAnchor.constraint(
+                equalTo: containerView.heightAnchor,
+                multiplier: value,
+                constant: constant)
+            constraint.priority = .required - 1
             constraints.append(constraint)
         }
 
