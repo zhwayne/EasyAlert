@@ -69,7 +69,8 @@ struct InteractiveSheetSectionView: View {
           .ignoresSafeArea()
           .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        let sheet = InteractiveSheet(content: content)
+        let sheet = Sheet(content: content)
+        sheet.isInteractive = true
         sheet.show()
       } label: {
         Text("基础交互式弹窗")
@@ -126,7 +127,8 @@ struct InteractiveSheetSectionView: View {
           .ignoresSafeArea()
           .frame(maxWidth: .infinity, maxHeight: 500)
         }
-        let sheet = InteractiveSheet(content: content)
+        let sheet = Sheet(content: content)
+        sheet.isInteractive = true
         sheet.backdrop.allowDismissWhenBackgroundTouch = true
         sheet.show()
       } label: {
@@ -214,7 +216,8 @@ struct InteractiveSheetSectionView: View {
           .ignoresSafeArea()
           .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        let sheet = InteractiveSheet(content: content)
+        let sheet = Sheet(content: content)
+        sheet.isInteractive = true
         sheet.show()
       } label: {
         Text("自定义样式交互式弹窗")
