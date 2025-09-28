@@ -22,6 +22,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		29A82F442E88C47400CD7FF1 /* EasyAlert.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = EasyAlert.xcodeproj; sourceTree = SOURCE_ROOT; };
 		607FACD01AFB9204008FA782 /* EasyAlert_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyAlert_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACE51AFB9204008FA782 /* EasyAlert_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EasyAlert_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -65,6 +66,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				29A82F442E88C47400CD7FF1 /* EasyAlert.xcodeproj */,
 				A967D16B2AC15C8B007F9A5B /* Packages */,
 				29A82F372E8833FC00CD7FF1 /* EasyAlert */,
 				607FACE81AFB9204008FA782 /* Tests */,

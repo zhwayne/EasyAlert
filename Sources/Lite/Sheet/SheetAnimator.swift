@@ -51,7 +51,6 @@ internal class SheetAnimator: AlertbleAnimator {
 
         withSpringTimingAnimation {
             context.dimmingView.alpha = 0
-            context.presentedView.alpha = 0.5
             context.presentedView.transform = CGAffineTransform(translationX: 0, y: height)
         } completion: { _ in
             completion()

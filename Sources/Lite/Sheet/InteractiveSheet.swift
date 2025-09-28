@@ -42,8 +42,6 @@ open class InteractiveSheet: Sheet {
     public override init(content: AlertContent) {
         super.init(content: content)
         // Use the interactive sheet animator that supports progress updates
-        self.animator = InteractiveSheetAnimator()
-        
         setupPanGesture()
         
         // Create the coordinator for gesture delegate handling
@@ -130,11 +128,6 @@ open class InteractiveSheet: Sheet {
                 subview.alpha = dimmingAlpha
                 break
             }
-        }
-        
-        // Update animator progress for smooth transition
-        if let interactiveAnimator = animator as? InteractiveAnimator {
-            interactiveAnimator.updateProgress(dragProgress)
         }
     }
     
