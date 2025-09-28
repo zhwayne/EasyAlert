@@ -389,11 +389,6 @@ struct InteractiveSheetSectionView: View {
       Button {
         let content = AlertHostingController { alert in
           VStack(spacing: 16) {
-            // Drag indicator
-            RoundedRectangle(cornerRadius: 2.5)
-              .fill(Color.secondary)
-              .frame(width: 36, height: 5)
-              .padding(.top, 8)
             
             Text("拖拽交互式弹窗")
               .font(.system(size: 20, weight: .semibold))
@@ -445,6 +440,7 @@ struct InteractiveSheetSectionView: View {
             .padding(.horizontal)
             .padding(.bottom, 20)
           }
+          .padding(.top, 20)
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .background(.regularMaterial)
           .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
@@ -459,11 +455,6 @@ struct InteractiveSheetSectionView: View {
         let content = AlertHostingController { alert in
           ScrollView {
             VStack(spacing: 20) {
-              // Drag indicator
-              RoundedRectangle(cornerRadius: 2.5)
-                .fill(Color.secondary)
-                .frame(width: 36, height: 5)
-                .padding(.top, 8)
               
               Text("可滚动交互式弹窗")
                 .font(.system(size: 22, weight: .bold))
@@ -505,6 +496,7 @@ struct InteractiveSheetSectionView: View {
               
               Spacer(minLength: 20)
             }
+            .padding(.top, 20)
           }
           .frame(maxWidth: .infinity, maxHeight: 500) // 限制最大高度为 500
           .background(.regularMaterial)
@@ -518,12 +510,7 @@ struct InteractiveSheetSectionView: View {
       
       Button {
         let content = AlertHostingController { alert in
-          VStack(spacing: 16) {
-            // Drag indicator
-            RoundedRectangle(cornerRadius: 2.5)
-              .fill(Color.secondary)
-              .frame(width: 36, height: 5)
-              .padding(.top, 8)
+            VStack(spacing: 16) {
             
             Text("自定义样式交互式弹窗")
               .font(.system(size: 20, weight: .semibold))
@@ -597,6 +584,7 @@ struct InteractiveSheetSectionView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 20)
           }
+          .padding(.top, 20)
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .background(.regularMaterial)
           .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
