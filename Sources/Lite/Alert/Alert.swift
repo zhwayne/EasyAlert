@@ -35,7 +35,12 @@ import UIKit
     /// The layout guide that defines the alert's size constraints.
     ///
     /// This guide determines how the alert is sized and positioned within its container.
-    public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible)
+    public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible) {
+        didSet { 
+            guard isActive else { return }
+            withSpringTimingAnimation { self.updateLayout() }
+         }
+    }
 
     /// The layout manager that handles the alert's positioning and sizing.
     ///
@@ -310,9 +315,7 @@ extension Alert {
 
     public func updateLayout() {
         willLayoutContainer()
-        UIView.performWithoutAnimation { [self] in
-            layout.updateLayout(context: layoutContext, layoutGuide: layoutGuide)
-        }
+        layout.updateLayout(context: layoutContext, layoutGuide: layoutGuide)
         didLayoutContainer()
     }
 

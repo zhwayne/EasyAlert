@@ -164,7 +164,7 @@ fileprivate extension ActionSheet.ActionView {
     /// - Returns: The appropriate background color for the action style.
     func backgroundColor(for style: Action.Style) -> UIColor {
         if case .cancel = style {
-            return .systemBackground
+            return .secondarySystemGroupedBackground
         }
         return .clear
     }
