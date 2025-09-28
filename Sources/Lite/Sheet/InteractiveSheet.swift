@@ -47,6 +47,9 @@ open class InteractiveSheet: Sheet {
 
     /// Whether the sheet actually applied any transform during this gesture.
     private var didApplyDrag: Bool = false
+    
+    /// The current drag translation Y offset.
+    internal var currentDragTranslationY: CGFloat = 0.0
 
     /// The top grabber indicator managed by the sheet.
     private var grabberView: UIView?
@@ -58,6 +61,8 @@ open class InteractiveSheet: Sheet {
         super.init(content: content)
         // Create the coordinator for gesture delegate handling
         self.coordinator = Coordinator(interactiveSheet: self)
+        // Use a custom animator that can access drag state
+        self.animator = InteractiveSheetAnimator(interactiveSheet: self)
 
         setupPanGesture()
     }
@@ -204,6 +209,7 @@ open class InteractiveSheet: Sheet {
 
     private func applySheetDrag(translationY: CGFloat) {
         didApplyDrag = true
+        currentDragTranslationY = translationY
         // Calculate drag progress
         dragProgress = min(1.0, translationY / maxDragDistance)
 
