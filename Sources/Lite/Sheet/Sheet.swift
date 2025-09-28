@@ -27,6 +27,10 @@ open class Sheet: Alert {
         super.init(content: content)
         self.animator = SheetAnimator()
         self.layout = SheetLayout()
-        layoutGuide = .init(width: .multiplied(by: 1, maxWidth: 414), height: .flexible)
+        layoutGuide = .init(
+            width: .multiplied(by: 1, maxWidth: 414),
+            height: .flexible,
+            ignoredSafeAreaEdges: [.bottom]
+        )
     }
 }

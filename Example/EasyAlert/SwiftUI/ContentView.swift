@@ -438,12 +438,13 @@ struct InteractiveSheetSectionView: View {
               }
             }
             .padding(.horizontal)
-            .padding(.bottom, 20)
+            .padding(.bottom, 40)
           }
           .padding(.top, 20)
-          .frame(maxWidth: .infinity, maxHeight: .infinity)
           .background(.regularMaterial)
           .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+          .ignoresSafeArea()
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         let sheet = InteractiveSheet(content: content)
         sheet.show()
@@ -498,11 +499,13 @@ struct InteractiveSheetSectionView: View {
             }
             .padding(.top, 20)
           }
-          .frame(maxWidth: .infinity, maxHeight: 500) // 限制最大高度为 500
           .background(.regularMaterial)
           .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+          .ignoresSafeArea()
+          .frame(maxWidth: .infinity, maxHeight: 500)
         }
         let sheet = InteractiveSheet(content: content)
+        sheet.backdrop.allowDismissWhenBackgroundTouch = true
         sheet.show()
       } label: {
         Text("可滚动内容交互式弹窗")
@@ -582,12 +585,13 @@ struct InteractiveSheetSectionView: View {
                 .foregroundColor(.white)
             }
             .padding(.horizontal, 20)
-            .padding(.bottom, 20)
+            .padding(.bottom, 40)
           }
           .padding(.top, 20)
-          .frame(maxWidth: .infinity, maxHeight: .infinity)
           .background(.regularMaterial)
           .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+          .ignoresSafeArea()
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         let sheet = InteractiveSheet(content: content)
         sheet.show()

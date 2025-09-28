@@ -83,7 +83,7 @@ final class SheetLayout: AlertableLayout {
             constraints.append(constraint)
         }
 
-        if layoutGuide.ignoresSafeAreaBottom {
+        if layoutGuide.ignoredSafeAreaEdges.contains(.bottom) {
             let constraint = presentedView.bottomAnchor.constraint(
                 equalTo: containerView.bottomAnchor,
                 constant: -edgeInsets.bottom)

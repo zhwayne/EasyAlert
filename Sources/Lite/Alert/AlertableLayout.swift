@@ -49,8 +49,12 @@ import UIKit
     /// The insets to apply around the alert content.
     public var contentInsets: UIEdgeInsets
 
-    /// Whether the alert should ignore the bottom safe area.
-    public var ignoresSafeAreaBottom: Bool
+    /// The safe-area edges to ignore when positioning.
+    ///
+    /// Use this to specify which edges should use the container's bounds instead of
+    /// the safe area as the reference for layout. For example, include `.bottom`
+    /// to anchor to the container's bottom edge. Defaults to none.
+    public var ignoredSafeAreaEdges: UIRectEdge = []
 
     /// Creates a new layout guide with the specified parameters.
     ///
@@ -58,17 +62,17 @@ import UIKit
     ///   - width: The width sizing mode for the alert.
     ///   - height: The height sizing mode for the alert.
     ///   - contentInsets: The insets to apply around the alert content. Defaults to `.zero`.
-    ///   - ignoresSafeAreaBottom: Whether the alert should ignore the bottom safe area. Defaults to `false`.
+    ///   - ignoredSafeAreaEdges: Safe-area edges to ignore (defaults to `[]`).
     public init(
         width: Width,
         height: Height,
         contentInsets: UIEdgeInsets = .zero,
-        ignoresSafeAreaBottom: Bool = false
+        ignoredSafeAreaEdges: UIRectEdge = []
     ) {
         self.width = width
         self.height = height
         self.contentInsets = contentInsets
-        self.ignoresSafeAreaBottom = ignoresSafeAreaBottom
+        self.ignoredSafeAreaEdges = ignoredSafeAreaEdges
     }
 }
 
