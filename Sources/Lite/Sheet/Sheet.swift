@@ -143,14 +143,14 @@ open class Sheet: Alert {
         guard grabberView == nil else { return }
         let grabber = UIView()
         grabber.translatesAutoresizingMaskIntoConstraints = false
-        grabber.backgroundColor = UIColor.secondaryLabel.withAlphaComponent(0.3)
+        grabber.backgroundColor = UIColor.systemFill
         grabber.layer.cornerRadius = 2.5
         grabber.layer.masksToBounds = true
         grabber.isHidden = !isInteractive
         presentedView.addSubview(grabber)
         let topAnchor = presentedView.topAnchor
         NSLayoutConstraint.activate([
-            grabber.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            grabber.topAnchor.constraint(equalTo: topAnchor, constant: 6),
             grabber.centerXAnchor.constraint(equalTo: presentedView.centerXAnchor),
             grabber.widthAnchor.constraint(equalToConstant: 36),
             grabber.heightAnchor.constraint(equalToConstant: 5)

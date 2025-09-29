@@ -64,8 +64,8 @@ internal class SheetAnimator: AlertbleAnimator {
         if let sheet = sheet, sheet.isInteractive {
             // Use drag translation for interactive sheets
             let dragTranslationY = sheet.currentDragTranslationY
-            let currentMinY = context.presentedView.frame.minY + dragTranslationY
-            let distanceToBottom = context.containerView.frame.height - currentMinY
+            let initialMinY = context.presentedView.frame.minY - dragTranslationY
+            let distanceToBottom = context.containerView.frame.height - initialMinY
             let height = distanceToBottom + context.dimmingView.safeAreaInsets.bottom
             
             withSpringTimingAnimation {

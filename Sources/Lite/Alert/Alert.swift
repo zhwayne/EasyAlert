@@ -64,18 +64,10 @@ import UIKit
     
     /// The presented view that contains the actual alert content.
     ///
-    /// This view represents the actual content area of the alert. If the alert
-    /// content is a `UIView`, this returns the view directly. If the alert content
-    /// is a `UIViewController`, this returns the view controller's view. This view
+    /// This view represents the actual content area of the alert. This view
     /// is the one that gets animated during show and dismiss transitions.
     public var presentedView: UIView {
-        if let view = alertContent as? UIView {
-            return view
-        } else if let viewController = alertContent as? UIViewController {
-            return viewController.view
-        } else {
-            fatalError("Unsupported content type: \(type(of: alertContent))")
-        }
+        return alertContainerController.view
     }
     
     /// The container controller that manages the alert's view hierarchy.
@@ -418,10 +410,7 @@ extension Alert {
 
     private var interfaceOrientation: UIInterfaceOrientation {
         let windowScene = UIApplication.shared.activeWindowScene
-        guard let interfaceOrientation = windowScene?.interfaceOrientation else {
-            return UIApplication.shared.statusBarOrientation
-        }
-        return interfaceOrientation
+        return windowScene?.interfaceOrientation ?? .portrait
     }
 
     private var layoutContext: LayoutContext {
