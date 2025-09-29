@@ -33,9 +33,8 @@ final class SheetLayout: AlertableLayout {
     func updateLayout(context: LayoutContext, layoutGuide: LayoutGuide) {
 
         NSLayoutConstraint.deactivate(constraints)
-        defer {
-            NSLayoutConstraint.activate(constraints)
-        }
+        constraints.removeAll(keepingCapacity: true)
+        defer { NSLayoutConstraint.activate(constraints) }
 
         let edgeInsets = layoutGuide.contentInsets
         let presentedView = context.presentedView

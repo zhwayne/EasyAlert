@@ -36,7 +36,7 @@ import UIKit
     ///
     /// This guide determines how the alert is sized and positioned within its container.
     public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible) {
-        didSet { 
+        didSet {
             guard isActive else { return }
             withSpringTimingAnimation { self.updateLayout() }
          }
@@ -308,6 +308,9 @@ extension Alert {
     public func updateLayout() {
         willLayoutContainer()
         layout.updateLayout(context: layoutContext, layoutGuide: layoutGuide)
+        // Ensure Auto Layout applies updated constraints immediately.
+        // When called within an animation block, this enables smooth constraint animations.
+        containerView.layoutIfNeeded()
         didLayoutContainer()
     }
 

@@ -33,9 +33,8 @@ final class AlertLayout: AlertableLayout {
 
         // Deactivate existing constraints before applying new ones
         NSLayoutConstraint.deactivate(constraints)
-        defer {
-            NSLayoutConstraint.activate(constraints)
-        }
+        constraints.removeAll(keepingCapacity: true)
+        defer { NSLayoutConstraint.activate(constraints) }
 
         let edgeInsets = layoutGuide.contentInsets
         let presentedView = context.presentedView
