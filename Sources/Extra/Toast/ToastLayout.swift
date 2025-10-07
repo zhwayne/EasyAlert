@@ -17,93 +17,47 @@ final class ToastLayout: AlertableLayout {
     /// The position where the toast should be displayed on the screen.
     ///
     /// This property determines whether the toast appears in the center or at the
-    /// bottom of the screen, affecting the layout calculations and constraints.
+    /// bottom of the screen, affecting the frame calculation below.
     var position: Toast.Position = .bottom
-    
-    /// An array of active layout constraints for the toast view.
-    ///
-    /// This property stores the constraints that position and size the toast view,
-    /// allowing for proper constraint management and updates.
-    private var constraints: [NSLayoutConstraint] = []
 
     /// Updates the layout of the toast view based on the provided context and layout guide.
     ///
-    /// This method calculates and applies the appropriate constraints for the toast view,
-    /// taking into account the position, content insets, and layout guide specifications.
-    /// It handles both width and height constraints with support for fixed, flexible,
-    /// and multiplied sizing options.
+    /// The toast layout now relies on frame calculations. The presented view is measured
+    /// using Auto Layout and positioned either at the vertical center or above the bottom
+    /// edge with a proportional offset to mimic the previous constraint-based behaviour,
+    /// returning the final frame without mutating constraints directly.
     ///
     /// - Parameters:
     ///   - context: The layout context containing the views to be laid out.
     ///   - layoutGuide: The layout guide that defines sizing and positioning constraints.
-    func updateLayout(context: LayoutContext, layoutGuide: LayoutGuide) {
-
-        NSLayoutConstraint.deactivate(constraints)
-        constraints.removeAll(keepingCapacity: true)
-        defer { NSLayoutConstraint.activate(constraints) }
-
-        let edgeInsets = layoutGuide.contentInsets
+    /// - Returns: The frame that should be applied to the toast view.
+    func frameOfPresentedView(context: LayoutContext, layoutGuide: LayoutGuide) -> CGRect {
         let presentedView = context.presentedView
-        let containerView = context.containerView
 
-        // layout guide width.
-        switch layoutGuide.width {
-        case let .fixed(value):
-            let width = value - (edgeInsets.left + edgeInsets.right)
-            constraints.append(presentedView.widthAnchor.constraint(equalToConstant: width))
+        let bounds = layoutBounds(for: context, layoutGuide: layoutGuide)
+        let available = availableRect(within: bounds, contentInsets: layoutGuide.contentInsets)
 
-        case .flexible:
-            let width = min(containerView.bounds.width, containerView.bounds.height) - (edgeInsets.left + edgeInsets.right)
-            constraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: width))
+        let size = resolvedSize(
+            for: presentedView,
+            layoutGuide: layoutGuide,
+            availableRect: available,
+            containerSize: context.containerView.bounds.size
+        )
 
-        case let .fractional(value):
-            let constant = -(edgeInsets.left + edgeInsets.right)
-            let constraint = presentedView.widthAnchor.constraint(
-                equalTo: containerView.widthAnchor,
-                multiplier: value,
-                constant: constant)
-            constraint.priority = .required - 1
-            constraints.append(constraint)
-        }
-
-        // layout guide height.
-        switch layoutGuide.height {
-        case let .fixed(value):
-            let height = value - (edgeInsets.top + edgeInsets.bottom)
-            let constraint = presentedView.heightAnchor.constraint(equalToConstant: height)
-            constraints.append(constraint)
-
-        case .flexible:
-            let height = containerView.bounds.height - (edgeInsets.top + edgeInsets.bottom)
-            let constraint = presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: height)
-            constraints.append(constraint)
-
-        case let .fractional(value):
-            let constant = -(edgeInsets.top + edgeInsets.bottom)
-            let constraint = presentedView.heightAnchor.constraint(
-                equalTo: containerView.heightAnchor,
-                multiplier: value,
-                constant: constant)
-            constraint.priority = .required - 1
-            constraints.append(constraint)
-        }
+        let originX = available.minX + (available.width - size.width) * 0.5
+        let originY: CGFloat
 
         switch position {
         case .center:
-            let constraint = presentedView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
-            constraints.append(constraint)
+            originY = available.minY + (available.height - size.height) * 0.5
+
         case .bottom:
             // FIXME: 横屏和竖屏场景下，toast 底部的高度应定由当前设备方向高度重新计算
-            let bottomOffset = if containerView.frame.height > containerView.frame.width {
-                containerView.frame.height * 0.15
-            } else {
-                containerView.frame.height * 0.15
-            }
-            let constraint = presentedView.bottomAnchor.constraint(
-                equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: -edgeInsets.bottom - bottomOffset)
-            constraints.append(constraint)
+            let containerHeight = context.containerView.bounds.height
+            let bottomOffset = containerHeight * 0.15
+            originY = available.maxY - bottomOffset - size.height
         }
 
-        constraints.append(presentedView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor))
+        return CGRect(origin: CGPoint(x: originX, y: originY), size: size)
     }
 }

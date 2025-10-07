@@ -41,11 +41,12 @@ final class AlertContainerController: UIViewController {
 
     /// Called after the view controller's view is loaded into memory.
     ///
-    /// This method sets up the view controller's view with proper autoresizing mask
-    /// configuration for constraint-based layout.
+    /// This method sets up the view controller's view for the frame-based layout
+    /// system used by the surrounding alert infrastructure.
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = true
+        view.autoresizingMask = []
         // Do any additional setup after loading the view.
     }
 

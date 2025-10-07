@@ -275,20 +275,19 @@ extension Alert {
     }
 
     private func configureContainer() {
-        backdropView.addSubview(alertContainerController.view)
-        NSLayoutConstraint.activate([
-            alertContainerController.view.widthAnchor.constraint(lessThanOrEqualTo: backdropView.widthAnchor),
-            alertContainerController.view.heightAnchor.constraint(lessThanOrEqualTo: backdropView.heightAnchor)
-        ])
+        let contentContainerView = alertContainerController.view!
+        contentContainerView.translatesAutoresizingMaskIntoConstraints = true
+        contentContainerView.autoresizingMask = []
+        backdropView.addSubview(contentContainerView)
 
         // Add view or viewController
         if let view = alertContent as? UIView {
-            alertContainerController.view.addSubview(view)
+            contentContainerView.addSubview(view)
             layoutFill(view)
         } else if let viewController = alertContent as? UIViewController {
             viewController.willMove(toParent: alertContainerController)
             alertContainerController.addChild(viewController)
-            alertContainerController.view.addSubview(viewController.view)
+            contentContainerView.addSubview(viewController.view)
             viewController.didMove(toParent: alertContainerController)
             layoutFill(viewController.view)
         }
@@ -307,10 +306,15 @@ extension Alert {
 
     public func updateLayout() {
         willLayoutContainer()
-        layout.updateLayout(context: layoutContext, layoutGuide: layoutGuide)
-        // Ensure Auto Layout applies updated constraints immediately.
-        // When called within an animation block, this enables smooth constraint animations.
+        containerView.setNeedsLayout()
         containerView.layoutIfNeeded()
+        let targetFrame = layout.frameOfPresentedView(context: layoutContext, layoutGuide: layoutGuide)
+        let normalizedFrame = targetFrame.integral
+        if presentedView.frame != normalizedFrame {
+            presentedView.frame = normalizedFrame
+            presentedView.setNeedsLayout()
+        }
+        presentedView.layoutIfNeeded()
         didLayoutContainer()
     }
 

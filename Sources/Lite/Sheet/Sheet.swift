@@ -80,8 +80,7 @@ open class Sheet: Alert {
         self.layout = SheetLayout()
         layoutGuide = .init(
             width: .fractional(1),
-            height: .flexible,
-            ignoredSafeAreaEdges: [.bottom]
+            height: .flexible
         )
         
         // Create the coordinator for gesture delegate handling
@@ -148,9 +147,8 @@ open class Sheet: Alert {
         grabber.layer.masksToBounds = true
         grabber.isHidden = !isInteractive
         presentedView.addSubview(grabber)
-        let topAnchor = presentedView.topAnchor
         NSLayoutConstraint.activate([
-            grabber.topAnchor.constraint(equalTo: topAnchor, constant: 6),
+            grabber.topAnchor.constraint(equalTo: presentedView.topAnchor, constant: 6),
             grabber.centerXAnchor.constraint(equalTo: presentedView.centerXAnchor),
             grabber.widthAnchor.constraint(equalToConstant: 36),
             grabber.heightAnchor.constraint(equalToConstant: 5)

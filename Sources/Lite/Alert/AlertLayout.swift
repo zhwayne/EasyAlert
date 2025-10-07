@@ -14,94 +14,34 @@ import UIKit
 /// It supports flexible, fixed, and proportional sizing with proper constraint management.
 final class AlertLayout: AlertableLayout {
 
-    /// The array of active layout constraints that are currently applied to the alert.
-    ///
-    /// This array tracks all constraints created by the layout manager to ensure
-    /// they can be properly deactivated and reactivated during layout updates.
-    private var constraints: [NSLayoutConstraint] = []
-
     /// Updates the layout of the alert based on the provided context and layout guide.
     ///
-    /// This method applies width, height, and positioning constraints to the alert
-    /// based on the layout guide specifications. It handles different sizing modes
-    /// including fixed, flexible, and proportional sizing with proper edge insets.
+    /// This method calculates the alert frame using a frame-based layout system. It
+    /// resolves the available region, measures the presented view with Auto Layout,
+    /// and returns the resulting frame instead of mutating constraints directly.
     ///
     /// - Parameters:
     ///   - context: The layout context containing views and layout information.
     ///   - layoutGuide: The layout guide that defines size and positioning constraints.
-    func updateLayout(context: LayoutContext, layoutGuide: LayoutGuide) {
-
-        // Deactivate existing constraints before applying new ones
-        NSLayoutConstraint.deactivate(constraints)
-        constraints.removeAll(keepingCapacity: true)
-        defer { NSLayoutConstraint.activate(constraints) }
-
-        let edgeInsets = layoutGuide.contentInsets
+    /// - Returns: The frame that should be applied to the presented view.
+    func frameOfPresentedView(context: LayoutContext, layoutGuide: LayoutGuide) -> CGRect {
         let presentedView = context.presentedView
-        let containerView = context.containerView
 
-        // Apply width constraints based on layout guide
-        switch layoutGuide.width {
-        case let .fixed(value):
-            // Fixed width: alert has a specific width regardless of container size
-            let width = value - (edgeInsets.left + edgeInsets.right)
-            constraints.append(presentedView.widthAnchor.constraint(equalToConstant: width))
+        let bounds = layoutBounds(for: context, layoutGuide: layoutGuide)
+        let available = availableRect(within: bounds, contentInsets: layoutGuide.contentInsets)
 
-        case .flexible:
-            // Flexible width: alert adapts to container width with insets
-            let width = containerView.bounds.width - (edgeInsets.left + edgeInsets.right)
-            constraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: width))
-
-        case let .fractional(value):
-            // Fractional width: alert width is a percentage of container width
-            let constant = -(edgeInsets.left + edgeInsets.right)
-            let constraint = presentedView.widthAnchor.constraint(
-                equalTo: containerView.widthAnchor,
-                multiplier: value,
-                constant: constant)
-            constraint.priority = .required - 1
-            constraints.append(constraint)
-        }
-
-        // Apply height constraints based on layout guide
-        switch layoutGuide.height {
-        case let .fixed(value):
-            // Fixed height: alert has a specific height regardless of content
-            let height = value - (edgeInsets.top + edgeInsets.bottom)
-            let constraint = presentedView.heightAnchor.constraint(equalToConstant: height)
-            constraints.append(constraint)
-
-        case .flexible:
-            // Flexible height: alert adapts to container height with insets
-            let height = containerView.bounds.height - (edgeInsets.top + edgeInsets.bottom)
-            let constraint = presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: height)
-            constraints.append(constraint)
-
-        case let .fractional(value):
-            // Fractional height: alert height is a percentage of container height
-            let constant = -(edgeInsets.top + edgeInsets.bottom)
-            let constraint = presentedView.heightAnchor.constraint(
-                equalTo: containerView.heightAnchor,
-                multiplier: value,
-                constant: constant)
-            constraint.priority = .required - 1
-            constraints.append(constraint)
-        }
-
-        // Center the alert horizontally with edge inset compensation
-        constraints.append(
-            presentedView.centerXAnchor.constraint(
-                equalTo: containerView.centerXAnchor,
-                constant: (abs(edgeInsets.left) - abs(edgeInsets.right)) / 2
-            )
+        let size = resolvedSize(
+            for: presentedView,
+            layoutGuide: layoutGuide,
+            availableRect: available,
+            containerSize: context.containerView.bounds.size
         )
-        
-        // Center the alert vertically with edge inset compensation
-        constraints.append(
-            presentedView.centerYAnchor.constraint(
-                equalTo: containerView.centerYAnchor,
-                constant: (abs(edgeInsets.top) - abs(edgeInsets.bottom))
-            )
+
+        let origin = CGPoint(
+            x: available.minX + (available.width - size.width) * 0.5,
+            y: available.minY + (available.height - size.height) * 0.5
         )
+
+        return CGRect(origin: origin, size: size)
     }
 }

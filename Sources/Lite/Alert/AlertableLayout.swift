@@ -55,30 +55,20 @@ import UIKit
     /// The insets to apply around the alert content.
     public var contentInsets: UIEdgeInsets
 
-    /// The safe-area edges to ignore when positioning.
-    ///
-    /// Use this to specify which edges should use the container's bounds instead of
-    /// the safe area as the reference for layout. For example, include `.bottom`
-    /// to anchor to the container's bottom edge. Defaults to none.
-    public var ignoredSafeAreaEdges: UIRectEdge = []
-
     /// Creates a new layout guide with the specified parameters.
     ///
     /// - Parameters:
     ///   - width: The width sizing mode for the alert.
     ///   - height: The height sizing mode for the alert.
     ///   - contentInsets: The insets to apply around the alert content. Defaults to `.zero`.
-    ///   - ignoredSafeAreaEdges: Safe-area edges to ignore (defaults to `[]`).
     public init(
         width: Width,
         height: Height,
-        contentInsets: UIEdgeInsets = .zero,
-        ignoredSafeAreaEdges: UIRectEdge = []
+        contentInsets: UIEdgeInsets = .zero
     ) {
         self.width = width
         self.height = height
         self.contentInsets = contentInsets
-        self.ignoredSafeAreaEdges = ignoredSafeAreaEdges
     }
 }
 
@@ -89,7 +79,7 @@ import UIKit
 /// behaviors, such as centering, edge alignment, or custom positioning logic.
 @MainActor public protocol AlertableLayout {
 
-    /// Updates the layout of the alert during the transition.
+    /// Calculates the frame that should be applied to the presented view.
     ///
     /// This method is called whenever the alert's layout needs to be updated,
     /// such as during presentation, dismissal, or orientation changes.
@@ -97,7 +87,8 @@ import UIKit
     /// - Parameters:
     ///   - context: The layout context containing views and layout information.
     ///   - layoutGuide: The layout guide that defines size and positioning constraints.
-    func updateLayout(context: LayoutContext, layoutGuide: LayoutGuide)
+    /// - Returns: The frame that should be assigned to the presented view.
+    func frameOfPresentedView(context: LayoutContext, layoutGuide: LayoutGuide) -> CGRect
 }
 
 /// A context object for use during the transition animation of an alert.
@@ -117,4 +108,284 @@ import UIKit
 
     /// The current interface orientation of the device.
     public let interfaceOrientation: UIInterfaceOrientation
+}
+
+// MARK: - Frame-based layout helpers
+
+@MainActor
+extension AlertableLayout {
+
+    /// Calculates the effective bounds for layout by applying safe-area adjustments.
+    ///
+    /// - Parameters:
+    ///   - context: The current layout context.
+    ///   - layoutGuide: The layout guide that describes sizing behaviour.
+    /// - Returns: A rectangle describing the usable layout region.
+    func layoutBounds(for context: LayoutContext, layoutGuide: LayoutGuide) -> CGRect {
+        let containerView = context.containerView
+        var bounds = containerView.bounds
+        guard bounds.width > 0 || bounds.height > 0 else { return .zero }
+
+        let safeInsets = containerView.safeAreaInsets
+        bounds.origin.x += safeInsets.left
+        bounds.origin.y += safeInsets.top
+        bounds.size.width -= (safeInsets.left + safeInsets.right)
+        bounds.size.height -= (safeInsets.top + safeInsets.bottom)
+        return bounds.clampedToPositiveSize()
+    }
+
+    /// Resolves the available layout rectangle by applying content insets to the layout bounds.
+    ///
+    /// - Parameters:
+    ///   - bounds: The bounds produced by ``layoutBounds(for:layoutGuide:)``.
+    ///   - contentInsets: Insets describing additional padding for the presented view.
+    /// - Returns: A rectangle representing the final area available for layout calculations.
+    func availableRect(within bounds: CGRect, contentInsets: UIEdgeInsets) -> CGRect {
+        var rect = bounds
+        rect.origin.x += contentInsets.left
+        rect.origin.y += contentInsets.top
+        rect.size.width -= (contentInsets.left + contentInsets.right)
+        rect.size.height -= (contentInsets.top + contentInsets.bottom)
+        return rect.clampedToPositiveSize()
+    }
+
+    /// Calculates the target size for the presented view based on the layout configuration.
+    ///
+    /// - Parameters:
+    ///   - view: The view that should be presented.
+    ///   - layoutGuide: The layout guide describing sizing behaviour.
+    ///   - availableRect: The rectangle available for layout.
+    ///   - containerSize: The raw size of the container view (prior to safe-area adjustments).
+    ///   - widthLimit: An optional upper bound for the resulting width.
+    ///   - heightLimit: An optional upper bound for the resulting height.
+    /// - Returns: The resolved size that should be applied to the presented view.
+    func resolvedSize(
+        for view: UIView,
+        layoutGuide: LayoutGuide,
+        availableRect: CGRect,
+        containerSize: CGSize,
+        widthLimit: CGFloat? = nil,
+        heightLimit: CGFloat? = nil
+    ) -> CGSize {
+        let availableWidth = max(0, availableRect.width)
+        let availableHeight = max(0, availableRect.height)
+
+        let horizontalLimit = widthLimit.map { min($0, availableWidth) }
+        let verticalLimit = heightLimit.map { min($0, availableHeight) }
+
+        let horizontalDimension = LayoutDimensionConstraint.horizontal(
+            rule: layoutGuide.width,
+            availableLength: availableWidth,
+            containerLength: containerSize.width,
+            insetSum: layoutGuide.contentInsets.left + layoutGuide.contentInsets.right,
+            limit: horizontalLimit
+        )
+
+        let verticalDimension = LayoutDimensionConstraint.vertical(
+            rule: layoutGuide.height,
+            availableLength: availableHeight,
+            containerLength: containerSize.height,
+            insetSum: layoutGuide.contentInsets.top + layoutGuide.contentInsets.bottom,
+            limit: verticalLimit
+        )
+
+        let targetSize = CGSize(
+            width: max(0, horizontalDimension.targetLength),
+            height: max(0, verticalDimension.targetLength)
+        )
+
+        let measuredSize = view.systemLayoutSizeFitting(
+            targetSize,
+            withHorizontalFittingPriority: horizontalDimension.priority,
+            verticalFittingPriority: verticalDimension.priority
+        )
+
+        var width = horizontalDimension.resolvedLength(
+            measured: measuredSize.width,
+            available: availableWidth
+        )
+        var height = verticalDimension.resolvedLength(
+            measured: measuredSize.height,
+            available: availableHeight
+        )
+
+        if width == 0 {
+            width = fallbackLength(
+                current: view.bounds.width,
+                intrinsic: view.intrinsicContentSize.width,
+                dimension: horizontalDimension,
+                available: availableWidth
+            )
+        }
+
+        if height == 0 {
+            height = fallbackLength(
+                current: view.bounds.height,
+                intrinsic: view.intrinsicContentSize.height,
+                dimension: verticalDimension,
+                available: availableHeight
+            )
+        }
+
+        return CGSize(width: width.roundedForLayout(), height: height.roundedForLayout())
+    }
+
+    /// Produces a fallback length when Auto Layout measurement returns zero.
+    private func fallbackLength(
+        current: CGFloat,
+        intrinsic: CGFloat,
+        dimension: LayoutDimensionConstraint,
+        available: CGFloat
+    ) -> CGFloat {
+        let candidates: [CGFloat] = [current, intrinsic, dimension.targetLength, dimension.limit ?? 0, available]
+        var resolved: CGFloat = 0
+        for value in candidates where value.isFinite && value > 0 {
+            resolved = value
+            break
+        }
+        if resolved == 0 { return 0 }
+        var length = resolved
+        if let limit = dimension.limit {
+            length = min(length, limit)
+        }
+        if dimension.clampToAvailable {
+            length = min(length, available)
+        }
+        return length
+    }
+}
+
+// MARK: - LayoutDimensionConstraint
+
+@MainActor
+private struct LayoutDimensionConstraint {
+
+    enum Mode { case fixed, flexible, fractional }
+
+    let targetLength: CGFloat
+    let priority: UILayoutPriority
+    let limit: CGFloat?
+    let clampToAvailable: Bool
+    let mode: Mode
+
+    func resolvedLength(measured: CGFloat, available: CGFloat) -> CGFloat {
+        var length: CGFloat
+        switch mode {
+        case .fixed:
+            length = targetLength
+        case .fractional:
+            length = targetLength
+        case .flexible:
+            let measurement = measured.isFinite && measured > 0 ? measured : targetLength
+            length = min(targetLength, measurement)
+        }
+        if let limit {
+            length = min(length, limit)
+        }
+        if clampToAvailable {
+            length = min(length, available)
+        }
+        return max(0, length)
+    }
+
+    static func horizontal(
+        rule: Width,
+        availableLength: CGFloat,
+        containerLength: CGFloat,
+        insetSum: CGFloat,
+        limit: CGFloat?
+    ) -> LayoutDimensionConstraint {
+        switch rule {
+        case let .fixed(value):
+            return LayoutDimensionConstraint(
+                targetLength: max(0, value - insetSum),
+                priority: .required,
+                limit: limit,
+                clampToAvailable: false,
+                mode: .fixed
+            )
+        case .flexible:
+            let allowed = max(0, min(availableLength, limit ?? availableLength))
+            return LayoutDimensionConstraint(
+                targetLength: allowed,
+                priority: .fittingSizeLevel,
+                limit: allowed,
+                clampToAvailable: true,
+                mode: .flexible
+            )
+        case let .fractional(value):
+            let raw = max(0, containerLength * value - insetSum)
+            let allowed = max(0, min(limit ?? availableLength, availableLength))
+            return LayoutDimensionConstraint(
+                targetLength: raw,
+                priority: .required,
+                limit: allowed,
+                clampToAvailable: true,
+                mode: .fractional
+            )
+        }
+    }
+
+    static func vertical(
+        rule: Height,
+        availableLength: CGFloat,
+        containerLength: CGFloat,
+        insetSum: CGFloat,
+        limit: CGFloat?
+    ) -> LayoutDimensionConstraint {
+        switch rule {
+        case let .fixed(value):
+            return LayoutDimensionConstraint(
+                targetLength: max(0, value - insetSum),
+                priority: .required,
+                limit: limit,
+                clampToAvailable: false,
+                mode: .fixed
+            )
+        case .flexible:
+            let allowed = max(0, min(availableLength, limit ?? availableLength))
+            return LayoutDimensionConstraint(
+                targetLength: allowed,
+                priority: .fittingSizeLevel,
+                limit: allowed,
+                clampToAvailable: true,
+                mode: .flexible
+            )
+        case let .fractional(value):
+            let raw = max(0, containerLength * value - insetSum)
+            let allowed = max(0, min(limit ?? availableLength, availableLength))
+            return LayoutDimensionConstraint(
+                targetLength: raw,
+                priority: .required,
+                limit: allowed,
+                clampToAvailable: true,
+                mode: .fractional
+            )
+        }
+    }
+}
+
+// MARK: - Internal utilities
+
+private extension CGRect {
+    func clampedToPositiveSize() -> CGRect {
+        var rect = standardized
+        if rect.size.width < 0 {
+            rect.size.width = 0
+        }
+        if rect.size.height < 0 {
+            rect.size.height = 0
+        }
+        return rect
+    }
+
+}
+
+private extension CGFloat {
+    func roundedForLayout() -> CGFloat {
+        guard isFinite else { return 0 }
+        let scale = UIScreen.main.scale
+        guard scale.isFinite && scale > 0 else { return self }
+        return (self * scale).rounded() / scale
+    }
 }
