@@ -32,7 +32,6 @@ final class SheetLayout: AlertableLayout {
         let bounds = layoutBounds(for: context, layoutGuide: layoutGuide)
         let available = availableRect(within: bounds, contentInsets: layoutGuide.contentInsets)
         let widthLimit = context.interfaceOrientation.isLandscape ? CGFloat(414) : nil
-
         let size = resolvedSize(
             for: presentedView,
             layoutGuide: layoutGuide,
@@ -43,8 +42,20 @@ final class SheetLayout: AlertableLayout {
 
         let safeInsets = context.containerView.safeAreaInsets
         let containerBounds = context.containerView.bounds
-        let finalHeight = min(containerBounds.height, size.height + safeInsets.bottom)
-        let originY = containerBounds.maxY - finalHeight
+        
+        let finalHeight: CGFloat
+        let originY: CGFloat
+        
+        // 根据 LayoutGuide.edgesForExtendedSafeArea 是否包含 .bottom 决定底部行为
+        if layoutGuide.edgesForExtendedSafeArea.contains(.bottom) {
+            // 紧贴底部：高度包含安全区域，位置从容器底部开始
+            finalHeight = min(containerBounds.height, size.height + safeInsets.bottom)
+            originY = containerBounds.maxY - finalHeight - layoutGuide.contentInsets.bottom
+        } else {
+            // 底部留白：高度不包含安全区域，位置考虑安全区域
+            finalHeight = min(containerBounds.height - safeInsets.bottom, size.height)
+            originY = containerBounds.maxY - safeInsets.bottom - finalHeight - layoutGuide.contentInsets.bottom
+        }
 
         let origin = CGPoint(
             x: available.minX + (available.width - size.width) * 0.5,

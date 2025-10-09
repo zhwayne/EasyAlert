@@ -38,7 +38,7 @@ import UIKit
     public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible) {
         didSet {
             guard isActive else { return }
-            withSpringTimingAnimation { self.updateLayout() }
+            updateLayout()
          }
     }
 
@@ -120,7 +120,9 @@ import UIKit
             object: nil,
             using: { [weak self] note in
                 guard let self, isActive else { return }
-                updateLayout()
+                DispatchQueue.main.async {
+                    self.updateLayout()
+                }
             })
     }
 

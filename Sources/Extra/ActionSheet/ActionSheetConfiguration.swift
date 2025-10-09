@@ -27,10 +27,11 @@ extension ActionSheet {
         public var layoutGuide: LayoutGuide = .init(
             width: .fractional(1),
             height: .flexible,
-            contentInsets: UIEdgeInsets(top: 0, left: 8, bottom: 8, right: 8)
+            contentInsets: UIEdgeInsets(top: 0, left: 8, bottom: 40, right: 8),
+            edgesForExtendedSafeArea: []
         )
 
-        /// The corner radius to apply to the action sheet's visual elements.
+        /// The corner radius to apply to the action sheet's visual elem	ents.
         ///
         /// This value determines the roundness of the action sheet's corners, affecting
         /// both the background and action button styling. The default value of 13

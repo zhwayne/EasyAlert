@@ -113,9 +113,6 @@ private struct DynamicHeightContentView: View {
         }
 
         Slider(value: $height, in: 240...600, step: 1)
-          .onChange(of: height) { newValue in
-            onHeightChange(CGFloat(newValue))
-          }
       }
       .padding(.horizontal)
 
@@ -125,7 +122,6 @@ private struct DynamicHeightContentView: View {
         Button {
           let target = max(240, min(600, height - 40))
           height = target
-          onHeightChange(CGFloat(target))
         } label: {
           Text("-40")
             .font(.system(size: 16, weight: .medium))
@@ -139,7 +135,6 @@ private struct DynamicHeightContentView: View {
         Button {
           let target = max(240, min(600, height + 40))
           height = target
-          onHeightChange(CGFloat(target))
         } label: {
           Text("+40")
             .font(.system(size: 16, weight: .medium))
@@ -151,6 +146,9 @@ private struct DynamicHeightContentView: View {
         }
       }
       .padding(.horizontal)
+      .onChange(of: height) { newValue in
+        onHeightChange(CGFloat(newValue))
+      }
 
       Button {
         alert?.dismiss()

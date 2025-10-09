@@ -46,8 +46,10 @@
 			exceptions = (
 				29A82F432E8833FD00CD7FF1 /* Exceptions for "EasyAlert" folder in "EasyAlert_Example" target */,
 			);
+			indentWidth = 2;
 			path = EasyAlert;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 

@@ -55,6 +55,24 @@ import UIKit
     /// The insets to apply around the alert content.
     public var contentInsets: UIEdgeInsets
 
+    /// Describes which edges may extend into the safe area. Empty set preserves all.
+    ///
+    /// By default, `.all` are enabled.
+    public var edgesForExtendedSafeArea: ExtendedSafeAreaEdges = .all
+
+    /// An option set of safe-area edges that are allowed to extend.
+    @MainActor public struct ExtendedSafeAreaEdges: @MainActor OptionSet {
+        public let rawValue: Int
+        public init(rawValue: Int) { self.rawValue = rawValue }
+
+        public static let top    = ExtendedSafeAreaEdges(rawValue: 1 << 0)
+        public static let left   = ExtendedSafeAreaEdges(rawValue: 1 << 1)
+        public static let bottom = ExtendedSafeAreaEdges(rawValue: 1 << 2)
+        public static let right  = ExtendedSafeAreaEdges(rawValue: 1 << 3)
+
+        public static let all: ExtendedSafeAreaEdges = [.top, .left, .bottom, .right]
+    }
+
     /// Creates a new layout guide with the specified parameters.
     ///
     /// - Parameters:
@@ -64,11 +82,13 @@ import UIKit
     public init(
         width: Width,
         height: Height,
-        contentInsets: UIEdgeInsets = .zero
+        contentInsets: UIEdgeInsets = .zero,
+        edgesForExtendedSafeArea: ExtendedSafeAreaEdges = .all
     ) {
         self.width = width
         self.height = height
         self.contentInsets = contentInsets
+        self.edgesForExtendedSafeArea = edgesForExtendedSafeArea
     }
 }
 
