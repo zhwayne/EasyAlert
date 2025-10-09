@@ -14,34 +14,71 @@ import UIKit
 /// It supports flexible, fixed, and proportional sizing with proper constraint management.
 final class AlertLayout: AlertableLayout {
 
-    /// Updates the layout of the alert based on the provided context and layout guide.
-    ///
-    /// This method calculates the alert frame using a frame-based layout system. It
-    /// resolves the available region, measures the presented view with Auto Layout,
-    /// and returns the resulting frame instead of mutating constraints directly.
-    ///
-    /// - Parameters:
-    ///   - context: The layout context containing views and layout information.
-    ///   - layoutGuide: The layout guide that defines size and positioning constraints.
-    /// - Returns: The frame that should be applied to the presented view.
-    func frameOfPresentedView(context: LayoutContext, layoutGuide: LayoutGuide) -> CGRect {
+    private var activeConstraints: [NSLayoutConstraint] = []
+
+    /// Updates (re-installs) constraints for the presented view using the current `layoutGuide`.
+    func updateLayoutConstraints(context: LayoutContext, layoutGuide: LayoutGuide) {
+        let container = context.containerView
         let presentedView = context.presentedView
 
-        let bounds = layoutBounds(for: context, layoutGuide: layoutGuide)
-        let available = availableRect(within: bounds, contentInsets: layoutGuide.contentInsets)
+        NSLayoutConstraint.deactivate(activeConstraints)
+        activeConstraints.removeAll()
 
-        let size = resolvedSize(
-            for: presentedView,
-            layoutGuide: layoutGuide,
-            availableRect: available,
-            containerSize: context.containerView.bounds.size
-        )
+        presentedView.translatesAutoresizingMaskIntoConstraints = false
 
-        let origin = CGPoint(
-            x: available.minX + (available.width - size.width) * 0.5,
-            y: available.minY + (available.height - size.height) * 0.5
-        )
+        // Determine reference anchors based on safe-area extension preferences
+        let edges = layoutGuide.edgesForExtendedSafeArea
+        let topRef = edges.contains(.top) ? container.topAnchor : container.safeAreaLayoutGuide.topAnchor
+        let leftRef = edges.contains(.left) ? container.leftAnchor : container.safeAreaLayoutGuide.leftAnchor
+        let bottomRef = edges.contains(.bottom) ? container.bottomAnchor : container.safeAreaLayoutGuide.bottomAnchor
+        let rightRef = edges.contains(.right) ? container.rightAnchor : container.safeAreaLayoutGuide.rightAnchor
 
-        return CGRect(origin: origin, size: size)
+        // Always keep inside insets
+        activeConstraints.append(presentedView.topAnchor.constraint(greaterThanOrEqualTo: topRef, constant: layoutGuide.contentInsets.top))
+        activeConstraints.append(presentedView.leftAnchor.constraint(greaterThanOrEqualTo: leftRef, constant: layoutGuide.contentInsets.left))
+        activeConstraints.append(presentedView.rightAnchor.constraint(lessThanOrEqualTo: rightRef, constant: -layoutGuide.contentInsets.right))
+        activeConstraints.append(presentedView.bottomAnchor.constraint(lessThanOrEqualTo: bottomRef, constant: -layoutGuide.contentInsets.bottom))
+
+        // Center within container
+        activeConstraints.append(presentedView.centerXAnchor.constraint(equalTo: container.centerXAnchor))
+        activeConstraints.append(presentedView.centerYAnchor.constraint(equalTo: container.centerYAnchor))
+
+        // Size rules
+        switch layoutGuide.width {
+        case let .fixed(value):
+            let width = max(0, value - (layoutGuide.contentInsets.left + layoutGuide.contentInsets.right))
+            activeConstraints.append(presentedView.widthAnchor.constraint(equalToConstant: width))
+        case .flexible:
+            // Cap to available width
+            let safeInsets = container.safeAreaInsets
+            let leftSafe = edges.contains(.left) ? 0 : safeInsets.left
+            let rightSafe = edges.contains(.right) ? 0 : safeInsets.right
+            let available = max(0, container.bounds.width - leftSafe - rightSafe - layoutGuide.contentInsets.left - layoutGuide.contentInsets.right)
+            activeConstraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: available))
+        case let .fractional(f):
+            let insetSum = layoutGuide.contentInsets.left + layoutGuide.contentInsets.right
+            let ref = container.widthAnchor
+            let c = -insetSum
+            activeConstraints.append(presentedView.widthAnchor.constraint(equalTo: ref, multiplier: max(0, f), constant: c))
+        }
+
+        switch layoutGuide.height {
+        case let .fixed(value):
+            let height = max(0, value - (layoutGuide.contentInsets.top + layoutGuide.contentInsets.bottom))
+            activeConstraints.append(presentedView.heightAnchor.constraint(equalToConstant: height))
+        case .flexible:
+            let safeInsets = container.safeAreaInsets
+            let topSafe = edges.contains(.top) ? 0 : safeInsets.top
+            let bottomSafe = edges.contains(.bottom) ? 0 : safeInsets.bottom
+            let available = max(0, container.bounds.height - topSafe - bottomSafe - layoutGuide.contentInsets.top - layoutGuide.contentInsets.bottom)
+            activeConstraints.append(presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: available))
+        case let .fractional(f):
+            let insetSum = layoutGuide.contentInsets.top + layoutGuide.contentInsets.bottom
+            let ref = container.heightAnchor
+            let c = -insetSum
+            activeConstraints.append(presentedView.heightAnchor.constraint(equalTo: ref, multiplier: max(0, f), constant: c))
+        }
+
+        NSLayoutConstraint.activate(activeConstraints)
     }
 }

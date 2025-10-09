@@ -14,54 +14,61 @@ import UIKit
 /// and positions sheets at the bottom of the screen with proper safe area handling.
 final class SheetLayout: AlertableLayout {
 
-    /// Updates the layout of the sheet view based on the provided context and layout guide.
-    ///
-    /// The sheet layout uses a frame-based system that measures the presented view
-    /// and positions it along the bottom edge of the container. When running in
-    /// landscape mode, the layout constrains the maximum width to match the original
-    /// constraint-based implementation (414pt cap), and returns the final frame instead
-    /// of mutating constraints.
-    ///
-    /// - Parameters:
-    ///   - context: The layout context containing the views to be laid out.
-    ///   - layoutGuide: The layout guide that defines sizing and positioning constraints.
-    /// - Returns: The frame that should be applied to the presented sheet view.
-    func frameOfPresentedView(context: LayoutContext, layoutGuide: LayoutGuide) -> CGRect {
+    private var activeConstraints: [NSLayoutConstraint] = []
+
+    /// Updates constraints to position the sheet at the bottom with optional safe-area handling.
+    func updateLayoutConstraints(context: LayoutContext, layoutGuide: LayoutGuide) {
+        let container = context.containerView
         let presentedView = context.presentedView
 
-        let bounds = layoutBounds(for: context, layoutGuide: layoutGuide)
-        let available = availableRect(within: bounds, contentInsets: layoutGuide.contentInsets)
-        let widthLimit = context.interfaceOrientation.isLandscape ? CGFloat(414) : nil
-        let size = resolvedSize(
-            for: presentedView,
-            layoutGuide: layoutGuide,
-            availableRect: available,
-            containerSize: context.containerView.bounds.size,
-            widthLimit: widthLimit
-        )
+        NSLayoutConstraint.deactivate(activeConstraints)
+        activeConstraints.removeAll()
 
-        let safeInsets = context.containerView.safeAreaInsets
-        let containerBounds = context.containerView.bounds
-        
-        let finalHeight: CGFloat
-        let originY: CGFloat
-        
-        // 根据 LayoutGuide.edgesForExtendedSafeArea 是否包含 .bottom 决定底部行为
-        if layoutGuide.edgesForExtendedSafeArea.contains(.bottom) {
-            // 紧贴底部：高度包含安全区域，位置从容器底部开始
-            finalHeight = min(containerBounds.height, size.height + safeInsets.bottom)
-            originY = containerBounds.maxY - finalHeight - layoutGuide.contentInsets.bottom
-        } else {
-            // 底部留白：高度不包含安全区域，位置考虑安全区域
-            finalHeight = min(containerBounds.height - safeInsets.bottom, size.height)
-            originY = containerBounds.maxY - safeInsets.bottom - finalHeight - layoutGuide.contentInsets.bottom
+        presentedView.translatesAutoresizingMaskIntoConstraints = false
+
+        // Horizontal sizing
+        switch layoutGuide.width {
+        case let .fixed(value):
+            let w = max(0, value - (layoutGuide.contentInsets.left + layoutGuide.contentInsets.right))
+            activeConstraints.append(presentedView.widthAnchor.constraint(equalToConstant: w))
+        case .flexible:
+            // Cap width to available with a landscape limit of 414pt
+            let safeInsets = container.safeAreaInsets
+            let leftSafe = layoutGuide.edgesForExtendedSafeArea.contains(.left) ? 0 : safeInsets.left
+            let rightSafe = layoutGuide.edgesForExtendedSafeArea.contains(.right) ? 0 : safeInsets.right
+            var available = max(0, container.bounds.width - leftSafe - rightSafe - layoutGuide.contentInsets.left - layoutGuide.contentInsets.right)
+            if context.interfaceOrientation.isLandscape { available = min(available, 414) }
+            activeConstraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: available))
+        case let .fractional(f):
+            let insetSum = layoutGuide.contentInsets.left + layoutGuide.contentInsets.right
+            let c = -insetSum
+            activeConstraints.append(presentedView.widthAnchor.constraint(equalTo: container.widthAnchor, multiplier: max(0, f), constant: c))
         }
 
-        let origin = CGPoint(
-            x: available.minX + (available.width - size.width) * 0.5,
-            y: originY
-        )
+        // Vertical sizing
+        switch layoutGuide.height {
+        case let .fixed(value):
+            let h = max(0, value - (layoutGuide.contentInsets.top + layoutGuide.contentInsets.bottom))
+            activeConstraints.append(presentedView.heightAnchor.constraint(equalToConstant: h))
+        case .flexible:
+            let safeInsets = container.safeAreaInsets
+            let topSafe = layoutGuide.edgesForExtendedSafeArea.contains(.top) ? 0 : safeInsets.top
+            let bottomSafe = layoutGuide.edgesForExtendedSafeArea.contains(.bottom) ? 0 : safeInsets.bottom
+            let available = max(0, container.bounds.height - topSafe - bottomSafe - layoutGuide.contentInsets.top - layoutGuide.contentInsets.bottom)
+            activeConstraints.append(presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: available))
+        case let .fractional(f):
+            let insetSum = layoutGuide.contentInsets.top + layoutGuide.contentInsets.bottom
+            let c = -insetSum
+            activeConstraints.append(presentedView.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: max(0, f), constant: c))
+        }
 
-        return CGRect(origin: origin, size: CGSize(width: size.width, height: finalHeight))
+        // Horizontal position center
+        activeConstraints.append(presentedView.centerXAnchor.constraint(equalTo: container.centerXAnchor))
+
+        // Bottom position considering safe-area preference
+        let bottomAnchor = layoutGuide.edgesForExtendedSafeArea.contains(.bottom) ? container.bottomAnchor : container.safeAreaLayoutGuide.bottomAnchor
+        activeConstraints.append(presentedView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -layoutGuide.contentInsets.bottom))
+
+        NSLayoutConstraint.activate(activeConstraints)
     }
 }

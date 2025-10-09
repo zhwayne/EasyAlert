@@ -278,7 +278,7 @@ extension Alert {
 
     private func configureContainer() {
         let contentContainerView = alertContainerController.view!
-        contentContainerView.translatesAutoresizingMaskIntoConstraints = true
+        contentContainerView.translatesAutoresizingMaskIntoConstraints = false
         contentContainerView.autoresizingMask = []
         backdropView.addSubview(contentContainerView)
 
@@ -308,15 +308,10 @@ extension Alert {
 
     public func updateLayout() {
         willLayoutContainer()
+        presentedView.translatesAutoresizingMaskIntoConstraints = false
+        layout.updateLayoutConstraints(context: layoutContext, layoutGuide: layoutGuide)
         containerView.setNeedsLayout()
         containerView.layoutIfNeeded()
-        let targetFrame = layout.frameOfPresentedView(context: layoutContext, layoutGuide: layoutGuide)
-        let normalizedFrame = targetFrame.integral
-        if presentedView.frame != normalizedFrame {
-            presentedView.frame = normalizedFrame
-            presentedView.setNeedsLayout()
-        }
-        presentedView.layoutIfNeeded()
         didLayoutContainer()
     }
 

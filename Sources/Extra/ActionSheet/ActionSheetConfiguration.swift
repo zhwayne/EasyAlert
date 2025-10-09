@@ -27,7 +27,7 @@ extension ActionSheet {
         public var layoutGuide: LayoutGuide = .init(
             width: .fractional(1),
             height: .flexible,
-            contentInsets: UIEdgeInsets(top: 0, left: 8, bottom: 40, right: 8),
+            contentInsets: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8),
             edgesForExtendedSafeArea: []
         )
 
