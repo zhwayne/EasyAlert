@@ -26,7 +26,7 @@ extension ActionSheet {
         /// with fractional width and flexible height by default.
         public var layoutGuide: LayoutGuide = .init(
             width: .fractional(1),
-            height: .flexible,
+            height: .intrinsic,
             contentInsets: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8),
             edgesForExtendedSafeArea: []
         )

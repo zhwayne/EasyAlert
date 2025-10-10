@@ -48,35 +48,36 @@ final class AlertLayout: AlertableLayout {
         case let .fixed(value):
             let width = max(0, value - (layoutGuide.contentInsets.left + layoutGuide.contentInsets.right))
             activeConstraints.append(presentedView.widthAnchor.constraint(equalToConstant: width))
-        case .flexible:
-            // Cap to available width
-            let safeInsets = container.safeAreaInsets
-            let leftSafe = edges.contains(.left) ? 0 : safeInsets.left
-            let rightSafe = edges.contains(.right) ? 0 : safeInsets.right
-            let available = max(0, container.bounds.width - leftSafe - rightSafe - layoutGuide.contentInsets.left - layoutGuide.contentInsets.right)
-            activeConstraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: available))
         case let .fractional(f):
             let insetSum = layoutGuide.contentInsets.left + layoutGuide.contentInsets.right
             let ref = container.widthAnchor
             let c = -insetSum
             activeConstraints.append(presentedView.widthAnchor.constraint(equalTo: ref, multiplier: max(0, f), constant: c))
+        case .intrinsic:
+            // For alerts, intrinsic width allows the view to size itself within available space
+            let safeInsets = container.safeAreaInsets
+            let leftSafe = edges.contains(.left) ? 0 : safeInsets.left
+            let rightSafe = edges.contains(.right) ? 0 : safeInsets.right
+            let available = max(0, container.bounds.width - leftSafe - rightSafe - layoutGuide.contentInsets.left - layoutGuide.contentInsets.right)
+            activeConstraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: available))
         }
 
         switch layoutGuide.height {
         case let .fixed(value):
             let height = max(0, value - (layoutGuide.contentInsets.top + layoutGuide.contentInsets.bottom))
             activeConstraints.append(presentedView.heightAnchor.constraint(equalToConstant: height))
-        case .flexible:
-            let safeInsets = container.safeAreaInsets
-            let topSafe = edges.contains(.top) ? 0 : safeInsets.top
-            let bottomSafe = edges.contains(.bottom) ? 0 : safeInsets.bottom
-            let available = max(0, container.bounds.height - topSafe - bottomSafe - layoutGuide.contentInsets.top - layoutGuide.contentInsets.bottom)
-            activeConstraints.append(presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: available))
         case let .fractional(f):
             let insetSum = layoutGuide.contentInsets.top + layoutGuide.contentInsets.bottom
             let ref = container.heightAnchor
             let c = -insetSum
             activeConstraints.append(presentedView.heightAnchor.constraint(equalTo: ref, multiplier: max(0, f), constant: c))
+        case .intrinsic:
+            // For alerts, intrinsic height allows the view to size itself within available space
+            let safeInsets = container.safeAreaInsets
+            let topSafe = edges.contains(.top) ? 0 : safeInsets.top
+            let bottomSafe = edges.contains(.bottom) ? 0 : safeInsets.bottom
+            let available = max(0, container.bounds.height - topSafe - bottomSafe - layoutGuide.contentInsets.top - layoutGuide.contentInsets.bottom)
+            activeConstraints.append(presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: available))
         }
 
         NSLayoutConstraint.activate(activeConstraints)

@@ -80,7 +80,7 @@ open class Sheet: Alert {
         self.layout = SheetLayout()
         layoutGuide = .init(
             width: .fractional(1),
-            height: .flexible
+            height: .intrinsic
         )
         
         // Create the coordinator for gesture delegate handling

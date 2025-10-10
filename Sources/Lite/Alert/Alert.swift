@@ -35,7 +35,7 @@ import UIKit
     /// The layout guide that defines the alert's size constraints.
     ///
     /// This guide determines how the alert is sized and positioned within its container.
-    public var layoutGuide = LayoutGuide(width: .flexible, height: .flexible) {
+    public var layoutGuide = LayoutGuide(width: .intrinsic, height: .intrinsic) {
         didSet {
             guard isActive else { return }
             updateLayout()

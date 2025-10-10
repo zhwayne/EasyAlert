@@ -31,18 +31,17 @@ final class SheetLayout: AlertableLayout {
         case let .fixed(value):
             let w = max(0, value - (layoutGuide.contentInsets.left + layoutGuide.contentInsets.right))
             activeConstraints.append(presentedView.widthAnchor.constraint(equalToConstant: w))
-        case .flexible:
-            // Cap width to available with a landscape limit of 414pt
-            let safeInsets = container.safeAreaInsets
-            let leftSafe = layoutGuide.edgesForExtendedSafeArea.contains(.left) ? 0 : safeInsets.left
-            let rightSafe = layoutGuide.edgesForExtendedSafeArea.contains(.right) ? 0 : safeInsets.right
-            var available = max(0, container.bounds.width - leftSafe - rightSafe - layoutGuide.contentInsets.left - layoutGuide.contentInsets.right)
-            if context.interfaceOrientation.isLandscape { available = min(available, 414) }
-            activeConstraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: available))
         case let .fractional(f):
             let insetSum = layoutGuide.contentInsets.left + layoutGuide.contentInsets.right
             let c = -insetSum
             activeConstraints.append(presentedView.widthAnchor.constraint(equalTo: container.widthAnchor, multiplier: max(0, f), constant: c))
+        case .intrinsic:
+            // For sheets, intrinsic width allows the view to size itself within available space
+            let safeInsets = container.safeAreaInsets
+            let leftSafe = layoutGuide.edgesForExtendedSafeArea.contains(.left) ? 0 : safeInsets.left
+            let rightSafe = layoutGuide.edgesForExtendedSafeArea.contains(.right) ? 0 : safeInsets.right
+            let available = max(0, container.bounds.width - leftSafe - rightSafe - layoutGuide.contentInsets.left - layoutGuide.contentInsets.right)
+            activeConstraints.append(presentedView.widthAnchor.constraint(lessThanOrEqualToConstant: available))
         }
 
         // Vertical sizing
@@ -50,16 +49,14 @@ final class SheetLayout: AlertableLayout {
         case let .fixed(value):
             let h = max(0, value - (layoutGuide.contentInsets.top + layoutGuide.contentInsets.bottom))
             activeConstraints.append(presentedView.heightAnchor.constraint(equalToConstant: h))
-        case .flexible:
-            let safeInsets = container.safeAreaInsets
-            let topSafe = layoutGuide.edgesForExtendedSafeArea.contains(.top) ? 0 : safeInsets.top
-            let bottomSafe = layoutGuide.edgesForExtendedSafeArea.contains(.bottom) ? 0 : safeInsets.bottom
-            let available = max(0, container.bounds.height - topSafe - bottomSafe - layoutGuide.contentInsets.top - layoutGuide.contentInsets.bottom)
-            activeConstraints.append(presentedView.heightAnchor.constraint(lessThanOrEqualToConstant: available))
         case let .fractional(f):
             let insetSum = layoutGuide.contentInsets.top + layoutGuide.contentInsets.bottom
             let c = -insetSum
             activeConstraints.append(presentedView.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: max(0, f), constant: c))
+        case .intrinsic:
+            // Let the sheet size itself based on its intrinsic content size
+            // No height constraint is added, allowing the view to size itself
+            break
         }
 
         // Horizontal position center

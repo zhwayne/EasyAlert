@@ -118,8 +118,8 @@ final class ToastAlert: Alert {
         backdrop.interactionScope = .all
 
         layoutGuide = LayoutGuide(
-            width: .flexible,
-            height: .flexible,
+            width: .intrinsic,
+            height: .intrinsic,
             contentInsets: UIEdgeInsets(top: 0, left: 36, bottom: 0, right: 36)
         )
     }

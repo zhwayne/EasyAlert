@@ -24,7 +24,7 @@ extension ActionAlert {
         ///
         /// This property determines how the alert is positioned and sized within its container,
         /// with flexible width and height by default to accommodate different content sizes.
-        public var layoutGuide: LayoutGuide = .init(width: .flexible, height: .flexible)
+        public var layoutGuide: LayoutGuide = .init(width: .intrinsic, height: .intrinsic)
 
         /// The corner radius to apply to the alert's visual elements.
         ///
