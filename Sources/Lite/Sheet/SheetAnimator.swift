@@ -9,11 +9,11 @@ import UIKit
 
 /// An animator that provides slide-up animations for sheet presentations.
 ///
-/// `SheetAnimator` implements the `AlertbleAnimator` protocol to provide smooth,
+/// `SheetAnimator` implements the `AlertableAnimator` protocol to provide smooth,
 /// spring-based slide-up animations for sheet presentations. It animates the sheet
 /// from below the screen to its final position, creating a natural modal presentation.
 /// It can also handle interactive drag-to-dismiss animations when provided with a sheet reference.
-internal class SheetAnimator: AlertbleAnimator {
+internal class SheetAnimator: AlertableAnimator {
     
     /// A weak reference to the sheet to access drag state for interactive animations.
     private weak var sheet: Sheet?

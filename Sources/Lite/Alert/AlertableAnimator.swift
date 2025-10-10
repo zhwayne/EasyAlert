@@ -1,5 +1,5 @@
 //
-//  AlertbleAnimator.swift
+//  AlertableAnimator.swift
 //  EasyAlert
 //
 //  Created by iya on 2022/5/31.
@@ -9,10 +9,10 @@ import UIKit
 
 /// A protocol for objects that can perform transition animations for an alert.
 ///
-/// `AlertbleAnimator` defines the interface for customizing alert presentation and
+/// `AlertableAnimator` defines the interface for customizing alert presentation and
 /// dismissal animations. Each animator should focus on implementing a specific
 /// animation style. For different animation types, create separate implementations.
-@MainActor public protocol AlertbleAnimator {
+@MainActor public protocol AlertableAnimator {
     
     /// Performs the animation for showing the alert.
     ///

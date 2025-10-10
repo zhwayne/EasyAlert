@@ -9,11 +9,11 @@ import UIKit
 
 /// An animator that provides standard show and dismiss animations for alerts.
 ///
-/// `AlertAnimator` implements the `AlertbleAnimator` protocol to provide
+/// `AlertAnimator` implements the `AlertableAnimator` protocol to provide
 /// smooth, spring-based animations for alert presentation and dismissal.
 /// The animations include a subtle scale effect for the alert content and
 /// fade effects for both the content and backdrop.
-internal struct AlertAnimator: AlertbleAnimator {
+internal struct AlertAnimator: AlertableAnimator {
 
     /// Animates the presentation of the alert with a spring-based scale and fade effect.
     ///

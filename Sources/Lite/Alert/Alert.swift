@@ -30,7 +30,7 @@ import UIKit
     /// The animator responsible for showing and dismissing the alert.
     ///
     /// This animator controls the transition animations when the alert appears and disappears.
-    public var animator: AlertbleAnimator = AlertAnimator()
+    public var animator: AlertableAnimator = AlertAnimator()
 
     /// The layout guide that defines the alert's size constraints.
     ///

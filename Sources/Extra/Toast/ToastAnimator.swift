@@ -9,10 +9,10 @@ import UIKit
 
 /// An animator that provides spring-based animations for toast notifications.
 ///
-/// `ToastAnimator` implements the `AlertbleAnimator` protocol to provide smooth,
+/// `ToastAnimator` implements the `AlertableAnimator` protocol to provide smooth,
 /// spring-based animations for showing and dismissing toast notifications. It uses
 /// a scale and fade animation that creates a polished user experience.
-internal struct ToastAnimator: AlertbleAnimator {
+internal struct ToastAnimator: AlertableAnimator {
 
     /// Animates the toast into view with a spring-based scale and fade animation.
     ///

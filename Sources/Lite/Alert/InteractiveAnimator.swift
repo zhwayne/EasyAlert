@@ -13,7 +13,7 @@ import UIKit
 /// progress control, allowing animations to be driven by user gestures or other
 /// interactive elements. This protocol should be implemented by animators that
 /// need to respond to real-time user input during animations.
-@MainActor public protocol InteractiveAnimator: AlertbleAnimator {
+@MainActor public protocol InteractiveAnimator: AlertableAnimator {
     
     /// Updates the animation progress for interactive animations.
     ///
